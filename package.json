@@ -1,42 +1,14 @@
 {
   "name": "@terminusdb/woql-client",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "TerminusDB client library",
   "main": "./dist/index.js",
   "directories": {
-    "lib": "lib"
+    "lib": "lib",
+    "test": "test"
   },
   "author": "kevin@datachemist.com",
   "license": "Apache-2.0",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/terminusdb/woql-client"
-  },
-  "scripts": {
-    "clean": "rimraf dist",
-    "test": "npm run lint && npm run cover",
-    "test:prod": "cross-env BABEL_ENV=production npm run test",
-    "test:only": "mocha --require babel-core/register --require babel-polyfill --recursive",
-    "test:watch": "npm test -- --watch",
-    "test:examples": "node examples/",
-    "cover": "nyc --check-coverage --lines 55 npm run test:only",
-    "lint": "eslint --fix lib/**",
-    "build": "cross-env BABEL_ENV=production babel lib --out-file ./dist/woql-client.js --no-comments --source-maps ",
-    "prepublish": "npm run clean && npm run lint && npm run test && npm run build"
-  },
-  "files": [
-    "lib"
-  ],
-  "keywords": [
-    "Terminus",
-    "WOQL",
-    "Driver",
-    "DB"
-  ],
-  "bugs": {
-    "url": "https://github.com/terminusdb/woql-client/issues"
-  },
-  "homepage": "https://github.com/terminusdb/woql-client#readme",
   "dependencies": {
     "axios": "^0.19.0",
     "eslint-plugin-react": "^7.14.3",
@@ -62,5 +34,31 @@
     "rimraf": "^2.6.2",
     "sinon": "^7.4.1",
     "uglify-js": "^3.6.0"
-  }
+  },
+  "scripts": {
+    "clean": "rimraf -r dist/*",
+    "test": "npm run lint && npm run cover",
+    "test:prod": "cross-env BABEL_ENV=production npm run test",
+    "test:only": "mocha --require babel-core/register --require babel-polyfill --recursive",
+    "test:watch": "npm test -- --watch",
+    "test:examples": "node examples/",
+    "cover": "nyc --check-coverage --lines 55 npm run test:only",
+    "lint": "eslint --fix lib/**",
+    "build": "cross-env BABEL_ENV=production babel lib --out-file ./dist/woql-client.js --no-comments --source-maps ",
+    "prepare": "npm run clean && npm run lint && npm run test && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/terminusdb/woql-client.git"
+  },
+  "keywords": [
+    "Terminus",
+    "WOQL",
+    "Driver",
+    "DB"
+  ],
+  "bugs": {
+    "url": "https://github.com/terminusdb/woql-client/issues"
+  },
+  "homepage": "https://github.com/terminusdb/woql-client#readme"
 }
