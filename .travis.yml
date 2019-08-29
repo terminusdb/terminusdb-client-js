@@ -1,7 +1,5 @@
 language: node_js
 sudo: required
-env:
-  - CXX=g++-4.8 TRAVIS=true
 node_js:
   - "stable"
 after_success: npm run prepare
