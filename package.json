@@ -1,6 +1,6 @@
 {
   "name": "@terminusdb/woql-client",
-  "version": "1.0.1",
+  "version": "0.0.1",
   "description": "TerminusDB client library",
   "main": "./dist/index.js",
   "directories": {
