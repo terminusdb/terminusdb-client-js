@@ -24,11 +24,13 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-minify": "^0.5.0",
     "chai": "^4.1.2",
+    "coveralls": "^3.0.6",
     "cross-env": "^5.1.3",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
+    "istanbul": "^0.4.5",
     "mocha": "^6.1.3",
     "nyc": "^13.3.0",
     "rimraf": "^2.6.2",
@@ -45,7 +47,9 @@
     "cover": "nyc --check-coverage --lines 55 npm run test:only",
     "lint": "eslint --fix lib/**",
     "build": "cross-env BABEL_ENV=production babel lib --out-file ./dist/woql-client.min.js --no-comments --source-maps ",
-    "prepare": "npm run clean && npm run lint && npm run test && npm run build"
+    "prepare": "npm run clean && npm run lint && npm run test && npm run build",
+    "coveralls": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*"
+    "coveralls-after": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
     "type": "git",

@@ -2,9 +2,10 @@ language: node_js
 sudo: required
 node_js:
   - "stable"
-after_success: npm run prepare
-before_script:
-     npm install
+script: "npm run coveralls"
+# Send coverage data to Coveralls
+after_script: "npm run coveralls-after"
+
 branches:
   only:
     - master

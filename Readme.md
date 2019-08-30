@@ -1,12 +1,11 @@
 woql-clients
 ===============
 
+[![build status](https://api.travis-ci.org/terminusdb/woql-client.svg?branch=master)](https://travis-ci.org/axios/axios)
 
-  [![NPM Version][npm-image]][npm-url]
-  [![NPM Downloads][downloads-image]][downloads-url]
-  [![Linux Build][travis-image]][travis-url]
-  [![Windows Build][appveyor-image]][appveyor-url]
-  [![Test Coverage][coveralls-image]][coveralls-url]
+[![code coverage]()]()
+
+[![code helpers]()]()
 
 Promise based woql client for the browser and node.js
 
