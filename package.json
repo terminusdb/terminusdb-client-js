@@ -48,7 +48,7 @@
     "lint": "eslint --fix lib/**",
     "build": "cross-env BABEL_ENV=production babel lib --out-file ./dist/woql-client.min.js --no-comments --source-maps ",
     "prepare": "npm run clean && npm run lint && npm run test && npm run build",
-    "coveralls": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*"
+    "coveralls": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*",
     "coveralls-after": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
