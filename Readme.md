@@ -1,9 +1,9 @@
 woql-clients
 ===============
 
-[![build status](https://api.travis-ci.org/terminusdb/woql-client.svg?branch=master)](https://travis-ci.org/axios/axios)
+[![build status](https://api.travis-ci.org/terminusdb/woql-client.svg?branch=master)](https://travis-ci.org/terminusdb/woql-client)
 
-[![code coverage]()]()
+[![Coverage Status](https://coveralls.io/repos/github/terminusdb/woql-client/badge.svg?branch=master)](https://coveralls.io/github/terminusdb/woql-client?branch=master)
 
 [![code helpers]()]()
 
