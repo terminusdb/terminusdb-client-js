@@ -36,6 +36,6 @@ describe('get a terminusDB schema', function () {
 
 	it('update the schema of the current database',function(done){
 
-		
+
 	})
 })
