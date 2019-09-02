@@ -10,7 +10,7 @@ woql-clients
 Promise based woql client for the browser and node.js
 
 ## Requirements
-- [DQS]()
+- [TerminusDB](https://github.com/terminusdb/terminusdb)
 - [NodeJS 8.1.4+](https://nodejs.org/en/)
 
 ## Installation
