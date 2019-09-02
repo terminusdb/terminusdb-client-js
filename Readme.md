@@ -2,10 +2,8 @@ woql-clients
 ===============
 
 [![build status](https://api.travis-ci.org/terminusdb/woql-client.svg?branch=master)](https://travis-ci.org/terminusdb/woql-client)
-
 [![Coverage Status](https://coveralls.io/repos/github/terminusdb/woql-client/badge.svg?branch=master)](https://coveralls.io/github/terminusdb/woql-client?branch=master)
-
-[![code helpers]()]()
+[![code helpers]
 
 Promise based woql client for the browser and node.js
 
@@ -39,7 +37,7 @@ Using cdn:
 
 ```javascript
 //
-const woqlClient = require('woql-client');
+const woqlClient = require('@terminusdb/woql-client');
 
 //Create a new instance of woql client
 const client = new woqlClient();
@@ -79,7 +77,7 @@ connections options.
 To initialize `woql-client` with custom options use
 
 ```js
-const woqlClient = require('woql-client')
+const woqlClient = require('@terminusdb/woql-client')
 
 const client = new woqlClient({
     server:"http://localhost:6363/",
