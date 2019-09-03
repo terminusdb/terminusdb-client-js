@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-require("babel-register");
+require("@babel/register");
 // Webpack Configuration
 const config = {
   
