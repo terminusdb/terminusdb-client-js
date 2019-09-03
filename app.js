@@ -1,6 +1,7 @@
-var WOQLClient = require('./index.js');
+var TerminusDB = require('./index.js');
+//var UTILS = require('./lib/utils.js');
 
-var dbClient= new WOQLClient();
+var dbClient= new TerminusDB.WOQLClient();
 
 var connection=dbClient.connect("http://195.201.12.87:6363/", "root");
 
@@ -12,5 +13,6 @@ dbClient.getClassFrame('http://pippo').then(response=>{console.log(response)}).c
 	console.log("GETFRAME ERROR");
 })
 
+var cc= new TerminusDB.IDParser();
 
 //https://github.com/caolan/async

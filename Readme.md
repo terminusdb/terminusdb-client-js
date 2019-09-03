@@ -37,10 +37,10 @@ Using cdn:
 
 ```javascript
 //
-const woqlClient = require('@terminusdb/woql-client');
+const TerminusDB = require('@terminusdb/woql-client');
 
 //Create a new instance of woql client
-const client = new woqlClient();
+const client = new TerminusDB.WOQLClient();
 
 //Connect to a Terminus server at the given URI with an API key
 client.connect("http://localhost:6363/", 'root').
@@ -74,12 +74,12 @@ async function getCapabilities() {
 ## Options
 connections options.
 
-To initialize `woql-client` with custom options use
+To initialize `TerminusDB woql-client` with custom options use
 
 ```js
-const woqlClient = require('@terminusdb/woql-client')
+const TerminusDB = require('@terminusdb/woql-client')
 
-const client = new woqlClient({
+const client = new TerminusDB.WOQLClient({
     server:"http://localhost:6363/",
     dbid:"test_db",
     include_key:true
