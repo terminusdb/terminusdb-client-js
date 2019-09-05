@@ -3,9 +3,9 @@ var TerminusDB = require('./index.js');
 
 var dbClient= new TerminusDB.WOQLClient();
 
-var connection=dbClient.connect("http://195.201.12.87:6363/", "root");
+var connection=dbClient.connect("https://dev.datachemist.net/platform", "root");
 
-connection.then((response)=>console.log("I'm connect")).catch((err)=>{
+connection.then((response)=>console.log("I'm connect",response)).catch((err)=>{
 	console.log("PROMISE reject", 'CONNECTION');
 });
 

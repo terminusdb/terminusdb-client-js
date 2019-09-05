@@ -30,12 +30,28 @@ const config = {
   },
   devtool :'source-map',
   // Plugins
-  plugins: [
-    new HtmlWebPackPlugin({
-      template: "./index.html",
-      filename: "index.html"
-    })
-  ]
+  
 };
+
+
+module.exports = function(env, argv){
+
+  if (argv.mode === 'development') {
+      config.watch=true
+
+  }
+
+  if (argv.mode === 'production') {
+    config.plugins= [
+      new HtmlWebPackPlugin({
+        template: "./index.html",
+        filename: "index.html"
+      })
+    ]
+  }
+
+  return config;
+};
+
 // Exports
-module.exports = config;
+//module.exports = config;
