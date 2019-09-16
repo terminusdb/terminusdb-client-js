@@ -3,8 +3,6 @@ var TerminusDB = require('./index.js');
 
 var dbClient= new TerminusDB.WOQLClient();
 
-
-
 var connection=dbClient.connect("http://195.201.12.87:6363", "root");
 
 connection.then((response)=>{
@@ -15,7 +13,7 @@ connection.then((response)=>{
 	console.log("getSchema RESPONSE OK")).catch((err)=>{
 	console.log("PROMISE reject", 'GETSCHEMA');
 });
-	
+
 
 }).catch((err)=>{
 	console.log("PROMISE reject", 'CONNECTION');
