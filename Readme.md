@@ -1,4 +1,4 @@
-woql-clients
+woql-client
 ===============
 
 [![build status](https://api.travis-ci.org/terminusdb/woql-client.svg?branch=master)](https://travis-ci.org/terminusdb/woql-client)
