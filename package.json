@@ -1,4 +1,4 @@
-{
+  {
   "name": "@terminusdb/woql-client",
   "version": "0.0.3",
   "description": "TerminusDB client library",
