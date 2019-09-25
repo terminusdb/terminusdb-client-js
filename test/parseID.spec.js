@@ -97,18 +97,10 @@ describe('IDParser tests', function () {
 
 	it('test validPrefixedURL',function(){
 		const context= {
-				    "dcog":"https://datachemist.net/ontology/dcog#",
-				    "dcogbox":"https://datachemist.net/ontology/dcogbox#",
 				    "doc":"http://195.201.12.87:6363/terminus/document/",
-				    "ex":"http://example.org/",
 				    "owl":"http://www.w3.org/2002/07/owl#",
 				    "rdf":"http://www.w3.org/1999/02/22-rdf-syntax-ns#",
 				    "rdfs":"http://www.w3.org/2000/01/rdf-schema#",
-				    "rvo":"https://datachemist.net/ontology/rvo#",
-				    "schema":"http://195.201.12.87:6363/terminus/schema/",
-				    "scm":"http://195.201.12.87:6363/terminus/schema/",
-				    "terminus":"https://datachemist.net/ontology/terminus#",
-				    "xdd":"https://datachemist.net/ontology/xdd#",
 				    "xsd":"http://www.w3.org/2001/XMLSchema#"
 				  }
         

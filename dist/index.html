@@ -5,33 +5,27 @@
     <title>Woql Client</title>
 </head>
 <body>
-
-  
 <script type="text/javascript" src="terminus-client.min.js"></script>
 <script type="text/javascript">
 	var dbClient= new TerminusClient.WOQLClient();
 
-var connection=dbClient.connect("http://195.201.12.87:6363", "root");
+	var connection=dbClient.connect("http://localhost");
 
-connection.then((response)=>{
-	console.log("I'm connect")
-
-
-	dbClient.getSchema(getSchema,{"terminus:encoding":"terminus:turtle"}).then((response)=>
-	console.log("getSchema RESPONSE OK")).catch((err)=>{
-	console.log("PROMISE reject", 'GETSCHEMA');
-});
+	connection.then((response)=>{
+		console.log("I'm connect")
 
 
-}).catch((err)=>{
-	console.log("PROMISE reject", 'CONNECTION');
-});
+		dbClient.getSchema(getSchema,{"terminus:encoding":"terminus:turtle"}).then((response)=>
+		console.log("getSchema RESPONSE OK")).catch((err)=>{
+		console.log("PROMISE reject", 'GETSCHEMA');
+	});
 
-//dbClient.getClassFrame('http://pippo').then(response=>{console.log(response)}).catch(err=>{
-//	console.log("GETFRAME ERROR");
-//})
 
-var getSchema='terminus';
+	}).catch((err)=>{
+		console.log("PROMISE reject", 'CONNECTION');
+	});
+
+	var getSchema='terminus';
 	
 </script>
 </body>
