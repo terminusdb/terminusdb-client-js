@@ -24,7 +24,7 @@ const config = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-         loader: 'babel-loader'
+        loader: 'babel-loader'
       }
     ]
   },
@@ -38,7 +38,6 @@ module.exports = function(env, argv){
 
   if (argv.mode === 'development') {
       config.watch=true
-
   }
 
   if (argv.mode === 'production') {
