@@ -1,5 +1,5 @@
-  {
-  "name": "@terminusdb/woql-client",
+{
+  "name": "@terminusdb/terminus-client",
   "version": "0.0.3",
   "description": "TerminusDB client library",
   "main": "index.js",
@@ -55,7 +55,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/terminusdb/woql-client.git"
+    "url": "git+https://github.com/terminusdb/terminus-client.git"
   },
   "keywords": [
     "Terminus",
@@ -64,7 +64,7 @@
     "DB"
   ],
   "bugs": {
-    "url": "https://github.com/terminusdb/woql-client/issues"
+    "url": "https://github.com/terminusdb/terminus-client/issues"
   },
-  "homepage": "https://github.com/terminusdb/woql-client#readme"
+  "homepage": "https://github.com/terminusdb/terminus-client#readme"
 }

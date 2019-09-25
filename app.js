@@ -1,7 +1,7 @@
-var TerminusDB = require('./index.js');
+var TerminusClient = require('./index.js');
 //var UTILS = require('./lib/utils.js');
 
-var dbClient= new TerminusDB.WOQLClient();
+var dbClient= new TerminusClient.WOQLClient();
 
 var connection=dbClient.connect("http://195.201.12.87:6363", "root");
 

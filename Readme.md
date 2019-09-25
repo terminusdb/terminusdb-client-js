@@ -1,11 +1,11 @@
-woql-client
+terminus-client
 ===============
 
-[![build status](https://api.travis-ci.org/terminusdb/woql-client.svg?branch=master)](https://travis-ci.org/terminusdb/woql-client)
-[![Coverage Status](https://coveralls.io/repos/github/terminusdb/woql-client/badge.svg?branch=master)](https://coveralls.io/github/terminusdb/woql-client?branch=master)
+[![build status](https://api.travis-ci.org/terminusdb/terminus-client.svg?branch=master)](https://travis-ci.org/terminusdb/terminus-client)
+[![Coverage Status](https://coveralls.io/repos/github/terminusdb/terminus-client/badge.svg?branch=master)](https://coveralls.io/github/terminusdb/terminus-client?branch=master)
 [![code helpers]
 
-Promise based woql client for the browser and node.js
+Promise based terminus client for the browser and node.js
 
 ## Requirements
 - [TerminusDB](https://github.com/terminusdb/terminusdb)
@@ -22,13 +22,13 @@ Installation is done using the npm install command:
 Using npm:
 
 ```bash
-$ npm install --save @terminusdb/woql-client
+$ npm install --save @terminusdb/terminus-client
 ```
 
 Using cdn:
 
 ```html
-<script src="https://unpkg.com/@terminusdb/woql-client/dist/woql-client.min.js"></script>
+<script src="https://unpkg.com/@terminusdb/terminus-client/dist/terminus-client.min.js"></script>
 ```
 
 ## Docs & Community
@@ -37,10 +37,10 @@ Using cdn:
 
 ```javascript
 //
-const TerminusDB = require('@terminusdb/woql-client');
+const TerminusClient = require('@terminusdb/terminus-client');
 
-//Create a new instance of woql client
-const client = new TerminusDB.WOQLClient();
+//Create a new instance of terminus client
+const client = new TerminusClient.WOQLClient();
 
 //Connect to a Terminus server at the given URI with an API key
 client.connect("http://localhost:6363/", 'root').
@@ -74,12 +74,12 @@ async function getCapabilities() {
 ## Options
 connections options.
 
-To initialize `TerminusDB woql-client` with custom options use
+To initialize `TerminusDB client` with custom options use
 
 ```js
-const TerminusDB = require('@terminusdb/woql-client')
+const TerminusClient = require('@terminusdb/terminus-client')
 
-const client = new TerminusDB.WOQLClient({
+const client = new TerminusClient.WOQLClient({
     server:"http://localhost:6363/",
     dbid:"test_db",
     include_key:true

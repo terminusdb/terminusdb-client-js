@@ -5,8 +5,11 @@
     <title>Woql Client</title>
 </head>
 <body>
+
+  
+<script type="text/javascript" src="terminus-client.min.js"></script>
 <script type="text/javascript">
-	var dbClient= new TerminusDB.WOQLClient();
+	var dbClient= new TerminusClient.WOQLClient();
 
 var connection=dbClient.connect("http://195.201.12.87:6363", "root");
 
@@ -31,6 +34,5 @@ connection.then((response)=>{
 var getSchema='terminus';
 	
 </script>
-  
-<script type="text/javascript" src="woql-client.min.js"></script></body>
+</body>
 </html>

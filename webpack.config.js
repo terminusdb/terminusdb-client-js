@@ -9,10 +9,10 @@ const config = {
   // Output
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'woql-client.min.js',
-    sourceMapFilename: 'woql-client.min.js.map',
+    filename: 'terminus-client.min.js',
+    sourceMapFilename: 'terminus-client.min.js.map',
     libraryTarget: 'var',
-    library: 'TerminusDB',
+    library: 'TerminusClient',
   },
   node: {
     process: false
