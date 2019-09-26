@@ -43,7 +43,7 @@ const TerminusClient = require('@terminusdb/terminus-client');
 const client = new TerminusClient.WOQLClient();
 
 //Connect to a Terminus server at the given URI with an API key
-client.connect("http://localhost:6363/", 'root').
+client.connect("http://localhost/", 'secret').
  .then(function (response) {
     // handle success
     console.log(response);
@@ -60,7 +60,7 @@ client.connect("http://localhost:6363/", 'root').
 //use async/await.
 async function getCapabilities() {
   try {
-    const response = await client.connect("http://localhost:6363/", 'root');
+    const response = await client.connect("http://localhost/", 'secret');
     console.log(response);
   } catch (err) {
     console.error(err);
@@ -80,7 +80,7 @@ To initialize `TerminusDB client` with custom options use
 const TerminusClient = require('@terminusdb/terminus-client')
 
 const client = new TerminusClient.WOQLClient({
-    server:"http://localhost:6363/",
+    server:"http://localhost/",
     dbid:"test_db",
     include_key:true
 });
