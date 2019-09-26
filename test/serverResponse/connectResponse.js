@@ -1,16 +1,10 @@
 module.exports={
    "@context":{
-      "dcog":"https://localhost/ontology/dcog#",
-      "dcogbox":"https://localhost/ontology/dcogbox#",
       "doc":"http://localhost/terminus/document/",
-      "ex":"http://example.org/",
       "owl":"http://www.w3.org/2002/07/owl#",
       "rdf":"http://www.w3.org/1999/02/22-rdf-syntax-ns#",
       "rdfs":"http://www.w3.org/2000/01/rdf-schema#",
-      "rvo":"https://localhost/ontology/rvo#",
-      "scm":"http://localhost/terminus/schema/",
       "terminus":"https://localhost/ontology/terminus#",
-      "xdd":"https://localhost/ontology/xdd#",
       "xsd":"http://www.w3.org/2001/XMLSchema#"
    },
    "@id":"doc:admin",
