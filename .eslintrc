@@ -19,6 +19,8 @@
       'LabeledStatement',
       'WithStatement',
     ],
+    "no-use-before-define": ["error", { "functions": false, "classes": false }],
+    "prefer-destructuring": ["error", {"object": false, "array": false}],
     "globals": { "fetch": false }
   }
 }
