@@ -4,7 +4,7 @@ var ConnectionConfig = require('../lib/connectionConfig');
 
 describe('connectionConfig tests', function () {
    
-   const startServerUrl="https://localhost:6363/";
+   const startServerUrl="http://localhost:6363/";
    const startDBid="testDB";
    
    const params={server:startServerUrl,db:startDBid}

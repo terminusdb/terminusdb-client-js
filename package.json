@@ -50,7 +50,7 @@
     "lint": "eslint --fix lib/**",
     "build": "webpack --mode production",
     "prepare": "npm run clean && npm run coveralls && npm run build",
-    "coveralls": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*",
+    "coveralls": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha --  -R spec ./test/*",
     "coveralls-after": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {

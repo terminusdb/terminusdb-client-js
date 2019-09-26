@@ -20,8 +20,9 @@ describe('capabilities Actions', function () {
 	it('check connection capabilities Object', function(done){
 		//console.log(JSON.stringify(connectionCapabilities.connection,null,2));
 
-		expect(JSON.stringify(connectionCapabilities.connection,null,2)).to
-				.equal(JSON.stringify(SnapCapabilitiesObj,null,2));
+		expect(connectionCapabilities.connection[url].key).to
+				.equal(SnapCapabilitiesObj[url].key)
+
 		done();
 	})
 
