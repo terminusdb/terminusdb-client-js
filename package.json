@@ -1,6 +1,6 @@
 {
   "name": "@terminusdb/terminus-client",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "TerminusDB client library",
   "main": "index.js",
   "directories": {
@@ -61,6 +61,7 @@
     "Terminus",
     "WOQL",
     "Driver",
+    "Database",
     "DB"
   ],
   "bugs": {
