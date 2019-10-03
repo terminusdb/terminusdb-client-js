@@ -156,13 +156,17 @@ For get a terminusDB schema
 
 ```js
 
-//Retrieves the schema of the specified database by Full Url
-client.getSchema("http://localhost:6363/dbID");
+opts is optional and defines which format is requested (*terminus:jsonld / terminus:turtle)
+
+const opts={terminus:encoding: "terminus:turtle"}
+
+//Retrieves the schema of the specified database by full Url
+client.getSchema("http://localhost:6363/dbID",opts);
 
 or
 
-//you can get a database schema in the current seleted server
-client.getSchema("dbID").then((response)=>{
+//Retrieves the schema of the specified database by Id in the current server
+client.getSchema("dbID",opts).then((response)=>{
   console.log("response")
 }).catch((err)=>{
   console.log(err);
@@ -171,23 +175,25 @@ client.getSchema("dbID").then((response)=>{
 
 ```
 
-//https://github.com/terminusdb/terminus-schema
-const opts={terminus:encoding: "terminus:turtle"}
-
 
 ##### `updateSchema():{[schurl:String, doc:String, opts:Object])`
 For Update a terminusDB schema
 schurl TerminusDB server URL or a valid TerminusDB Id or omitted 
 doc is OWL schema String 
-Some example[TerminusDB OWL Schema] (https://github.com/terminusdb/terminus-schema)
+
+For stating with an OWL schema go to [https://terminusdb.com/docs/](https://terminusdb.com/docs/)
+
+In the documentation pages you'll find an example of an OWL schema
+Go to Quick Start > My First Knowledge Graph
 
 ```js
 
+//OWL Schema
 const doc="@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.........."
 
 const opts={terminus:encoding: "terminus:turtle"}
 
-client.updateSchema(false,doc,opts).then((response)=>{
+client.updateSchema(dbID,doc,opts).then((response)=>{
   console.log(response)
 }).catch((err)=>{
   console.log(err)
@@ -196,9 +202,6 @@ client.updateSchema(false,doc,opts).then((response)=>{
 ...
 
 ```
-
-
-
 
 ## Testing
 * Clone this repository
