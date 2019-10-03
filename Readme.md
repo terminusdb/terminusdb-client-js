@@ -48,10 +48,10 @@ Download the terminus-client.min.js file from the /dist directory and save it to
 //
 const TerminusClient = require('@terminusdb/terminus-client');
 
-//Create a new instance of terminus client
+//Create a new instance of terminusDB client
 const client = new TerminusClient.WOQLClient();
 
-//Connect to a Terminus server at the given URI with an API key
+//Connect to a TerminusDB server at the given URI with an API key
 client.connect("http://localhost:6363/", 'secret').
  .then(function (response) {
     // handle success
@@ -98,17 +98,17 @@ const client = new TerminusClient.WOQLClient({
 
 ## API
 
-##### `createDatabase([dburl:String, details:Object, key:String]):Object`
+##### `createDatabase(dburl:String, details:Object, key:String):Promise`
 Create a new terminusDB database in the current terminusDB server
 
 ```js
-var currentTerminusServerUrl=client.connectionConfig.dbURL();
+var currentTerminusDBServerUrl=client.connectionConfig.dbURL();
 
 var details={
    "@context":{
       "rdfs":"http://www.w3.org/2000/01/rdf-schema#",
       "terminus":"http://terminusdb.com/schema/terminus#",
-      "_":"http://localhost:6363/test_new_db/"
+      "_":"http://localhost:6363/myFirstTerminusDB/"
    },
    "terminus:document":{
       "@type":"terminus:Database",
@@ -124,49 +124,55 @@ var details={
          "@type":"xsd:string",
          "@value":"*"
       },
-      "@id":"http://localhost:6363/test_new_db"
+      "@id":"http://localhost:6363/myFirstTerminusDB"
    },
    "@type":"terminus:APIUpdate"
 }
 
 
-client.createDatabase("newD",details,'root');
+client.createDatabase("myFirstTerminusDB",details,'mykey');
 
 ...
 
 ```
 
-##### `deleteDatabase():{[dbUrl:string]}`
+##### `deleteDatabase(dbUrl:String):Promise`
 For delete a terminusDB 
 
 ```js
-//if authorized you can delete a terminusDB in the server myTerminusServer
-client.deleteDatabase("http://localhost:6363/dbID");
+//if authorized you can delete a terminusDB in the a terminusDB server by full URL
+client.deleteDatabase("http://localhost:6363/myFirstTerminusDB");
 
 or
 
-//you can delete a database in the current seleted server
-client.deleteDatabase("dbID");
+//you can delete a terminusDB in the current seleted server
+client.deleteDatabase("myFirstTerminusDB");
 ...
 
 ```
 
-##### `getSchema():{[schurl:String, opts:Object]}`
+##### `getSchema(schurl:String, opts:Object):Promise`
 For get a terminusDB schema 
 
 ```js
 
-opts is optional and defines which format is requested (*terminus:jsonld / terminus:turtle)
+//opts.terminus:encoding defines which format is requested 
+//(*terminus:jsonld / terminus:turtle)
+//opts.terminus:user_key is an optional API key
 
-const opts={terminus:encoding: "terminus:turtle"}
+const opts={terminus:encoding: "terminus:turtle",
+            terminus:user_key: "mykey"}
 
-//Retrieves the schema of the specified database by full Url
-client.getSchema("http://localhost:6363/dbID",opts);
+//Retrieves the schema of the specified TerminusDB database by full Url
+client.getSchema("http://localhost:6363/myFirstTerminusDB/schema",opts);
 
 or
 
+const opts={terminus:encoding: "terminus:turtle"}
+
+
 //Retrieves the schema of the specified database by Id in the current server
-client.getSchema("dbID",opts).then((response)=>{
+client.getSchema("myFirstTerminusDB",opts).then((response)=>{
   console.log("response")
 }).catch((err)=>{
   console.log(err);
@@ -176,9 +182,9 @@ client.getSchema("dbID",opts).then((response)=>{
 ```
 
 
-##### `updateSchema():{[schurl:String, doc:String, opts:Object])`
+##### `updateSchema(schurl:String, doc:String, opts:Object):Promise`
 For Update a terminusDB schema
-schurl TerminusDB server URL or a valid TerminusDB Id or omitted 
+schurl TerminusDB full URL or a valid TerminusDB Id or omitted 
 doc is OWL schema String 
 
 For stating with an OWL schema go to [https://terminusdb.com/docs/](https://terminusdb.com/docs/)
@@ -193,7 +199,148 @@ const doc="@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.........."
 
 const opts={terminus:encoding: "terminus:turtle"}
 
-client.updateSchema(dbID,doc,opts).then((response)=>{
+client.updateSchema('myFirstTerminusDB',doc,opts).then((response)=>{
+  console.log(response)
+}).catch((err)=>{
+  console.log(err)
+});
+
+...
+
+```
+
+##### `createDocument(docurl:String, doc:Object, opts:Object):Promise`
+Creates a new document in the specified TerminusDB database
+
+docurl TerminusDB document full URL or a valid TerminusDB document Id or omitted 
+
+doc is a document Object 
+
+```js
+
+//Object
+const doc={  
+   "@context":{  
+      "doc":"http://localhost:6363/myFirstTerminusDB/document/",
+      "owl":"http://www.w3.org/2002/07/owl#",
+      "rdf":"http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+      "rdfs":"http://www.w3.org/2000/01/rdf-schema#",
+      "scm":"http://localhost:6363/myFirstTerminusDB/schema#",
+      "tbs":"http://terminusdb.com/schema/tbs#",
+      "tcs":"http://terminusdb.com/schema/tcs#",
+      "terminus":"http://terminusdb.com/schema/terminus#",
+      "vio":"http://terminusdb.com/schema/vio#",
+      "xdd":"http://terminusdb.com/schema/xdd#",
+      "xsd":"http://www.w3.org/2001/XMLSchema#",
+      "_":"http://localhost:6363/myFirstTerminusDB/document/Rose/"
+   },
+   "terminus:document":{  
+      "tcs:member_of":[  
+         {  
+            "@id":"doc:yoga"
+         }
+      ],
+      "tcs:friend":[  
+         {  
+            "@id":"doc:Jane"
+         }
+      ],
+      "tcs:date_of_birth":[  
+         {  
+            "@value":"1976-05-12",
+            "@type":"xsd:date"
+         }
+      ],
+      "rdfs:label":[  
+         {  
+            "@value":"Rose",
+            "@type":"xsd:string"
+         }
+      ],
+      "rdfs:comment":[  
+         {  
+            "@value":"Steve is a person who is a member of Yoga group and are friends with Jane\n",
+            "@type":"xsd:string"
+         }
+      ],
+      "tcs:identity":[  
+         {  
+            "tcs:website":[  
+               {  
+                  "@value":"www.myWEBSite.com",
+                  "@type":"xdd:url"
+               }
+            ],
+            "tcs:twitter_handle":[  
+               {  
+                  "@value":"https://twitter.com/Rose",
+                  "@type":"xsd:string"
+               }
+            ],
+            "tcs:email_address":[  
+               {  
+                  "@value":"rose@gmail.com",
+                  "@type":"xdd:email"
+               }
+            ],
+            "@type":"tcs:Identifier",
+            "@id":"_:x0ciuq1570113866176"
+         }
+      ],
+      "@type":"http://terminusdb.com/schema/tcs#Person",
+      "@id":"http://localhost:6363/myFirstTerminusDB/document/Rose"
+   },
+   "@type":"terminus:APIUpdate"
+}
+
+//opts.key is an optional API key
+
+const opts={terminus:user_key: "mykey"}
+
+client.updateSchema("myFirstTerminusDB",doc,opts).then((response)=>{
+  console.log(response)
+}).catch((err)=>{
+  console.log(err)
+});
+
+...
+
+```
+
+##### `getDocument(docurl:String, opts:Object):Promise`
+Retrieves a document from the specified TerminusDb 
+
+docurl TerminusDB document full URL or a valid TerminusDB document Id or omitted 
+
+```js
+
+//opts.terminus:encoding defines which format is requested
+//opts.key is an optional API key
+
+const opts={terminus:encoding: "terminus:frame",
+            terminus:user_key: "mykey"}
+
+client.getDocument(http://localhost:6363/myFirstTerminusDB/document/Rose,opts).then((response)=>{
+  console.log(response)
+}).catch((err)=>{
+  console.log(err)
+});
+
+...
+
+```
+
+##### `deleteDocument(docurl:String, opts:Object):Promise`
+Delete a document from the specified TerminusDb 
+
+docurl TerminusDB document full URL or a valid TerminusDB document Id or omitted 
+
+```js
+
+//(opts) opts.key is an optional API key 
+const opts={terminus:user_key: "mykey"}
+
+client.deleteDocument(http://localhost:6363/myFirstTerminusDB/document/Rose,opts).then((response)=>{
   console.log(response)
 }).catch((err)=>{
   console.log(err)
