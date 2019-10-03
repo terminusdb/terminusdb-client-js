@@ -8,13 +8,14 @@ terminus-client
 Promise based terminus client for the browser and node.js
 
 ## Requirements
-- [TerminusDB](https://github.com/terminusdb/terminusdb)
+- [TerminusDB](https://github.com/terminusdb/terminus-server)
 - [NodeJS 8.1.4+](https://nodejs.org/en/)
 
 ## Installation
 
-This is a Node.js module available through the npm registry.
+Terminus Client can be used as either a Node.js module available through the npm registry, or directly included in web-sites by including the script tag below.
 
+### NPM Module
 Before installing, download and install Node.js. Node.js 0.10 or higher is required.
 
 Installation is done using the npm install command:
@@ -25,13 +26,21 @@ Using npm:
 $ npm install --save @terminusdb/terminus-client
 ```
 
+### Minified Script
+
 Using cdn:
 
 ```html
 <script src="https://unpkg.com/@terminusdb/terminus-client/dist/terminus-client.min.js"></script>
 ```
 
-## Docs & Community
+Downloading: 
+
+Download the terminus-client.min.js file from the /dist directory and save it to your location of choice, then:
+
+```html
+<script src="http://my.saved.location/terminus-client.min.js"></script>
+```
 
 ## Usage
 
@@ -211,5 +220,5 @@ It will be nice, if you open an issue first so that we can know what is going on
 
 The APACHE 2.0 License 
 
-Copyright (c) 2019 ........
+Copyright (c) 2019 
  
