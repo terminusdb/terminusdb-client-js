@@ -52,7 +52,7 @@ const TerminusClient = require('@terminusdb/terminus-client');
 const client = new TerminusClient.WOQLClient();
 
 //Connect to a TerminusDB server at the given URI with an API key
-client.connect("http://localhost:6363/", 'secret').
+client.connect("http://localhost:6363/", 'myKey').
  .then(function (response) {
     // handle success
     console.log(response);
@@ -69,7 +69,7 @@ client.connect("http://localhost:6363/", 'secret').
 //use async/await.
 async function getCapabilities() {
   try {
-    const response = await client.connect("http://localhost:6363/", 'secret');
+    const response = await client.connect("http://localhost:6363/", 'myKey');
     console.log(response);
   } catch (err) {
     console.error(err);
@@ -99,10 +99,10 @@ const client = new TerminusClient.WOQLClient({
 ## API
 
 ##### `createDatabase(dburl:String, details:Object, key:String):Promise`
-Create a new terminusDB database in the current terminusDB server
+Create a new terminusDB database 
 
 ```js
-var currentTerminusDBServerUrl=client.connectionConfig.dbURL();
+
 
 var details={
    "@context":{
@@ -129,8 +129,18 @@ var details={
    "@type":"terminus:APIUpdate"
 }
 
+//Create a new Database in the current terminusDB server using the terminusDB server Api key
+//dburl is the new Database Id 
 
-client.createDatabase("myFirstTerminusDB",details,'mykey');
+var currentTerminusDBServerUrl=client.connectionConfig.dbURL();
+
+client.createDatabase("myFirstTerminusDB",details);
+
+or 
+
+//dburl is a full new TerminusDB url
+
+client.createDatabase("http://localhost:6363/myFirstTerminusDB",details,'mykey');
 
 ...
 
@@ -140,12 +150,12 @@ client.createDatabase("myFirstTerminusDB",details,'mykey');
 For delete a terminusDB 
 
 ```js
-//if authorized you can delete a terminusDB in the a terminusDB server by full URL
-client.deleteDatabase("http://localhost:6363/myFirstTerminusDB");
+//if authorized you can delete a terminusDB in the a terminusDB server by full URL and Api key
+client.deleteDatabase("http://localhost:6363/myFirstTerminusDB",'mykey');
 
 or
 
-//you can delete a terminusDB in the current seleted server
+//you can delete a terminusDB in the current terminusDB server
 client.deleteDatabase("myFirstTerminusDB");
 ...
 
@@ -161,7 +171,7 @@ For get a terminusDB schema
 //opts.terminus:user_key is an optional API key
 
 const opts={terminus:encoding: "terminus:turtle",
-            terminus:user_key: "mykey"}
+            terminus:user_key: "root"}
 
 //Retrieves the schema of the specified TerminusDB database by full Url
 client.getSchema("http://localhost:6363/myFirstTerminusDB/schema",opts);
@@ -295,7 +305,7 @@ const doc={
 
 //opts.key is an optional API key
 
-const opts={terminus:user_key: "mykey"}
+const opts={terminus:user_key: "root"}
 
 client.updateSchema("myFirstTerminusDB",doc,opts).then((response)=>{
   console.log(response)
@@ -338,7 +348,7 @@ docurl TerminusDB document full URL or a valid TerminusDB document Id or omitted
 ```js
 
 //(opts) opts.key is an optional API key 
-const opts={terminus:user_key: "mykey"}
+const opts={terminus:user_key: "root"}
 
 client.deleteDocument(http://localhost:6363/myFirstTerminusDB/document/Rose,opts).then((response)=>{
   console.log(response)
