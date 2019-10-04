@@ -166,12 +166,11 @@ For get a terminusDB schema
 
 ```js
 
-//opts.terminus:encoding defines which format is requested 
-//(*terminus:jsonld / terminus:turtle)
-//opts.terminus:user_key is an optional API key
+//opts.terminus:encoding defines which format is requested (*terminus:jsonld / terminus:turtle)
+//opts.terminus:user_key is the server API key
 
 const opts={terminus:encoding: "terminus:turtle",
-            terminus:user_key: "root"}
+            terminus:user_key: "mykey"}
 
 //Retrieves the schema of the specified TerminusDB database by full Url
 client.getSchema("http://localhost:6363/myFirstTerminusDB/schema",opts);
@@ -194,8 +193,9 @@ client.getSchema("myFirstTerminusDB",opts).then((response)=>{
 
 ##### `updateSchema(schurl:String, doc:String, opts:Object):Promise`
 For Update a terminusDB schema
-schurl TerminusDB full URL or a valid TerminusDB Id or omitted 
-doc is OWL schema String 
+
+1) schurl TerminusDB full URL or a valid TerminusDB Id or omitted 
+2) doc is OWL schema String 
 
 For stating with an OWL schema go to [https://terminusdb.com/docs/](https://terminusdb.com/docs/)
 
@@ -207,7 +207,21 @@ Go to Quick Start > My First Knowledge Graph
 //OWL Schema
 const doc="@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.........."
 
+//update a schema from the current server 
 const opts={terminus:encoding: "terminus:turtle"}
+
+client.updateSchema('myFirstTerminusDB',doc,opts).then((response)=>{
+  console.log(response)
+}).catch((err)=>{
+  console.log(err)
+});
+
+
+or 
+
+//update a schema from a full TerminusDB Url 
+const opts={terminus:encoding: "terminus:turtle",
+            terminus:key:"mykey"}
 
 client.updateSchema('myFirstTerminusDB',doc,opts).then((response)=>{
   console.log(response)
@@ -229,85 +243,71 @@ doc is a document Object
 ```js
 
 //Object
-const doc={  
-   "@context":{  
+const doc={
+   "rdfs:label":[
+      {
+         "@value":"Chess Group",
+         "@type":"xsd:string"
+      }
+   ],
+   "rdfs:comment":[
+      {
+         "@value":"this is a group for chess players",
+         "@type":"xsd:string"
+      }
+   ],
+   "tcs:identity":[
+      {
+         "tcs:website":[
+            {
+               "@value":"www.chessPlayer.com",
+               "@type":"xdd:url"
+            }
+         ],
+         "@type":"tcs:Identifier",
+         "@id":"_:f89plh1570198207869"
+      }
+   ],
+   "@type":"http://terminusdb.com/schema/tcs#Group",
+   "@context":{
+      "s":"http://localhost:6363/myFirstTerminusDB/schema#",
+      "dg":"http://localhost:6363/myFirstTerminusDB/schema",
       "doc":"http://localhost:6363/myFirstTerminusDB/document/",
-      "owl":"http://www.w3.org/2002/07/owl#",
+      "db":"http://localhost:6363/myFirstTerminusDB/",
+      "g":"http://localhost:6363/",
       "rdf":"http://www.w3.org/1999/02/22-rdf-syntax-ns#",
       "rdfs":"http://www.w3.org/2000/01/rdf-schema#",
-      "scm":"http://localhost:6363/myFirstTerminusDB/schema#",
-      "tbs":"http://terminusdb.com/schema/tbs#",
+      "xsd":"http://www.w3.org/2001/XMLSchema#",
+      "owl":"http://www.w3.org/2002/07/owl#",
       "tcs":"http://terminusdb.com/schema/tcs#",
+      "tbs":"http://terminusdb.com/schema/tbs#",
+      "xdd":"http://terminusdb.com/schema/xdd#",
       "terminus":"http://terminusdb.com/schema/terminus#",
       "vio":"http://terminusdb.com/schema/vio#",
-      "xdd":"http://terminusdb.com/schema/xdd#",
-      "xsd":"http://www.w3.org/2001/XMLSchema#",
-      "_":"http://localhost:6363/myFirstTerminusDB/document/Rose/"
-   },
-   "terminus:document":{  
-      "tcs:member_of":[  
-         {  
-            "@id":"doc:yoga"
-         }
-      ],
-      "tcs:friend":[  
-         {  
-            "@id":"doc:Jane"
-         }
-      ],
-      "tcs:date_of_birth":[  
-         {  
-            "@value":"1976-05-12",
-            "@type":"xsd:date"
-         }
-      ],
-      "rdfs:label":[  
-         {  
-            "@value":"Rose",
-            "@type":"xsd:string"
-         }
-      ],
-      "rdfs:comment":[  
-         {  
-            "@value":"Steve is a person who is a member of Yoga group and are friends with Jane\n",
-            "@type":"xsd:string"
-         }
-      ],
-      "tcs:identity":[  
-         {  
-            "tcs:website":[  
-               {  
-                  "@value":"www.myWEBSite.com",
-                  "@type":"xdd:url"
-               }
-            ],
-            "tcs:twitter_handle":[  
-               {  
-                  "@value":"https://twitter.com/Rose",
-                  "@type":"xsd:string"
-               }
-            ],
-            "tcs:email_address":[  
-               {  
-                  "@value":"rose@gmail.com",
-                  "@type":"xdd:email"
-               }
-            ],
-            "@type":"tcs:Identifier",
-            "@id":"_:x0ciuq1570113866176"
-         }
-      ],
-      "@type":"http://terminusdb.com/schema/tcs#Person",
-      "@id":"http://localhost:6363/myFirstTerminusDB/document/Rose"
-   },
-   "@type":"terminus:APIUpdate"
+      "docs":"http://terminusdb.com/schema/documentation#",
+      "scm":"http://localhost:6363/myFirstTerminusDB/schema#",
+      "_":"http://localhost:6363/myFirstTerminusDB/document/chess/"
+   }
 }
+/
+// opts.terminus:encoding defines which format is requested (jsonld/frame)
+const opts={terminus:encoding: "jsonld"}
 
-//opts.key is an optional API key
+client.createDocument("doc:chess",doc,opts).then((response)=>{
+  console.log(response)
+}).catch((err)=>{
+  console.log(err)
+});
 
-const opts={terminus:user_key: "root"}
 
-client.updateSchema("myFirstTerminusDB",doc,opts).then((response)=>{
+or 
+
+//opts.key is an API key
+
+const opts={terminus:encoding: "jsonld",
+            terminus:user_key: "mykey"}
+
+client.createDocument("http://localhost:6363/myFirstTerminusDB/document/chess/",doc,opts).then((response)=>{
   console.log(response)
 }).catch((err)=>{
   console.log(err)
@@ -330,7 +330,7 @@ docurl TerminusDB document full URL or a valid TerminusDB document Id or omitted
 const opts={terminus:encoding: "terminus:frame",
             terminus:user_key: "mykey"}
 
-client.getDocument(http://localhost:6363/myFirstTerminusDB/document/Rose,opts).then((response)=>{
+client.getDocument("http://localhost:6363/myFirstTerminusDB/document/Rose",opts).then((response)=>{
   console.log(response)
 }).catch((err)=>{
   console.log(err)
@@ -346,11 +346,16 @@ Delete a document from the specified TerminusDb
 docurl TerminusDB document full URL or a valid TerminusDB document Id or omitted 
 
 ```js
+client.deleteDocument("doc:chess",opts).then((response)=>{
+  console.log(response)
+}).catch((err)=>{
+  console.log(err)
+});
 
 //(opts) opts.key is an optional API key 
-const opts={terminus:user_key: "root"}
+const opts={terminus:user_key: "mykey"}
 
-client.deleteDocument(http://localhost:6363/myFirstTerminusDB/document/Rose,opts).then((response)=>{
+client.deleteDocument("http://localhost:6363/myFirstTerminusDB/document/chess",opts).then((response)=>{
   console.log(response)
 }).catch((err)=>{
   console.log(err)
