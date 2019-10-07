@@ -146,7 +146,7 @@ client.createDatabase("http://localhost:6363/myFirstTerminusDB",details,'mykey')
 
 ```
 
-##### `deleteDatabase(dbUrl:String):Promise`
+##### `deleteDatabase(dbUrl:String,key:String):Promise`
 For delete a terminusDB 
 
 ```js
@@ -313,6 +313,7 @@ client.createDocument("http://localhost:6363/myFirstTerminusDB/document/chess/",
   console.log(err)
 });
 
+
 ...
 
 ```
@@ -330,11 +331,23 @@ docurl TerminusDB document full URL or a valid TerminusDB document Id or omitted
 const opts={terminus:encoding: "terminus:frame",
             terminus:user_key: "mykey"}
 
-client.getDocument("http://localhost:6363/myFirstTerminusDB/document/Rose",opts).then((response)=>{
+client.getDocument("http://localhost:6363/myFirstTerminusDB/document/chess",opts).then((response)=>{
   console.log(response)
 }).catch((err)=>{
   console.log(err)
 });
+
+or 
+
+//get the document chess from current server and current terminusDB
+const opts={terminus:encoding: "terminus:frame"}
+
+client.getDocument("doc:chess",opts).then((response)=>{
+  console.log(response)
+}).catch((err)=>{
+  console.log(err)
+});
+
 
 ...
 
