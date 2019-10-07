@@ -105,12 +105,11 @@ Create a new terminusDB database
 
 
 var details={
-   "@context":{
+    "@context":{
       "rdfs":"http://www.w3.org/2000/01/rdf-schema#",
       "terminus":"http://terminusdb.com/schema/terminus#",
       "_":"http://localhost:6363/myFirstTerminusDB/"
-   },
-   "terminus:document":{
+     }, 
       "@type":"terminus:Database",
       "rdfs:label":{
          "@language":"en",
@@ -125,9 +124,7 @@ var details={
          "@value":"*"
       },
       "@id":"http://localhost:6363/myFirstTerminusDB"
-   },
-   "@type":"terminus:APIUpdate"
-}
+  }
 
 //Create a new Database in the current terminusDB server using the terminusDB server Api key
 //dburl is the new Database Id 
@@ -236,7 +233,7 @@ client.updateSchema('myFirstTerminusDB',doc,opts).then((response)=>{
 ##### `createDocument(docurl:String, doc:Object, opts:Object):Promise`
 Creates a new document in the specified TerminusDB database
 
-docurl TerminusDB document full URL or a valid TerminusDB document Id or omitted 
+docurl TerminusDB document full URL or a valid TerminusDB document Id 
 
 doc is a document Object 
 
@@ -307,7 +304,7 @@ or
 const opts={terminus:encoding: "jsonld",
             terminus:user_key: "mykey"}
 
-client.createDocument("http://localhost:6363/myFirstTerminusDB/document/chess/",doc,opts).then((response)=>{
+client.createDocument("http://localhost:6363/myFirstTerminusDB/document/chess",doc,opts).then((response)=>{
   console.log(response)
 }).catch((err)=>{
   console.log(err)
@@ -321,7 +318,7 @@ client.createDocument("http://localhost:6363/myFirstTerminusDB/document/chess/",
 ##### `getDocument(docurl:String, opts:Object):Promise`
 Retrieves a document from the specified TerminusDb 
 
-docurl TerminusDB document full URL or a valid TerminusDB document Id or omitted 
+docurl TerminusDB document full URL or a valid TerminusDB document Id 
 
 ```js
 
@@ -353,10 +350,96 @@ client.getDocument("doc:chess",opts).then((response)=>{
 
 ```
 
+
+##### `updateDocument(docurl:String, doc:Object, opts:Object):Promise`
+Update the document data in the specified TerminusDB database
+
+docurl TerminusDB document full URL or a valid TerminusDB document Id 
+
+doc is a document Object 
+
+```js
+
+//Object
+const doc={
+   "rdfs:label":[
+      {
+         "@value":"Chess Group",
+         "@type":"xsd:string"
+      }
+   ],
+   "rdfs:comment":[
+      {
+         "@value":"this is a group for chess players",
+         "@type":"xsd:string"
+      }
+   ],
+   "tcs:identity":[
+      {
+         "tcs:website":[
+            {
+               "@value":"www.chessPlayer.com",
+               "@type":"xdd:url"
+            }
+         ],
+         "@type":"tcs:Identifier",
+         "@id":"_:f89plh1570198207869"
+      }
+   ],
+   "@type":"http://terminusdb.com/schema/tcs#Group",
+   "@context":{
+      "s":"http://localhost:6363/myFirstTerminusDB/schema#",
+      "dg":"http://localhost:6363/myFirstTerminusDB/schema",
+      "doc":"http://localhost:6363/myFirstTerminusDB/document/",
+      "db":"http://localhost:6363/myFirstTerminusDB/",
+      "g":"http://localhost:6363/",
+      "rdf":"http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+      "rdfs":"http://www.w3.org/2000/01/rdf-schema#",
+      "xsd":"http://www.w3.org/2001/XMLSchema#",
+      "owl":"http://www.w3.org/2002/07/owl#",
+      "tcs":"http://terminusdb.com/schema/tcs#",
+      "tbs":"http://terminusdb.com/schema/tbs#",
+      "xdd":"http://terminusdb.com/schema/xdd#",
+      "terminus":"http://terminusdb.com/schema/terminus#",
+      "vio":"http://terminusdb.com/schema/vio#",
+      "docs":"http://terminusdb.com/schema/documentation#",
+      "scm":"http://localhost:6363/myFirstTerminusDB/schema#",
+      "_":"http://localhost:6363/myFirstTerminusDB/document/chess/"
+   }
+}
+/
+// opts.terminus:encoding defines which format is requested (jsonld/frame)
+const opts={terminus:encoding: "jsonld"}
+
+client.updateDocument("doc:chess",doc,opts).then((response)=>{
+  console.log(response)
+}).catch((err)=>{
+  console.log(err)
+});
+
+
+or 
+
+//opts.key is an API key
+
+const opts={terminus:encoding: "jsonld",
+            terminus:user_key: "mykey"}
+
+client.updateDocument("http://localhost:6363/myFirstTerminusDB/document/chess",doc,opts).then((response)=>{
+  console.log(response)
+}).catch((err)=>{
+  console.log(err)
+});
+
+
+...
+
+```
+
 ##### `deleteDocument(docurl:String, opts:Object):Promise`
 Delete a document from the specified TerminusDb 
 
-docurl TerminusDB document full URL or a valid TerminusDB document Id or omitted 
+docurl TerminusDB document full URL or a valid TerminusDB document Id 
 
 ```js
 client.deleteDocument("doc:chess",opts).then((response)=>{

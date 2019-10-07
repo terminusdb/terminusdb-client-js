@@ -49,7 +49,8 @@
     "lint": "eslint --fix lib/**",
     "build": "webpack --mode production",
     "prepare": "npm run clean && npm run test && npm run build",
-    "coveralls-after": "nyc report --reporter=text-lcov | coveralls"
+    "coveralls-after": "nyc report --reporter=text-lcov | coveralls",
+    "npm:publish": "npm publish --access public"
   },
   "repository": {
     "type": "git",
