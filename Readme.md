@@ -43,6 +43,7 @@ Download the terminus-client.min.js file from the /dist directory and save it to
 ```
 
 ## Usage
+For the [full Documentation](https://terminusdb.com/docs/client_api)
 
 ```javascript
 //
@@ -290,7 +291,7 @@ const doc={
 // opts.terminus:encoding defines which format is requested (jsonld/frame)
 const opts={terminus:encoding: "jsonld"}
 
-client.createDocument("doc:chess",doc,opts).then((response)=>{
+client.createDocument("chess",doc,opts).then((response)=>{
   console.log(response)
 }).catch((err)=>{
   console.log(err)
@@ -339,7 +340,7 @@ or
 //get the document chess from current server and current terminusDB
 const opts={terminus:encoding: "terminus:frame"}
 
-client.getDocument("doc:chess",opts).then((response)=>{
+client.getDocument("chess",opts).then((response)=>{
   console.log(response)
 }).catch((err)=>{
   console.log(err)
@@ -411,7 +412,7 @@ const doc={
 // opts.terminus:encoding defines which format is requested (jsonld/frame)
 const opts={terminus:encoding: "jsonld"}
 
-client.updateDocument("doc:chess",doc,opts).then((response)=>{
+client.updateDocument("chess",doc,opts).then((response)=>{
   console.log(response)
 }).catch((err)=>{
   console.log(err)
@@ -442,7 +443,7 @@ Delete a document from the specified TerminusDb
 docurl TerminusDB document full URL or a valid TerminusDB document Id 
 
 ```js
-client.deleteDocument("doc:chess",opts).then((response)=>{
+client.deleteDocument("chess",opts).then((response)=>{
   console.log(response)
 }).catch((err)=>{
   console.log(err)
