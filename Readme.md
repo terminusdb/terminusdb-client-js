@@ -104,28 +104,25 @@ Create a new terminusDB database
 
 ```js
 
-
 var details={
-    "@context":{
-      "rdfs":"http://www.w3.org/2000/01/rdf-schema#",
-      "terminus":"http://terminusdb.com/schema/terminus#",
-      "_":"http://localhost:6363/myFirstTerminusDB/"
-     }, 
-      "@type":"terminus:Database",
-      "rdfs:label":{
-         "@language":"en",
-         "@value":"new db tests"
-      },
-      "rdfs:comment":{
-         "@language":"en",
-         "@value":"new db description"
-      },
-      "terminus:allow_origin":{
-         "@type":"xsd:string",
-         "@value":"*"
-      },
-      "@id":"http://localhost:6363/myFirstTerminusDB"
+  "@context": {
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "terminus": "http://terminusdb.com/schema/terminus#"
+  },
+  "@type": "terminus:Database",
+  "rdfs:label": {
+    "@language": "en",
+    "@value": "my first test"
+  },
+  "rdfs:comment": {
+    "@language": "en",
+    "@value": "document test"
+  },
+  "terminus:allow_origin": {
+    "@type": "xsd:string",
+    "@value": "*"
   }
+}
 
 //Create a new Database in the current terminusDB server using the terminusDB server Api key
 //dburl is the new Database Id 
