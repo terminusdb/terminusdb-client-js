@@ -5,9 +5,6 @@
     <title>Woql Client</title>
 </head>
 <body>
-<script type="text/javascript" src="lib/woql.js"></script>
-<script type="text/javascript" src="lib/viewers.js"></script>
-<script type="text/javascript" src="lib/framePattern.js"></script>
 <script type="text/javascript" src="lib/htmlViewers.js"></script>
 <script src="http://localhost/terminus-client/dist/terminus-client.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -15,6 +12,8 @@
        crossorigin="anonymous"></script>
 
 <script type="text/javascript">
+	
+	var WOQL = TerminusClient.WOQL;
 	
 	function showTerminus(doc){
 		document.getElementById('dvterm').appendChild(document.createTextNode(doc.subjid));
