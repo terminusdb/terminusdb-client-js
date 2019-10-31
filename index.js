@@ -7,6 +7,4 @@ module.exports = {
                   ErrorMessage:require('./lib/errorMessage'),
                   FrameHelper:require('./lib/frameHelper'),
                   ObjectFrame:require('./lib/objectFrame'),
-                  TerminusDocumentViewer:require('./lib/documentViewer'),
-                  WOQLViewer:require('./lib/woqlViewer'),
                   WOQL:require('./lib/woql')};

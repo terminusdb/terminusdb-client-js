@@ -30,12 +30,11 @@
 	
 	var tdb = "http://localhost:6363/terminus";
 	
-	var dbClient= new TerminusClient.WOQLClient();
+	var dbClient = new TerminusClient.WOQLClient();
 	var connection=dbClient.connect("http://localhost:6363/", "root");
 	connection.then((response)=>{
 		dbClient.connectionConfig.setDB("terminus");
 		var whtml = new TerminusHTMLViewer(dbClient);
-		
 		var tab = whtml.table(WOQL.from(tdb).limit(100).getEverything()); 
 		var chooser = whtml.chooser(WOQL.from(tdb).classMetadata()); 
 		var d2 = whtml.document("admin", { rules: arules}); 	
@@ -55,11 +54,11 @@
 <div id="chooser-target"></div>
 <div id="table-target"></div>
 <div id="property-template" style="display:none">
-<div class='property-view'>
-	<P>Property Label: <span class='property-label'></span></P>
-	<P>Property Comment: <span class='property-comment'></span></P>
-	<P>Property Values: <span class='property-values'></span></P>
-</div>
+	<div class='property-view'>
+		<P>Property Label: <span class='property-label'></span></P>
+		<P>Property Comment: <span class='property-comment'></span></P>
+		<P>Property Values: <span class='property-values'></span></P>
+	</div>
 </div>
 </body>
 </html>
