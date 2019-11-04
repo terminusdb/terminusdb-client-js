@@ -5,8 +5,7 @@
     <title>Woql Client</title>
 </head>
 <body>
-<script type="text/javascript" src="lib/woql.js"></script>
-<script type="text/javascript" src="lib/viewers.js"></script>
+<script type="text/javascript" src="lib/htmlViewers.js"></script>
 <script src="http://localhost/terminus-client/dist/terminus-client.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -14,47 +13,33 @@
 
 <script type="text/javascript">
 	
+	var WOQL = TerminusClient.WOQL;
+	
 	function showTerminus(doc){
 		document.getElementById('dvterm').appendChild(document.createTextNode(doc.subjid));
-		const lab = doc.getProperty("rdfs:label").first() || doc.subjid;
+		const lab = doc.first("rdfs:label") || doc.subjid;
 		document.getElementById('dvlab').appendChild(document.createTextNode(lab))		
 	}
 	
-	var adminrules = [
-		{   
-			pattern: { renderer: "object"},
-		    render: function(frame){
-		    	//alert(' objrend ' + frame.subject());
-		    	subs = frame.renderProperties();
-	    	}
-		},
-		{	
-			pattern: { renderer: "property"},
-		    render: function(frame){
-		    	//alert('prop rend ' + frame.property());
-		    	vals = frame.renderValues();
-		    }
-		},
-		{	
-			pattern: { renderer: "data"},
-		    render: function(frame){
-		    	//alert('data rend ' + frame.get());
-		    }	  
-		}    					
-	]
-
+	var arules = [
+		WOQL.rule().renderer("object").json(),
+		WOQL.rule().renderer("property").json(),
+		WOQL.rule().renderer("data").json(),
+		WOQL.rule().renderer("data").property("rdfs:comment").render(false).json()
+	];
 	
 	var tdb = "http://localhost:6363/terminus";
 	
-	var dbClient= new TerminusClient.WOQLClient();
+	var dbClient = new TerminusClient.WOQLClient();
 	var connection=dbClient.connect("http://localhost:6363/", "root");
 	connection.then((response)=>{
 		dbClient.connectionConfig.setDB("terminus");
 		var whtml = new TerminusHTMLViewer(dbClient);
-		var tab = whtml.table(WOQL.from(tdb).getEverything()); 
-		var chooser = whtml.chooser(WOQL.from(tdb).classMetadata(), { element_value: "v:Element", element_label: "v:Label"}); 
-		var d2 = whtml.document("admin", { rules: adminrules}); 	
+		var tab = whtml.table(WOQL.from(tdb).limit(100).getEverything()); 
+		var chooser = whtml.chooser(WOQL.from(tdb).classMetadata()); 
+		var d2 = whtml.document("admin", { rules: arules}); 	
 		whtml.document("terminus", { render: showTerminus });
+		
 		document.getElementById('dv2target').appendChild(d2);
 		document.getElementById('table-target').appendChild(tab);
 		document.getElementById('chooser-target').appendChild(chooser);
@@ -69,11 +54,11 @@
 <div id="chooser-target"></div>
 <div id="table-target"></div>
 <div id="property-template" style="display:none">
-<div class='property-view'>
-	<P>Property Label: <span class='property-label'></span></P>
-	<P>Property Comment: <span class='property-comment'></span></P>
-	<P>Property Values: <span class='property-values'></span></P>
-</div>
+	<div class='property-view'>
+		<P>Property Label: <span class='property-label'></span></P>
+		<P>Property Comment: <span class='property-comment'></span></P>
+		<P>Property Values: <span class='property-values'></span></P>
+	</div>
 </div>
 </body>
 </html>
