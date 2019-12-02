@@ -1,4 +1,4 @@
-'use strinct'
+'use strict'
 const axios = require("axios");
 const expect = require('chai').expect;
 const allClassQuery=`select([v('Class'), v('Label'), v('Comment'), 
