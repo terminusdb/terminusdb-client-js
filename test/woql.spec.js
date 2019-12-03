@@ -324,10 +324,9 @@ describe('triple builder', function () {
     //{ limit: [ 10, { start: [Array] } ] }
     const woqlObject=WOQL.addProperty("some_property", "string");
 
-    console.log(woqlObject.json())
-    //const jsonObj={ add_quad: [ 'scm:some_property', 'rdf:scm', 'owl:Class', 'db:schema' ] }
+    const jsonObj={ and: [ { add_quad: [ 'scm:some_property', 'rdf:type', 'owl:DatatypeProperty', 'db:schema' ] }, { add_quad: [ 'scm:some_property', 'rdfs:range', 'xsd:string', 'db:schema' ] } ] };
 
-    //expect(woqlObject.json()).to.eql(jsonObj);
+    expect(woqlObject.json()).to.eql(jsonObj);
 
   })
 
@@ -364,6 +363,36 @@ describe('triple builder chanier', function () {
     //const jsonObj={}
 
     //expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
+  it('check the label method',function(){
+
+    const woqlObject=WOQL.node("doc:x", "add_quad").label("my label", "en");
+
+    const jsonObj={ add_quad: ['doc:x', 'rdfs:label', { '@value': 'my label', '@language': 'en' }, 'db:schema'] }
+
+    expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
+  it('check the comment method',function(){
+
+    const woqlObject=WOQL.node("doc:x", "add_quad").comment("my comment");
+
+    const jsonObj={ add_quad: ['doc:x', 'rdfs:comment', { '@value': 'my comment', '@language': 'en' }, 'db:schema'] }
+
+    expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
+  it('check the property method',function(){
+
+    const woqlObject=WOQL.node("doc:x", "add_quad").property("myprop", "value");
+
+    const jsonObj={ add_quad: ['doc:x', 'rdfs:myprop', { '@value': 'my value', '@language': 'en' }, 'db:schema'] }
+
+    expect(woqlObject.json()).to.eql(jsonObj);
 
   })
 
