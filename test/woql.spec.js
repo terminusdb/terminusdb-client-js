@@ -109,7 +109,7 @@ describe('woql queries', function () {
 
     const woqlObject=WOQL.eq("a","b");
 
-    const jsonObj={ eq: [ { "@language": "en", "@value": "a" }, { "@language": "en", "@value": "b" } ] }
+    const jsonObj={ eq: [ { "@language": "en", "@value": "a" }, { "@language": "en", "@value": "b" } ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -119,7 +119,7 @@ describe('woql queries', function () {
 
     const woqlObject=WOQL.trim("a","b");
 
-    const jsonObj={ trim: [ "a", "b" ] }
+    const jsonObj={ trim: [ "a", "b" ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -129,7 +129,7 @@ describe('woql queries', function () {
 
     const woqlObject=WOQL.eval("1+2","b");
 
-    const jsonObj={ eval: [ '1+2', 'b' ] }
+    const jsonObj={ eval: [ '1+2', 'b' ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -139,7 +139,7 @@ describe('woql queries', function () {
 
     const woqlObject=WOQL.minus("2","1");
 
-    const jsonObj={ minus: [ '2', '1' ] }
+    const jsonObj={ minus: [ '2', '1' ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -149,7 +149,7 @@ describe('woql queries', function () {
 
     const woqlObject=WOQL.plus("2","1");
 
-    const jsonObj={ plus: [ '2', '1' ] }
+    const jsonObj={ plus: [ '2', '1' ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -159,7 +159,7 @@ describe('woql queries', function () {
 
     const woqlObject=WOQL.times("2","1");
 
-    const jsonObj={ times: [ '2', '1' ] }
+    const jsonObj={ times: [ '2', '1' ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -169,7 +169,7 @@ describe('woql queries', function () {
 
     const woqlObject=WOQL.divide("2","1");
 
-    const jsonObj={ divide: [ '2', '1' ] }
+    const jsonObj={ divide: [ '2', '1' ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -179,7 +179,7 @@ describe('woql queries', function () {
 
     const woqlObject=WOQL.exp("2","1");
 
-    const jsonObj={ exp: [ '2', '1' ] }
+    const jsonObj={ exp: [ '2', '1' ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -189,7 +189,7 @@ describe('woql queries', function () {
 
     const woqlObject=WOQL.as("Source", "Target");
 
-    const jsonObj={ as: [ { '@value': 'Source' }, 'v:Target' ] }
+    const jsonObj={ as: [ { '@value': 'Source' }, 'v:Target' ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -199,7 +199,7 @@ describe('woql queries', function () {
 
     const woqlObject=WOQL.as("Prefix", ["V1","V2"]);
 
-    const jsonObj={ as: [ { '@value': 'Prefix' }, 'v:V1,V2' ] }
+    const jsonObj={ as: [ { '@value': 'Prefix' }, 'v:V1,V2' ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -213,7 +213,7 @@ describe('triple builder', function () {
 
     const woqlObject=WOQL.triple("a", "b", "c");
 
-    const jsonObj={ triple: [ "doc:a", "scm:b", { "@language": "en", "@value": "c" } ] }
+    const jsonObj={ triple: [ "doc:a", "scm:b", { "@language": "en", "@value": "c" } ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -223,7 +223,7 @@ describe('triple builder', function () {
 
     const woqlObject=WOQL.quad("a", "b", "c", "d");
 
-    const jsonObj={ quad: [ "doc:a", "scm:b", { "@language": "en", "@value": "c" }, "db:d" ] }
+    const jsonObj={ quad: [ "doc:a", "scm:b", { "@language": "en", "@value": "c" }, "db:d" ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -233,7 +233,7 @@ describe('triple builder', function () {
 
     const woqlObject=WOQL.addClass("id");
 
-    const jsonObj={ add_quad: [ 'scm:id', 'rdf:type', 'owl:Class', 'db:schema' ] }
+    const jsonObj={ add_quad: [ 'scm:id', 'rdf:type', 'owl:Class', 'db:schema' ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -243,7 +243,7 @@ describe('triple builder', function () {
 
     const woqlObject=WOQL.deleteClass("id");
 
-    const jsonObj= { and: [ { delete_quad: [ 'scm:id', 'v:All', 'v:Al2', 'db:schema' ] }, { delete_quad: [ 'v:Al3', 'v:Al4', 'scm:id', 'db:schema' ] } ] }
+    const jsonObj= { and: [ { delete_quad: [ 'scm:id', 'v:All', 'v:Al2', 'db:schema' ] }, { delete_quad: [ 'v:Al3', 'v:Al4', 'scm:id', 'db:schema' ] } ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -253,7 +253,7 @@ describe('triple builder', function () {
 
     const woqlObject=WOQL.sub("ClassA","ClassB");
 
-    const jsonObj={ sub: [ "scm:ClassA", "scm:ClassB" ] }
+    const jsonObj={ sub: [ "scm:ClassA", "scm:ClassB" ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -263,7 +263,7 @@ describe('triple builder', function () {
 
     const woqlObject=WOQL.isa("instance","Class");
 
-    const jsonObj={ isa: [ "scm:instance", "owl:Class" ] }
+    const jsonObj={ isa: [ "scm:instance", "owl:Class" ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -273,7 +273,7 @@ describe('triple builder', function () {
 
     const woqlObject=WOQL.delete({ triple: [ "doc:a", "scm:b", { "@language": "en", "@value": "c" } ] });
 
-    const jsonObj={ delete: [ { triple: [ "doc:a", "scm:b", { "@language": "en", "@value": "c" } ] } ] }
+    const jsonObj={ delete: [ { triple: [ "doc:a", "scm:b", { "@language": "en", "@value": "c" } ] } ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -283,7 +283,7 @@ describe('triple builder', function () {
 
     const woqlObject=WOQL.delete_triple("a", "b", "c");
 
-    const jsonObj={ delete_triple: [ "doc:a", "scm:b", { "@language": "en", "@value": "c" } ] }
+    const jsonObj={ delete_triple: [ "doc:a", "scm:b", { "@language": "en", "@value": "c" } ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -293,7 +293,7 @@ describe('triple builder', function () {
 
     const woqlObject=WOQL.delete_quad("a", "b", "c", "d");
 
-    const jsonObj={ delete_quad: [ "doc:a", "scm:b", { "@language": "en", "@value": "c" }, "db:d" ] }
+    const jsonObj={ delete_quad: [ "doc:a", "scm:b", { "@language": "en", "@value": "c" }, "db:d" ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -303,7 +303,7 @@ describe('triple builder', function () {
 
     const woqlObject=WOQL.add_triple("a", "b", "c");
 
-    const jsonObj={ add_triple: [ "doc:a", "scm:b", { "@language": "en", "@value": "c" } ] }
+    const jsonObj={ add_triple: [ "doc:a", "scm:b", { "@language": "en", "@value": "c" } ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -313,7 +313,7 @@ describe('triple builder', function () {
 
     const woqlObject=WOQL.add_quad("a", "b", "c", "d");
 
-    const jsonObj={ add_quad: [ "doc:a", "scm:b", { "@language": "en", "@value": "c" }, "db:d" ] }
+    const jsonObj={ add_quad: [ "doc:a", "scm:b", { "@language": "en", "@value": "c" }, "db:d" ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -334,7 +334,7 @@ describe('triple builder', function () {
     //{ limit: [ 10, { start: [Array] } ] }
     const woqlObject=WOQL.deleteProperty("some_property", "string");
 
-    const jsonObj={ and: [ { delete_quad: [ 'scm:some_property', 'v:All', 'v:Al2', 'xsd:string' ] }, { delete_quad: [ 'v:Al3', 'v:Al4', 'scm:some_property', 'xsd:string' ] } ] }
+    const jsonObj={ and: [ { delete_quad: [ 'scm:some_property', 'v:All', 'v:Al2', 'xsd:string' ] }, { delete_quad: [ 'v:Al3', 'v:Al4', 'scm:some_property', 'xsd:string' ] } ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -349,9 +349,20 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.node("some_node");
 
-    const jsonObj={}
+    const jsonObj={};
 
     expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
+  it('check the graph method',function(){
+
+    const woqlObject=WOQL.node("doc:x", "add_quad").graph("db:schema");
+
+    console.log(woqlObject.json());
+    //const jsonObj={}
+
+    //expect(woqlObject.json()).to.eql(jsonObj);
 
   })
 
