@@ -358,11 +358,13 @@ describe('triple builder chanier', function () {
   it('check the graph method',function(){
 
     const woqlObject=WOQL.node("doc:x", "add_quad").graph("db:schema");
+    const woqlObject2=WOQL.node("doc:x", "add_quad").graph("db:mySchema").label("my label", "en");
 
-    console.log(woqlObject.json());
-    //const jsonObj={}
+    const jsonObj={};
+    const jsonObj2={ add_quad: ['doc:x', 'rdfs:label', { '@value': 'my label', '@language': 'en' }, 'db:mySchema'] };
 
-    //expect(woqlObject.json()).to.eql(jsonObj);
+    expect(woqlObject.json()).to.eql(jsonObj);
+    expect(woqlObject2.json()).to.eql(jsonObj2);
 
   })
 
@@ -370,7 +372,7 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.node("doc:x", "add_quad").label("my label", "en");
 
-    const jsonObj={ add_quad: ['doc:x', 'rdfs:label', { '@value': 'my label', '@language': 'en' }, 'db:schema'] }
+    const jsonObj={ add_quad: ['doc:x', 'rdfs:label', { '@value': 'my label', '@language': 'en' }, 'db:schema'] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -380,7 +382,7 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.node("doc:x", "add_quad").comment("my comment");
 
-    const jsonObj={ add_quad: ['doc:x', 'rdfs:comment', { '@value': 'my comment', '@language': 'en' }, 'db:schema'] }
+    const jsonObj={ add_quad: ['doc:x', 'rdfs:comment', { '@value': 'my comment', '@language': 'en' }, 'db:schema'] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -390,9 +392,91 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.node("doc:x", "add_quad").property("myprop", "value");
 
-    const jsonObj={ add_quad: ['doc:x', 'rdfs:myprop', { '@value': 'my value', '@language': 'en' }, 'db:schema'] }
+    const jsonObj={ add_quad: ['doc:x', 'rdfs:myprop', { '@value': 'my value', '@language': 'en' }, 'db:schema'] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
+  it('check the entity method',function(){
+
+    const woqlObject=WOQL.node("doc:x", "add_quad").entity();
+
+    console.log(woqlObject.json());
+
+    //const jsonObj={ add_quad: ['doc:x', 'rdfs:myprop', { '@value': 'my value', '@language': 'en' }, 'db:schema'] }
+
+    //expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
+  it('check the parent method',function(){
+
+    const woqlObject=WOQL.node("doc:x", "add_quad").parent("Z");
+
+    console.log(woqlObject.json());
+
+    //const jsonObj={ add_quad: ['doc:x', 'rdfs:myprop', { '@value': 'my value', '@language': 'en' }, 'db:schema'] }
+
+    //expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
+  it('check the abstract method',function(){
+
+    const woqlObject=WOQL.node("doc:x", "add_quad").abstract();
+
+    const jsonObj={ add_quad: [ 'doc:x', 'tcs:tag', 'tcs:abstract', 'db:schema' ] };
+
+    expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
+  it('check the relationship method',function(){
+
+    const woqlObject=WOQL.node("doc:x", "add_quad").relationship();
+
+    console.log(woqlObject.json());
+
+    const jsonObj={ add_quad: [ 'doc:x', 'tcs:tag', 'tcs:relationship', 'db:schema' ] };
+
+    expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
+  it('check the max method',function(){
+
+    const woqlObject=WOQL.addProperty("P", "string").max(4);
+
+    console.log(woqlObject.json());
+
+    //const jsonObj={ add_quad: [ 'doc:x', 'tcs:tag', 'tcs:relationship', 'db:schema' ] };
+
+    //expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
+  it('check the min method',function(){
+
+    const woqlObject=WOQL.addProperty("P", "string").min(2);
+
+    console.log(woqlObject.json());
+
+    //const jsonObj={ add_quad: [ 'doc:x', 'tcs:tag', 'tcs:relationship', 'db:schema' ] };
+
+    //expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
+  it('check the cardinality method',function(){
+
+    const woqlObject=WOQL.addProperty("P", "string").cardinality(3);
+
+    console.log(woqlObject.json());
+
+    //const jsonObj={ add_quad: [ 'doc:x', 'tcs:tag', 'tcs:relationship', 'db:schema' ] };
+
+    //expect(woqlObject.json()).to.eql(jsonObj);
 
   })
 
