@@ -79,12 +79,12 @@ describe('woql queries', function () {
 
 		const woqlObject=WOQL.opt(WOQL.triple("a", "b", "c"));
 
-    const woqlObjectChain=WOQL.opt().triple("a", "b", "c");
+    //const woqlObjectChain=WOQL.opt().triple("a", "b", "c");
 
 		const jsonObj={ opt: [ { triple: [ "doc:a", "scm:b", { "@language": "en", "@value": "c" } ] } ] }
 
 		expect(woqlObject.json()).to.eql(jsonObj);
-    expect(woqlObjectChain.json()).to.eql(jsonObj);
+    //expect(woqlObjectChain.json()).to.eql(jsonObj);
 
 	})
 
@@ -323,6 +323,7 @@ describe('triple builder', function () {
   it('check the addProperty method',function(){
     //{ limit: [ 10, { start: [Array] } ] }
     const woqlObject=WOQL.addProperty("some_property", "string");
+
     console.log(woqlObject.json())
     //const jsonObj={ add_quad: [ 'scm:some_property', 'rdf:scm', 'owl:Class', 'db:schema' ] }
 
