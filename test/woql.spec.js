@@ -466,7 +466,7 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.node("doc:x", "add_quad").property("myprop", "value");
 
-    const jsonObj={ add_quad: ['doc:x', 'rdfs:myprop', { '@value': 'my value', '@language': 'en' }, 'db:schema'] };
+    const jsonObj={ add_quad: ['doc:x', 'scm:myprop', { '@value': 'value', '@language': 'en' }, 'db:schema'] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -476,11 +476,9 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.node("doc:x", "add_quad").entity();
 
-    console.log(woqlObject.json());
+    const jsonObj={ add_quad: [ 'doc:x', 'rdfs:subClassOf', 'tcs:Entity', 'db:schema' ] };
 
-    //const jsonObj={ add_quad: ['doc:x', 'rdfs:myprop', { '@value': 'my value', '@language': 'en' }, 'db:schema'] }
-
-    //expect(woqlObject.json()).to.eql(jsonObj);
+    expect(woqlObject.json()).to.eql(jsonObj);
 
   })
 
@@ -488,11 +486,9 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.node("doc:x", "add_quad").parent("Z");
 
-    console.log(woqlObject.json());
+    const jsonObj={ add_quad: [ 'doc:x', 'rdfs:subClassOf', 'scm:Z', 'db:schema' ] };
 
-    //const jsonObj={ add_quad: ['doc:x', 'rdfs:myprop', { '@value': 'my value', '@language': 'en' }, 'db:schema'] }
-
-    //expect(woqlObject.json()).to.eql(jsonObj);
+    expect(woqlObject.json()).to.eql(jsonObj);
 
   })
 
@@ -510,9 +506,7 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.node("doc:x", "add_quad").relationship();
 
-    console.log(woqlObject.json());
-
-    const jsonObj={ add_quad: [ 'doc:x', 'tcs:tag', 'tcs:relationship', 'db:schema' ] };
+    const jsonObj={ add_quad: [ 'doc:x', 'rdfs:subClassOf', 'tcs:Relationship', 'db:schema' ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
