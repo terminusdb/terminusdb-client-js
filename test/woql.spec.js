@@ -75,18 +75,62 @@ describe('woql queries', function () {
 
 	})
 
+  it('check the when method',function(){
+
+    const Update=WOQL.addClass("id");
+    const Condition=WOQL.or(WOQL.triple("a", "b", "c"),WOQL.triple("1", "2", "3"));
+
+    const woqlObject=WOQL.when(Condition, Update);
+
+    const woqlObjectChain=WOQL.when(Condition).addClass("id")
+    //console.log(woqlObject.json()['when'][0][]);
+    console.log(woqlObjectChain.json());
+    /*
+    const jsonObj={
+                  when: [
+                    WOQLQuery {
+                      query: [Object],
+                      cursor: [Object],
+                      chain_ended: false,
+                      contains_update: false,
+                      paging_transitive_properties: [Array],
+                      vocab: [Object]
+                    },
+                    {}
+                  ]
+                };
+                */
+    //expect(woqlObject.json()).to.eql(jsonObj);
+    //expect(woqlObjectChain.json()).to.eql(jsonObj);
+
+  })
+
   it('check the opt method',function(){
 
 		const woqlObject=WOQL.opt(WOQL.triple("a", "b", "c"));
 
-    //const woqlObjectChain=WOQL.opt().triple("a", "b", "c");
+    const woqlObjectChain=WOQL.opt().triple("a", "b", "c");
 
 		const jsonObj={ opt: [ { triple: [ "doc:a", "scm:b", { "@language": "en", "@value": "c" } ] } ] }
 
 		expect(woqlObject.json()).to.eql(jsonObj);
-    //expect(woqlObjectChain.json()).to.eql(jsonObj);
+    expect(woqlObjectChain.json()).to.eql(jsonObj);
 
 	})
+
+  it('check the from method',function(){
+
+    const Query=WOQL.limit(10);
+    //const woqlObject=WOQL.from("http://dburl", Query);
+
+    const woqlObjectChain=WOQL.from("http://dburl").limit(10);
+
+    const jsonObj={ from: [ 'http://dburl', { limit: [ 10, {} ] } ] }
+
+    //expect(woqlObject.json()).to.eql(jsonObj);
+    expect(woqlObjectChain.json()).to.eql(jsonObj);
+
+  })
 
   it('check the select method',function(){
 
@@ -185,6 +229,16 @@ describe('woql queries', function () {
 
   })
 
+  it('check the get method',function(){
+
+    const woqlObject=WOQL.as("Map", "Target");
+
+    const jsonObj={ as: [ { '@value': 'Map' }, 'v:Target' ] };
+
+    expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
   it('check the as method',function(){
 
     const woqlObject=WOQL.as("Source", "Target");
@@ -195,6 +249,16 @@ describe('woql queries', function () {
 
   })
 
+  it('check the remote method',function(){
+
+    const woqlObject=WOQL.remote({url: "http://url"});
+    console.log(woqlObject.json());
+    //const jsonObj={ as: [ { '@value': 'Prefix' }, 'v:V1,V2' ] };
+
+    //expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
   it('check the unique method',function(){
 
     const woqlObject=WOQL.as("Prefix", ["V1","V2"]);
@@ -202,6 +266,16 @@ describe('woql queries', function () {
     const jsonObj={ as: [ { '@value': 'Prefix' }, 'v:V1,V2' ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
+  it('check the list method',function(){
+
+    const woqlObject=WOQL.list(["V1","V2"]);
+    console.log(woqlObject.json());
+    //const jsonObj={ as: [ { '@value': 'Prefix' }, 'v:V1,V2' ] };
+
+    //expect(woqlObject.json()).to.eql(jsonObj);
 
   })
 
