@@ -598,4 +598,56 @@ describe('woql query object', function () {
 
   })
 
+  it('check the getLimit method',function(){
+    global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
+
+    const woqlObject=WOQL.limit(2).start(0);
+
+    expect(woqlObject.getLimit()).to.eql(2);
+
+  })
+
+  it('check the hasSelect method',function(){
+    global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
+
+    const woqlObjectTrue=WOQL.select("V1", WOQL.triple("a", "b", "c"));
+    const woqlObjectFalse=WOQL.limit(2).start(0);
+
+    expect(woqlObjectTrue.hasSelect()).to.eql(true);
+    expect(woqlObjectFalse.hasSelect()).to.eql(false);
+
+  })
+
+  it('check the getSelect method',function(){
+    global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
+
+    const woqlObject=WOQL.select("V1", WOQL.triple("a", "b", "c"));
+
+    expect(woqlObject.getSelect()).to.eql("V1");
+
+  })
+
+  it('check the context method',function(){
+    global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
+
+    const woqlObject=WOQL.limit(2).start(0);
+
+    //const jsonObj={ limit: [ 3, { start: [ 0, {} ] } ] };
+    console.log(woqlObject.context("context").json())
+
+    //expect(woqlObject.setContext("context").json()).to.eql(jsonObj);
+
+  })
+
+  it('check the getContext method',function(){
+    global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
+
+    const woqlObject=WOQL.context("context");
+
+    const jsonObj={ limit: [ 3, { start: [ 0, {} ] } ] };
+
+    expect(woqlObject.getContext()).to.eql(jsonObj);
+
+  })
+
 });

@@ -83,7 +83,6 @@ describe('woql queries', function () {
     const woqlObject=WOQL.when(true, WOQL.addClass("id"));
 
     const woqlObjectChain=WOQL.when(true).addClass("id")
-    console.log(woqlObject.json());
 
     const jsonObj={
                   when: [
@@ -223,9 +222,9 @@ describe('woql queries', function () {
 
   it('check the get method',function(){
 
-    const woqlObject=WOQL.as("Map", "Target");
+    const woqlObject=WOQL.get("Map", "Target");
 
-    const jsonObj={ as: [ { '@value': 'Map' }, 'v:Target' ] };
+    const jsonObj={ get: [ 'Map' , 'Target' ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
