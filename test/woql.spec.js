@@ -84,24 +84,16 @@ describe('woql queries', function () {
 
     const woqlObjectChain=WOQL.when(true).addClass("id")
     console.log(woqlObject.json());
-    console.log(woqlObjectChain.json());
-/*
+
     const jsonObj={
                   when: [
-                    {"true": []}, {
-                      query: [Object],
-                      cursor: [Object],
-                      chain_ended: false,
-                      contains_update: false,
-                      paging_transitive_properties: [Array],
-                      vocab: [Object]
-                    },
-                    {}
+                    {"true": []},
+                    { add_quad: [ 'scm:id', 'rdf:type', 'owl:Class', 'db:schema' ] }
                   ]
                 };
-*/
+
     //expect(woqlObject.json()).to.eql(jsonObj);
-    //expect(woqlObjectChain.json()).to.eql(jsonObj);
+    expect(woqlObjectChain.json()).to.eql(jsonObj);
 
   })
 
@@ -252,10 +244,10 @@ describe('woql queries', function () {
   it('check the remote method',function(){
 
     const woqlObject=WOQL.remote({url: "http://url"});
-    console.log(woqlObject.json());
-    //const jsonObj={ as: [ { '@value': 'Prefix' }, 'v:V1,V2' ] };
 
-    //expect(woqlObject.json()).to.eql(jsonObj);
+    const jsonObj={ remote: [ { url: 'http://url' } ] };
+
+    expect(woqlObject.json()).to.eql(jsonObj);
 
   })
 
@@ -272,10 +264,10 @@ describe('woql queries', function () {
   it('check the list method',function(){
 
     const woqlObject=WOQL.list(["V1","V2"]);
-    console.log(woqlObject.json());
-    //const jsonObj={ as: [ { '@value': 'Prefix' }, 'v:V1,V2' ] };
 
-    //expect(woqlObject.json()).to.eql(jsonObj);
+    const jsonObj={ list: [ [ 'V1', 'V2' ] ] };
+
+    expect(woqlObject.json()).to.eql(jsonObj);
 
   })
 
@@ -506,7 +498,7 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.node("doc:x", "add_quad").relationship();
 
-    const jsonObj={ add_quad: [ 'doc:x', 'rdfs:subClassOf', 'tcs:Relationship', 'db:schema' ] };
+    const jsonObj={ add_quad: [ 'doc:x', 'rdfs:subClassOf', 'tcs:Entity', 'db:schema' ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -516,11 +508,16 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.addProperty("P", "string").max(4);
 
-    console.log(woqlObject.json());
+    const jsonObj={ and: [ { add_quad: ["scm:P",
+                                        "rdf:type",
+                                        "owl:DatatypeProperty",
+                                        "db:schema"] },
+                           { add_quad: ["scm:P",
+                                        "rdfs:range",
+                                        "xsd:string",
+                                        "db:schema"] } ] };
 
-    //const jsonObj={ add_quad: [ 'doc:x', 'tcs:tag', 'tcs:relationship', 'db:schema' ] };
-
-    //expect(woqlObject.json()).to.eql(jsonObj);
+    expect(woqlObject.json()).to.eql(jsonObj);
 
   })
 
@@ -528,11 +525,16 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.addProperty("P", "string").min(2);
 
-    console.log(woqlObject.json());
+    const jsonObj={ and: [ { add_quad: ["scm:P",
+                                        "rdf:type",
+                                        "owl:DatatypeProperty",
+                                        "db:schema"] },
+                           { add_quad: ["scm:P",
+                                        "rdfs:range",
+                                        "xsd:string",
+                                        "db:schema"] } ] };
 
-    //const jsonObj={ add_quad: [ 'doc:x', 'tcs:tag', 'tcs:relationship', 'db:schema' ] };
-
-    //expect(woqlObject.json()).to.eql(jsonObj);
+    expect(woqlObject.json()).to.eql(jsonObj);
 
   })
 
@@ -540,11 +542,16 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.addProperty("P", "string").cardinality(3);
 
-    console.log(woqlObject.json());
+    const jsonObj={ and: [ { add_quad: ["scm:P",
+                                        "rdf:type",
+                                        "owl:DatatypeProperty",
+                                        "db:schema"] },
+                           { add_quad: ["scm:P",
+                                        "rdfs:range",
+                                        "xsd:string",
+                                        "db:schema"] } ] };
 
-    //const jsonObj={ add_quad: [ 'doc:x', 'tcs:tag', 'tcs:relationship', 'db:schema' ] };
-
-    //expect(woqlObject.json()).to.eql(jsonObj);
+    expect(woqlObject.json()).to.eql(jsonObj);
 
   })
 

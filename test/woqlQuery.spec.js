@@ -451,13 +451,13 @@ describe('woql query object', function () {
 
   })
 
-  it('check the loadVocab method',function(){
+  it('check the loadVocabulary method',function(){
     global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
 
     const woqlObject=WOQL.limit(2).start(0);
     //console.log(woqlObject.getAllDocuments().json());
 
-    woqlObject.loadVocab(global.client);
+    woqlObject.loadVocabulary(global.client);
     //expect(woqlObject.loadVocab(global.client).json()).to.eql(jsonObj);
 
   })
