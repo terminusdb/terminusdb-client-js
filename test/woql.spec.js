@@ -87,7 +87,7 @@ describe('woql queries', function () {
 
     const jsonObj={
                   when: [
-                    {"true": []},
+                    true,
                     { add_quad: [ 'scm:id', 'rdf:type', 'owl:Class', 'db:schema' ] }
                   ]
                 };

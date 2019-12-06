@@ -548,7 +548,7 @@ describe('woql query object', function () {
 
     const woqlObject=WOQL.limit(2).start(10);
 
-    const jsonObj={ limit: [ 3, { start: [ 10, {} ] } ] };
+    const jsonObj={ limit: [ 3, { start: [ 0, {} ] } ] };
 
     expect(woqlObject.setPageSize(3).json()).to.eql(jsonObj);
 
@@ -557,11 +557,11 @@ describe('woql query object', function () {
   it('check the addStart method',function(){
     global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
 
-    const woqlObject=WOQL.limit(2).start(10);
+    const woqlObject=WOQL.limit(2);
 
-    const jsonObj={ limit: [ 2, { start: [ 11, {} ] } ] };
+    const jsonObj={ start: [ 10, { limit: [ 2, {} ] } ] };
 
-    expect(woqlObject.addStart(1).json()).to.eql(jsonObj);
+    expect(woqlObject.addStart(10).json()).to.eql(jsonObj);
 
   })
 
