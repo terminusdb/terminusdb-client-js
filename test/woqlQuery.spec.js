@@ -592,7 +592,7 @@ describe('woql query object', function () {
 
     const woqlObject=WOQL.limit(2).start(10);
 
-    const jsonObj={ limit: [ 3, { start: [ 0, {} ] } ] };
+    const jsonObj={ limit: [ 3, { start: [ 10, {} ] } ] };
 
     expect(woqlObject.setLimit(3).json()).to.eql(jsonObj);
 
@@ -618,35 +618,25 @@ describe('woql query object', function () {
 
   })
 
-  it('check the getSelect method',function(){
+  it('check the getSelectVariables method',function(){
     global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
 
     const woqlObject=WOQL.select("V1", WOQL.triple("a", "b", "c"));
 
-    expect(woqlObject.getSelect()).to.eql("V1");
+    expect(woqlObject.getSelectVariables()).to.eql(["V1"]);
 
   })
 
-  it('check the context method',function(){
+  it('check the context and getContext method',function(){
     global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
 
+    const contextObj = {"@import": "https://terminusdb/contexts/woql/syntax/context.jsonld",
+               "@propagate": true,
+               "db" : "http://localhost:6363/testDB004/"}
     const woqlObject=WOQL.limit(2).start(0);
+    woqlObject.context(contextObj);
 
-    //const jsonObj={ limit: [ 3, { start: [ 0, {} ] } ] };
-    console.log(woqlObject.context("context").json())
-
-    //expect(woqlObject.setContext("context").json()).to.eql(jsonObj);
-
-  })
-
-  it('check the getContext method',function(){
-    global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
-
-    const woqlObject=WOQL.context("context");
-
-    const jsonObj={ limit: [ 3, { start: [ 0, {} ] } ] };
-
-    expect(woqlObject.getContext()).to.eql(jsonObj);
+    expect(woqlObject.getContext()).to.eql(contextObj);
 
   })
 
