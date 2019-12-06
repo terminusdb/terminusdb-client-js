@@ -306,6 +306,17 @@ describe('pre-roll queries', function () {
     const woqlObject=WOQL.limit(2).start(0);
     //console.log(JSON.stringify(woqlObject.getDocumentConnections("docid").json()));
     const jsonObj={ limit: [ 2, { start: [ 0, { "and": [
+        { "or": [
+                  { "triple": [
+                    "doc:docid",
+                    "v:Outgoing",
+                    "v:Entid"
+                    ] },
+                  { "triple": [ "v:Entid",
+                                "v:Incoming",
+                                { "@language": "en", "@value": "docid" },
+                              ] },
+                ] },
         { "isa": [ "v:Entid", "v:Enttype"] },
         { "sub": [ "v:Enttype", "tcs:Document"] },
         { "opt": [ { "triple": [
@@ -320,16 +331,7 @@ describe('pre-roll queries', function () {
                           "db:schema"
                  ] } ] }
                ],
-    "or": [
-        { "triple": [
-                "doc:docid",
-                "v:Outgoing",
-                "v:Entid"] },
-        { "triple": [
-                "v:Entid",
-                "v:Incoming",
-                { "@language": "en", "@value": "docid" }] },
-          ] } ] } ] };
+             } ] } ] };
 
     expect(woqlObject.getDocumentConnections("docid").json()).to.eql(jsonObj);
 
@@ -467,10 +469,119 @@ describe('woql query object', function () {
 
     const woqlObjectTrue=WOQL.limit(2).start(0);
     const woqlObjectFalse=WOQL.select("V1", WOQL.triple("a", "b", "c"));
-    console.log(woqlObjectFalse.isPaged());
 
     expect(woqlObjectTrue.isPaged()).to.eql(true);
     expect(woqlObjectFalse.isPaged()).to.eql(false);
+
+  })
+
+  it('check the getPaged method',function(){
+    global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
+
+    const woqlObject=WOQL.limit(2).start(0);
+    const woqlObject2=WOQL.limit(3).start(10);
+    const woqlObject3=WOQL.limit(2).start(10);
+
+    expect(woqlObject.getPage()).to.eql(1);
+    expect(woqlObject2.getPage()).to.eql(4);
+    expect(woqlObject3.getPage()).to.eql(6);
+
+  })
+
+  it('check the setPage method',function(){
+    global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
+
+    const woqlObject=WOQL.limit(2).start(0);
+
+    const jsonObj={ limit: [ 2, { start: [ 2, {} ] } ] };
+
+    expect(woqlObject.setPage(2).json()).to.eql(jsonObj);
+
+  })
+
+  it('check the nextPage method',function(){
+    global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
+
+    const woqlObject=WOQL.limit(2).start(0);
+
+    const jsonObj={ limit: [ 2, { start: [ 2, {} ] } ] };
+
+    expect(woqlObject.nextPage().json()).to.eql(jsonObj);
+
+  })
+
+  it('check the firstPage method',function(){
+    global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
+
+    const woqlObject=WOQL.limit(2).start(2);
+
+    const jsonObj={ limit: [ 2, { start: [ 0, {} ] } ] };
+
+    expect(woqlObject.firstPage().json()).to.eql(jsonObj);
+
+  })
+
+  it('check the previousPage method',function(){
+    global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
+
+    const woqlObject=WOQL.limit(2).start(4);
+
+    const jsonObj={ limit: [ 2, { start: [ 2, {} ] } ] };
+
+    expect(woqlObject.previousPage().json()).to.eql(jsonObj);
+
+  })
+
+  it('check the setPageSize method',function(){
+    global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
+
+    const woqlObject=WOQL.limit(2).start(0);
+
+    const jsonObj={ limit: [ 3, { start: [ 0, {} ] } ] };
+
+    expect(woqlObject.setPageSize(3).json()).to.eql(jsonObj);
+
+  })
+
+  it('check the setPageSize not first method',function(){
+    global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
+
+    const woqlObject=WOQL.limit(2).start(10);
+
+    const jsonObj={ limit: [ 3, { start: [ 10, {} ] } ] };
+
+    expect(woqlObject.setPageSize(3).json()).to.eql(jsonObj);
+
+  })
+
+  it('check the addStart method',function(){
+    global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
+
+    const woqlObject=WOQL.limit(2).start(10);
+
+    const jsonObj={ limit: [ 2, { start: [ 11, {} ] } ] };
+
+    expect(woqlObject.addStart(1).json()).to.eql(jsonObj);
+
+  })
+
+  it('check the hasStart method',function(){
+    global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
+
+    const woqlObjectTrue=WOQL.limit(2).start(10);
+    const woqlObjectFalse=WOQL.limit(2);
+
+    expect(woqlObjectTrue.hasStart()).to.eql(true);
+    expect(woqlObjectFalse.hasStart()).to.eql(false);
+
+  })
+
+  it('check the getStart method',function(){
+    global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
+
+    const woqlObject=WOQL.limit(2).start(10);
+
+    expect(woqlObject.getStart()).to.eql(10);
 
   })
 
