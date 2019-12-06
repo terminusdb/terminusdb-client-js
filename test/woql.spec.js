@@ -84,11 +84,11 @@ describe('woql queries', function () {
 
     const woqlObjectChain=WOQL.when(Condition).addClass("id")
     //console.log(woqlObject.json()['when'][0][]);
-    console.log(woqlObjectChain.json());
-    /*
+    //console.log(woqlObjectChain.json());
+
     const jsonObj={
                   when: [
-                    WOQLQuery {
+                    WOQLQuery, {
                       query: [Object],
                       cursor: [Object],
                       chain_ended: false,
@@ -99,9 +99,9 @@ describe('woql queries', function () {
                     {}
                   ]
                 };
-                */
-    //expect(woqlObject.json()).to.eql(jsonObj);
-    //expect(woqlObjectChain.json()).to.eql(jsonObj);
+
+    expect(woqlObject.json()).to.eql(jsonObj);
+    expect(woqlObjectChain.json()).to.eql(jsonObj);
 
   })
 
