@@ -558,10 +558,12 @@ describe('woql query object', function () {
     global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
 
     const woqlObject=WOQL.limit(2);
+    const woqlObject2=WOQL.start(5).limit(2);
 
     const jsonObj={ start: [ 10, { limit: [ 2, {} ] } ] };
 
     expect(woqlObject.addStart(10).json()).to.eql(jsonObj);
+    expect(woqlObject2.addStart(10).json()).to.eql(jsonObj);
 
   })
 
@@ -582,6 +584,17 @@ describe('woql query object', function () {
     const woqlObject=WOQL.limit(2).start(10);
 
     expect(woqlObject.getStart()).to.eql(10);
+
+  })
+
+  it('check the setLimit not first method',function(){
+    global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
+
+    const woqlObject=WOQL.limit(2).start(10);
+
+    const jsonObj={ limit: [ 3, { start: [ 0, {} ] } ] };
+
+    expect(woqlObject.setLimit(3).json()).to.eql(jsonObj);
 
   })
 
