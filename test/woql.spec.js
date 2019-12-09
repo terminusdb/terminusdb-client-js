@@ -86,7 +86,9 @@ describe('woql queries', function () {
 
     const jsonObj={
                   when: [
-                    true,
+                    {
+                      "true":[]
+                    },
                     { add_quad: [ 'scm:id', 'rdf:type', 'owl:Class', 'db:schema' ] }
                   ]
                 };
@@ -224,7 +226,13 @@ describe('woql queries', function () {
 
     const woqlObject=WOQL.get("Map", "Target");
 
-    const jsonObj={ get: [ 'Map' , 'Target' ] };
+    const jsonObj={ get: [
+      [ { "as": [ {"@value": "T"}, "M" ] },
+        { "as": [ {"@value": "a"}, "a" ] },
+        { "as": [ { "@value": "r"}, "p" ] }
+      ],
+      {}
+    ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -308,7 +316,10 @@ describe('triple builder', function () {
 
     const woqlObject=WOQL.deleteClass("id");
 
-    const jsonObj= { and: [ { delete_quad: [ 'scm:id', 'v:All', 'v:Al2', 'db:schema' ] }, { delete_quad: [ 'v:Al3', 'v:Al4', 'scm:id', 'db:schema' ] } ] };
+    const jsonObj= { and: [
+      { delete_quad: [ 'scm:id', 'v:All', 'v:Al2', 'db:schema' ] },
+      { "opt": [ { delete_quad: [ 'v:Al3', 'v:Al4', 'scm:id', 'db:schema' ] } ] }
+      ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -507,13 +518,25 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.addProperty("P", "string").max(4);
 
-    const jsonObj={ and: [ { add_quad: ["scm:P",
+    const jsonObj={ "and": [ { "add_quad": ["scm:P",
                                         "rdf:type",
                                         "owl:DatatypeProperty",
                                         "db:schema"] },
-                           { add_quad: ["scm:P",
+                           { "add_quad": ["scm:P",
                                         "rdfs:range",
                                         "xsd:string",
+                                        "db:schema"] },
+                           { "add_quad": ["scm:P_max",
+                                        "rdf:type",
+                                        "owl:Restriction",
+                                        "db:schema"] },
+                           { "add_quad": [ "scm:P_max",
+                                        "owl:onProperty",
+                                        "scm:P",
+                                        "db:schema"] },
+                           { "add_quad": [ "scm:P_max",
+                                        "owl:maxCardinality",
+                                        4,
                                         "db:schema"] } ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
@@ -524,13 +547,25 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.addProperty("P", "string").min(2);
 
-    const jsonObj={ and: [ { add_quad: ["scm:P",
+    const jsonObj={ "and": [ { "add_quad": ["scm:P",
                                         "rdf:type",
                                         "owl:DatatypeProperty",
                                         "db:schema"] },
-                           { add_quad: ["scm:P",
+                             { "add_quad": ["scm:P",
                                         "rdfs:range",
                                         "xsd:string",
+                                        "db:schema"] },
+                             { "add_quad": ["scm:P_min",
+                                        "rdf:type",
+                                        "owl:Restriction",
+                                        "db:schema"] },
+                             { "add_quad": [ "scm:P_min",
+                                        "owl:onProperty",
+                                        "scm:P",
+                                        "db:schema"] },
+                             { "add_quad": [ "scm:P_min",
+                                        "owl:minCardinality",
+                                        2,
                                         "db:schema"] } ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
@@ -541,14 +576,26 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.addProperty("P", "string").cardinality(3);
 
-    const jsonObj={ and: [ { add_quad: ["scm:P",
-                                        "rdf:type",
-                                        "owl:DatatypeProperty",
-                                        "db:schema"] },
-                           { add_quad: ["scm:P",
-                                        "rdfs:range",
-                                        "xsd:string",
-                                        "db:schema"] } ] };
+    const jsonObj={ "and": [ { "add_quad": ["scm:P",
+                                          "rdf:type",
+                                          "owl:DatatypeProperty",
+                                          "db:schema"] },
+                             { "add_quad": ["scm:P",
+                                          "rdfs:range",
+                                          "xsd:string",
+                                          "db:schema"] },
+                             { "add_quad": ["scm:P_cardinality",
+                                          "rdf:type",
+                                          "owl:Restriction",
+                                          "db:schema"] },
+                             { "add_quad": [ "scm:P_cardinality",
+                                          "owl:onProperty",
+                                          "scm:P",
+                                          "db:schema"] },
+                             { "add_quad": [ "scm:P_cardinality",
+                                          "owl:cardinality",
+                                          3,
+                                          "db:schema"] } ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
