@@ -43,7 +43,7 @@ describe('pre-roll queries', function () {
 
     const woqlObject=WOQL.limit(2).start(0);
     //console.log(woqlObject.getAllDocuments().json());
-    const jsonObj={ limit: [ 2, { start: [ 0, { "and": [ { "triple": [ "v:Document", "rdf:type", "v:Type"] }, { "sub": ["v:Type", "tcs:Document" ] } ] } ] } ] };
+    const jsonObj={ limit: [ 2, { start: [ 0, { "and": [ { "triple": [ "v:Subject", "rdf:type", "v:Type"] }, { "sub": ["v:Type", "tcs:Document" ] } ] } ] } ] };
 
     expect(woqlObject.getAllDocuments().json()).to.eql(jsonObj);
 
@@ -245,9 +245,9 @@ describe('pre-roll queries', function () {
     const woqlObject=WOQL.limit(2).start(0);
 
     const jsonObj={ limit: [ 2, { start: [ 0, { "and": [
-        { "triple": [ "v:Document", "rdf:type", {"@language": "en", "@value": "ClassID"}] },
+        { "triple": [ "v:Subject", "rdf:type", {"@language": "en", "@value": "ClassID"}] },
         { "opt": [ { "triple": [
-                          "v:Document",
+                          "v:Subject",
                           "v:Property",
                           "v:Value"
                  ] } ] }
@@ -263,9 +263,9 @@ describe('pre-roll queries', function () {
     const woqlObject=WOQL.limit(2).start(0);
     //console.log(woqlObject.getAllDocuments().json());
     const jsonObj={ limit: [ 2, { start: [ 0, { "and": [
-        { "triple": [ "v:Document", "scm:PropID", "v:Value"] },
+        { "triple": [ "v:Subject", "scm:PropID", "v:Value"] },
         { "opt": [ { "triple": [
-                          "v:Document",
+                          "v:Subject",
                           "rdfs:label",
                           "v:Label"
                  ] } ] }

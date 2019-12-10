@@ -226,13 +226,7 @@ describe('woql queries', function () {
 
     const woqlObject=WOQL.get("Map", "Target");
 
-    const jsonObj={ get: [
-      [ { "as": [ {"@value": "T"}, "M" ] },
-        { "as": [ {"@value": "a"}, "a" ] },
-        { "as": [ { "@value": "r"}, "p" ] }
-      ],
-      {}
-    ] };
+    const jsonObj={ get: [[], {}] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -241,10 +235,14 @@ describe('woql queries', function () {
   it('check the as method',function(){
 
     const woqlObject=WOQL.as("Source", "Target");
+    const woqlObject2=WOQL.as("Source", "Target").as("Source2", "Target2");
 
-    const jsonObj={ as: [ { '@value': 'Source' }, 'v:Target' ] };
+    const jsonObj=[{ as: [ { '@value': 'Source' }, 'v:Target' ] }];
+    const jsonObj2 =[{ as: [ { '@value': 'Source' }, 'v:Target' ] },
+                      { as: [ { '@value': 'Source2' }, 'v:Target2' ] }]
 
     expect(woqlObject.json()).to.eql(jsonObj);
+    expect(woqlObject2.json()).to.eql(jsonObj2);
 
   })
 
@@ -260,9 +258,9 @@ describe('woql queries', function () {
 
   it('check the unique method',function(){
 
-    const woqlObject=WOQL.as("Prefix", ["V1","V2"]);
+    const woqlObject=WOQL.unique("doc:Station_",["v:Start_ID"],"v:Start_IRI");
 
-    const jsonObj={ as: [ { '@value': 'Prefix' }, 'v:V1,V2' ] };
+    const jsonObj={ unique: [ 'doc:Station_', { list: ["v:Start_ID"] }, 'v:Start_IRI' ] }
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -458,7 +456,7 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.node("doc:x", "add_quad").comment("my comment");
 
-    const jsonObj={ add_quad: ['doc:x', 'rdfs:comment', { '@value': 'my comment', '@language': 'en' }, 'db:schema'] };
+    const jsonObj={ "add_quad": ['doc:x', 'rdfs:comment', { '@value': 'my comment', '@language': 'en' }, 'db:schema'] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
