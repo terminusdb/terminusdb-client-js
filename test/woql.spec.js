@@ -534,7 +534,7 @@ describe('triple builder chanier', function () {
                                         "db:schema"] },
                            { "add_quad": [ "scm:P_max",
                                         "owl:maxCardinality",
-                                        4,
+                                        { "@value": "4", "@type": "xsd:nonNegativeInteger" },
                                         "db:schema"] } ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
@@ -563,7 +563,7 @@ describe('triple builder chanier', function () {
                                         "db:schema"] },
                              { "add_quad": [ "scm:P_min",
                                         "owl:minCardinality",
-                                        2,
+                                        { "@value": "2", "@type": "xsd:nonNegativeInteger" },
                                         "db:schema"] } ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
@@ -592,7 +592,7 @@ describe('triple builder chanier', function () {
                                           "db:schema"] },
                              { "add_quad": [ "scm:P_cardinality",
                                           "owl:cardinality",
-                                          3,
+                                          { "@value": "3", "@type": "xsd:nonNegativeInteger" },
                                           "db:schema"] } ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
