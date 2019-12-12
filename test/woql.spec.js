@@ -452,11 +452,21 @@ describe('triple builder chanier', function () {
 
   })
 
+  it('check the description method',function(){
+
+    const woqlObject=WOQL.addClass("New class").description("A new class object.").entity();
+
+    const jsonObj={ "add_quad": ['doc:x', 'rdfs:comment', { '@value': 'my comment', '@language': 'en' }, 'db:schema'] };
+
+    expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
   it('check the comment method',function(){
 
     const woqlObject=WOQL.node("doc:x", "add_quad").comment("my comment");
 
-    const jsonObj={ "add_quad": ['doc:x', 'rdfs:comment', { '@value': 'my comment', '@language': 'en' }, 'db:schema'] };
+    const jsonObj={ "comment": "my comment" };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
