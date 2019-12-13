@@ -317,7 +317,7 @@ describe('triple builder', function () {
 
     const woqlObject=WOQL.deleteClass("id");
 
-    const jsonObj= { and: [ { delete_quad: [ 'scm:id', 'v:All', 'v:Al2', 'db:schema' ] }, { delete_quad: [ 'v:Al3', 'v:Al4', 'scm:id', 'db:schema' ] } ] };
+    const jsonObj= { and: [ { delete_quad: [ 'scm:id', 'v:All', 'v:Al2', 'db:schema' ] }, { opt: [{delete_quad: [ 'v:Al3', 'v:Al4', 'scm:id', 'db:schema' ] }]} ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -446,7 +446,7 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.node("doc:x", "add_quad").label("my label", "en");
 
-    const jsonObj={ add_quad: ['doc:x', 'rdfs:label', { '@value': 'my label', '@language': 'en' }, 'db:schema'] };
+    const jsonObj={ add_quad: ["doc:x", 'rdfs:label', { '@value': 'my label', '@language': 'en' }, 'db:schema'] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -454,9 +454,9 @@ describe('triple builder chanier', function () {
 
   it('check the comment method',function(){
 
-    const woqlObject=WOQL.node("doc:x", "add_quad").comment("my comment");
+    const woqlObject=WOQL.comment("Comments Out the Following").add_triple("doc:x", "type", "scm:Yoke");
 
-    const jsonObj={ add_quad: ['doc:x', 'rdfs:comment', { '@value': 'my comment', '@language': 'en' }, 'db:schema'] };
+    const jsonObj={ comment: [{ "@value": 'Comments Out the Following', "@language": 'en' }, {"add_triple": ["doc:x", "rdf:type", "scm:Yoke"]}] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -466,7 +466,7 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.node("doc:x", "add_quad").property("myprop", "value");
 
-    const jsonObj={ add_quad: ['doc:x', 'rdfs:myprop', { '@value': 'my value', '@language': 'en' }, 'db:schema'] };
+    const jsonObj={ add_quad: ['doc:x', 'scm:myprop', { '@value': 'value', '@language': 'en' }, 'db:schema'] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -512,7 +512,7 @@ describe('triple builder chanier', function () {
 
     console.log(woqlObject.json());
 
-    const jsonObj={ add_quad: [ 'doc:x', 'tcs:tag', 'tcs:relationship', 'db:schema' ] };
+    const jsonObj={ add_quad: [ 'doc:x', 'rdfs:subClassOf', 'tcs:Entity', 'db:schema' ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
