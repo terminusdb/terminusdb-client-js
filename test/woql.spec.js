@@ -466,7 +466,13 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.node("doc:x", "add_quad").comment("my comment");
 
-    const jsonObj={ "comment": "my comment" };
+    const jsonObj={ "comment": [
+            {
+              "@language": "en",
+              "@value": "my comment"
+            },
+            {}
+          ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
