@@ -113,8 +113,8 @@ describe('woql queries', function () {
 
   it('check the from method',function(){
 
-    const Query=WOQL.limit(10);
-    //const woqlObject=WOQL.from("http://dburl", Query);
+    const WOQLQuery=WOQL.limit(10);
+    //const woqlObject=WOQL.from("http://dburl", WOQLQuery);
 
     const woqlObjectChain=WOQL.from("http://dburl").limit(10);
 
@@ -122,6 +122,20 @@ describe('woql queries', function () {
 
     //expect(woqlObject.json()).to.eql(jsonObj);
     expect(woqlObjectChain.json()).to.eql(jsonObj);
+
+  })
+
+  it('check the star method',function(){
+
+    const woqlObject=WOQL.limit(10).star();
+
+    const jsonObj={ limit: [ 10, { "triple": [
+                  "v:Subject",
+                  "v:Predicate",
+                  "v:Object"
+                ] } ] };
+
+    expect(woqlObject.json()).to.eql(jsonObj);
 
   })
 
