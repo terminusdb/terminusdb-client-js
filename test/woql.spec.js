@@ -466,11 +466,14 @@ describe('triple builder chanier', function () {
 
   })
 
-  it('check the description method',function(){
+  it('check the add class method',function(){
 
-    const woqlObject=WOQL.addClass("New class").description("A new class object.").entity();
+    const woqlObject=WOQL.addClass("NewClass").description("A new class object.").entity();
 
-    const jsonObj={ "add_quad": ['doc:x', 'rdfs:comment', { '@value': 'my comment', '@language': 'en' }, 'db:schema'] };
+    const jsonObj={ "and": [{"add_quad": ['scm:NewClass', 'rdf:type', "owl:Class", 'db:schema']},
+                  {"add_quad": ['scm:NewClass', 'rdfs:comment', { '@value': "A new class object.", '@language': 'en' }, 'db:schema']},
+                  {"add_quad": ['scm:NewClass', 'rdfs:subClassOf', "tcs:Entity", 'db:schema']}
+    ]};
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -564,7 +567,7 @@ describe('triple builder chanier', function () {
                                         "db:schema"] },
                            { "add_quad": [ "scm:P_max",
                                         "owl:maxCardinality",
-                                        { "@value": "4", "@type": "xsd:nonNegativeInteger" },
+                                        { "@value": 4, "@type": "xsd:nonNegativeInteger" },
                                         "db:schema"] } ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
@@ -593,7 +596,7 @@ describe('triple builder chanier', function () {
                                         "db:schema"] },
                              { "add_quad": [ "scm:P_min",
                                         "owl:minCardinality",
-                                        { "@value": "2", "@type": "xsd:nonNegativeInteger" },
+                                        { "@value": 2, "@type": "xsd:nonNegativeInteger" },
                                         "db:schema"] } ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
@@ -622,7 +625,7 @@ describe('triple builder chanier', function () {
                                           "db:schema"] },
                              { "add_quad": [ "scm:P_cardinality",
                                           "owl:cardinality",
-                                          { "@value": "3", "@type": "xsd:nonNegativeInteger" },
+                                          { "@value": 3, "@type": "xsd:nonNegativeInteger" },
                                           "db:schema"] } ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
