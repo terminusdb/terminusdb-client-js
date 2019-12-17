@@ -113,8 +113,8 @@ describe('woql queries', function () {
 
   it('check the from method',function(){
 
-    const Query=WOQL.limit(10);
-    //const woqlObject=WOQL.from("http://dburl", Query);
+    const WOQLQuery=WOQL.limit(10);
+    //const woqlObject=WOQL.from("http://dburl", WOQLQuery);
 
     const woqlObjectChain=WOQL.from("http://dburl").limit(10);
 
@@ -122,6 +122,20 @@ describe('woql queries', function () {
 
     //expect(woqlObject.json()).to.eql(jsonObj);
     expect(woqlObjectChain.json()).to.eql(jsonObj);
+
+  })
+
+  it('check the star method',function(){
+
+    const woqlObject=WOQL.limit(10).star();
+
+    const jsonObj={ limit: [ 10, { "triple": [
+                  "v:Subject",
+                  "v:Predicate",
+                  "v:Object"
+                ] } ] };
+
+    expect(woqlObject.json()).to.eql(jsonObj);
 
   })
 
@@ -256,11 +270,21 @@ describe('woql queries', function () {
 
   })
 
-  it('check the unique method',function(){
+  it('check the idgen method',function(){
 
-    const woqlObject=WOQL.unique("doc:Station_",["v:Start_ID"],"v:Start_IRI");
+    const woqlObject=WOQL.idgen("doc:Station",["v:Start_ID"],"v:Start_Station_URL");
 
-    const jsonObj={ unique: [ 'doc:Station_', { list: ["v:Start_ID"] }, 'v:Start_IRI' ] }
+    const jsonObj={ "idgen": [ 'doc:Station', { "list": ["v:Start_ID"] }, 'v:Start_Station_URL' ] }
+
+    expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
+  it('check the typecast method',function(){
+
+    const woqlObject=WOQL.typecast("v:Duration", "xsd:integer", "v:Duration_Cast");
+
+    const jsonObj={ "typecast": [ "v:Duration", "xsd:integer", "v:Duration_Cast" ] }
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -435,7 +459,7 @@ describe('triple builder chanier', function () {
     const woqlObject2=WOQL.node("doc:x", "add_quad").graph("db:mySchema").label("my label", "en");
 
     const jsonObj={};
-    const jsonObj2={ add_quad: ['doc:x', 'rdfs:label', { '@value': 'my label', '@language': 'en' }, 'db:mySchema'] };
+    const jsonObj2={ 'add_quad': ['doc:x', 'rdfs:label', { '@value': 'my label', '@language': 'en' }, 'db:mySchema'] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
     expect(woqlObject2.json()).to.eql(jsonObj2);
@@ -446,7 +470,7 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.node("doc:x", "add_quad").label("my label", "en");
 
-    const jsonObj={ add_quad: ['doc:x', 'rdfs:label', { '@value': 'my label', '@language': 'en' }, 'db:schema'] };
+    const jsonObj={ 'add_quad': ['doc:x', 'rdfs:label', { '@value': 'my label', '@language': 'en' }, 'db:schema'] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -485,7 +509,7 @@ describe('triple builder chanier', function () {
 
     const woqlObject=WOQL.node("doc:x", "add_quad").property("myprop", "value");
 
-    const jsonObj={ add_quad: ['doc:x', 'scm:myprop', { '@value': 'value', '@language': 'en' }, 'db:schema'] };
+    const jsonObj={ 'add_quad': ['doc:x', 'scm:myprop', { '@value': 'value', '@language': 'en' }, 'db:schema'] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
