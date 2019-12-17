@@ -270,11 +270,21 @@ describe('woql queries', function () {
 
   })
 
-  it('check the unique method',function(){
+  it('check the idgen method',function(){
 
-    const woqlObject=WOQL.unique("doc:Station_",["v:Start_ID"],"v:Start_IRI");
+    const woqlObject=WOQL.idgen("doc:Station",["v:Start_ID"],"v:Start_Station_URL");
 
-    const jsonObj={ unique: [ 'doc:Station_', { list: ["v:Start_ID"] }, 'v:Start_IRI' ] }
+    const jsonObj={ "idgen": [ 'doc:Station', { "list": ["v:Start_ID"] }, 'v:Start_Station_URL' ] }
+
+    expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
+  it('check the typecast method',function(){
+
+    const woqlObject=WOQL.typecast("v:Duration", "xsd:integer", "v:Duration_Cast");
+
+    const jsonObj={ "typecast": [ "v:Duration", "xsd:integer", "v:Duration_Cast" ] }
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
