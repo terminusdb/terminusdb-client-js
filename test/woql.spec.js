@@ -77,9 +77,6 @@ describe('woql queries', function () {
 
   it('check the when method',function(){
 
-    const Update=WOQL.addClass("id");
-    const Condition=WOQL.or(WOQL.triple("a", "b", "c"),WOQL.triple("1", "2", "3"));
-
     const woqlObject=WOQL.when(true, WOQL.addClass("id"));
 
     const woqlObjectChain=WOQL.when(true).addClass("id")
@@ -93,7 +90,7 @@ describe('woql queries', function () {
                   ]
                 };
 
-    //expect(woqlObject.json()).to.eql(jsonObj);
+    expect(woqlObject.json()).to.eql(jsonObj);
     expect(woqlObjectChain.json()).to.eql(jsonObj);
 
   })
