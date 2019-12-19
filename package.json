@@ -42,7 +42,7 @@
   },
   "scripts": {
     "clean": "rimraf -r dist/*",
-    "test": "npm run lint && npm run cover",
+    "test": "npm run cover",
     "test:only": "mocha --require @babel/register --require @babel/preset-env --recursive",
     "test:watch": "mocha --watch --require @babel/register --require @babel/preset-env --recursive",
     "test:examples": "node examples/",
