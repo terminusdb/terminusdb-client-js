@@ -1,11 +1,6 @@
-//const chai =require('chai');
 const expect = require('chai').expect;
 
-//const chaiJsonEqual = require('chai-json-equal');
-
 var WOQL = require('../lib/woql');
-
-//chai.use(chaiJsonEqual);
 
 describe('woql queries', function () {
 
@@ -535,9 +530,9 @@ describe('triple builder chaining methods', function () {
 
   it('check the property method',function(){
 
-    const woqlObject=WOQL.node("doc:x", "add_quad").property("myprop", "value");
+    const woqlObject=WOQL.node("doc:x", "add_triple").property("myprop", "value");
 
-    const jsonObj={ 'add_quad': ['doc:x', 'scm:myprop', { '@value': 'value', '@language': 'en' }, 'db:schema'] };
+    const jsonObj={ 'add_triple': ['doc:x', 'scm:myprop', { '@value': 'value', '@language': 'en' }] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
@@ -689,4 +684,28 @@ describe('triple builder chaining methods', function () {
     ]};
      expect(woqlObject.json()).to.eql(jsonObj);     
 })
+  it('check the chained doctype method',function(){
+  const woqlObject = WOQL.doctype("MyDoc")
+        .property("prop", "dateTime")
+        .property("prop2", "integer")
+        
+  const jsonObj={ and: [
+          { add_quad: ["scm:prop2", "rdf:type", "owl:DatatypeProperty", "db:schema"] },
+          { add_quad: ["scm:prop2", "rdfs:range", "xsd:integer", "db:schema"] },
+          { add_quad: ["scm:prop2", "rdfs:domain", "scm:MyDoc", "db:schema"] },
+          { and: [
+              { add_quad: ["scm:prop", "rdf:type", "owl:DatatypeProperty", "db:schema"] },
+              { add_quad: ["scm:prop", "rdfs:range", "xsd:dateTime", "db:schema"] },
+              { add_quad: ["scm:prop", "rdfs:domain", "scm:MyDoc", "db:schema"] },
+
+            { and: [
+               { add_quad: ["scm:MyDoc", "rdf:type", "owl:Class", "db:schema"] },
+               { add_quad: ["scm:MyDoc", "rdfs:subClassOf", "tcs:Document", "db:schema"] }
+          ]}
+        ]},         
+  ]};
+   expect(woqlObject.json()).to.eql(jsonObj);     
 })
+
+})
+
