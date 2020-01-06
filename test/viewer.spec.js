@@ -130,7 +130,7 @@ describe('Viewer rules', function () {
         config.node().literal(true).type("xdd:coordinatePolygon").value(32).size(43).icon({}).color([0,0,0]).text("hello").border({}).renderer("world").render(rend).click(rend).hover(rend).args({}).hidden(true).
         charge(24).collisionRadius(21).arrow({}).distance(34).symmetric(false).weight(100);
 
-        const jsonObj= {graph: {}, rules: [{pattern: {literal : true, scope: "node", type: ["xdd:coordinatePolygon"], value: [32]}, 
+        const jsonObj= {graph: {}, rules: [{pattern: {literal : true, scope: "row", type: ["xdd:coordinatePolygon"], value: [32]}, 
             rule: {
                 args: {},
                 arrow: {},
