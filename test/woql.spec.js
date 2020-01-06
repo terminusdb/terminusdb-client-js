@@ -13,9 +13,37 @@ describe('woql queries', function () {
 		expect(woqlObject.vocab.type).to.equal('rdf:type');
 	})
 
+  it('check the insert method',function(){
+
+		const woqlObject=WOQL.insert("v:Bike_URL", "Bicycle");
+    const woqlObjectDB=WOQL.insert("v:Bike_URL", "Bicycle", "myDB");
+    const jsonObj={ "add_triple": [ 'v:Bike_URL', 'rdf:type', 'scm:Bicycle' ] };
+    const jsonObjDB={ "add_quad": [ 'v:Bike_URL', 'rdf:type', 'scm:Bicycle', 'db:myDB' ] };
+		expect(woqlObject.json()).to.eql(jsonObj);
+    expect(woqlObjectDB.json()).to.eql(jsonObjDB);
+	})
+
+  it('check the doctype method',function(){
+
+		const woqlObject=WOQL.doctype("Station");
+
+		const jsonObj={ "and": [
+                    { "add_quad": ["scm:Station",
+                    "rdf:type",
+                    "owl:Class",
+                    "db:schema"] },
+                    { "add_quad": ["scm:Station",
+                    "rdfs:subClassOf",
+                    "tcs:Document",
+                    "db:schema"] }
+                   ] }
+
+		expect(woqlObject.json()).to.eql(jsonObj);
+
+	})
 
 	it('check the limit method',function(){
-    const woqlObject=WOQL.limit(10);  
+    const woqlObject=WOQL.limit(10);
 
     expect(woqlObject.json().limit[0]).to.equal(10);
 
@@ -70,14 +98,10 @@ describe('woql queries', function () {
 
   it('check the when method',function(){
 
-<<<<<<< HEAD
-    const woqlObject=WOQL.when(true, WOQL.addClass("id"));
-=======
     const Update=WOQL.add_class("id");
     const Condition=WOQL.or(WOQL.triple("a", "b", "c"),WOQL.triple("1", "2", "3"));
 
     const woqlObject=WOQL.when(true, WOQL.add_class("id"));
->>>>>>> 37c8029e275df396c6d0a0dc5c6f76309dd398fd
 
     const woqlObjectChain=WOQL.when(true).add_class("id")
 
@@ -115,7 +139,7 @@ describe('woql queries', function () {
 
     const woqlObjectChain=WOQL.from("http://dburl").limit(10);
 
-    const jsonObj={ from: [ 'http://dburl', { limit: [ 10, {} ] } ] }
+    const jsonObj={ "from": [ 'http://dburl', { "limit": [ 10, {} ] } ] }
 
     //expect(woqlObject.json()).to.eql(jsonObj);
     expect(woqlObjectChain.json()).to.eql(jsonObj);
@@ -126,7 +150,7 @@ describe('woql queries', function () {
 
     const woqlObject=WOQL.limit(10).star();
 
-    const jsonObj={ limit: [ 10, { "triple": [
+    const jsonObj={ "limit": [ 10, { "triple": [
                   "v:Subject",
                   "v:Predicate",
                   "v:Object"
@@ -286,6 +310,17 @@ describe('woql queries', function () {
     expect(woqlObject.json()).to.eql(jsonObj);
 
   })
+
+  it('check the cast method',function(){
+
+    const woqlObject=WOQL.cast("v:Duration", "xsd:integer", "v:Duration_Cast");
+
+    const jsonObj={ "typecast": [ "v:Duration", "xsd:integer", "v:Duration_Cast" ] }
+
+    expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
 
   it('check the list method',function(){
 
@@ -686,13 +721,13 @@ describe('triple builder chaining methods', function () {
          { add_triple: ["v:Node_ID", "rdfs:subClassOf", "tcs:Entity"] },
          { add_triple: ["v:Node_ID", "rdfs:subClassOf", "scm:hello"] }
     ]};
-     expect(woqlObject.json()).to.eql(jsonObj);     
+     expect(woqlObject.json()).to.eql(jsonObj);
 })
   it('check the chained doctype method',function(){
   const woqlObject = WOQL.doctype("MyDoc")
         .property("prop", "dateTime")
         .property("prop2", "integer")
-        
+
   const jsonObj={ and: [
           { add_quad: ["scm:prop2", "rdf:type", "owl:DatatypeProperty", "db:schema"] },
           { add_quad: ["scm:prop2", "rdfs:range", "xsd:integer", "db:schema"] },
@@ -706,10 +741,9 @@ describe('triple builder chaining methods', function () {
                { add_quad: ["scm:MyDoc", "rdf:type", "owl:Class", "db:schema"] },
                { add_quad: ["scm:MyDoc", "rdfs:subClassOf", "tcs:Document", "db:schema"] }
           ]}
-        ]},         
+        ]},
   ]};
-   expect(woqlObject.json()).to.eql(jsonObj);     
+   expect(woqlObject.json()).to.eql(jsonObj);
 })
 
 })
-
