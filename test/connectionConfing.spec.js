@@ -14,7 +14,6 @@ describe('connectionConfig tests', function () {
    
    it('check get server URL', function(){
       expect(connectionConfig.serverURL()).to.equal(startServerUrl);
-      expect(connectionConfig.platformEndpoint()).to.equal(false);
       expect(connectionConfig.dbURL()).to.equal(`${startServerUrl}${startDBid}`); 		
    })
 
