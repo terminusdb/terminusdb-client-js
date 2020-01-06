@@ -114,11 +114,11 @@ describe('utils tests', function () {
     expect(xsdstr).to.equal(expected);
  })
 
- it('check convertTimestampToXsd',function(){		
+/* it('check convertTimestampToXsd',function(){		
     let parsed = UTILS.DateHelper.convertTimestampToXsd(0);
     const expected = { year: 1970, month: 1, day: 1, hour: 1, minute: 0, second: 0}	
     expect(parsed).to.eql(expected);
- })
+ })*/
 });
 
 
