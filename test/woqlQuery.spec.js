@@ -442,14 +442,13 @@ describe('pre-roll queries', function () {
 
 describe('woql query object', function () {
 
-  it('check the setVocabulary method',function(){
+  it('check the setVocabulary and getVocabulary method',function(){
     global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
 
     const woqlObject=WOQL.limit(2).start(0);
     woqlObject.setVocabulary("vocab");
-    //console.log(woqlObject.getAllDocuments().json());
-    //done();
-    //expect(woqlObject.setVocabulary("vocab")).to.eql(jsonObj);
+
+    expect(woqlObject.getVocabulary()).to.eql("vocab");
 
   })
 
