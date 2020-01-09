@@ -1,5 +1,5 @@
 module.exports = {
-				 WOQLClient:require('./lib/woqlClient'),
+	         WOQLClient:require('./lib/woqlClient'),
                  ConnectionCapabilities:require('./lib/connectionCapabilities'),
                  ConnectionConfig:require('./lib/connectionConfig'),
                  IDParser:require('./lib/terminusIDParser'),
