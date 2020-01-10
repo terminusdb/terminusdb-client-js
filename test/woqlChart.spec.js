@@ -18,6 +18,7 @@ describe('woqlChart config', function () {
 										,"rule":{"label":"Day","type":"number"}}]}
 
 
+		
 		console.log(JSON.stringify(woqlChart.json()));
 
 	})

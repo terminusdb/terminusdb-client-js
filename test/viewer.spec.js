@@ -191,30 +191,54 @@ describe('Viewer rules', function () {
     it('check the View Chart Rules',function(){
         const config=View.chart();
         var rend = function(){alert("r")};
-        config.bar("a", "b").literal(true).type("xdd:coordinatePolygon").value(32).size(43).icon({}).color([0,0,0]).text("hello").border({}).renderer("world").render(rend).click(rend).hover(rend).args({}).hidden(true).
-        fill([1,2,3]).stroke(["a", "b", "c"]).strokeWidth(34).dot(false).labelRotate(32.1).axisType("Bar").axisDomain([]);
+        
+        /*config.bar("a", "b").literal(true).type("xdd:coordinatePolygon").value(32).size(43).icon({}).color([0,0,0]).text("hello").border({}).renderer("world").render(rend).click(rend).hover(rend).args({}).hidden(true).
+        fill([1,2,3]).stroke(["a", "b", "c"]).strokeWidth(34).dot(false).labelRotate(32.1).type("Bar").axisDomain([]);*/
+        config.title("MY CHART TEST").layout("vertical");
+        config.bar("a").legendType('square').label('my bar').fill("#00ff00").stroke("#ff0000").strokeWidth(34);
 
-        const jsonObj= {chart: {}, rules: [{pattern: {literal : true, scope: "Bar", type: ["xdd:coordinatePolygon"], value: [32], variables: ['v:a', "v:b"]}, 
-            rule: {
-                args: {},
-                border: {},
-                click: rend,
-                color: [0,0,0],
-                domain: [],
-                dot: false,
-                fill: [1,2,3],
-                hidden: true,
-                hover: rend,
-                icon: {},
-                labelRotate: 32.1,
-                render: rend,
-                renderer:"world",
-                size: 43,
-                stroke: ["a", "b", "c"],
-                strokeWidth: 34,
-                text: "hello",
-            }
-        }]};
+        config.xAxis("b").labelRotate(32.1).type('number').axisDomain(['dataMin - 1', 'dataMax  + 1'])
+
+        const jsonObj= {"chart":{
+                              "title":"MY CHART TEST",
+                              "layout":"vertical"
+                           },
+                           "rules":[
+                              {
+                                 "pattern":{
+                                    "scope":"Bar",
+                                    "variables":[
+                                       "v:a"
+                                    ]
+                                 },
+                                 "rule":{
+                                    "legendType":"square",
+                                    "label":"my bar",
+                                    "fill":"#00ff00",
+                                    "stroke":"#ff0000",
+                                    "strokeWidth":34
+                                 }
+                              },
+                              {
+                                 "pattern":{
+                                    "scope":"XAxis",
+                                    "variables":[
+                                       "v:b"
+                                    ]
+                                 },
+                                 "rule":{
+                                    "labelRotate":32.1,
+                                    "type":"number",
+                                    "domain":[
+                                       "dataMin - 1",
+                                       "dataMax  + 1"
+                                    ]
+                                 }
+                              }
+                           ]
+                        }
+
+        //console.log(JSON.stringify(config.json()));
         const serial = config.json();
         expect(serial).to.eql(jsonObj);
         const nt = View.loadConfig(serial);
