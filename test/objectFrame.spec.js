@@ -20,6 +20,5 @@ describe('Object Frame Rules', function () {
         const jsonObj= {"@id": "doc:utop", "@type": "mycls", mprop: [{ "@type": "xsd:string", "@value": "helloworld"}]};
         expect(extract).to.eql(jsonObj);
     })
-
 })
 
