@@ -307,8 +307,6 @@ describe('pre-roll queries', function () {
     //console.log(JSON.stringify(woqlObject.getDocumentConnections("docid").json()));
     const jsonObj={ limit: [ 2, { start: [ 0, { "and": [
         { "eq" : ["v:Docid", "doc:docid"]},
-        { "triple": [ "v:Entid", "rdf:type", "v:Enttype"] },
-        { "sub": [ "v:Enttype", "tcs:Document"] },
         { "or": [
                   { "triple": [
                     "doc:docid",
@@ -320,6 +318,8 @@ describe('pre-roll queries', function () {
                                 "doc:docid",
                               ] },
                 ] },
+        { "triple": [ "v:Entid", "rdf:type", "v:Enttype"] },
+        { "sub": [ "v:Enttype", "tcs:Document"] },
         { "opt": [ { "triple": [
                           "v:Entid",
                           "rdfs:label",
