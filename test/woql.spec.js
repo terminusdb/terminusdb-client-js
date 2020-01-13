@@ -321,6 +321,17 @@ describe('woql queries', function () {
 
   })
 
+  it('check the concat method',function(){
+
+    const woqlObject=WOQL.concat("v:Duration yo v:Duration_Cast", "x");
+
+    const jsonObj={ "concat": [ { list: ["v:Duration", {"@value": " yo ", "@type": "xsd:string"}, "v:Duration_Cast" ]}, "v:x"] }
+
+    expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
+
 
   it('check the list method',function(){
 
@@ -348,7 +359,14 @@ describe('woql queries', function () {
     const jsonObj2={ order_by: [ {desc: ['v:C', "v:A"]}, {} ] };
     expect(woqlObject2.json()).to.eql(jsonObj2);
 
+    const ascd = WOQL.asc(["v:C", "v:A"]);
+    const woqlObject3=WOQL.order_by(ascd);
+    const jsonObj3={ order_by: [ {asc: ['v:C', "v:A"]}, {} ] };
+    expect(woqlObject3.json()).to.eql(jsonObj3);
+
+
   })
+
 
 
 })
@@ -726,9 +744,9 @@ describe('triple builder chaining methods', function () {
      expect(woqlObject.json()).to.eql(jsonObj);
 })
   it('check the chained doctype method',function(){
-  const woqlObject = WOQL.doctype("MyDoc")
-        .property("prop", "dateTime")
-        .property("prop2", "integer")
+  const woqlObject = WOQL.doctype("MyDoc").label("abc").description("abcd")
+        .property("prop", "dateTime").label("aaa")
+        .property("prop2", "integer").label("abe")
 
   const jsonObj={ and: [
           { add_quad: ["scm:prop2", "rdf:type", "owl:DatatypeProperty", "db:schema"] },
@@ -738,12 +756,15 @@ describe('triple builder chaining methods', function () {
               { add_quad: ["scm:prop", "rdf:type", "owl:DatatypeProperty", "db:schema"] },
               { add_quad: ["scm:prop", "rdfs:range", "xsd:dateTime", "db:schema"] },
               { add_quad: ["scm:prop", "rdfs:domain", "scm:MyDoc", "db:schema"] },
-
             { and: [
                { add_quad: ["scm:MyDoc", "rdf:type", "owl:Class", "db:schema"] },
-               { add_quad: ["scm:MyDoc", "rdfs:subClassOf", "tcs:Document", "db:schema"] }
-          ]}
-        ]},
+               { add_quad: ["scm:MyDoc", "rdfs:subClassOf", "tcs:Document", "db:schema"] },
+               { add_quad: ["scm:MyDoc", "rdfs:label", {"@value": "abc", "@language": "en"}, "db:schema"] },
+               { add_quad: ["scm:MyDoc", "rdfs:comment", {"@value": "abcd", "@language": "en"}, "db:schema"] },
+            ]},
+            { add_quad: ["scm:prop", "rdfs:label", {"@value": "aaa", "@language": "en"}, "db:schema"] }
+         ]},
+         { add_quad: ["scm:prop2", "rdfs:label", {"@value": "abe", "@language": "en"}, "db:schema"] }
   ]};
    expect(woqlObject.json()).to.eql(jsonObj);
 })
