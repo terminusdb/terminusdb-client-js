@@ -531,8 +531,10 @@ describe('triple builder chaining methods', function () {
   it('check the label method',function(){
 
     const woqlObject=WOQL.node("doc:x", "add_quad").label("my label", "en");
+    const woqlObject2=WOQL.node("doc:x", "add_quad").label("v:label");
 
     const jsonObj={ 'add_quad': ['doc:x', 'rdfs:label', { '@value': 'my label', '@language': 'en' }, 'db:schema'] };
+    const jsonObj2={ 'add_quad': ['doc:x', 'rdfs:label', "v:label", 'db:schema'] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
