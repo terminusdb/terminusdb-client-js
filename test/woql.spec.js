@@ -331,6 +331,21 @@ describe('woql queries', function () {
 
   })
 
+  it('check the re method',function(){
+
+    const woqlObject=WOQL.re(".*", "v:string", "v:formated");
+
+    const jsonObj={
+                    're': [
+                      { '@value': '.*', '@type': 'xsd:string' },
+                      'v:string',
+                      { 'list': ["v:formated"] }
+                    ]
+                  };
+
+    expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
 
 
   it('check the list method',function(){
