@@ -1,10 +1,10 @@
 const expect = require('chai').expect;
 var WOQLChartConfig = require('../lib/viewer/chartConfig');
 
-describe('woqlChart config', function () { 
+describe('woqlChart config', function () {
 
 	let woqlChart;
-	
+
 	beforeEach(function() {
 	   	woqlChart = new WOQLChartConfig()
 	});
@@ -18,8 +18,8 @@ describe('woqlChart config', function () {
 										,"rule":{"label":"Day","type":"number"}}]}
 
 
-		
-		console.log(JSON.stringify(woqlChart.json()));
+
+		//console.log(JSON.stringify(woqlChart.json()));
 
 	})
 
