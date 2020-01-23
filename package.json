@@ -42,7 +42,7 @@
     "webpack-dev-server": "^3.10.1"
   },
   "scripts": {
-    "doc":"documentation build lib/** -f html -o docs",
+    "doc":"documentation build lib/** -f html -o docsjs/docs",
     "clean": "rimraf -r dist/*",
     "test": "npm run cover",
     "test:only": "mocha --require @babel/register --require @babel/preset-env --recursive",
