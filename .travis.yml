@@ -1,5 +1,7 @@
 before_script:
   - npm install -g documentation
+  - npm run doc
+
 
 language: node_js
 sudo: required
@@ -9,8 +11,7 @@ node_js:
 # Send coverage data to Coveralls
 after_script: 
   - npm run coveralls-after
-  - npm run doc
-
+ 
 branches:
   only:
     - dev 
