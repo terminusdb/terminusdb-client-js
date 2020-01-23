@@ -1,10 +1,15 @@
+before_script:
+  - npm install -g documentation
+
 language: node_js
 sudo: required
 node_js:
   - "stable"
 # travis call prepare 
 # Send coverage data to Coveralls
-after_script: "npm run coveralls-after"
+after_script: 
+  - npm run coveralls-after
+  - npm run doc
 
 branches:
   only:

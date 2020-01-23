@@ -24,3 +24,5 @@ CHANGELOG.md
 .prettierrc
 .gitignore
 app.js
+
+.docs
