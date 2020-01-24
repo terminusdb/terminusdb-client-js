@@ -1,6 +1,6 @@
 {
   "name": "@terminusdb/terminus-client",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "TerminusDB client library",
   "main": "index.js",
   "directories": {
@@ -42,7 +42,7 @@
     "webpack-dev-server": "^3.10.1"
   },
   "scripts": {
-    "doc":"documentation build lib/** -f html -o public_pages/docs",
+    "doc": "documentation build lib/** -f html -o public_pages/docs",
     "clean": "rimraf -r public_pages/dist",
     "test": "npm run cover",
     "test:only": "mocha --require @babel/register --require @babel/preset-env --recursive",
