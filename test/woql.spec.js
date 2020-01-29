@@ -365,7 +365,7 @@ describe('woql queries', function () {
   })
 
   it('check the order_by method',function(){
-    const woqlObject=WOQL.order_by("B");
+    const woqlObject=WOQL.order_by(WOQL.asc("v:B"));
     const jsonObj={ order_by: [ {asc: ['v:B']}, {} ] };
     expect(woqlObject.json()).to.eql(jsonObj);
 
