@@ -1,6 +1,8 @@
 *.log
 npm-debug.log*
 
+public_pages
+
 # Coverage directory used by tools like istanbul
 coverage
 .nyc_output
@@ -24,5 +26,3 @@ CHANGELOG.md
 .prettierrc
 .gitignore
 app.js
-
-.docs

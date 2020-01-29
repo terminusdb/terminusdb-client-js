@@ -1,14 +1,18 @@
 const path = require('path');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+
+var PACKAGE = require('./package.json');
+var version = PACKAGE.version;
+
 require("@babel/register");
 // Webpack Configuration
 const config = {
-  
+
   // Entry
   entry: path.resolve(__dirname, 'index.js'),
   // Output
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, `public_pages/${version}/dist`),
     filename: 'terminus-client.min.js',
     sourceMapFilename: 'terminus-client.min.js.map',
     libraryTarget: 'var',
@@ -30,7 +34,7 @@ const config = {
   },
   devtool :'source-map',
   // Plugins
-  
+
 };
 
 

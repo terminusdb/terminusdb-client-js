@@ -34,7 +34,7 @@ Using cdn:
 <script src="https://unpkg.com/@terminusdb/terminus-client/dist/terminus-client.min.js"></script>
 ```
 
-Downloading: 
+Downloading:
 
 Download the terminus-client.min.js file from the /dist directory and save it to your location of choice, then:
 
@@ -100,7 +100,7 @@ const client = new TerminusClient.WOQLClient({
 ## API
 
 ##### `createDatabase(dburl:String, details:Object, key:String):Promise`
-Create a new terminusDB database 
+Create a new terminusDB database
 
 ```js
 
@@ -125,13 +125,13 @@ var details={
 }
 
 //Create a new Database in the current terminusDB server using the terminusDB server Api key
-//dburl is the new Database Id 
+//dburl is the new Database Id
 
 var currentTerminusDBServerUrl=client.connectionConfig.dbURL();
 
 client.createDatabase("myFirstTerminusDB",details);
 
-or 
+or
 
 //dburl is a full new TerminusDB url
 
@@ -142,7 +142,7 @@ client.createDatabase("http://localhost:6363/myFirstTerminusDB",details,'mykey')
 ```
 
 ##### `deleteDatabase(dbUrl:String,key:String):Promise`
-For delete a terminusDB 
+For delete a terminusDB
 
 ```js
 //if authorized you can delete a terminusDB in the a terminusDB server by full URL and Api key
@@ -157,7 +157,7 @@ client.deleteDatabase("myFirstTerminusDB");
 ```
 
 ##### `getSchema(schurl:String, opts:Object):Promise`
-For get a terminusDB schema 
+For get a terminusDB schema
 
 ```js
 
@@ -189,8 +189,8 @@ client.getSchema("myFirstTerminusDB",opts).then((response)=>{
 ##### `updateSchema(schurl:String, doc:String, opts:Object):Promise`
 For Update a terminusDB schema
 
-1) schurl TerminusDB full URL or a valid TerminusDB Id or omitted 
-2) doc is OWL schema String 
+1) schurl TerminusDB full URL or a valid TerminusDB Id or omitted
+2) doc is OWL schema String
 
 For stating with an OWL schema go to [https://terminusdb.com/docs/](https://terminusdb.com/docs/)
 
@@ -202,7 +202,7 @@ Go to Quick Start > My First Knowledge Graph
 //OWL Schema
 const doc="@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.........."
 
-//update a schema from the current server 
+//update a schema from the current server
 const opts={terminus:encoding: "terminus:turtle"}
 
 client.updateSchema('myFirstTerminusDB',doc,opts).then((response)=>{
@@ -212,9 +212,9 @@ client.updateSchema('myFirstTerminusDB',doc,opts).then((response)=>{
 });
 
 
-or 
+or
 
-//update a schema from a full TerminusDB Url 
+//update a schema from a full TerminusDB Url
 const opts={terminus:encoding: "terminus:turtle",
             terminus:key:"mykey"}
 
@@ -231,9 +231,9 @@ client.updateSchema('myFirstTerminusDB',doc,opts).then((response)=>{
 ##### `createDocument(docurl:String, doc:Object, opts:Object):Promise`
 Creates a new document in the specified TerminusDB database
 
-docurl TerminusDB document full URL or a valid TerminusDB document Id 
+docurl TerminusDB document full URL or a valid TerminusDB document Id
 
-doc is a document Object 
+doc is a document Object
 
 ```js
 
@@ -295,7 +295,7 @@ client.createDocument("chess",doc,opts).then((response)=>{
 });
 
 
-or 
+or
 
 //opts.key is an API key
 
@@ -314,9 +314,9 @@ client.createDocument("http://localhost:6363/myFirstTerminusDB/document/chess",d
 ```
 
 ##### `getDocument(docurl:String, opts:Object):Promise`
-Retrieves a document from the specified TerminusDb 
+Retrieves a document from the specified TerminusDb
 
-docurl TerminusDB document full URL or a valid TerminusDB document Id 
+docurl TerminusDB document full URL or a valid TerminusDB document Id
 
 ```js
 
@@ -332,7 +332,7 @@ client.getDocument("http://localhost:6363/myFirstTerminusDB/document/chess",opts
   console.log(err)
 });
 
-or 
+or
 
 //get the document chess from current server and current terminusDB
 const opts={terminus:encoding: "terminus:frame"}
@@ -352,9 +352,9 @@ client.getDocument("chess",opts).then((response)=>{
 ##### `updateDocument(docurl:String, doc:Object, opts:Object):Promise`
 Update the document data in the specified TerminusDB database
 
-docurl TerminusDB document full URL or a valid TerminusDB document Id 
+docurl TerminusDB document full URL or a valid TerminusDB document Id
 
-doc is a document Object 
+doc is a document Object
 
 ```js
 
@@ -416,7 +416,7 @@ client.updateDocument("chess",doc,opts).then((response)=>{
 });
 
 
-or 
+or
 
 //opts.key is an API key
 
@@ -435,9 +435,9 @@ client.updateDocument("http://localhost:6363/myFirstTerminusDB/document/chess",d
 ```
 
 ##### `deleteDocument(docurl:String, opts:Object):Promise`
-Delete a document from the specified TerminusDb 
+Delete a document from the specified TerminusDb
 
-docurl TerminusDB document full URL or a valid TerminusDB document Id 
+docurl TerminusDB document full URL or a valid TerminusDB document Id
 
 ```js
 client.deleteDocument("chess",opts).then((response)=>{
@@ -446,7 +446,7 @@ client.deleteDocument("chess",opts).then((response)=>{
   console.log(err)
 });
 
-//(opts) opts.key is an optional API key 
+//(opts) opts.key is an optional API key
 const opts={terminus:user_key: "mykey"}
 
 client.deleteDocument("http://localhost:6363/myFirstTerminusDB/document/chess",opts).then((response)=>{
@@ -475,9 +475,10 @@ $ npm run test
 ## Contribute
 It will be nice, if you open an issue first so that we can know what is going on, then, fork this repo and push in your ideas. Do not forget to add a bit of test(s) of what value you adding.
 
+Please check [Contributing.md](Contributing.md) for more information.
+
 ## Licence
 
-The APACHE 2.0 License 
+The APACHE 2.0 License
 
-Copyright (c) 2019 
- 
+Copyright (c) 2019

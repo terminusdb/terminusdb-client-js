@@ -7,10 +7,14 @@
     "lib": "lib",
     "test": "test"
   },
+  "publishConfig": {
+   "access": "public"
+  },
   "author": "kevin@datachemist.com",
   "license": "Apache-2.0",
   "dependencies": {
     "axios": "^0.19.0",
+    "documentation": "^12.1.4",
     "prettier": "^1.19.1",
     "update": "^0.7.4"
   },
@@ -42,8 +46,9 @@
     "webpack-dev-server": "^3.10.1"
   },
   "scripts": {
-    "doc":"documentation build lib/** -f html -o docsjs/docs",
-    "clean": "rimraf -r dist/*",
+    "versionWIN":"echo %npm_package_version%",
+    "doc": "documentation build lib/** -f html -o public_pages/$npm_package_version/docs",
+    "clean": "rimraf -r public_pages/$npm_package_version/dist",
     "test": "npm run cover",
     "test:only": "mocha --require @babel/register --require @babel/preset-env --recursive",
     "test:watch": "mocha --watch --require @babel/register --require @babel/preset-env --recursive",
@@ -54,7 +59,8 @@
     "prepare": "npm run clean && npm run test && npm run build",
     "coveralls-after": "nyc report --reporter=text-lcov | coveralls",
     "npm:publish": "npm publish --access public",
-    "test-single": "mocha $1"
+    "test-single": "mocha $1",
+    "git-tag": "git tag $npm_package_version"
   },
   "repository": {
     "type": "git",

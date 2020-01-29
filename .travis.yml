@@ -1,27 +1,59 @@
-before_script:
-  - npm install -g documentation
-  - npm run doc
+#node -pe "require('./package.json').version"
+#before_script:
+  # in master branch increment the version
+  #- npm version patch
+  #  on:
+   #     branch : master
+  #- npm install -g documentation
+  #- npm run doc
 
 
 language: node_js
 sudo: required
 node_js:
   - "stable"
-# travis call prepare 
+# travis call prepare
 # Send coverage data to Coveralls
-after_script: 
+after_script:
   - npm run coveralls-after
- 
+
 branches:
   only:
-    - dev 
+    - dev
     - master
 
+ before_deploy:
+     if ! [[ $TRAVIS_TAG ]]; then
+        export TRAVIS_TAG="1.$TRAVIS_BUILD_NUMBER" &&
+        npm install -g documentation &&
+        npm version patch &&
+        npm run doc
+      # Set up git user name and tag this commit
+        git config --local user.name "Francesca-Bit"  &&
+        git config --local user.email "francesca@datachemist.com" &&
+        git add package.json &&
+        git commit -m "version changed travis_build_number $TRAVIS_TAG" &&
+        git push origin master &&
+        npm run git-tag;
+      fi
 deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
-  keep_history: true
-  local_dir: docsjs
-  on:
-    branch: dev
+  - provider: releases
+     api_key: $GITHUB_TOKEN
+     file: public_pages/dist/*
+     skip_cleanup: true
+     on:
+       branch: master
+  -provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+    keep_history: true
+    local_dir: public_pages
+    on:
+        branch: master
+  - provider: npm
+    skip_cleanup: true
+    email: "francesca@datachemist.com"
+    api_key: "NPM_TOKEN"
+    keep_history: true
+    on:
+        branch : master
