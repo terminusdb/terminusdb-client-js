@@ -43,12 +43,12 @@ deploy:
      skip_cleanup: true
      on:
        branch: master
-  -provider: pages
+  - provider: pages
     skip_cleanup: true
     github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
     keep_history: true
     local_dir: public_pages
-    on:
+      on:
         branch: master
   - provider: npm
     skip_cleanup: true
