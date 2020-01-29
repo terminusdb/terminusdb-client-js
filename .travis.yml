@@ -27,7 +27,7 @@ branches:
         export TRAVIS_TAG="1.$TRAVIS_BUILD_NUMBER" &&
         npm install -g documentation &&
         npm version patch &&
-        npm run doc
+        npm run doc && 
       # Set up git user name and tag this commit
         git config --local user.name "Francesca-Bit"  &&
         git config --local user.email "francesca@datachemist.com" &&
