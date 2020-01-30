@@ -1,6 +1,10 @@
 before_script:
   - npm install -g documentation
-  - if [[  $TRAVIS_BRANCH == 'master' && !$TRAVIS_TAG ]]; then npm version patch; fi
+  - |
+    if [[  $TRAVIS_BRANCH == 'master' && !$TRAVIS_TAG ]]; then
+      echo "__INCREMENT_VERSION_NUMBER__"
+      npm version patch
+    fi
 
 language: node_js
 sudo: required
@@ -18,7 +22,7 @@ branches:
 #git remote add origin https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git
 before_deploy:
   - |
-    if ![[ $TRAVIS_TAG ]]; then
+    if [[ !$TRAVIS_TAG ]]; then
       echo "__BEFORE__TRAVIS__TAG__"
       export TRAVIS_TAG="1.$TRAVIS_BUILD_NUMBER" 
       echo $TRAVIS_TAG
