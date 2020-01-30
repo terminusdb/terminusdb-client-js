@@ -21,15 +21,6 @@ branches:
   only:
     - dev
     - master
-#git remote add origin https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git
-# git config --local user.name "Francesca-Bit"
-#git config --local user.email "francesca@datachemist.com"
-#echo "__ADD_PACKAGE__ TO MASTER"
-#git add package.json
-#git commit -m "version changed travis_build_number $TRAVIS_TAG"
-#git push origin master
-#npm run git-tag;
-
 
 before_deploy:
   - |
@@ -37,23 +28,9 @@ before_deploy:
       echo "__BEFORE__TRAVIS__TAG__"
       export TRAVIS_TAG="1.$TRAVIS_BUILD_NUMBER"
       npm run doc
-      rev=$(git rev-parse --short HEAD)
-      echo $rev
-      git config --local user.name "Francesca-Bit"
-      git config --local user.email "francesca@datachemist.com"
-      git add package.json
-      git commit -m "version changed $rev" 
-      git push https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git HEAD:master
     fi
 
 deploy:
-  - provider: script
-    skip_cleanup: true
-    github_token: $GITHUB_TOKEN
-    script: npm run git-tag
-    keep_history: true
-    on:
-      branch: master
   - provider: pages
     skip_cleanup: true
     github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
@@ -63,12 +40,12 @@ deploy:
       branch: master
   - provider: releases
     keep_history: true
+    target_commitish: $PACKAGE_VERSION
     api_key: $GITHUB_TOKEN
     file: public_pages/dist/*
     skip_cleanup: true
     on:
       branch: master
-      tags: true
   - provider: npm
     skip_cleanup: true
     email: "francesca@datachemist.com"
@@ -76,4 +53,3 @@ deploy:
     keep_history: true
     on:
       branch : master
-      tags: true
