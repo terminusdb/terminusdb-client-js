@@ -1,7 +1,7 @@
 before_script:
   - npm install -g documentation
   - |
-    if [[  $TRAVIS_BRANCH == 'master' && !$TRAVIS_TAG ]]; then
+    if [[  $TRAVIS_BRANCH == 'master' && ! $TRAVIS_VAR ]]; then
       echo "__INCREMENT_VERSION_NUMBER__"
       npm version patch
     fi
@@ -23,15 +23,16 @@ branches:
 
 before_deploy:
   - |
-    if [[ !$TRAVIS_TAG ]]; then
-      echo "__BEFORE__TRAVIS__TAG__"
-      export TRAVIS_TAG="1.$TRAVIS_BUILD_NUMBER"
+    if [[ ! $TRAVIS_VAR ]]; then
+      echo $TRAVIS_VAR
       echo $PACKAGE_VERSION
       npm run doc
       git config --local user.name "Francesca-Bit"
       git config --local user.email "francesca@datachemist.com"      
-      git tag -f $PACKAGE_VERSION
+      git tag -f $PACKAGE_VERSION -m "new version $PACKAGE_VERSION"
     fi
+  - export TRAVIS_VAR="1.$TRAVIS_BUILD_NUMBER"
+  - echo $TRAVIS_VAR
 
 deploy:
   - provider: pages
