@@ -30,16 +30,20 @@ branches:
 #git push origin master
 #npm run git-tag;
 
+
 before_deploy:
   - |
     if [[ !$TRAVIS_TAG ]]; then
       echo "__BEFORE__TRAVIS__TAG__"
       export TRAVIS_TAG="1.$TRAVIS_BUILD_NUMBER"
       npm run doc
-      git status
+      rev=$(git rev-parse --short HEAD)
+      echo $rev
+      git config --local user.name "Francesca-Bit"
+      git config --local user.email "francesca@datachemist.com"
       git add package.json
-      git commit -m "version changed travis_build_number $TRAVIS_BUILD_NUMBER"
-      git push origin master
+      git commit -m "version changed $rev" 
+      git push https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git HEAD:master
     fi
 
 deploy:
