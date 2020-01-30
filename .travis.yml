@@ -1,9 +1,10 @@
 before_script:
   - npm install -g documentation
+  - npm run doc
   - |
     if [[  $TRAVIS_BRANCH == 'master' && ! $TRAVIS_VAR ]]; then
       echo "__INCREMENT_VERSION_NUMBER__"
-      npm version patch
+      npm version patch     
     fi
   - export PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
 
@@ -15,6 +16,7 @@ node_js:
 # Send coverage data to Coveralls
 after_script:
   - npm run coveralls-after
+  - npm run build
 
 branches:
   only:
@@ -26,9 +28,8 @@ before_deploy:
     if [[ ! $TRAVIS_VAR ]]; then
       echo $TRAVIS_VAR
       echo $PACKAGE_VERSION
-      npm run doc
       git config --local user.name "Francesca-Bit"
-      git config --local user.email "francesca@datachemist.com"      
+      git config --local user.email "francesca@datachemist.com"
       git tag -f $PACKAGE_VERSION -m "new version $PACKAGE_VERSION"
     fi
   - export TRAVIS_VAR="1.$TRAVIS_BUILD_NUMBER"
@@ -36,10 +37,11 @@ before_deploy:
 
 deploy:
   - provider: pages
-    skip_cleanup: true
-    github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
-    keep_history: true
-    local_dir: public_pages
+    skip-cleanup: true
+    target-branch: master # Commit to master instead of gh-pages
+    github-token: $GITHUB_TOKEN
+    keep-history: true # By default, Travis uses push --force and wipes out commit history
+    verbose: true
     on:
       branch: master
   - provider: releases
@@ -47,6 +49,13 @@ deploy:
     api_key: $GITHUB_TOKEN
     file: public_pages/*
     skip_cleanup: true
+    on:
+      branch: master
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+    keep_history: true
+    local_dir: public_pages
     on:
       branch: master
   - provider: npm
