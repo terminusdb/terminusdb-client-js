@@ -4,9 +4,8 @@ before_script:
     if [[  $TRAVIS_BRANCH == 'master' && !$TRAVIS_TAG ]]; then
       echo "__INCREMENT_VERSION_NUMBER__"
       npm version patch
-      export PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
-      echo "$PACKAGE_VERSION"
     fi
+  - export PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
 
 language: node_js
 sudo: required
@@ -27,6 +26,7 @@ before_deploy:
     if [[ !$TRAVIS_TAG ]]; then
       echo "__BEFORE__TRAVIS__TAG__"
       export TRAVIS_TAG="1.$TRAVIS_BUILD_NUMBER"
+      echo $PACKAGE_VERSION
       npm run doc
       git config --local user.name "Francesca-Bit"
       git config --local user.email "francesca@datachemist.com"      
@@ -44,14 +44,14 @@ deploy:
   - provider: releases
     keep_history: true
     api_key: $GITHUB_TOKEN
-    file: public_pages/dist/*
+    file: public_pages/*
     skip_cleanup: true
     on:
       branch: master
   - provider: npm
     skip_cleanup: true
     email: "francesca@datachemist.com"
-    api_key: "$NPM_TOKEN"
+    api_key: $NPM_TOKEN
     keep_history: true
     on:
       branch : master
