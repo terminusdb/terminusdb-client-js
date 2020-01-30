@@ -34,18 +34,15 @@ before_deploy:
   - |
     if [[ !$TRAVIS_TAG ]]; then
       echo "__BEFORE__TRAVIS__TAG__"
-      export TRAVIS_TAG="1.$TRAVIS_BUILD_NUMBER" 
-      echo $TRAVIS_TAG
+      export TRAVIS_TAG="1.$TRAVIS_BUILD_NUMBER"
       npm run doc
+      git status
+      git add package.json
+      git commit -m "version changed travis_build_number $TRAVIS_BUILD_NUMBER"
+      git push origin master
     fi
 
 deploy:
-  - provider: script
-    skip_cleanup: true
-    github_token: $GITHUB_TOKEN
-    script: git add package.json && git commit -m "version changed travis_build_number $TRAVIS_BUILD_NUMBER" && git push origin master
-    keep_history: true
-
   - provider: script
     skip_cleanup: true
     github_token: $GITHUB_TOKEN
