@@ -4,6 +4,8 @@ before_script:
     if [[  $TRAVIS_BRANCH == 'master' && !$TRAVIS_TAG ]]; then
       echo "__INCREMENT_VERSION_NUMBER__"
       npm version patch
+      PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
+      echo "$PACKAGE_VERSION"
     fi
 
 language: node_js
