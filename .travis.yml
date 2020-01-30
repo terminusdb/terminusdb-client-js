@@ -30,7 +30,7 @@ before_deploy:
       npm run doc
       git config --local user.name "Francesca-Bit"
       git config --local user.email "francesca@datachemist.com"      
-      git tag $PACKAGE_VERSION
+      git tag -f $PACKAGE_VERSION
     fi
 
 deploy:
