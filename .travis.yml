@@ -1,3 +1,7 @@
+before_script:
+  - npm install -g documentation
+  - if [[  $TRAVIS_BRANCH == 'master' && !$TRAVIS_TAG ]]; then npm version patch; fi
+
 language: node_js
 sudo: required
 node_js:
@@ -11,20 +15,23 @@ branches:
   only:
     - dev
     - master
-
+#git remote add origin https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git
 before_deploy:
+  - |
     if ![[ $TRAVIS_TAG ]]; then
-      export TRAVIS_TAG="1.$TRAVIS_BUILD_NUMBER" &&
-      npm install -g documentation &&
-      npm version patch &&
-      npm run doc &&
-      git config --local user.name "Francesca-Bit" &&
-      git config --local user.email "francesca@datachemist.com" &&
-      git add package.json &&
-      git commit -m "version changed travis_build_number $TRAVIS_TAG" &&
-      git push origin master &&
+      echo "__BEFORE__TRAVIS__TAG__"
+      export TRAVIS_TAG="1.$TRAVIS_BUILD_NUMBER" 
+      echo $TRAVIS_TAG
+      npm run doc 
+      git config --local user.name "Francesca-Bit"
+      git config --local user.email "francesca@datachemist.com"
+      echo "__ADD_PACKAGE__ TO MASTER"
+      git add package.json
+      git commit -m "version changed travis_build_number $TRAVIS_TAG"
+      git push origin master
       npm run git-tag;
     fi
+
 deploy:
   - provider: releases
     api_key: $GITHUB_TOKEN
@@ -32,6 +39,7 @@ deploy:
     skip_cleanup: true
     on:
       branch: master
+      condition: tag IS present
   - provider: pages
     skip_cleanup: true
     github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
@@ -39,10 +47,12 @@ deploy:
     local_dir: public_pages
     on:
       branch: master
+      condition: tag IS present
   - provider: npm
     skip_cleanup: true
     email: "francesca@datachemist.com"
-    api_key: "NPM_TOKEN"
+    api_key: "$NPM_TOKEN"
     keep_history: true
     on:
       branch : master
+      condition: tag IS present
