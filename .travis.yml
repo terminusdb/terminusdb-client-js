@@ -34,12 +34,13 @@ before_deploy:
     fi
   - export TRAVIS_VAR="1.$TRAVIS_BUILD_NUMBER"
   - echo $TRAVIS_VAR
-
+#[skip travis]
 deploy:
   - provider: pages
     skip-cleanup: true
     target-branch: master # Commit to master instead of gh-pages
     github-token: $GITHUB_TOKEN
+    commit_message: "Deploy from travis [skip travis]"
     keep-history: true # By default, Travis uses push --force and wipes out commit history
     verbose: true
     on:
