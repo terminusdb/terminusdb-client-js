@@ -30,21 +30,26 @@ before_deploy:
       echo $PACKAGE_VERSION
       git config --local user.name "Francesca-Bit"
       git config --local user.email "francesca@datachemist.com"
+      git add .
+      git commit -m "version changed travis_build_number $TRAVIS_BUILD_NUMBER [skip travis]"
+      git push https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git HEAD:master
       git tag -f $PACKAGE_VERSION -m "new version $PACKAGE_VERSION"
     fi
   - export TRAVIS_VAR="1.$TRAVIS_BUILD_NUMBER"
   - echo $TRAVIS_VAR
-#[skip travis]
-deploy:
-  - provider: pages
-    skip-cleanup: true
-    target-branch: master # Commit to master instead of gh-pages
-    github-token: $GITHUB_TOKEN
-    commit_message: "Deploy from travis [skip travis]"
-    keep-history: true # By default, Travis uses push --force and wipes out commit history
-    verbose: true
-    on:
-      branch: master
+
+#[skip travis] commit_message dosen't work in this travis version
+# - provider: pages
+# skip-cleanup: true
+# target-branch: master # Commit to master instead of gh-pages
+# github-token: $GITHUB_TOKEN
+# commit_message: "Deploy from travis [skip travis]"
+# keep-history: true # By default, Travis uses push --force and wipes out commit history
+# verbose: true
+# on:
+# branch: master
+
+deploy: 
   - provider: releases
     keep_history: true
     api_key: $GITHUB_TOKEN
