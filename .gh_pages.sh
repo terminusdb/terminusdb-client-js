@@ -5,11 +5,11 @@ PUBLICATION_BRANCH=gh-pages
 # Checkout the branch
 REPO_PATH=$PWD
 
-echo $REPO_PATH
+echo "$REPO_PATH"
 
-pushd $HOME
-git clone --branch=$PUBLICATION_BRANCH    https://${GITHUB_TOKEN}@github.com/$TRAVIS_REPO_SLUG tmp_pages 2>&1 > /dev/null
-cd tmp_pages
+pushd "$HOME" || exit
+git clone --branch=$PUBLICATION_BRANCH  "https://${GITHUB_TOKEN}@github.com/$TRAVIS_REPO_SLUG" tmp_pages 2>&1 > /dev/null
+cd tmp_pages || exit
 # Update pages
 cp -r $REPO_PATH/public_pages .
 # Commit and push latest version
@@ -18,4 +18,4 @@ git config user.name  "Travis"
 git config user.email "travis@travis-ci.org"
 git commit -m "Updated version."
 git push -fq origin $PUBLICATION_BRANCH 2>&1 > /dev/null
-popd
+popd || exit

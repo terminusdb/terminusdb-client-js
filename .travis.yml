@@ -33,9 +33,6 @@ before_deploy:
       echo $PACKAGE_VERSION
       git config --local user.name "Francesca-Bit"
       git config --local user.email "francesca@datachemist.com"
-      git branch tmp
-      git checkout tmp
-      echo $(git status)
       git reset
       git add .
       git commit -m "[skip travis] version changed $PACKAGE_VERSION"
@@ -62,7 +59,7 @@ deploy:
   - provider: script
     skip_cleanup: true
     keep_history: true
-    script: bash .gh_pages
+    script: bash gh_pages.sh
     on:
       branch: clientBuild 
       condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
