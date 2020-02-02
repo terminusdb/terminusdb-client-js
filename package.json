@@ -56,7 +56,7 @@
     "cover": "nyc --check-coverage --lines 30 npm run test:only ",
     "lint": "echo todo",
     "build": "webpack --mode production",
-    "prepare": "npm run clean && npm run test && npm run build",
+    "prepare": "npm run clean && npm run test",
     "coveralls-after": "nyc report --reporter=text-lcov | coveralls",
     "npm:publish": "npm publish --access public",
     "test-single": "mocha $1",

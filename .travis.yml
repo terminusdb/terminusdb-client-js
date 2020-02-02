@@ -18,6 +18,7 @@ node_js:
 # Deploy terminusdb/terminus-client
 after_script:
   - npm run coveralls-after
+  - npm run build
 
 branches:
   only:
