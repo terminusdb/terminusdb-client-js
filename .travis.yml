@@ -1,11 +1,12 @@
 before_script:
-  - npm install -g documentation
-  - npm run doc
   - |
     if [[  $TRAVIS_BRANCH == 'clientBuild' && $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*  ]]; then
       echo "__INCREMENT_VERSION_NUMBER__"
-      export PACKAGE_VERSION=$(npm version patch)     
+      export PACKAGE_VERSION=$(npm version patch)
+      npm install -g documentation
+      npm run doc     
     fi
+
   # export PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
 
 language: node_js
@@ -27,17 +28,17 @@ branches:
 before_deploy:
   - |
     if [[ ! $TRAVIS_VAR ]]; then
-      echo $TRAVIS_VAR
+      echo "___TRAVIS_VAR____"
+      export TRAVIS_VAR="1.$TRAVIS_BUILD_NUMBER"
+
       echo $PACKAGE_VERSION
       git config --local user.name "Francesca-Bit"
       git config --local user.email "francesca@datachemist.com"
       git add .
       git commit -m "version changed $PACKAGE_VERSION"
       git push https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git HEAD:clientBuild
-      git tag -f $PACKAGE_VERSION -m "new version $PACKAGE_VERSION"
+      git tag -f "$PACKAGE_VERSION TRAVIS" -m "new version $PACKAGE_VERSION"
     fi
-  - export TRAVIS_VAR="1.$TRAVIS_BUILD_NUMBER"
-  - echo $TRAVIS_VAR
 
 #[skip travis] commit_message dosen't work in this travis version
 # - provider: pages
@@ -54,7 +55,6 @@ deploy:
   - provider: releases
     keep_history: true
     api_key: $GITHUB_TOKEN
-    file: public_pages/*
     skip_cleanup: true
     on:
       branch: clientBuild # condition: $TRAVIS_BRANCH =~ ^(staging|production)$
