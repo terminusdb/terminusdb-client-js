@@ -37,7 +37,7 @@ before_deploy:
       git add .
       git commit -m "version changed $PACKAGE_VERSION"
       git push https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git HEAD:clientBuild
-      git tag -f "$PACKAGE_VERSION TRAVIS" -m "new version $PACKAGE_VERSION"
+      git tag -f -a "$PACKAGE_VERSION TRAVIS" -m "new version $PACKAGE_VERSION"
     fi
 
 #[skip travis] commit_message dosen't work in this travis version
