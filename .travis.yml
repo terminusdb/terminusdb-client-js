@@ -4,7 +4,8 @@ before_script:
       echo "__INCREMENT_VERSION_NUMBER__"
       export PACKAGE_VERSION=$(npm version patch)
       npm install -g documentation
-      npm run doc     
+      npm run doc
+      
     fi
 
   # export PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
