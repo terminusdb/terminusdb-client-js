@@ -38,6 +38,7 @@ before_deploy:
       git add .
       git commit -m "[skip travis] version changed $PACKAGE_VERSION"
       git push origin HEAD:clientBuild
+      
     fi
 
 #git tag -f -a "$PACKAGE_VERSION" -m "new version $PACKAGE_VERSION"
