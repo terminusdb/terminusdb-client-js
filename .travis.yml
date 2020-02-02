@@ -26,7 +26,7 @@ branches:
 
 before_deploy:
   - |
-    if [[ ! $TRAVIS_VAR]]; then
+    if [[ ! $TRAVIS_VAR ]]; then
       echo $TRAVIS_VAR
       echo $PACKAGE_VERSION
       git config --local user.name "Francesca-Bit"
