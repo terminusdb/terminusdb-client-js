@@ -2,11 +2,11 @@ before_script:
   - npm install -g documentation
   - npm run doc
   - |
-    if [[  $TRAVIS_BRANCH == 'master' && ! $TRAVIS_VAR ]]; then
+    if [[  $TRAVIS_BRANCH == 'clientBuild' && $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*  ]]; then
       echo "__INCREMENT_VERSION_NUMBER__"
-      npm version patch     
+      export PACKAGE_VERSION=$(npm version patch)     
     fi
-  - export PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
+  # export PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
 
 language: node_js
 sudo: required
@@ -14,25 +14,27 @@ node_js:
   - "stable"
 # travis call prepare
 # Send coverage data to Coveralls
+# Deploy terminusdb/terminus-client
 after_script:
   - npm run coveralls-after
   - npm run build
 
 branches:
   only:
-    - dev
-    - master
+    - clientBuild
+#script: if [[ $TRAVIS_COMMIT_MESSAGE == *"trigger build"* ]]; then mvn install ; fi ;
 
 before_deploy:
   - |
-    if [[ ! $TRAVIS_VAR ]]; then
+    if [[ ! $TRAVIS_VAR]]; then
       echo $TRAVIS_VAR
       echo $PACKAGE_VERSION
       git config --local user.name "Francesca-Bit"
       git config --local user.email "francesca@datachemist.com"
       git add .
-      git commit -m "version changed travis_build_number $TRAVIS_BUILD_NUMBER [skip travis]"
-      git push https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git HEAD:master
+      git commit -m "version changed [skip travis]"
+
+      git push https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git HEAD:clientBuild
       git tag -f $PACKAGE_VERSION -m "new version $PACKAGE_VERSION"
     fi
   - export TRAVIS_VAR="1.$TRAVIS_BUILD_NUMBER"
@@ -56,18 +58,21 @@ deploy:
     file: public_pages/*
     skip_cleanup: true
     on:
-      branch: master
+      branch: clientBuild # condition: $TRAVIS_BRANCH =~ ^(staging|production)$
+      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"* 
   - provider: pages
     skip_cleanup: true
     github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
     keep_history: true
     local_dir: public_pages
     on:
-      branch: master
+      branch: clientBuild
+      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
   - provider: npm
     skip_cleanup: true
     email: "francesca@datachemist.com"
     api_key: $NPM_TOKEN
     keep_history: true
     on:
-      branch : master
+      branch : clientBuild
+      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
