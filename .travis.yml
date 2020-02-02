@@ -18,7 +18,6 @@ node_js:
 # Deploy terminusdb/terminus-client
 after_script:
   - npm run coveralls-after
-  - npm run build
 
 branches:
   only:
@@ -37,8 +36,9 @@ before_deploy:
       git add .
       git commit -m "[skip travis] version changed $PACKAGE_VERSION"
       git push https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git HEAD:clientBuild
-      git tag -f -a "$PACKAGE_VERSION" -m "new version $PACKAGE_VERSION"
     fi
+
+#git tag -f -a "$PACKAGE_VERSION" -m "new version $PACKAGE_VERSION"
 
 #[skip travis] commit_message dosen't work in this travis version
 # - provider: pages
