@@ -35,10 +35,12 @@ before_deploy:
       git config --local user.email "francesca@datachemist.com"
       git branch tmp
       git checkout tmp
+      echo $(git status)
+      git reset
       git add .
       git commit -m "[skip travis] version changed $PACKAGE_VERSION"
-      git push origin HEAD:clientBuild
-      
+      git push https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git HEAD:clientBuild
+
     fi
 
 #git tag -f -a "$PACKAGE_VERSION" -m "new version $PACKAGE_VERSION"
