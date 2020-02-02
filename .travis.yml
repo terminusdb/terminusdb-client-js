@@ -35,9 +35,9 @@ before_deploy:
       git config --local user.name "Francesca-Bit"
       git config --local user.email "francesca@datachemist.com"
       git add .
-      git commit -m "version changed $PACKAGE_VERSION"
+      git commit -m "[skip travis] version changed $PACKAGE_VERSION"
       git push https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git HEAD:clientBuild
-      git tag -f -a "$PACKAGE_VERSION TRAVIS" -m "new version $PACKAGE_VERSION"
+      git tag -f -a "$PACKAGE_VERSION" -m "new version $PACKAGE_VERSION"
     fi
 
 #[skip travis] commit_message dosen't work in this travis version
@@ -51,22 +51,7 @@ before_deploy:
 # on:
 # branch: master
 
-deploy: 
-  - provider: releases
-    keep_history: true
-    api_key: $GITHUB_TOKEN
-    skip_cleanup: true
-    on:
-      branch: clientBuild # condition: $TRAVIS_BRANCH =~ ^(staging|production)$
-      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"* 
-  - provider: pages
-    skip_cleanup: true
-    github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
-    keep_history: true
-    local_dir: public_pages
-    on:
-      branch: clientBuild
-      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
+deploy:
   - provider: npm
     skip_cleanup: true
     email: "francesca@datachemist.com"
