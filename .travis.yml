@@ -33,13 +33,16 @@ before_deploy:
       echo $PACKAGE_VERSION
       git config --local user.name "Francesca-Bit"
       git config --local user.email "francesca@datachemist.com"
-      git remote set-url origin https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git
+      git branch tmp
+      git checkout tmp
       git add .
       git commit -m "[skip travis] version changed $PACKAGE_VERSION"
       git push origin HEAD:clientBuild
     fi
 
 #git tag -f -a "$PACKAGE_VERSION" -m "new version $PACKAGE_VERSION"
+#git remote set-url origin https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git
+
 
 #[skip travis] commit_message dosen't work in this travis version
 # - provider: pages
@@ -54,6 +57,8 @@ before_deploy:
 
 deploy:
   - provider: script
+    skip_cleanup: true
+    keep_history: true
     script: bash .gh_pages
     on:
       branch: clientBuild 
