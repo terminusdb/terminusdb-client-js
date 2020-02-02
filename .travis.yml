@@ -51,11 +51,26 @@ before_deploy:
 # on:
 # branch: master
 
-deploy:
+deploy: 
+ # - provider: releases
+ #   keep_history: true
+ #   api_key: $GITHUB_TOKEN
+ #   skip_cleanup: true
+ #   on:
+ #     branch: clientBuild # condition: $TRAVIS_BRANCH =~ ^(staging|production)$
+ #     condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"* 
+  #- provider: pages
+  #  skip_cleanup: true
+  #  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  #  keep_history: true
+  #  local_dir: public_pages
+  # on:
+  #    branch: clientBuild
+  #    condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
   - provider: npm
     skip_cleanup: true
     email: "francesca@datachemist.com"
-    api_key: $NPM_TOKEN
+    api_key: $NPM_TOKEN__
     keep_history: true
     on:
       branch : clientBuild
