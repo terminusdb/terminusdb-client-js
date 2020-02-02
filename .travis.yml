@@ -56,9 +56,10 @@ deploy:
   - provider: script
     script: bash .gh_pages
     on:
-      branch: clientBuild # condition: $TRAVIS_BRANCH =~ ^(staging|production)$
+      branch: clientBuild 
       condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"
       
+  # condition: $TRAVIS_BRANCH =~ ^(staging|production)$    
  # - provider: releases
  #   keep_history: true
  #   api_key: $GITHUB_TOKEN
