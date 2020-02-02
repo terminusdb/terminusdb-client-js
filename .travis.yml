@@ -33,9 +33,10 @@ before_deploy:
       echo $PACKAGE_VERSION
       git config --local user.name "Francesca-Bit"
       git config --local user.email "francesca@datachemist.com"
+      git remote set-url origin https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git
       git add .
       git commit -m "[skip travis] version changed $PACKAGE_VERSION"
-      git push https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git HEAD:clientBuild
+      git push origin HEAD:clientBuild
     fi
 
 #git tag -f -a "$PACKAGE_VERSION" -m "new version $PACKAGE_VERSION"
@@ -51,7 +52,13 @@ before_deploy:
 # on:
 # branch: master
 
-deploy: 
+deploy:
+  - provider: script
+    script: bash .gh_pages
+    on:
+      branch: clientBuild # condition: $TRAVIS_BRANCH =~ ^(staging|production)$
+      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"
+      
  # - provider: releases
  #   keep_history: true
  #   api_key: $GITHUB_TOKEN
@@ -67,11 +74,11 @@ deploy:
   # on:
   #    branch: clientBuild
   #    condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
-  - provider: npm
-    skip_cleanup: true
-    email: "francesca@datachemist.com"
-    api_key: $NPM_TOKEN__
-    keep_history: true
-    on:
-      branch : clientBuild
-      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
+  #- provider: npm
+  #  skip_cleanup: true
+  #  email: "francesca@datachemist.com"
+  #  api_key: $NPM_TOKEN__
+  #  keep_history: true
+  #  on:
+  #    branch : clientBuild
+  #    condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
