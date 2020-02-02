@@ -1,6 +1,7 @@
 #!/bin/bash
 echo "___SONO IN SCRIPT____"
 
+
 PUBLICATION_BRANCH=gh-pages
 # Checkout the branch
 REPO_PATH=$PWD

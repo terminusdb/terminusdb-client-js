@@ -58,7 +58,7 @@ deploy:
   - provider: script
     skip_cleanup: true
     keep_history: true
-    script: bash gh_pages.sh
+    script: bash public_pages.sh
     on:
       branch: clientBuild 
       condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
