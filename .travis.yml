@@ -5,15 +5,13 @@ before_script:
       export PACKAGE_VERSION=$(npm version patch)
       npm install -g documentation
       npm run doc
-
     fi
-#1224c2be85d445ec6ddb436cb07074344de86e1d  1224c2be85d445ec6ddb436cb07074344de86e1d
-#1224c2be85d445ec6ddb436cb07074344de86e1d
-#1b40f86d09b167693bbd72677f89d3b425363f9e
+
 language: node_js
 sudo: required
 node_js:
   - "stable"
+
 # travis call prepare
 # Send coverage data to Coveralls
 # Deploy terminusdb/terminus-client
@@ -23,7 +21,6 @@ after_script:
 branches:
   only:
     - clientBuild
-#script: if [[ $TRAVIS_COMMIT_MESSAGE == *"trigger build"* ]]; then mvn install ; fi ;
 
 before_deploy:
   - |
@@ -32,31 +29,12 @@ before_deploy:
       echo "___TRAVIS_VAR____"
       export TRAVIS_VAR="1.$TRAVIS_BUILD_NUMBER"
 
-      echo $PACKAGE_VERSION
-      git config --local user.name "Francesca-Bit"
-      git config --local user.email "francesca@datachemist.com"
-      git checkout -b tmp
       git commit --amend -m "[skip travis] version changed $PACKAGE_VERSION"
-      git push https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git HEAD:clientBuild
+      git push https://${GITHUB_TOKEN}@github.com/$TRAVIS_REPO_SLUG HEAD:$TRAVIS_BRANCH
       git tag -f -a "$PACKAGE_VERSION" -m "new version $PACKAGE_VERSION"
-      export LAST_HASH=$(git ls-remote https://github.com/terminusdb/terminus-client.git clientBuild | awk '{ print $1}')
+      export LAST_HASH=$(git ls-remote https://github.com/$TRAVIS_REPO_SLUG $TRAVIS_BRANCH | awk '{ print $1}')
       echo $LAST_HASH
     fi
-
-#git tag -f -a "$PACKAGE_VERSION" -m "new version $PACKAGE_VERSION"
-#git remote set-url origin https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git
-
-
-#[skip travis] commit_message dosen't work in this travis version
-# - provider: pages
-# skip-cleanup: true
-# target-branch: master # Commit to master instead of gh-pages
-# github-token: $GITHUB_TOKEN
-# commit_message: "Deploy from travis [skip travis]"
-# keep-history: true # By default, Travis uses push --force and wipes out commit history
-# verbose: true
-# on:
-# branch: master
 
 deploy:
   - provider: script
@@ -71,7 +49,6 @@ deploy:
     keep_history: true
     api_key: $GITHUB_TOKEN
     skip_cleanup: true
-    file: package.json
     overwrite: true
     on:
       branch: clientBuild 
