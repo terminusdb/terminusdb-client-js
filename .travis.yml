@@ -5,6 +5,7 @@ before_script:
       export PACKAGE_VERSION=$(npm version patch)
       npm install -g documentation
       npm run doc
+      
     fi
 
 language: node_js
