@@ -39,6 +39,9 @@ before_deploy:
       git commit --amend -m "[skip travis] version changed $PACKAGE_VERSION"
       git push https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git HEAD:clientBuild
       git tag -f -a "$PACKAGE_VERSION" -m "new version $PACKAGE_VERSION"
+
+      export LAST_HASH=$(git rev-parse HEAD)
+      echo $LAST_HASH
     fi
 
 #git tag -f -a "$PACKAGE_VERSION" -m "new version $PACKAGE_VERSION"
@@ -71,6 +74,9 @@ deploy:
     api_key: $GITHUB_TOKEN
     skip_cleanup: true
     file: package.json
+    overwrite: true
+    file_glob: true
+    file: ./*
     on:
       branch: clientBuild 
       condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"* 
