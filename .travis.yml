@@ -5,9 +5,11 @@ before_script:
       export PACKAGE_VERSION=$(npm version patch)
       npm install -g documentation
       npm run doc
-      
-    fi
 
+    fi
+#1224c2be85d445ec6ddb436cb07074344de86e1d  1224c2be85d445ec6ddb436cb07074344de86e1d
+#1224c2be85d445ec6ddb436cb07074344de86e1d
+#1b40f86d09b167693bbd72677f89d3b425363f9e
 language: node_js
 sudo: required
 node_js:
@@ -66,6 +68,7 @@ deploy:
     keep_history: true
     api_key: $GITHUB_TOKEN
     skip_cleanup: true
+    file: package.json
     on:
       branch: clientBuild 
       condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"* 
