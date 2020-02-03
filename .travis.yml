@@ -5,10 +5,7 @@ before_script:
       export PACKAGE_VERSION=$(npm version patch)
       npm install -g documentation
       npm run doc
-
     fi
-
-  # export PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
 
 language: node_js
 sudo: required
@@ -35,7 +32,7 @@ before_deploy:
       echo $PACKAGE_VERSION
       git config --local user.name "Francesca-Bit"
       git config --local user.email "francesca@datachemist.com"
-      git add .
+      git checkout -b tmp
       git commit --amend -m "[skip travis] version changed $PACKAGE_VERSION"
       git push https://Francesca-Bit:$GITHUB_TOKEN@github.com/terminusdb/terminus-client.git HEAD:clientBuild
       git tag -f -a "$PACKAGE_VERSION" -m "new version $PACKAGE_VERSION"
