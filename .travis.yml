@@ -52,13 +52,12 @@ deploy:
     overwrite: true
     on:
       branch: clientBuild 
-      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"* 
-      
-  #- provider: npm
-  #  skip_cleanup: true
-  #  email: "francesca@datachemist.com"
-  #  api_key: $NPM_TOKEN__
-  #  keep_history: true
-  #  on:
-  #    branch : clientBuild
-  #    condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
+      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*       
+  - provider: npm
+    skip_cleanup: true
+    email: "francesca@datachemist.com"
+    api_key: $NODE_TOKEN
+    keep_history: true
+    on:
+      branch : clientBuild
+      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
