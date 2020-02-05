@@ -25,18 +25,16 @@ branches:
 before_deploy:
   - |
     if [[ ! $TRAVIS_VAR ]]; then
-      printf "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
       npm run build
       echo "___TRAVIS_VAR____"
       export TRAVIS_VAR="1.$TRAVIS_BUILD_NUMBER"
-
       git commit --amend -m "[skip travis] version changed $PACKAGE_VERSION"
       git push https://${GITHUB_TOKEN}@github.com/$TRAVIS_REPO_SLUG HEAD:$TRAVIS_BRANCH
       git tag -f -a "$PACKAGE_VERSION" -m "new version $PACKAGE_VERSION"
       export LAST_HASH=$(git ls-remote https://github.com/$TRAVIS_REPO_SLUG $TRAVIS_BRANCH | awk '{ print $1}')
       echo $LAST_HASH
     fi
-#https://blog.travis-ci.com/2018-04-11-how_to_publish_node_js_packages_with_travis_ci_and_packagecloud/
+
 deploy:
   - provider: script
     skip_cleanup: true
@@ -55,10 +53,13 @@ deploy:
       branch: clientBuild 
       condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*  
   - provider: npm
+    registry: "https://registry.npmjs.org/"
     skip_cleanup: true
+    access: public
     email: "francesca@datachemist.com"
     api_key: $NPM_TOKEN
     keep_history: true
+    auth_method: "authToken"
     on:
       branch : clientBuild
       condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
