@@ -12,13 +12,7 @@ pushd "$HOME" || exit
 git clone --branch=$PUBLICATION_BRANCH  "https://${GITHUB_TOKEN}@github.com/$TRAVIS_REPO_SLUG" tmp_pages 2>&1 > /dev/null
 cd tmp_pages || exit
 
-rm -rf 1.1.10
-rm -rf 1.1.9
-rm -rf 1.1.8
-rm -rf 1.1.7
-rm -rf 1.1.6
-rm -rf 1.1.5
-rm -rf 1.1.4
+#rm -rf 1.1.4
 
 # Update pages
 cp -r $REPO_PATH/public_pages/.  .

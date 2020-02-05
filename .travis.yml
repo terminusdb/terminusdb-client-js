@@ -25,6 +25,7 @@ branches:
 before_deploy:
   - |
     if [[ ! $TRAVIS_VAR ]]; then
+      printf "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
       npm run build
       echo "___TRAVIS_VAR____"
       export TRAVIS_VAR="1.$TRAVIS_BUILD_NUMBER"
@@ -35,7 +36,7 @@ before_deploy:
       export LAST_HASH=$(git ls-remote https://github.com/$TRAVIS_REPO_SLUG $TRAVIS_BRANCH | awk '{ print $1}')
       echo $LAST_HASH
     fi
-
+#https://blog.travis-ci.com/2018-04-11-how_to_publish_node_js_packages_with_travis_ci_and_packagecloud/
 deploy:
   - provider: script
     skip_cleanup: true
@@ -52,11 +53,11 @@ deploy:
     overwrite: true
     on:
       branch: clientBuild 
-      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*       
+      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*  
   - provider: npm
     skip_cleanup: true
     email: "francesca@datachemist.com"
-    api_key: $NODE_TOKEN
+    api_key: $NPM_TOKEN
     keep_history: true
     on:
       branch : clientBuild
