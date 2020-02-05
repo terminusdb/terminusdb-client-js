@@ -365,18 +365,18 @@ describe('woql queries', function () {
   })
 
   it('check the order_by method',function(){
-    const woqlObject=WOQL.order_by(WOQL.asc("v:B"));
-    const jsonObj={ order_by: [ {asc: ['v:B']}, {} ] };
+    const woqlObject=WOQL.order_by("v:B");
+    const jsonObj={ order_by: [ [{asc: ['v:B']}], {} ] };
     expect(woqlObject.json()).to.eql(jsonObj);
 
     const desc = WOQL.desc(["v:C", "v:A"]);
     const woqlObject2=WOQL.order_by(desc);
-    const jsonObj2={ order_by: [ {desc: ['v:C', "v:A"]}, {} ] };
+    const jsonObj2={ order_by: [ [{desc: ['v:C', "v:A"]}], {} ] };
     expect(woqlObject2.json()).to.eql(jsonObj2);
 
     const ascd = WOQL.asc(["v:C", "v:A"]);
     const woqlObject3=WOQL.order_by(ascd);
-    const jsonObj3={ order_by: [ {asc: ['v:C', "v:A"]}, {} ] };
+    const jsonObj3={ order_by: [ [{asc: ['v:C', "v:A"]}], {} ] };
     expect(woqlObject3.json()).to.eql(jsonObj3);
 
 
