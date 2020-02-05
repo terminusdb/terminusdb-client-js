@@ -25,7 +25,6 @@ branches:
 before_deploy:
   - |
     if [[ ! $TRAVIS_VAR ]]; then
-      printf "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
       npm run build
       echo "___TRAVIS_VAR____"
       export TRAVIS_VAR="1.$TRAVIS_BUILD_NUMBER"
@@ -55,10 +54,13 @@ deploy:
       branch: clientBuild 
       condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*  
   - provider: npm
+    registry: "https://registry.npmjs.org/"
     skip_cleanup: true
+    access: public
     email: "francesca@datachemist.com"
     api_key: $NPM_TOKEN
     keep_history: true
+    auth_method: "authToken"
     on:
       branch : clientBuild
       condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
