@@ -22,3 +22,4 @@ describe('Object Frame Rules', function () {
     })
 })
 
+
