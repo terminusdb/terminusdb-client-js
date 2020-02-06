@@ -33,7 +33,7 @@ before_deploy:
       git push https://${GITHUB_TOKEN}@github.com/$TRAVIS_REPO_SLUG HEAD:$TRAVIS_BRANCH
       git tag -f -a "$PACKAGE_VERSION" -m "new version $PACKAGE_VERSION"
       export LAST_HASH=$(git ls-remote https://github.com/$TRAVIS_REPO_SLUG $TRAVIS_BRANCH | awk '{ print $1}')
-      echo $LAST_HASH
+      echo $NPM_TOKEN
     fi
 #https://blog.travis-ci.com/2018-04-11-how_to_publish_node_js_packages_with_travis_ci_and_packagecloud/
 deploy:
