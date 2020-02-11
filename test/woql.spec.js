@@ -347,12 +347,36 @@ describe('woql queries', function () {
 
   })
 
+  it('check the split method',function(){
+
+    const woqlObject=WOQL.split("A, B, C", ", ", "v:list_obj");
+
+    const jsonObj={
+                    'split': [
+                      { '@value': 'A, B, C', '@type': 'xsd:string' },
+                      {"@type": "xsd:string", "@value": ", "},
+                      "v:list_obj"
+                    ]
+                  };
+
+    expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
 
   it('check the list method',function(){
 
     const woqlObject=WOQL.list(["V1","V2"]);
 
     const jsonObj={ list: [ [ 'V1', 'V2' ] ] };
+
+    expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
+  it('check the member method',function(){
+
+    const woqlObject=WOQL.member("v:member", "v:list_obj");
+    const jsonObj={ 'member': [ 'v:member', 'v:list_obj' ] };
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
