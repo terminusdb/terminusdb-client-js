@@ -347,6 +347,21 @@ describe('woql queries', function () {
 
   })
 
+  it('check the join method',function(){
+
+    const woqlObject=WOQL.join(["v:A_obj", "v:B_obj"], ", ", "v:output");
+    const jsonObj={
+                    'join': [
+                      [ 'v:A_obj', 'v:B_obj' ],
+                      { '@value': ', ', '@type': 'xsd:string' },
+                      'v:output'
+                    ]
+                  };
+
+    expect(woqlObject.json()).to.eql(jsonObj);
+
+  })
+
   it('check the split method',function(){
 
     const woqlObject=WOQL.split("A, B, C", ", ", "v:list_obj");
