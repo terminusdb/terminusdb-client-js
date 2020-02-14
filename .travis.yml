@@ -1,6 +1,6 @@
 before_script:
   - |
-    if [[  $TRAVIS_BRANCH == 'clientBuild' && $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*  ]]; then
+    if [[  $TRAVIS_BRANCH == 'master' && $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*  ]]; then
       echo "__INCREMENT_VERSION_NUMBER__"
       export PACKAGE_VERSION=$(npm version patch)
       npm install -g documentation
@@ -20,7 +20,8 @@ after_script:
 
 branches:
   only:
-    - clientBuild
+    - master
+    - dev
 
 before_deploy:
   - |
@@ -41,7 +42,7 @@ deploy:
     keep_history: true
     script: bash public_pages.sh
     on:
-      branch: clientBuild 
+      branch: master 
       condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
   - provider: releases
     target_commitish : $LAST_HASH
@@ -50,7 +51,7 @@ deploy:
     skip_cleanup: true
     overwrite: true
     on:
-      branch: clientBuild 
+      branch: master 
       condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*  
   - provider: npm
     registry: "https://registry.npmjs.org/"
@@ -61,5 +62,5 @@ deploy:
     keep_history: true
     auth_method: "authToken"
     on:
-      branch : clientBuild
+      branch : master
       condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
