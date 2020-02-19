@@ -1,3 +1,4 @@
+
 module.exports = {
 	         WOQLClient:require('./lib/woqlClient'),
                  ConnectionCapabilities:require('./lib/connectionCapabilities'),
