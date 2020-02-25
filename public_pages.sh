@@ -16,6 +16,8 @@ cd tmp_pages || exit
 
 # Update pages
 cp -r $REPO_PATH/public_pages/.  .
+rm -rf ./dist/*
+cp -r $REPO_PATH/public_pages/$PACKAGE_VERSION/dist/. ./dist
 # Commit and push latest version
 git add .
 git config user.name  "Travis"
