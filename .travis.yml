@@ -43,6 +43,7 @@ deploy:
     api_key: $GITHUB_TOKEN
     skip_cleanup: true
     overwrite: true
+    file : package-lock.json
     on:
       branch: master 
       condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*  
