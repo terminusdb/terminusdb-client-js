@@ -1,59 +1,66 @@
-#node -pe "require('./package.json').version"
-#before_script:
-  # in master branch increment the version
-  #- npm version patch
-  #  on:
-   #     branch : master
-  #- npm install -g documentation
-  #- npm run doc
-
+before_script:
+  - |
+    if [[  $TRAVIS_BRANCH == 'master' && $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*  ]]; then
+      echo "__INCREMENT_VERSION_NUMBER__"
+      export PACKAGE_VERSION=$(npm version patch)
+      npm install -g documentation
+      npm run doc
+    fi
 
 language: node_js
 sudo: required
 node_js:
   - "stable"
+
 # travis call prepare
 # Send coverage data to Coveralls
+# Deploy terminusdb/terminus-client
 after_script:
   - npm run coveralls-after
 
 branches:
   only:
-    - dev
     - master
+    - dev
 
- before_deploy:
-     if ! [[ $TRAVIS_TAG ]]; then
-        export TRAVIS_TAG="1.$TRAVIS_BUILD_NUMBER" &&
-        npm install -g documentation &&
-        npm version patch &&
-        npm run doc
-      # Set up git user name and tag this commit
-        git config --local user.name "Francesca-Bit"  &&
-        git config --local user.email "francesca@datachemist.com" &&
-        git add package.json &&
-        git commit -m "version changed travis_build_number $TRAVIS_TAG" &&
-        git push origin master &&
-        npm run git-tag;
-      fi
+before_deploy:
+  - |
+    if [[ ! $TRAVIS_VAR ]]; then
+      npm run build
+      echo "___TRAVIS_VAR____"
+      export TRAVIS_VAR="1.$TRAVIS_BUILD_NUMBER"
+      git commit --amend -m "[skip travis] version changed $PACKAGE_VERSION"
+      git push https://${GITHUB_TOKEN}@github.com/$TRAVIS_REPO_SLUG HEAD:$TRAVIS_BRANCH
+      git tag -f -a "$PACKAGE_VERSION" -m "new version $PACKAGE_VERSION"
+      export LAST_HASH=$(git ls-remote https://github.com/$TRAVIS_REPO_SLUG $TRAVIS_BRANCH | awk '{ print $1}')
+      echo $NPM_TOKEN
+    fi
+
 deploy:
+  - provider: script
+    skip_cleanup: true
+    keep_history: true
+    script: bash public_pages.sh
+    on:
+      branch: master 
+      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
   - provider: releases
-     api_key: $GITHUB_TOKEN
-     file: public_pages/dist/*
-     skip_cleanup: true
-     on:
-       branch: master
-  -provider: pages
-    skip_cleanup: true
-    github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+    target_commitish : $LAST_HASH
     keep_history: true
-    local_dir: public_pages
+    api_key: $GITHUB_TOKEN
+    skip_cleanup: true
+    overwrite: true
     on:
-        branch: master
+      branch: master 
+      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*  
   - provider: npm
+    registry: "https://registry.npmjs.org/"
     skip_cleanup: true
+    access: public
     email: "francesca@datachemist.com"
-    api_key: "NPM_TOKEN"
+    api_key: $NPM_TOKEN
     keep_history: true
+    auth_method: "authToken"
     on:
-        branch : master
+      branch : master
+      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*

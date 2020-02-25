@@ -16,7 +16,7 @@ describe('woql query', function () {
       global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
 
       const woqlObject=WOQL.limit(2).start(0);
-      woqlObject.execute(global.client);
+     // woqlObject.execute(global.client);
 	   //WOQLClient.prototype.select = function (qurl, woql, opts)
 	   //global.client.select()
 
@@ -458,13 +458,13 @@ describe('woql query object', function () {
     const woqlObject=WOQL.limit(2).start(0);
     //console.log(woqlObject.getAllDocuments().json());
 
-    woqlObject.loadVocabulary(global.client);
+    //woqlObject.loadVocabulary(global.client);
     //expect(woqlObject.loadVocab(global.client).json()).to.eql(jsonObj);
 
   })
 
   it('check the isPaged method',function(){
-    global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
+    //global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
 
     const woqlObjectTrue=WOQL.limit(2).start(0);
     const woqlObjectFalse=WOQL.select("V1", WOQL.triple("a", "b", "c"));
@@ -475,7 +475,7 @@ describe('woql query object', function () {
   })
 
   it('check the getPaged method',function(){
-    global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
+    //global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
 
     const woqlObject=WOQL.limit(2).start(0);
     const woqlObject2=WOQL.limit(3).start(10);
@@ -488,7 +488,7 @@ describe('woql query object', function () {
   })
 
   it('check the setPage method',function(){
-    global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
+    //global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: {}}));
 
     const woqlObject=WOQL.limit(2).start(0);
 
