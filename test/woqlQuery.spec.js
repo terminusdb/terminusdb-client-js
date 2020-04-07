@@ -32,7 +32,7 @@ describe('pre-roll queries', function () {
 
     const woqlObject=WOQL.limit(2).start(0);
 
-    const jsonObj={ limit: [ 2, { start: [ 0, {"quad": ["v:Subject", "v:Predicate", "v:Object", "db:Graph" ] } ] } ] };
+    const jsonObj={ "@type": "woql:Limit", [ 2, { start: [ 0, {"quad": ["v:Subject", "v:Predicate", "v:Object", "db:Graph" ] } ] } ] };
 
     expect(woqlObject.getEverything("Graph").json()).to.eql(jsonObj);
 
