@@ -15,5 +15,6 @@ module.exports = {
     WOQLChooser:require('./lib/viewer/woqlChooser'),
     WOQLChart:require('./lib/viewer/woqlChart'),
     WOQLStream:require('./lib/viewer/woqlStream'),
-    WOQL:require('./lib/woql')
+    WOQL:require('./lib/woql'),
+    axiosInstance:require('./axiosInstance')
 };
