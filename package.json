@@ -45,9 +45,9 @@
     "webpack-dev-server": "^3.10.3"
   },
   "scripts": {
-    "versionWIN": "echo %npm_package_version%",
-    "doc": "documentation build lib/** -f html -o public_pages/$npm_package_version/docs",
-    "clean": "rimraf -r public_pages/$npm_package_version/dist",
+    "versionWIN": "echo v${npm_package_version}",
+    "doc": "documentation build lib/** -f html -o public_pages/v${npm_package_version}/docs",
+    "clean": "rimraf -r public_pages/v${npm_package_version}/dist",
     "test": "npm run cover",
     "test:only": "mocha --require @babel/register --require @babel/preset-env --recursive  ",
     "test:watch": "mocha --watch --require @babel/register --require @babel/preset-env --recursive",
@@ -58,8 +58,7 @@
     "prepare": "npm run clean && npm run test",
     "coveralls-after": "nyc report --reporter=text-lcov | coveralls",
     "npm:publish": "npm publish --access public",
-    "test-single": "mocha $1",
-    "git-tag": "git tag $npm_package_version"
+    "test-single": "mocha $1"
   },
   "repository": {
     "type": "git",
