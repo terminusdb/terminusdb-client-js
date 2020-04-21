@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 var PACKAGE = require('./package.json');
-var version = PACKAGE.version;
+var version = `v${PACKAGE.version}`;
 
 require("@babel/register");
 // Webpack Configuration
