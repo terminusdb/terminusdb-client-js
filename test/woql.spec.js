@@ -2,12 +2,13 @@ const expect = require('chai').expect;
 
 var WOQL = require('../lib/woql');
 
-const idGenJson = require('./extraFile/idGenJson');
-const woqlStarJson = require('./extraFile/woqlStarJson');
-const woqlInsertJson = require('./extraFile/woqlInsertJson');
-const woqlDoctypeJson = require('./extraFile/woqlDoctypeJson');
-const woqlAndJson = require('./extraFile/woqlAndJson');
-const woqlOrJson = require('./extraFile/woqlOrJson');
+const idGenJson = require('./woqlJson/woqlIdgenJson');
+const woqlStarJson = require('./woqlJson/woqlStarJson');
+const woqlInsertJson = require('./woqlJson/woqlInsertJson');
+const woqlDoctypeJson = require('./woqlJson/woqlDoctypeJson');
+const woqlAndJson = require('./woqlJson/woqlAndJson');
+const woqlOrJson = require('./woqlJson/woqlOrJson');
+const woqlWhenJson = require('./woqlJson/woqlWhenJson');
 
 describe('woql queries', function () {
 
@@ -132,36 +133,22 @@ describe('woql queries', function () {
 
 
   it('check the or method',function(){
-
 		const woqlObject=WOQL.or(WOQL.triple("a", "b", "c"),WOQL.triple("1", "2", "3"));                     
 		expect(woqlObject.json()).to.eql(woqlOrJson);
 	})
 
 
   it('check the when method',function(){
-    const Update=WOQL.add_class("id");
-    const Condition=WOQL.or(WOQL.triple("a", "b", "c"),WOQL.triple("1", "2", "3"));
+    const woqlObject=WOQL.when(true, WOQL.add_class("id"));
 
-    //const woqlObject=WOQL.when(true, WOQL.add_class("id"));
+    //const woqlObjectChain=WOQL.when(true).add_class("id")
+    //console.log(JSON.stringify(woqlObject.json(), null, 4));
 
-    const woqlObjectChain=WOQL.when(true).add_class("id")
-
-    const jsonObj={
-                  when: [
-                    {
-                      "true":[]
-                    },
-                    { add_quad: [ 'scm:id', 'rdf:type', 'owl:Class', 'db:schema' ] }
-                  ]
-                };
-
-    console.log(JSON.stringify(woqlObject.json(), null, 4));
-
-    //expect(woqlObject.json()).to.eql(jsonObj);
+    expect(woqlObject.json()).to.eql(woqlWhenJson);
     //expect(woqlObjectChain.json()).to.eql(jsonObj);
 
   })
-/*
+
   it('check the opt method',function(){
 
 		const woqlObject=WOQL.opt(WOQL.triple("a", "b", "c"));
@@ -170,12 +157,14 @@ describe('woql queries', function () {
 
 		const jsonObj={ opt: [ { triple: [ "doc:a", "scm:b", { "@language": "en", "@value": "c" } ] } ] }
 
-		expect(woqlObject.json()).to.eql(jsonObj);
-    expect(woqlObjectChain.json()).to.eql(jsonObj);
+    console.log(JSON.stringify(woqlObject.json(), null, 4));
+
+		//expect(woqlObject.json()).to.eql(jsonObj);
+    //expect(woqlObjectChain.json()).to.eql(jsonObj);
 
 	})
 
-
+/*
 
   it('check the from method',function(){
 
