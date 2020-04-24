@@ -560,38 +560,26 @@ describe('triple builder chaining methods', function () {
     const woqlObject=WOQL.node("doc:x", "add_quad").graph("db:schema");
     const woqlObject2=WOQL.node("doc:x", "add_quad").graph("db:mySchema").label("my label", "en");
 
-    const jsonObj={};
-    const jsonObj2={ 'add_quad': ['doc:x', 'rdfs:label', { '@value': 'my label', '@language': 'en' }, 'db:mySchema'] };
-
-    console.log(JSON.stringify(woqlObject.json(), null, 4));
-    
-    //expect(woqlObject.json()).to.eql(jsonObj);
-    //expect(woqlObject2.json()).to.eql(jsonObj2);
+    const jsonObj={ "@type": "woql:And"};;
+  
+    expect(woqlObject.json()).to.eql(jsonObj);
+    expect(woqlObject2.json()).to.eql(woqlJson.graphMethodJson);
 
   })
-/*
-  it('check the label method',function(){
+
+  it('check the node and label method',function(){
 
     const woqlObject=WOQL.node("doc:x", "add_quad").label("my label", "en");
     const woqlObject2=WOQL.node("doc:x", "add_quad").label("v:label");
-
-    const jsonObj={ 'add_quad': ['doc:x', 'rdfs:label', { '@value': 'my label', '@language': 'en' }, 'db:schema'] };
-    const jsonObj2={ 'add_quad': ['doc:x', 'rdfs:label', "v:label", 'db:schema'] };
-
-    expect(woqlObject.json()).to.eql(jsonObj);
+    expect(woqlObject.json()).to.eql(woqlJson.labelMethodJson);
+    expect(woqlObject2.json()).to.eql(woqlJson.labelMethodJson2);
 
   })
 
-  it('check the add class method',function(){
+  it('check the add class and description method',function(){
 
-    const woqlObject=WOQL.add_class("NewClass").description("A new class object.").entity();
-
-    const jsonObj={ "and": [{"add_quad": ['scm:NewClass', 'rdf:type', "owl:Class", 'db:schema']},
-                  {"add_quad": ['scm:NewClass', 'rdfs:comment', { '@value': "A new class object.", '@language': 'en' }, 'db:schema']},
-                  {"add_quad": ['scm:NewClass', 'rdfs:subClassOf', "tcs:Entity", 'db:schema']}
-    ]};
-
-    expect(woqlObject.json()).to.eql(jsonObj);
+    const woqlObject=WOQL.add_class("NewClass").description("A new class object.");
+    expect(woqlObject.json()).to.eql(woqlJson.addClassDescJson);
 
   })
 
@@ -599,152 +587,50 @@ describe('triple builder chaining methods', function () {
 
     const woqlObject=WOQL.node("doc:x", "add_quad").comment("my comment");
 
-    const jsonObj={ "comment": [
-            {
-              "@language": "en",
-              "@value": "my comment"
-            },
-            {}
-          ] };
-
+    const jsonObj={
+                "@type": "woql:Comment",
+                "woql:comment": {
+                    "@type": "xsd:string",
+                    "@value": "my comment"
+                },
+                "woql:query": {}
+            }
     expect(woqlObject.json()).to.eql(jsonObj);
-
   })
 
-  it('check the property method',function(){
-
+  it('check node and property method',function(){
     const woqlObject=WOQL.node("doc:x", "add_triple").property("myprop", "value");
-
-    const jsonObj={ 'add_triple': ['doc:x', 'scm:myprop', { '@value': 'value', '@language': 'en' }] };
-
-    expect(woqlObject.json()).to.eql(jsonObj);
-
+    expect(woqlObject.json()).to.eql(woqlJson.addNodePropJson);
   })
 
-  it('check the entity method',function(){
-
-    const woqlObject=WOQL.node("doc:x", "add_quad").entity();
-
-    const jsonObj={ add_quad: [ 'doc:x', 'rdfs:subClassOf', 'tcs:Entity', 'db:schema' ] };
-
-    expect(woqlObject.json()).to.eql(jsonObj);
-
-  })
-
-  it('check the parent method',function(){
-
-    const woqlObject=WOQL.node("doc:x", "add_quad").parent("Z");
-
-    const jsonObj={ add_quad: [ 'doc:x', 'rdfs:subClassOf', 'scm:Z', 'db:schema' ] };
-
-    expect(woqlObject.json()).to.eql(jsonObj);
-
+  it('check node and  parent method',function(){
+    const woqlObject=WOQL.node("doc:x", "add_quad").parent("classParentName");  
+    expect(woqlObject.json()).to.eql(woqlJson.nodeParentJson);
   })
 
   it('check the abstract method',function(){
-
-    const woqlObject=WOQL.node("doc:x", "add_quad").abstract();
-
-    const jsonObj={ add_quad: [ 'doc:x', 'tcs:tag', 'tcs:abstract', 'db:schema' ] };
-
-    expect(woqlObject.json()).to.eql(jsonObj);
-
+    const woqlObject=WOQL.node("doc:x", "add_quad").abstract();    
+    expect(woqlObject.json()).to.eql(woqlJson.nodeAbstractJson);
   })
 
-  it('check the relationship method',function(){
-
-    const woqlObject=WOQL.node("doc:x", "add_quad").relationship();
-
-    const jsonObj={ add_quad: [ 'doc:x', 'rdfs:subClassOf', 'tcs:Entity', 'db:schema' ] };
-
-    expect(woqlObject.json()).to.eql(jsonObj);
-
-  })
 
   it('check the max method',function(){
 
     const woqlObject=WOQL.add_property("P", "string").max(4);
-
-    const jsonObj={ "and": [ { "add_quad": ["scm:P",
-                                        "rdf:type",
-                                        "owl:DatatypeProperty",
-                                        "db:schema"] },
-                           { "add_quad": ["scm:P",
-                                        "rdfs:range",
-                                        "xsd:string",
-                                        "db:schema"] },
-                           { "add_quad": ["scm:P_max",
-                                        "rdf:type",
-                                        "owl:Restriction",
-                                        "db:schema"] },
-                           { "add_quad": [ "scm:P_max",
-                                        "owl:onProperty",
-                                        "scm:P",
-                                        "db:schema"] },
-                           { "add_quad": [ "scm:P_max",
-                                        "owl:maxCardinality",
-                                        { "@value": 4, "@type": "xsd:nonNegativeInteger" },
-                                        "db:schema"] } ] };
-
-    expect(woqlObject.json()).to.eql(jsonObj);
+    expect(woqlObject.json()).to.eql(woqlJson.propertyMaxJson);
 
   })
 
   it('check the min method',function(){
 
     const woqlObject=WOQL.add_property("P", "string").min(2);
-
-    const jsonObj={ "and": [ { "add_quad": ["scm:P",
-                                        "rdf:type",
-                                        "owl:DatatypeProperty",
-                                        "db:schema"] },
-                             { "add_quad": ["scm:P",
-                                        "rdfs:range",
-                                        "xsd:string",
-                                        "db:schema"] },
-                             { "add_quad": ["scm:P_min",
-                                        "rdf:type",
-                                        "owl:Restriction",
-                                        "db:schema"] },
-                             { "add_quad": [ "scm:P_min",
-                                        "owl:onProperty",
-                                        "scm:P",
-                                        "db:schema"] },
-                             { "add_quad": [ "scm:P_min",
-                                        "owl:minCardinality",
-                                        { "@value": 2, "@type": "xsd:nonNegativeInteger" },
-                                        "db:schema"] } ] };
-
-    expect(woqlObject.json()).to.eql(jsonObj);
-
+    expect(woqlObject.json()).to.eql(woqlJson.propMinJson);
   })
 
   it('check the cardinality method',function(){
 
-    const woqlObject=WOQL.add_property("P", "string").cardinality(3);
-
-    const jsonObj={ "and": [ { "add_quad": ["scm:P",
-                                          "rdf:type",
-                                          "owl:DatatypeProperty",
-                                          "db:schema"] },
-                             { "add_quad": ["scm:P",
-                                          "rdfs:range",
-                                          "xsd:string",
-                                          "db:schema"] },
-                             { "add_quad": ["scm:P_cardinality",
-                                          "rdf:type",
-                                          "owl:Restriction",
-                                          "db:schema"] },
-                             { "add_quad": [ "scm:P_cardinality",
-                                          "owl:onProperty",
-                                          "scm:P",
-                                          "db:schema"] },
-                             { "add_quad": [ "scm:P_cardinality",
-                                          "owl:cardinality",
-                                          { "@value": 3, "@type": "xsd:nonNegativeInteger" },
-                                          "db:schema"] } ] };
-
-    expect(woqlObject.json()).to.eql(jsonObj);
+    const woqlObject=WOQL.add_property("P", "string").cardinality(3);                                    
+    expect(woqlObject.json()).to.eql(woqlJson.propCardinalityJson);
 
   })
 
@@ -754,43 +640,17 @@ describe('triple builder chaining methods', function () {
           .description("v:Description")
           .property("prop", "v:Prop")
           .property("prop", "v:Prop2")
-          .entity()
-          .parent("hello");
-    const jsonObj={ and: [
-         { add_triple: ["v:Node_ID", "rdf:type", "v:Type"] },
-         { add_triple: ["v:Node_ID", "rdfs:label", "v:Label"] },
-         { add_triple: ["v:Node_ID", "rdfs:comment", "v:Description"] },
-         { add_triple: ["v:Node_ID", "scm:prop", "v:Prop"] },
-         { add_triple: ["v:Node_ID", "scm:prop", "v:Prop2"] },
-         { add_triple: ["v:Node_ID", "rdfs:subClassOf", "tcs:Entity"] },
-         { add_triple: ["v:Node_ID", "rdfs:subClassOf", "scm:hello"] }
-    ]};
-     expect(woqlObject.json()).to.eql(jsonObj);
+          .parent("myParentClass");
+    expect(woqlObject.json()).to.eql(woqlJson.chainInsertJson);
 })
+  
   it('check the chained doctype method',function(){
-  const woqlObject = WOQL.doctype("MyDoc").label("abc").description("abcd")
-        .property("prop", "dateTime").label("aaa")
-        .property("prop2", "integer").label("abe")
+    const woqlObject = WOQL.doctype("MyDoc").label("abc").description("abcd")
+          .property("prop", "dateTime").label("aaa")
+          .property("prop2", "integer").label("abe")
 
-  const jsonObj={ and: [
-          { add_quad: ["scm:prop2", "rdf:type", "owl:DatatypeProperty", "db:schema"] },
-          { add_quad: ["scm:prop2", "rdfs:range", "xsd:integer", "db:schema"] },
-          { add_quad: ["scm:prop2", "rdfs:domain", "scm:MyDoc", "db:schema"] },
-          { and: [
-              { add_quad: ["scm:prop", "rdf:type", "owl:DatatypeProperty", "db:schema"] },
-              { add_quad: ["scm:prop", "rdfs:range", "xsd:dateTime", "db:schema"] },
-              { add_quad: ["scm:prop", "rdfs:domain", "scm:MyDoc", "db:schema"] },
-            { and: [
-               { add_quad: ["scm:MyDoc", "rdf:type", "owl:Class", "db:schema"] },
-               { add_quad: ["scm:MyDoc", "rdfs:subClassOf", "tcs:Document", "db:schema"] },
-               { add_quad: ["scm:MyDoc", "rdfs:label", {"@value": "abc", "@language": "en"}, "db:schema"] },
-               { add_quad: ["scm:MyDoc", "rdfs:comment", {"@value": "abcd", "@language": "en"}, "db:schema"] },
-            ]},
-            { add_quad: ["scm:prop", "rdfs:label", {"@value": "aaa", "@language": "en"}, "db:schema"] }
-         ]},
-         { add_quad: ["scm:prop2", "rdfs:label", {"@value": "abe", "@language": "en"}, "db:schema"] }
-  ]};
-   expect(woqlObject.json()).to.eql(jsonObj);
-})*/
+    expect(woqlObject.json()).to.eql(woqlJson.chainDoctypeJson);
+    //console.log(JSON.stringify(woqlObject.json(), null, 4));  
+  })
 
 })
