@@ -12,13 +12,15 @@ describe('triple builder', function () {
     const woqlObject=WOQL.triple("a", "b", "c");
     expect(woqlObject.json()).to.eql(woqlJson.trypleJson);
 
+    
+
   })
 
   it('check the quad method',function(){
 
     const woqlObject=WOQL.quad("a", "b", "c", "d");
     expect(woqlObject.json()).to.eql(woqlJson.quadJson);
-
+   //console.log(JSON.stringify(woqlObject.json(), null, 4));
   })
 
   it('check the add_class method',function(){

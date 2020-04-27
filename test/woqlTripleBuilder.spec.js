@@ -49,7 +49,22 @@ describe('triple builder chaining methods', function () {
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
-    //console.log(JSON.stringify(woqlObject01.json(), null, 4)); 
+    console.log("__COMMENT__", JSON.stringify(woqlObject01.json(), null, 4)); 
+
+    /*
+    {
+    "@type": "woql:And",
+    "woql:query_list": [
+        {
+            "@type": "woql:QueryListElement",
+            "woql:index": {
+                "@type": "xsd:nonNegativeInteger",
+                "@value": 1
+            }
+        }
+    ]
+}
+  */
 
     //const woqlObject=WOQL.node("doc:x", "add_quad").comment("my comment");
     
