@@ -307,8 +307,11 @@ describe('woql queries', function () {
 
     const woqlObject=WOQL.get("Map", "Target");
 
-    const jsonObj={ "@type": "woql:Get", "woql:as_vars": "Map", "woql:query_resource": "Target"}
-    expect(woqlObject.json()).to.eql(jsonObj);
+    //const jsonObj={ "@type": "woql:Get", "woql:as_vars": "Map", "woql:query_resource": "Target"}
+   
+    expect(woqlObject.json()).to.eql(woqlJson.getJson);
+
+    //console.log(JSON.stringify(woqlObject.json(), null, 4))
 
   })
 
@@ -442,9 +445,12 @@ describe('woql queries', function () {
     const woqlObject=WOQL.order_by("v:A", "v:B asc", "v:C asc");
 
     expect(woqlObject.json()).to.eql({});
-    //expect(woqlObject.json()).to.eql(woqlJson.orderbyJson);
     
-    //console.log(JSON.stringify(woqlObject.json(), null, 4));
+
+    const woqlObject01=WOQL.order_by("v:A", "v:B asc", "v:C asc").triple("v:A", "v:B", "v:C");
+    expect(woqlObject01.json()).to.eql(woqlJson.orderbyJson);
+    
+    //console.log(JSON.stringify(woqlObject01.json(), null, 4));
   })
 
 })

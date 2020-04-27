@@ -1,4 +1,25 @@
 module.exports={
+        getJson:{
+                "@type": "woql:Get",
+                "woql:as_vars": [
+                    {
+                        "@type": "woql:NamedAsVar",
+                        "woql:identifier": {
+                            "@type": "xsd:string",
+                            "@value": "M"
+                        },
+                        "woql:variable_name": {
+                            "@type": "xsd:string",
+                            "@value": "a"
+                        },
+                        "woql:var_type": {
+                            "@type": "xsd:anyURI",
+                            "@value": "p"
+                        }
+                    }
+                ],
+                "woql:query_resource": "Target"
+            },
         memberJson:{
             "@type": "woql:Member",
             "woql:member": {
@@ -115,51 +136,76 @@ module.exports={
             }
         },
         orderbyJson:{
-            "@type": "woql:OrderBy",
-            "woql:variable_ordering": [
-                {
-                    "@type": "woql:VariableOrdering",
-                    "woql:index": {
-                        "@type": "xsd:nonNegativeInteger",
-                        "@value": 0
+                "@type": "woql:OrderBy",
+                "woql:variable_ordering": [
+                    {
+                        "@type": "woql:VariableOrdering",
+                        "woql:index": {
+                            "@type": "xsd:nonNegativeInteger",
+                            "@value": 0
+                        },
+                        "woql:variable": {
+                            "@type": "woql:Variable",
+                            "woql:variable_name": {
+                                "@value": "A",
+                                "@type": "xsd:string"
+                            }
+                        }
                     },
-                    "woql:variable": {
+                    {
+                        "@type": "woql:VariableOrdering",
+                        "woql:index": {
+                            "@type": "xsd:nonNegativeInteger",
+                            "@value": 1
+                        },
+                        "woql:ascending": {
+                            "@type": "xsd:boolean",
+                            "@value": true
+                        },
+                        "woql:variable": {
+                            "@type": "woql:Variable",
+                            "woql:variable_name": {
+                                "@value": "B",
+                                "@type": "xsd:string"
+                            }
+                        }
+                    },
+                    {
+                        "@type": "woql:VariableOrdering",
+                        "woql:index": {
+                            "@type": "xsd:nonNegativeInteger",
+                            "@value": 2
+                        },
+                        "woql:ascending": {
+                            "@type": "xsd:boolean",
+                            "@value": true
+                        },
+                        "woql:variable": {
+                            "@type": "woql:Variable",
+                            "woql:variable_name": {
+                                "@value": "C",
+                                "@type": "xsd:string"
+                            }
+                        }
+                    }
+                ],
+                "woql:query": {
+                    "@type": "woql:Triple",
+                    "woql:subject": {
                         "@type": "woql:Variable",
                         "woql:variable_name": {
                             "@value": "A",
                             "@type": "xsd:string"
                         }
-                    }
-                },
-                {
-                    "@type": "woql:VariableOrdering",
-                    "woql:index": {
-                        "@type": "xsd:nonNegativeInteger",
-                        "@value": 1
                     },
-                    "woql:ascending": {
-                        "@type": "xsd:boolean",
-                        "@value": true
-                    },
-                    "woql:variable": {
+                    "woql:predicate": {
                         "@type": "woql:Variable",
                         "woql:variable_name": {
                             "@value": "B",
                             "@type": "xsd:string"
                         }
-                    }
-                },
-                {
-                    "@type": "woql:VariableOrdering",
-                    "woql:index": {
-                        "@type": "xsd:nonNegativeInteger",
-                        "@value": 2
                     },
-                    "woql:ascending": {
-                        "@type": "xsd:boolean",
-                        "@value": true
-                    },
-                    "woql:variable": {
+                    "woql:object": {
                         "@type": "woql:Variable",
                         "woql:variable_name": {
                             "@value": "C",
@@ -167,9 +213,7 @@ module.exports={
                         }
                     }
                 }
-            ],
-            "woql:query": {}
-        },
+            },
         isAJson:{
             "@type": "woql:IsA",
             "woql:element": {
