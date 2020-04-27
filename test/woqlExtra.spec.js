@@ -27,4 +27,15 @@ describe('woql queries', function () {
 
 		expect(woqlObject.json()).to.eql(woqlExtraJson.multiUsingJson);
 	})
+
+	it('check and chain method',function(){
+		const woqlObject=WOQL.triple("v:A", "v:B", "v:C").and(WOQL.triple("v:D", "v:E", "v:F"));
+
+		const woqlObject01=WOQL.and(WOQL.triple("v:A", "v:B", "v:C"),WOQL.triple("v:D", "v:E", "v:F"));
+
+		//console.log(JSON.stringify(woqlObject01.json(), null, 4));
+
+		expect(woqlObject.json()).to.eql(woqlExtraJson.chainAndJson);
+		expect(woqlObject.json()).to.eql(woqlExtraJson.chainAndJson);
+	})
 })

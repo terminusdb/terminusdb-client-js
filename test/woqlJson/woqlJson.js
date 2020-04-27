@@ -17,89 +17,73 @@ module.exports={
             }
         },
         groupbyJson:{
-            "@type": "woql:GroupBy",
-            "woql:variable_list": [
-                {
-                    "@type": "woql:VariableListElement",
-                    "woql:index": {
-                        "@type": "xsd:nonNegativeInteger",
-                        "@value": 0
+    "@type": "woql:GroupBy",
+                "woql:variable_list": [
+                    {
+                        "@type": "woql:VariableListElement",
+                        "woql:index": {
+                            "@type": "xsd:nonNegativeInteger",
+                            "@value": 0
+                        },
+                        "woql:variable": {
+                            "@type": "woql:Variable",
+                            "woql:variable_name": {
+                                "@value": "A",
+                                "@type": "xsd:string"
+                            }
+                        }
                     },
-                    "woql:variable": {
+                    {
+                        "@type": "woql:VariableListElement",
+                        "woql:index": {
+                            "@type": "xsd:nonNegativeInteger",
+                            "@value": 1
+                        },
+                        "woql:variable": {
+                            "@type": "woql:Variable",
+                            "woql:variable_name": {
+                                "@value": "B",
+                                "@type": "xsd:string"
+                            }
+                        }
+                    }
+                ],
+                "woql:group_var": [
+                    "v:C"
+                ],
+                "woql:grouped": {
+                    "@type": "woql:Variable",
+                    "woql:variable_name": {
+                        "@value": "New",
+                        "@type": "xsd:string"
+                    }
+                },
+                "woql:query": {
+                    "@type": "woql:Triple",
+                    "woql:subject": {
                         "@type": "woql:Variable",
                         "woql:variable_name": {
                             "@value": "A",
                             "@type": "xsd:string"
                         }
-                    }
-                },
-                {
-                    "@type": "woql:VariableListElement",
-                    "woql:index": {
-                        "@type": "xsd:nonNegativeInteger",
-                        "@value": 1
                     },
-                    "woql:variable": {
+                    "woql:predicate": {
                         "@type": "woql:Variable",
                         "woql:variable_name": {
                             "@value": "B",
                             "@type": "xsd:string"
                         }
+                    },
+                    "woql:object": {
+                        "@type": "woql:Variable",
+                        "woql:variable_name": {
+                            "@value": "C",
+                            "@type": "xsd:string"
+                        }
                     }
                 }
-            ],
-            "woql:group_var": [
-                "v:C"
-            ],
-            "woql:grouped": {
-                "@type": "woql:Variable",
-                "woql:variable_name": {
-                    "@value": "New",
-                    "@type": "xsd:string"
-                }
             },
-            "woql:query": {}
-        },
-        trypleJson:{
-            "@type": "woql:Triple",
-            "woql:subject": {
-                "@type": "woql:Node",
-                "woql:node": "doc:a"
-            },
-            "woql:predicate": {
-                "@type": "woql:Node",
-                "woql:node": "scm:b"
-            },
-            "woql:object": {
-                "@type": "woql:Datatype",
-                "woql:datatype": {
-                    "@type": "xsd:string",
-                    "@value": "c"
-                }
-            }
-        },
-        quadJson:{
-            "@type": "woql:Quad",
-            "woql:subject": {
-                "@type": "woql:Node",
-                "woql:node": "doc:a"
-            },
-            "woql:predicate": {
-                "@type": "woql:Node",
-                "woql:node": "scm:b"
-            },
-            "woql:object": {
-                "@type": "woql:Datatype",
-                "woql:datatype": {
-                    "@type": "xsd:string",
-                    "@value": "c"
-                }
-            },
-            "woql:graph_filter": {
-                "@type": "xsd:string",
-                "@value": "d"
-            }
-        },
+
         addClassJson:{
             "@type": "woql:AddQuad",
             "woql:subject": {
@@ -404,104 +388,65 @@ module.exports={
                         ]
                     },
                 graphMethodJson:{
-                    "@type": "woql:And",
-                    "woql:query_list": [
-                        {
-                            "@type": "woql:QueryListElement",
-                            "woql:index": {
-                                "@type": "xsd:nonNegativeInteger",
-                                "@value": 0
-                            },
-                            "woql:query": {
-                                "@type": "woql:Quad",
-                                "woql:subject": {
-                                    "@type": "woql:Node",
-                                    "woql:node": "doc:x"
-                                },
-                                "woql:predicate": {
-                                    "@type": "woql:Node",
-                                    "woql:node": "rdfs:label"
-                                },
-                                "woql:object": {
-                                    "@type": "woql:Datatype",
-                                    "woql:datatype": {
-                                        "@value": "my label",
-                                        "@type": "xsd:string",
-                                        "@language": "en"
-                                    }
-                                },
-                                "woql:graph_filter": {
-                                    "@type": "xsd:string",
-                                    "@value": {
-                                        "@type": "xsd:string",
-                                        "@value": "db:mySchema"
-                                    }
-                                }
-                            }
+                    "@type": "woql:Quad",
+                    "woql:subject": {
+                        "@type": "woql:Node",
+                        "woql:node": "doc:x"
+                    },
+                    "woql:predicate": {
+                        "@type": "woql:Node",
+                        "woql:node": "rdfs:label"
+                    },
+                    "woql:object": {
+                        "@type": "woql:Datatype",
+                        "woql:datatype": {
+                            "@value": "my label",
+                            "@type": "xsd:string",
+                            "@language": "en"
                         }
-                    ]
+                    },
+                    "woql:graph_filter": {
+                        "@type": "xsd:string",
+                        "@value": "schema/main"
+                    }
                 },
                 labelMethodJson:{
-                        "@type": "woql:And",
-                        "woql:query_list": [
-                            {
-                                "@type": "woql:QueryListElement",
-                                "woql:index": {
-                                    "@type": "xsd:nonNegativeInteger",
-                                    "@value": 0
-                                },
-                                "woql:query": {
-                                    "@type": "woql:Triple",
-                                    "woql:subject": {
-                                        "@type": "woql:Node",
-                                        "woql:node": "doc:x"
-                                    },
-                                    "woql:predicate": {
-                                        "@type": "woql:Node",
-                                        "woql:node": "rdfs:label"
-                                    },
-                                    "woql:object": {
-                                        "@type": "woql:Datatype",
-                                        "woql:datatype": {
-                                            "@value": "my label",
-                                            "@type": "xsd:string",
-                                            "@language": "en"
-                                        }
-                                    }
+                            "@type": "woql:Triple",
+                            "woql:subject": {
+                                "@type": "woql:Node",
+                                "woql:node": "doc:x"
+                            },
+                            "woql:predicate": {
+                                "@type": "woql:Node",
+                                "woql:node": "rdfs:label"
+                            },
+                            "woql:object": {
+                                "@type": "woql:Datatype",
+                                "woql:datatype": {
+                                    "@value": "my label",
+                                    "@type": "xsd:string",
+                                    "@language": "en"
                                 }
                             }
-                        ]
-                    },
-                    labelMethodJson2:{
-                            "@type": "woql:And",
-                            "woql:query_list": [
-                                {
-                                    "@type": "woql:QueryListElement",
-                                    "woql:index": {
-                                        "@type": "xsd:nonNegativeInteger",
-                                        "@value": 0
-                                    },
-                                    "woql:query": {
-                                        "@type": "woql:Triple",
-                                        "woql:subject": {
-                                            "@type": "woql:Node",
-                                            "woql:node": "doc:x"
-                                        },
-                                        "woql:predicate": {
-                                            "@type": "woql:Node",
-                                            "woql:node": "rdfs:label"
-                                        },
-                                        "woql:object": {
-                                            "@type": "woql:Variable",
-                                            "woql:variable_name": {
-                                                "@value": "label",
-                                                "@type": "xsd:string"
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
                         },
+                    labelMethodJson2:{
+                        "@type": "woql:Triple",
+                        "woql:subject": {
+                            "@type": "woql:Node",
+                            "woql:node": "doc:x"
+                        },
+                        "woql:predicate": {
+                            "@type": "woql:Node",
+                            "woql:node": "rdfs:label"
+                        },
+                        "woql:object": {
+                            "@type": "woql:Variable",
+                            "woql:variable_name": {
+                                "@value": "label",
+                                "@type": "xsd:string"
+                            }
+                        }
+                    },
                     addClassDescJson:{
                             "@type": "woql:And",
                             "woql:query_list": [
@@ -564,88 +509,52 @@ module.exports={
                             ]
                         },
                     addNodePropJson:{
-                            "@type": "woql:And",
-                            "woql:query_list": [
-                                {
-                                    "@type": "woql:QueryListElement",
-                                    "woql:index": {
-                                        "@type": "xsd:nonNegativeInteger",
-                                        "@value": 0
-                                    },
-                                    "woql:query": {
-                                        "@type": "woql:Triple",
-                                        "woql:subject": {
-                                            "@type": "woql:Node",
-                                            "woql:node": "doc:x"
-                                        },
-                                        "woql:predicate": {
-                                            "@type": "woql:Node",
-                                            "woql:node": "scm:myprop"
-                                        },
-                                        "woql:object": {
-                                            "@type": "woql:Datatype",
-                                            "woql:datatype": {
-                                                "@type": "xsd:string",
-                                                "@value": "value"
-                                            }
-                                        }
-                                    }
+                            "@type": "woql:Triple",
+                            "woql:subject": {
+                                "@type": "woql:Node",
+                                "woql:node": "doc:x"
+                            },
+                            "woql:predicate": {
+                                "@type": "woql:Node",
+                                "woql:node": "scm:myprop"
+                            },
+                            "woql:object": {
+                                "@type": "woql:Datatype",
+                                "woql:datatype": {
+                                    "@type": "xsd:string",
+                                    "@value": "value"
                                 }
-                            ]
+                            }
                         },
                 nodeParentJson:{
-                            "@type": "woql:And",
-                            "woql:query_list": [
-                                {
-                                    "@type": "woql:QueryListElement",
-                                    "woql:index": {
-                                        "@type": "xsd:nonNegativeInteger",
-                                        "@value": 0
-                                    },
-                                    "woql:query": {
-                                        "@type": "woql:Triple",
-                                        "woql:subject": {
-                                            "@type": "woql:Node",
-                                            "woql:node": "doc:x"
-                                        },
-                                        "woql:predicate": {
-                                            "@type": "woql:Node",
-                                            "woql:node": "rdfs:subClassOf"
-                                        },
-                                        "woql:object": {
-                                            "@type": "woql:Node",
-                                            "woql:node": "scm:classParentName"
-                                        }
-                                    }
-                                }
-                            ]
+                        "@type": "woql:Triple",
+                        "woql:subject": {
+                            "@type": "woql:Node",
+                            "woql:node": "doc:x"
                         },
+                        "woql:predicate": {
+                            "@type": "woql:Node",
+                            "woql:node": "rdfs:subClassOf"
+                        },
+                        "woql:object": {
+                            "@type": "woql:Node",
+                            "woql:node": "scm:classParentName"
+                        }
+                    },
                     nodeAbstractJson:{
-                            "@type": "woql:And",
-                            "woql:query_list": [
-                                {
-                                    "@type": "woql:QueryListElement",
-                                    "woql:index": {
-                                        "@type": "xsd:nonNegativeInteger",
-                                        "@value": 0
-                                    },
-                                    "woql:query": {
-                                        "@type": "woql:Triple",
-                                        "woql:subject": {
-                                            "@type": "woql:Node",
-                                            "woql:node": "doc:x"
-                                        },
-                                        "woql:predicate": {
-                                            "@type": "woql:Node",
-                                            "woql:node": "terminus:tag"
-                                        },
-                                        "woql:object": {
-                                            "@type": "woql:Node",
-                                            "woql:node": "terminus:abstract"
-                                        }
-                                    }
-                                }
-                            ]
+                            "@type": "woql:Triple",
+                            "woql:subject": {
+                                "@type": "woql:Node",
+                                "woql:node": "doc:x"
+                            },
+                            "woql:predicate": {
+                                "@type": "woql:Node",
+                                "woql:node": "terminus:tag"
+                            },
+                            "woql:object": {
+                                "@type": "woql:Node",
+                                "woql:node": "terminus:abstract"
+                            }
                         },
                     propertyMaxJson:{
                             "@type": "woql:And",
@@ -989,390 +898,337 @@ module.exports={
                             ]
                         },
                     chainDoctypeJson:{
-                            "@type": "woql:And",
-                            "woql:query_list": [
-                                {
-                                    "@type": "woql:QueryListElement",
-                                    "woql:index": {
-                                        "@type": "xsd:nonNegativeInteger",
-                                        "@value": 0
-                                    },
-                                    "woql:query": {
-                                        "@type": "woql:And",
-                                        "woql:query_list": [
-                                            {
-                                                "@type": "woql:QueryListElement",
-                                                "woql:index": {
-                                                    "@type": "xsd:nonNegativeInteger",
-                                                    "@value": 0
-                                                },
-                                                "woql:query": {
-                                                    "@type": "woql:And",
-                                                    "woql:query_list": [
-                                                        {
-                                                            "@type": "woql:QueryListElement",
-                                                            "woql:index": {
-                                                                "@type": "xsd:nonNegativeInteger",
-                                                                "@value": 0
-                                                            },
-                                                            "woql:query": {
-                                                                "@type": "woql:AddQuad",
-                                                                "woql:subject": {
-                                                                    "@type": "woql:Node",
-                                                                    "woql:node": "scm:MyDoc"
-                                                                },
-                                                                "woql:predicate": {
-                                                                    "@type": "woql:Node",
-                                                                    "woql:node": "rdf:type"
-                                                                },
-                                                                "woql:object": {
-                                                                    "@type": "woql:Node",
-                                                                    "woql:node": "owl:Class"
-                                                                },
-                                                                "woql:graph": {
-                                                                    "@type": "xsd:string",
-                                                                    "@value": "schema/main"
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            "@type": "woql:QueryListElement",
-                                                            "woql:index": {
-                                                                "@type": "xsd:nonNegativeInteger",
-                                                                "@value": 1
-                                                            },
-                                                            "woql:query": {
-                                                                "@type": "woql:AddQuad",
-                                                                "woql:subject": {
-                                                                    "@type": "woql:Node",
-                                                                    "woql:node": "scm:MyDoc"
-                                                                },
-                                                                "woql:predicate": {
-                                                                    "@type": "woql:Node",
-                                                                    "woql:node": "rdfs:subClassOf"
-                                                                },
-                                                                "woql:object": {
-                                                                    "@type": "woql:Node",
-                                                                    "woql:node": "terminus:Document"
-                                                                },
-                                                                "woql:graph": {
-                                                                    "@type": "xsd:string",
-                                                                    "@value": "schema/main"
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            "@type": "woql:QueryListElement",
-                                                            "woql:index": {
-                                                                "@type": "xsd:nonNegativeInteger",
-                                                                "@value": 2
-                                                            },
-                                                            "woql:query": {
-                                                                "@type": "woql:AddQuad",
-                                                                "woql:subject": {
-                                                                    "@type": "woql:Node",
-                                                                    "woql:node": "scm:MyDoc"
-                                                                },
-                                                                "woql:predicate": {
-                                                                    "@type": "woql:Node",
-                                                                    "woql:node": "rdfs:label"
-                                                                },
-                                                                "woql:object": {
-                                                                    "@type": "woql:Datatype",
-                                                                    "woql:datatype": {
-                                                                        "@value": "abc",
-                                                                        "@type": "xsd:string",
-                                                                        "@language": "en"
-                                                                    }
-                                                                },
-                                                                "woql:graph": {
-                                                                    "@type": "xsd:string",
-                                                                    "@value": "schema/main"
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            "@type": "woql:QueryListElement",
-                                                            "woql:index": {
-                                                                "@type": "xsd:nonNegativeInteger",
-                                                                "@value": 3
-                                                            },
-                                                            "woql:query": {
-                                                                "@type": "woql:AddQuad",
-                                                                "woql:subject": {
-                                                                    "@type": "woql:Node",
-                                                                    "woql:node": "scm:MyDoc"
-                                                                },
-                                                                "woql:predicate": {
-                                                                    "@type": "woql:Node",
-                                                                    "woql:node": "rdfs:comment"
-                                                                },
-                                                                "woql:object": {
-                                                                    "@type": "woql:Datatype",
-                                                                    "woql:datatype": {
-                                                                        "@value": "abcd",
-                                                                        "@type": "xsd:string",
-                                                                        "@language": "en"
-                                                                    }
-                                                                },
-                                                                "woql:graph": {
-                                                                    "@type": "xsd:string",
-                                                                    "@value": "schema/main"
-                                                                }
-                                                            }
-                                                        }
-                                                    ]
-                                                }
-                                            },
-                                            {
-                                                "@type": "woql:QueryListElement",
-                                                "woql:index": {
-                                                    "@type": "xsd:nonNegativeInteger",
-                                                    "@value": 1
-                                                },
-                                                "woql:query": {
-                                                    "@type": "woql:And",
-                                                    "woql:query_list": [
-                                                        {
-                                                            "@type": "woql:QueryListElement",
-                                                            "woql:index": {
-                                                                "@type": "xsd:nonNegativeInteger",
-                                                                "@value": 0
-                                                            },
-                                                            "woql:query": {
-                                                                "@type": "woql:AddQuad",
-                                                                "woql:subject": {
-                                                                    "@type": "woql:Node",
-                                                                    "woql:node": "scm:prop"
-                                                                },
-                                                                "woql:predicate": {
-                                                                    "@type": "woql:Node",
-                                                                    "woql:node": "rdf:type"
-                                                                },
-                                                                "woql:object": {
-                                                                    "@type": "woql:Node",
-                                                                    "woql:node": "owl:DatatypeProperty"
-                                                                },
-                                                                "woql:graph": {
-                                                                    "@type": "xsd:string",
-                                                                    "@value": "schema/main"
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            "@type": "woql:QueryListElement",
-                                                            "woql:index": {
-                                                                "@type": "xsd:nonNegativeInteger",
-                                                                "@value": 1
-                                                            },
-                                                            "woql:query": {
-                                                                "@type": "woql:AddQuad",
-                                                                "woql:subject": {
-                                                                    "@type": "woql:Node",
-                                                                    "woql:node": "scm:prop"
-                                                                },
-                                                                "woql:predicate": {
-                                                                    "@type": "woql:Node",
-                                                                    "woql:node": "rdfs:range"
-                                                                },
-                                                                "woql:object": {
-                                                                    "@type": "woql:Node",
-                                                                    "woql:node": "xsd:dateTime"
-                                                                },
-                                                                "woql:graph": {
-                                                                    "@type": "xsd:string",
-                                                                    "@value": "schema/main"
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            "@type": "woql:QueryListElement",
-                                                            "woql:index": {
-                                                                "@type": "xsd:nonNegativeInteger",
-                                                                "@value": 2
-                                                            },
-                                                            "woql:query": {
-                                                                "@type": "woql:AddQuad",
-                                                                "woql:subject": {
-                                                                    "@type": "woql:Node",
-                                                                    "woql:node": "scm:prop"
-                                                                },
-                                                                "woql:predicate": {
-                                                                    "@type": "woql:Node",
-                                                                    "woql:node": "rdfs:domain"
-                                                                },
-                                                                "woql:object": {
-                                                                    "@type": "woql:Node",
-                                                                    "woql:node": "scm:MyDoc"
-                                                                },
-                                                                "woql:graph": {
-                                                                    "@type": "xsd:string",
-                                                                    "@value": "schema/main"
-                                                                }
-                                                            }
-                                                        }
-                                                    ]
-                                                }
-                                            },
-                                            {
-                                                "@type": "woql:QueryListElement",
-                                                "woql:index": {
-                                                    "@type": "xsd:nonNegativeInteger",
-                                                    "@value": 2
-                                                },
-                                                "woql:query": {
-                                                    "@type": "woql:AddQuad",
-                                                    "woql:subject": {
-                                                        "@type": "woql:Node",
-                                                        "woql:node": "scm:prop"
-                                                    },
-                                                    "woql:predicate": {
-                                                        "@type": "woql:Node",
-                                                        "woql:node": "rdfs:label"
-                                                    },
-                                                    "woql:object": {
-                                                        "@type": "woql:Datatype",
-                                                        "woql:datatype": {
-                                                            "@value": "aaa",
-                                                            "@type": "xsd:string",
-                                                            "@language": "en"
-                                                        }
-                                                    },
-                                                    "woql:graph": {
-                                                        "@type": "xsd:string",
-                                                        "@value": "schema/main"
-                                                    }
-                                                }
-                                            }
-                                        ]
-                                    }
+                        "@type": "woql:And",
+                        "woql:query_list": [
+                            {
+                                "@type": "woql:QueryListElement",
+                                "woql:index": {
+                                    "@type": "xsd:nonNegativeInteger",
+                                    "@value": 0
                                 },
-                                {
-                                    "@type": "woql:QueryListElement",
-                                    "woql:index": {
-                                        "@type": "xsd:nonNegativeInteger",
-                                        "@value": 1
+                                "woql:query": {
+                                    "@type": "woql:AddQuad",
+                                    "woql:subject": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "scm:MyDoc"
                                     },
-                                    "woql:query": {
-                                        "@type": "woql:And",
-                                        "woql:query_list": [
-                                            {
-                                                "@type": "woql:QueryListElement",
-                                                "woql:index": {
-                                                    "@type": "xsd:nonNegativeInteger",
-                                                    "@value": 0
-                                                },
-                                                "woql:query": {
-                                                    "@type": "woql:AddQuad",
-                                                    "woql:subject": {
-                                                        "@type": "woql:Node",
-                                                        "woql:node": "scm:prop2"
-                                                    },
-                                                    "woql:predicate": {
-                                                        "@type": "woql:Node",
-                                                        "woql:node": "rdf:type"
-                                                    },
-                                                    "woql:object": {
-                                                        "@type": "woql:Node",
-                                                        "woql:node": "owl:DatatypeProperty"
-                                                    },
-                                                    "woql:graph": {
-                                                        "@type": "xsd:string",
-                                                        "@value": "schema/main"
-                                                    }
-                                                }
-                                            },
-                                            {
-                                                "@type": "woql:QueryListElement",
-                                                "woql:index": {
-                                                    "@type": "xsd:nonNegativeInteger",
-                                                    "@value": 1
-                                                },
-                                                "woql:query": {
-                                                    "@type": "woql:AddQuad",
-                                                    "woql:subject": {
-                                                        "@type": "woql:Node",
-                                                        "woql:node": "scm:prop2"
-                                                    },
-                                                    "woql:predicate": {
-                                                        "@type": "woql:Node",
-                                                        "woql:node": "rdfs:range"
-                                                    },
-                                                    "woql:object": {
-                                                        "@type": "woql:Node",
-                                                        "woql:node": "xsd:integer"
-                                                    },
-                                                    "woql:graph": {
-                                                        "@type": "xsd:string",
-                                                        "@value": "schema/main"
-                                                    }
-                                                }
-                                            },
-                                            {
-                                                "@type": "woql:QueryListElement",
-                                                "woql:index": {
-                                                    "@type": "xsd:nonNegativeInteger",
-                                                    "@value": 2
-                                                },
-                                                "woql:query": {
-                                                    "@type": "woql:AddQuad",
-                                                    "woql:subject": {
-                                                        "@type": "woql:Node",
-                                                        "woql:node": "scm:prop2"
-                                                    },
-                                                    "woql:predicate": {
-                                                        "@type": "woql:Node",
-                                                        "woql:node": "rdfs:domain"
-                                                    },
-                                                    "woql:object": {
-                                                        "@type": "woql:Node",
-                                                        "woql:node": "scm:MyDoc"
-                                                    },
-                                                    "woql:graph": {
-                                                        "@type": "xsd:string",
-                                                        "@value": "schema/main"
-                                                    }
-                                                }
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "@type": "woql:QueryListElement",
-                                    "woql:index": {
-                                        "@type": "xsd:nonNegativeInteger",
-                                        "@value": 2
+                                    "woql:predicate": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "rdf:type"
                                     },
-                                    "woql:query": {
-                                        "@type": "woql:AddQuad",
-                                        "woql:subject": {
-                                            "@type": "woql:Node",
-                                            "woql:node": "scm:prop2"
-                                        },
-                                        "woql:predicate": {
-                                            "@type": "woql:Node",
-                                            "woql:node": "rdfs:label"
-                                        },
-                                        "woql:object": {
-                                            "@type": "woql:Datatype",
-                                            "woql:datatype": {
-                                                "@value": "abe",
-                                                "@type": "xsd:string",
-                                                "@language": "en"
-                                            }
-                                        },
-                                        "woql:graph": {
-                                            "@type": "xsd:string",
-                                            "@value": "schema/main"
-                                        }
+                                    "woql:object": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "owl:Class"
+                                    },
+                                    "woql:graph": {
+                                        "@type": "xsd:string",
+                                        "@value": "schema/main"
                                     }
                                 }
-                            ]
-                        }
-
-
-  
-
-
+                            },
+                            {
+                                "@type": "woql:QueryListElement",
+                                "woql:index": {
+                                    "@type": "xsd:nonNegativeInteger",
+                                    "@value": 1
+                                },
+                                "woql:query": {
+                                    "@type": "woql:AddQuad",
+                                    "woql:subject": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "scm:MyDoc"
+                                    },
+                                    "woql:predicate": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "rdfs:subClassOf"
+                                    },
+                                    "woql:object": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "terminus:Document"
+                                    },
+                                    "woql:graph": {
+                                        "@type": "xsd:string",
+                                        "@value": "schema/main"
+                                    }
+                                }
+                            },
+                            {
+                                "@type": "woql:QueryListElement",
+                                "woql:index": {
+                                    "@type": "xsd:nonNegativeInteger",
+                                    "@value": 2
+                                },
+                                "woql:query": {
+                                    "@type": "woql:AddQuad",
+                                    "woql:subject": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "scm:MyDoc"
+                                    },
+                                    "woql:predicate": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "rdfs:label"
+                                    },
+                                    "woql:object": {
+                                        "@type": "woql:Datatype",
+                                        "woql:datatype": {
+                                            "@value": "abc",
+                                            "@type": "xsd:string",
+                                            "@language": "en"
+                                        }
+                                    },
+                                    "woql:graph": {
+                                        "@type": "xsd:string",
+                                        "@value": "schema/main"
+                                    }
+                                }
+                            },
+                            {
+                                "@type": "woql:QueryListElement",
+                                "woql:index": {
+                                    "@type": "xsd:nonNegativeInteger",
+                                    "@value": 3
+                                },
+                                "woql:query": {
+                                    "@type": "woql:AddQuad",
+                                    "woql:subject": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "scm:MyDoc"
+                                    },
+                                    "woql:predicate": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "rdfs:comment"
+                                    },
+                                    "woql:object": {
+                                        "@type": "woql:Datatype",
+                                        "woql:datatype": {
+                                            "@value": "abcd",
+                                            "@type": "xsd:string",
+                                            "@language": "en"
+                                        }
+                                    },
+                                    "woql:graph": {
+                                        "@type": "xsd:string",
+                                        "@value": "schema/main"
+                                    }
+                                }
+                            },
+                            {
+                                "@type": "woql:QueryListElement",
+                                "woql:index": {
+                                    "@type": "xsd:nonNegativeInteger",
+                                    "@value": 4
+                                },
+                                "woql:query": {
+                                    "@type": "woql:AddQuad",
+                                    "woql:subject": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "scm:prop"
+                                    },
+                                    "woql:predicate": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "rdf:type"
+                                    },
+                                    "woql:object": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "owl:DatatypeProperty"
+                                    },
+                                    "woql:graph": {
+                                        "@type": "xsd:string",
+                                        "@value": "schema/main"
+                                    }
+                                }
+                            },
+                            {
+                                "@type": "woql:QueryListElement",
+                                "woql:index": {
+                                    "@type": "xsd:nonNegativeInteger",
+                                    "@value": 5
+                                },
+                                "woql:query": {
+                                    "@type": "woql:AddQuad",
+                                    "woql:subject": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "scm:prop"
+                                    },
+                                    "woql:predicate": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "rdfs:range"
+                                    },
+                                    "woql:object": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "xsd:dateTime"
+                                    },
+                                    "woql:graph": {
+                                        "@type": "xsd:string",
+                                        "@value": "schema/main"
+                                    }
+                                }
+                            },
+                            {
+                                "@type": "woql:QueryListElement",
+                                "woql:index": {
+                                    "@type": "xsd:nonNegativeInteger",
+                                    "@value": 6
+                                },
+                                "woql:query": {
+                                    "@type": "woql:AddQuad",
+                                    "woql:subject": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "scm:prop"
+                                    },
+                                    "woql:predicate": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "rdfs:domain"
+                                    },
+                                    "woql:object": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "scm:MyDoc"
+                                    },
+                                    "woql:graph": {
+                                        "@type": "xsd:string",
+                                        "@value": "schema/main"
+                                    }
+                                }
+                            },
+                            {
+                                "@type": "woql:QueryListElement",
+                                "woql:index": {
+                                    "@type": "xsd:nonNegativeInteger",
+                                    "@value": 7
+                                },
+                                "woql:query": {
+                                    "@type": "woql:AddQuad",
+                                    "woql:subject": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "scm:prop"
+                                    },
+                                    "woql:predicate": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "rdfs:label"
+                                    },
+                                    "woql:object": {
+                                        "@type": "woql:Datatype",
+                                        "woql:datatype": {
+                                            "@value": "aaa",
+                                            "@type": "xsd:string",
+                                            "@language": "en"
+                                        }
+                                    },
+                                    "woql:graph": {
+                                        "@type": "xsd:string",
+                                        "@value": "schema/main"
+                                    }
+                                }
+                            },
+                            {
+                                "@type": "woql:QueryListElement",
+                                "woql:index": {
+                                    "@type": "xsd:nonNegativeInteger",
+                                    "@value": 8
+                                },
+                                "woql:query": {
+                                    "@type": "woql:AddQuad",
+                                    "woql:subject": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "scm:prop2"
+                                    },
+                                    "woql:predicate": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "rdf:type"
+                                    },
+                                    "woql:object": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "owl:DatatypeProperty"
+                                    },
+                                    "woql:graph": {
+                                        "@type": "xsd:string",
+                                        "@value": "schema/main"
+                                    }
+                                }
+                            },
+                            {
+                                "@type": "woql:QueryListElement",
+                                "woql:index": {
+                                    "@type": "xsd:nonNegativeInteger",
+                                    "@value": 9
+                                },
+                                "woql:query": {
+                                    "@type": "woql:AddQuad",
+                                    "woql:subject": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "scm:prop2"
+                                    },
+                                    "woql:predicate": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "rdfs:range"
+                                    },
+                                    "woql:object": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "xsd:integer"
+                                    },
+                                    "woql:graph": {
+                                        "@type": "xsd:string",
+                                        "@value": "schema/main"
+                                    }
+                                }
+                            },
+                            {
+                                "@type": "woql:QueryListElement",
+                                "woql:index": {
+                                    "@type": "xsd:nonNegativeInteger",
+                                    "@value": 10
+                                },
+                                "woql:query": {
+                                    "@type": "woql:AddQuad",
+                                    "woql:subject": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "scm:prop2"
+                                    },
+                                    "woql:predicate": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "rdfs:domain"
+                                    },
+                                    "woql:object": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "scm:MyDoc"
+                                    },
+                                    "woql:graph": {
+                                        "@type": "xsd:string",
+                                        "@value": "schema/main"
+                                    }
+                                }
+                            },
+                            {
+                                "@type": "woql:QueryListElement",
+                                "woql:index": {
+                                    "@type": "xsd:nonNegativeInteger",
+                                    "@value": 11
+                                },
+                                "woql:query": {
+                                    "@type": "woql:AddQuad",
+                                    "woql:subject": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "scm:prop2"
+                                    },
+                                    "woql:predicate": {
+                                        "@type": "woql:Node",
+                                        "woql:node": "rdfs:label"
+                                    },
+                                    "woql:object": {
+                                        "@type": "woql:Datatype",
+                                        "woql:datatype": {
+                                            "@value": "abe",
+                                            "@type": "xsd:string",
+                                            "@language": "en"
+                                        }
+                                    },
+                                    "woql:graph": {
+                                        "@type": "xsd:string",
+                                        "@value": "schema/main"
+                                    }
+                                }
+                            }
+                        ]
+                    }
 
 }
