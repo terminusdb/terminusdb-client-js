@@ -45,7 +45,7 @@ describe('triple builder chaining methods', function () {
 
     const woqlObject01=WOQL.node("doc:x", "add_quad").comment("my comment");
 
-    const jsonObj={}
+    const jsonObj={"@type": "woql:Comment", "woql:comment": {"@type": "xsd:string", "@value": "my comment"}}
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
