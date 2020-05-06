@@ -84,4 +84,18 @@ describe('connectionConfig tests', function () {
 
       //console.log(JSON.stringify(connectionConfig.queryURL(), null, 4));
    })
+
+   /*
+   *Generate URL for create / delete graph api endpoint
+   */
+   it('check graphURL', function(){
+      const graphURL="http://localhost:6363/graph/admin/testDB/local/branch/master/schema/main"; 
+      expect(connectionConfig.graphURL('schema','main')).to.equal(graphURL);
+      //expect(connectionConfig.classFrameURL()).to.equal(queryFrameBranch01);
+      //expect(connectionConfig.triplesURL('instance','myschemaName')).to.equal(queryTriplesBranch01);
+
+      //console.log(JSON.stringify(connectionConfig.graphURL('schema','main'), null, 4));
+   })
+
+
 })

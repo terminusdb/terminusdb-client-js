@@ -1,5 +1,4 @@
 'use strict';
-require('./helper.spec');
 const axiosInstance = require('../lib/axiosInstance');
 const expect = require('chai').expect;
 

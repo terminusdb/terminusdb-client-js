@@ -2,7 +2,7 @@ const expect = require('chai').expect;
 
 var View = require('../lib/woqlView');
 
-describe('Viewer rules', function () { 
+/*describe('Viewer rules', function () { 
     it('check the View Rule',function(){
         const woqlRule=View.rule();
         woqlRule.literal(true).type("xdd:coordinatePolygon").scope("cell")
@@ -192,8 +192,6 @@ describe('Viewer rules', function () {
         const config=View.chart();
         var rend = function(){alert("r")};
         
-        /*config.bar("a", "b").literal(true).type("xdd:coordinatePolygon").value(32).size(43).icon({}).color([0,0,0]).text("hello").border({}).renderer("world").render(rend).click(rend).hover(rend).args({}).hidden(true).
-        fill([1,2,3]).stroke(["a", "b", "c"]).strokeWidth(34).dot(false).labelRotate(32.1).type("Bar").axisDomain([]);*/
         config.title("MY CHART TEST").layout("vertical");
         config.bar("a").legendType('square').label('my bar').fill("#00ff00").stroke("#ff0000").strokeWidth(34);
 
@@ -339,5 +337,5 @@ describe('Viewer rules', function () {
 
 
 
-})
+})*/
     
