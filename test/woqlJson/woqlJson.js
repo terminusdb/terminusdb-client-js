@@ -79,19 +79,16 @@ module.exports={
         },
         groupbyJson:{
     "@type": "woql:GroupBy",
-                "woql:variable_list": [
+                "woql:group_by": [
                     {
                         "@type": "woql:VariableListElement",
                         "woql:index": {
                             "@type": "xsd:nonNegativeInteger",
                             "@value": 0
                         },
-                        "woql:variable": {
-                            "@type": "woql:Variable",
-                            "woql:variable_name": {
-                                "@value": "A",
-                                "@type": "xsd:string"
-                            }
+			"woql:variable_name": {
+                            "@value": "A",
+                            "@type": "xsd:string"
                         }
                     },
                     {
@@ -100,17 +97,24 @@ module.exports={
                             "@type": "xsd:nonNegativeInteger",
                             "@value": 1
                         },
-                        "woql:variable": {
-                            "@type": "woql:Variable",
-                            "woql:variable_name": {
-                                "@value": "B",
-                                "@type": "xsd:string"
-                            }
+                        "woql:variable_name": {
+                            "@value": "B",
+                            "@type": "xsd:string"
                         }
                     }
                 ],
-                "woql:group_var": [
-                    "v:C"
+                "woql:group_template": [
+                    {
+                        "@type": "woql:VariableListElement",
+                        "woql:index": {
+                            "@type": "xsd:nonNegativeInteger",
+                            "@value": 0
+                        },
+			"woql:variable_name": {
+                            "@value": "C",
+                            "@type": "xsd:string"
+                        }
+                    }
                 ],
                 "woql:grouped": {
                     "@type": "woql:Variable",
