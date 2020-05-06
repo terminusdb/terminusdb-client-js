@@ -1,7 +1,11 @@
 'use strict';
+require('./helper.spec');
 const turtleSchemaR= require("./extraFile/getSchemaTurtleResponse");
-const axios = require("axios");
+const axiosInstance = require('../lib/axiosInstance');
 const expect = require('chai').expect;
+
+//http://localhost:6363/triples/terminus/schema/main
+//http://localhost:6363/triples/admin/testDB/local/commit/gfhfjkflfgorpyuiioo
 
 describe('get a terminusDB schema', function () {
 
@@ -26,7 +30,7 @@ describe('get a terminusDB schema', function () {
 	it('get a schema of the current database', function(done){
 		var opts={"terminus:encoding": "terminus:turtle"};
 
-		global.sandbox.stub(axios, "get").returns(Promise.resolve({status:200, data: turtleSchemaR}));
+		global.sandbox.stub(axiosInstance, "get").returns(Promise.resolve({status:200, data: turtleSchemaR}));
    		global.client.getSchema(null,opts).then((response)=>{
    			
    			expect(response).to.be.an('string');
