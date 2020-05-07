@@ -44,25 +44,28 @@ describe('connectionConfig tests', function () {
    })
 
 
+   /*
+   * get the schema in owl turtle encoding
+   */
    it('check set class tripleUrl', function(){
-      const classTripleURL="http://localhost:6363/triples/admin/testDB/local/commit/gfhfjkflfgorpyuiioo"
+      const classTripleURL="http://localhost:6363/triples/admin/testDB/local/commit/gfhfjkflfgorpyuiioo/schema/main"
 
      // console.log(JSON.stringify(connectionConfig.triplesURL(), null, 4));
       
-      expect(connectionConfig.triplesURL()).to.equal(classTripleURL);
+      expect(connectionConfig.triplesURL('schema')).to.equal(classTripleURL);
    })
 
    it('check remove the refCommit', function(){
       const queryUrlBranch01="http://localhost:6363/woql/admin/testDB/local/branch/myBranch";
       const queryFrameBranch01="http://localhost:6363/frame/admin/testDB/local/branch/myBranch";
-      const queryTriplesBranch01="http://localhost:6363/triples/admin/testDB/local/branch/myBranch"; 
+      const queryTriplesBranch01="http://localhost:6363/triples/admin/testDB/local/branch/myBranch/schema/main"; 
       /*
       *remove the ref commit it come to the 
       */
       connectionConfig.setRef(false);
       expect(connectionConfig.queryURL()).to.equal(queryUrlBranch01);
       expect(connectionConfig.classFrameURL()).to.equal(queryFrameBranch01);
-      expect(connectionConfig.triplesURL()).to.equal(queryTriplesBranch01);
+      expect(connectionConfig.triplesURL('schema')).to.equal(queryTriplesBranch01);
 
       //console.log(JSON.stringify(connectionConfig.queryURL(), null, 4));
    })
@@ -70,15 +73,29 @@ describe('connectionConfig tests', function () {
    it('check remove the branch', function(){
       const queryUrlBranch01="http://localhost:6363/woql/admin/testDB/local/branch/master";
       const queryFrameBranch01="http://localhost:6363/frame/admin/testDB/local/branch/master";
-      const queryTriplesBranch01="http://localhost:6363/triples/admin/testDB/local/branch/master"; 
+      const queryTriplesBranch01="http://localhost:6363/triples/admin/testDB/local/branch/master/instance/myschemaName"; 
       /*
       *remove the ref commit it come to the 
       */
       connectionConfig.setBranch(false);
       expect(connectionConfig.queryURL()).to.equal(queryUrlBranch01);
       expect(connectionConfig.classFrameURL()).to.equal(queryFrameBranch01);
-      expect(connectionConfig.triplesURL()).to.equal(queryTriplesBranch01);
+      expect(connectionConfig.triplesURL('instance','myschemaName')).to.equal(queryTriplesBranch01);
 
       //console.log(JSON.stringify(connectionConfig.queryURL(), null, 4));
    })
+
+   /*
+   *Generate URL for create / delete graph api endpoint
+   */
+   it('check graphURL', function(){
+      const graphURL="http://localhost:6363/graph/admin/testDB/local/branch/master/schema/main"; 
+      expect(connectionConfig.graphURL('schema','main')).to.equal(graphURL);
+      //expect(connectionConfig.classFrameURL()).to.equal(queryFrameBranch01);
+      //expect(connectionConfig.triplesURL('instance','myschemaName')).to.equal(queryTriplesBranch01);
+
+      //console.log(JSON.stringify(connectionConfig.graphURL('schema','main'), null, 4));
+   })
+
+
 })

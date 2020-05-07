@@ -49,7 +49,7 @@ describe('triple builder chaining methods', function () {
 
     expect(woqlObject.json()).to.eql(jsonObj);
 
-    console.log("__COMMENT__", JSON.stringify(woqlObject01.json(), null, 4)); 
+   // console.log("__COMMENT__", JSON.stringify(woqlObject01.json(), null, 4)); 
 
     /*
     {
