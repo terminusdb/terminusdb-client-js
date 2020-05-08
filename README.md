@@ -1,8 +1,8 @@
-terminus-client
+terminusdb-client
 ===============
 
-[![build status](https://api.travis-ci.com/terminusdb/terminus-client.svg?branch=master)](https://travis-ci.com/terminusdb/terminus-client)
-[![Coverage Status](https://coveralls.io/repos/github/terminusdb/terminus-client/badge.svg?branch=master)](https://coveralls.io/repos/github/terminusdb/terminus-client/badge.svg?branch=master)
+[![build status](https://api.travis-ci.com/terminusdb/terminusdb-client.svg?branch=master)](https://travis-ci.com/terminusdb/terminusdb-client)
+[![Coverage Status](https://coveralls.io/repos/github/terminusdb/terminusdb-client/badge.svg?branch=master)](https://coveralls.io/repos/github/terminusdb/terminusdb-client/badge.svg?branch=master)
 [![code helpers]
 
 Promise based terminus client for the browser and node.js
@@ -23,7 +23,7 @@ Installation is done using the npm install command:
 Using npm:
 
 ```bash
-$ npm install --save @terminusdb/terminus-client
+$ npm install --save @terminusdb/terminusdb-client
 ```
 
 ### Minified Script
@@ -31,15 +31,15 @@ $ npm install --save @terminusdb/terminus-client
 Using cdn:
 
 ```html
-<script src="https://unpkg.com/@terminusdb/terminus-client/dist/terminus-client.min.js"></script>
+<script src="https://unpkg.com/@terminusdb/terminusdb-client/dist/terminusdb-client.min.js"></script>
 ```
 
 Downloading:
 
-Download the terminus-client.min.js file from the /dist directory and save it to your location of choice, then:
+Download the terminusdb-client.min.js file from the /dist directory and save it to your location of choice, then:
 
 ```html
-<script src="http://my.saved.location/terminus-client.min.js"></script>
+<script src="http://my.saved.location/terminusdb-client.min.js"></script>
 ```
 
 ## Usage
@@ -47,7 +47,7 @@ For the [full Documentation](https://terminusdb.com/docs/client_api)
 
 ```javascript
 //
-const TerminusClient = require('@terminusdb/terminus-client');
+const TerminusClient = require('@terminusdb/terminusdb-client');
 
 //Create a new instance of terminusDB client
 const client = new TerminusClient.WOQLClient();
@@ -87,7 +87,7 @@ connections options.
 To initialize `TerminusDB client` with custom options use
 
 ```js
-const TerminusClient = require('@terminusdb/terminus-client')
+const TerminusClient = require('@terminusdb/terminusdb-client')
 
 const client = new TerminusClient.WOQLClient({
     server:"http://localhost/",
