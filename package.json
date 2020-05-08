@@ -1,5 +1,5 @@
 {
-  "name": "@terminusdb/terminus-client",
+  "name": "@terminusdb/terminusdb-client",
   "version": "2.0.0",
   "description": "TerminusDB client library",
   "main": "index.js",
@@ -8,7 +8,8 @@
     "test": "test"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "publishConfig": { "registry": "https://npm.pkg.github.com/" }
   },
   "author": "kevin@datachemist.com",
   "license": "Apache-2.0",
@@ -60,12 +61,12 @@
     "coveralls-after": "nyc report --reporter=text-lcov | coveralls",
     "npm:publish": "npm publish --access public",
     "test-single": "mocha $1",
-    "woql-test" : "mocha test/woqlTripleBuilder.spec.js  test/woql.spec.js test/woqlTripleBuilder01.spec.js test/woqlExtra.spec.js",
+    "woql-test": "mocha test/woqlTripleBuilder.spec.js  test/woql.spec.js test/woqlTripleBuilder01.spec.js test/woqlExtra.spec.js",
     "git-tag": "git tag $npm_package_version"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/terminusdb/terminus-client.git"
+    "url": "git+https://github.com/terminusdb/terminusdb-client.git"
   },
   "keywords": [
     "Terminus",
@@ -75,7 +76,7 @@
     "DB"
   ],
   "bugs": {
-    "url": "https://github.com/terminusdb/terminus-client/issues"
+    "url": "https://github.com/terminusdb/terminusdb-client/issues"
   },
-  "homepage": "https://github.com/terminusdb/terminus-client#readme"
+  "homepage": "https://github.com/terminusdb/terminusdb-client#readme"
 }
