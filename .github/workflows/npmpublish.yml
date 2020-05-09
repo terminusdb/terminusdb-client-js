@@ -30,7 +30,7 @@ jobs:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
       - run: npm ci
-      - run: npm unpublish @terminusdb/terminusdb-client:2.0.0
+      - run: npm unpublish @terminusdb/terminusdb-client@2.0.0
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
