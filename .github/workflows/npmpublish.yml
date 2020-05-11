@@ -29,12 +29,9 @@ jobs:
         with:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: |
-            git config user.email "noreply@github.com"
-            git config user.name "GitHub actions"
-            git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-            npm version patch
+      - run: npm unpublish @terminusdb/terminusdb-client@2.0.4
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.node_api_key_github}}
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
