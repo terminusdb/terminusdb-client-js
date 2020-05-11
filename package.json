@@ -1,6 +1,6 @@
 {
   "name": "@terminusdb/terminusdb-client",
-  "version": "2.0.0",
+  "version": "2.0.1-0",
   "description": "TerminusDB client library",
   "main": "index.js",
   "directories": {
@@ -9,7 +9,9 @@
   },
   "publishConfig": {
     "access": "public",
-    "publishConfig": { "registry": "https://npm.pkg.github.com/" }
+    "publishConfig": {
+      "registry": "https://npm.pkg.github.com/"
+    }
   },
   "author": "kevin@datachemist.com",
   "license": "Apache-2.0",
