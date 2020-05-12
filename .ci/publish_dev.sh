@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo apt install ruby
+sudo apt install ruby ruby-dev
 sudo gem install package_cloud
 npm ci
 echo "\
