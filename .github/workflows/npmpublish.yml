@@ -29,14 +29,7 @@ jobs:
         with:
           node-version: 12
       - run: sudo apt-get install jq
-      - run: |
-          npm ci
-          npm config set registry https://npm.pkg.github.com/
-          export VERSION=$(cat package.json | jq '.version' | sed 's/"//g')
-          echo "::set-env name=VERSION::$VERSION"
-      - run: npm unpublish @terminusdb/terminusdb-client@$VERSION
+      - run: npm ci
+      - run: bash .github/workflows/publish_github.sh
         env:
           NODE_AUTH_TOKEN: ${{secrets.node_api_key_github}}
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
