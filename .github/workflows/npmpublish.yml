@@ -34,6 +34,7 @@ jobs:
           npm config set registry https://npm.pkg.github.com/
       - run: |
           VERSION=$(cat package.json | jq '.version' | sed 's/"//g')
+          echo $VERSION
           npm unpublish "@terminusdb/terminusdb-client@$VERSION"
         env:
           NODE_AUTH_TOKEN: ${{secrets.node_api_key_github}}
