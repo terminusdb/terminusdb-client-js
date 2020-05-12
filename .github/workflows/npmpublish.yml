@@ -29,6 +29,7 @@ jobs:
         with:
           node-version: 12
       - run: sudo apt-get install jq
+      - run: npm ci
       - run: echo "@terminusdb:registry=https://npm.pkg.github.com/:_authToken=${{ secrets.node_api_key_github }}" > ~/.npmrc
       - run: bash .github/workflows/publish_github.sh
         env:
