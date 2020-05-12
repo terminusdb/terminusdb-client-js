@@ -8,6 +8,7 @@ terminusdb-client
 Promise based terminus client for the browser and node.js
 
 ## Requirements
+
 - [TerminusDB](https://github.com/terminusdb/terminus-server)
 - [NodeJS 8.1.4+](https://nodejs.org/en/)
 
@@ -482,6 +483,7 @@ If you have encounter any issues, please report it with your os and environment 
 If you encounter other questions, you can ask in our community [forum](https://community.terminusdb.com/) or [Slack channel](http://bit.ly/terminusdb-slack).
 
 ## Contribute
+
 It will be nice, if you open an issue first so that we can know what is going on, then, fork this repo and push in your ideas. Do not forget to add a bit of test(s) of what value you adding.
 
 Please check [Contributing.md](Contributing.md) for more information.
