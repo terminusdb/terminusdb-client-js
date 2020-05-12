@@ -3,6 +3,23 @@ sudo: required
 node_js:
   - "stable"
 
+stages:
+  - build
+  - deploy_dev
+    if: branch = v2.0
+
+jobs:
+  include:
+    - stage: build
+      script:
+        - npm ci
+        - npm test
+
+    - stage: deploy_dev
+      script:
+        - gem install package_cloud
+        - bash .ci/publish_dev.sh
+
 # travis call prepare
 # Send coverage data to Coveralls
 # Deploy terminusdb/terminus-client
@@ -18,11 +35,6 @@ branches:
 before_deploy: gem install package_cloud
 
 deploy:
-  - provider: script
-    script: bash .ci/publish_dev.sh
-    on:
-      branch: v2.0
-
   - provider: script
     skip_cleanup: true
     keep_history: true
