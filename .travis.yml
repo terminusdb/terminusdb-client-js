@@ -1,12 +1,3 @@
-before_script:
-  - |
-    if [[  $TRAVIS_BRANCH == 'master' && $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*  ]]; then
-      echo "__INCREMENT_VERSION_NUMBER__"
-      export PACKAGE_VERSION=$(npm version patch)
-      npm install -g documentation
-      npm run doc
-    fi
-
 language: node_js
 sudo: required
 node_js:
@@ -22,6 +13,7 @@ branches:
   only:
     - master
     - dev
+    - v2.0
 
 before_deploy:
   - |
@@ -38,12 +30,18 @@ before_deploy:
 
 deploy:
   - provider: script
+    script: bash .ci/publish_dev.sh
+    on:
+      branch: v2.0
+
+  - provider: script
     skip_cleanup: true
     keep_history: true
     script: bash public_pages.sh
     on:
-      branch: master 
+      branch: master
       condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
+
   - provider: releases
     target_commitish : $LAST_HASH
     keep_history: true
