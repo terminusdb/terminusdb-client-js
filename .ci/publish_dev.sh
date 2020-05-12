@@ -1,4 +1,5 @@
 #!/bin/bash
+sudo apt update
 sudo apt install ruby ruby-dev
 sudo gem install package_cloud
 npm ci
