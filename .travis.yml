@@ -15,19 +15,6 @@ branches:
     - dev
     - v2.0
 
-before_deploy:
-  - |
-    if [[ ! $TRAVIS_VAR ]]; then
-      npm run build
-      echo "___TRAVIS_VAR____"
-      export TRAVIS_VAR="1.$TRAVIS_BUILD_NUMBER"
-      git commit --amend -m "[skip travis] version changed $PACKAGE_VERSION"
-      git push https://${GITHUB_TOKEN}@github.com/$TRAVIS_REPO_SLUG HEAD:$TRAVIS_BRANCH
-      git tag -f -a "$PACKAGE_VERSION" -m "new version $PACKAGE_VERSION"
-      export LAST_HASH=$(git ls-remote https://github.com/$TRAVIS_REPO_SLUG $TRAVIS_BRANCH | awk '{ print $1}')
-      echo $NPM_TOKEN
-    fi
-
 deploy:
   - provider: script
     script: bash .ci/publish_dev.sh
