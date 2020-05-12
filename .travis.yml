@@ -15,6 +15,8 @@ branches:
     - dev
     - v2.0
 
+before_deploy: gem install package_cloud
+
 deploy:
   - provider: script
     script: bash .ci/publish_dev.sh
