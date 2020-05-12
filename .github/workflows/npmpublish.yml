@@ -31,10 +31,7 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       - run: sudo apt-get install jq
       - run: npm ci
-      - run: |
-          VERSION=$(cat package.json | jq '.version' | sed 's/"//g')
-          echo "set-env name=VERSION::$VERSION"
-      - run: npm unpublish "@terminusdb/terminusdb-client@$VERSION"
+      - run: npm unpublish @terminusdb/terminusdb-client@2.0.4
         env:
           NODE_AUTH_TOKEN: ${{secrets.node_api_key_github}}
       - run: npm publish
