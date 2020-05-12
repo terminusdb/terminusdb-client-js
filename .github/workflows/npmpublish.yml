@@ -31,7 +31,6 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       - run: sudo apt-get install jq
       - run: npm ci
-      - run: echo "@terminusdb:registry=https://npm.pkg.github.com/:_authToken=${{ secrets.node_api_key_github }}" > .npmrc
       - run: bash .github/workflows/publish_github.sh
         env:
           NODE_AUTH_TOKEN: ${{secrets.node_api_key_github}}
