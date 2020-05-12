@@ -28,9 +28,13 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-          registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: npm unpublish @terminusdb/terminusdb-client@2.0.4
+      - run: sudo apt-get install jq
+      - run: |
+          npm ci
+          npm config set registry https://npm.pkg.github.com/
+      - run: |
+          VERSION=$(cat package.json | jq '.version' | sed 's/"//g')
+          npm unpublish "@terminusdb/terminusdb-client@$VERSION"
         env:
           NODE_AUTH_TOKEN: ${{secrets.node_api_key_github}}
       - run: npm publish
