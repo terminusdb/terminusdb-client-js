@@ -16,8 +16,14 @@ branches:
     - v2.0
 
 deploy:
-  - provider: script
-    script: bash .ci/publish_dev.sh
+  - provider: packagecloud
+    username: rrooij
+    read_timeout: 600
+    repository: development
+    token: "${PACKAGECLOUD_TOKEN}"
+    dist: node
+    package_glob: "*.{tgz}"
+    skip_cleanup: true
     on:
       branch: v2.0
 
