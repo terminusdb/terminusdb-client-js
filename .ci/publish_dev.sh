@@ -4,6 +4,5 @@ echo "\
 always-auth=true
 registry=https://packagecloud.io/rrooij/development/npm/
 //packagecloud.io/rrooij/development/npm/:_authToken=$PACKAGECLOUD_TOKEN
-" > $HOME/.npmrc
-npm set registry https://packagecloud.io/rrooij/development/npm/
+" > $TRAVIS_BUILD_DIR/.npmrc
 npm publish
