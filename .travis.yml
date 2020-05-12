@@ -11,9 +11,6 @@ stages:
 jobs:
   include:
     - stage: build
-      script:
-        - npm ci
-        - npm test
 
     - stage: deploy_dev
       script:
