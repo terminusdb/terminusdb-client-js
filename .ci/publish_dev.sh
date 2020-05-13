@@ -1,5 +1,4 @@
 #!/bin/bash
-npm ci
 echo "\
 registry=https://api.bintray.com/npm/terminusdb/npm-dev
 _auth=$BINTRAY_TOKEN
