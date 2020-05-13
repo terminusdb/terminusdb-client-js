@@ -1,10 +1,10 @@
 #!/bin/bash
 npm ci
 echo "\
-always-auth=true
-registry=https://packagecloud.io/rrooij/development/npm/
-//packagecloud.io/rrooij/development/npm/:_authToken=$PACKAGECLOUD_API_TOKEN
-" > $TRAVIS_BUILD_DIR/.npmrc
+registry=https://api.bintray.com/npm/terminusdb/npm-dev
+_auth=rrooij:$BINTRAY_TOKEN
+email=robin@datachemist.com
+always-auth=true" > $TRAVIS_BUILD_DIR/.npmrc
 VERSION=$(cat package.json | jq '.version' | sed 's/"//g')
-package_cloud yank rrooij/development/node "@terminusdb/terminusdb-client-$VERSION.tgz"
+npm unpublish "@terminusdb/terminusdb-client@$VERSION"
 npm publish

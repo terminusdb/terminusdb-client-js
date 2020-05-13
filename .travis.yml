@@ -14,7 +14,6 @@ jobs:
 
     - stage: deploy_dev
       script:
-        - gem install package_cloud
         - bash .ci/publish_dev.sh
 
 # travis call prepare
@@ -28,8 +27,6 @@ branches:
     - master
     - dev
     - v2.0
-
-before_deploy: gem install package_cloud
 
 deploy:
   - provider: script
