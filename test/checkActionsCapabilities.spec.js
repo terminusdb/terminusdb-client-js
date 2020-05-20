@@ -27,7 +27,9 @@ describe('capabilities Actions', function () {
 		expect(connectionCapabilities.getServerRecord()).to.eql(serverRecordsFromCap);	
 	})
 
-	it('check getJSONContext method', function(){
+/**
+ * Removed as it will change 	
+ * it('check getJSONContext method', function(){
 		const jsonContext={"doc": "terminus:///terminus/document/",
 						    "layer": "http://terminusdb.com/schema/layer#",
 						    "owl": "http://www.w3.org/2002/07/owl#",
@@ -44,5 +46,5 @@ describe('capabilities Actions', function () {
 						};
 		expect(connectionCapabilities.getJSONContext()).to.eql(jsonContext);
 		//console.log(JSON.stringify(connectionCapabilities.getJSONContext('TEST'), null, 4));	
-	})
+	})*/
 })
