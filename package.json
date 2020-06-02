@@ -48,7 +48,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "scripts": {
-    "versionWIN": "echo %npm_package_version%",
+    "fix": "eslint --fix lib/**/*.js",
     "doc": "documentation build lib/** -f html -o public_pages/$npm_package_version/docs",
     "clean": "rimraf -r public_pages/$npm_package_version/dist",
     "test": "npm run cover",

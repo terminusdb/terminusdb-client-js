@@ -7,14 +7,15 @@ describe('connectionConfig tests', function () {
    const startServerUrl="http://localhost:6363/";
    const startDBid="testDB";
    const account="admin"
-   const params={server:startServerUrl,db:startDBid,account:account}
-   const connectionConfig= new ConnectionConfig(params);
+   const params={db:startDBid,account:account,user:account,key:"myKey"}
+   const connectionConfig= new ConnectionConfig(startServerUrl,params);
 
    const dbURL="http://localhost:6363/db/admin/testDB";
 
    it('check get server URL', function(){
       expect(connectionConfig.serverURL()).to.equal(startServerUrl);
-      expect(connectionConfig.dbURL()).to.equal(dbURL); 		
+      expect(connectionConfig.dbURL()).to.equal(dbURL); 	
+      expect(connectionConfig.basicAuth()).to.equal("admin:myKey")
    })
 
    it('check set branch', function(){
