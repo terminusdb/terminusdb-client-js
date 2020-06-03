@@ -33,7 +33,7 @@ deploy:
     registry: "https://registry.npmjs.org/"
     skip_cleanup: true
     access: public
-    email: "francesca@datachemist.com"
+    email: "robin@datachemist.com"
     api_key: $NPM_TOKEN
     keep_history: true
     auth_method: "authToken"
