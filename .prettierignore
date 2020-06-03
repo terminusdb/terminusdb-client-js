@@ -1,2 +1,8 @@
-package-lock.json
 node_modules/
+app.js
+.*
+dist/
+package.json
+package-lock.json
+.ci
+.nyc_output
