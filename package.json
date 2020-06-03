@@ -5,7 +5,8 @@
   "main": "index.js",
   "directories": {
     "lib": "lib",
-    "test": "test"
+    "test": "test",
+    "dist": "dist",
   },
   "publishConfig": {
     "access": "public",
