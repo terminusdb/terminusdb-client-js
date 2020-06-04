@@ -28,7 +28,16 @@ branches:
     - dev
     - v2.0
 
+
+before_deploy:
+  - npm run doc
+
 deploy:
+  - provider: script
+    script: bash .ci/publish_docs.sh
+    on:
+      branch: master
+      tags: true
   - provider: npm
     registry: "https://registry.npmjs.org/"
     skip_cleanup: true
