@@ -1,0 +1,29 @@
+{
+	"env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "parser": "babel-eslint",
+  "extends": [
+    "prettier"
+  ],
+  "plugins": [
+     "prettier"
+  ],
+  "rules": {
+    "import/no-commonjs": "off",
+    "linebreak-style": "off",
+    "prettier/prettier": [
+      "error", 
+      {
+        "printWidth": 100,
+        "semi": false,
+        "singleQuote": true,
+        "trailingComma": "all",
+        "bracketSpacing": false
+      }
+    ]
+  }
+}

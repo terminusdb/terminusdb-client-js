@@ -1,7 +1,8 @@
 node_modules/
-test
 app.js
 .*
 dist/
 package.json
 package-lock.json
+.ci
+.nyc_output

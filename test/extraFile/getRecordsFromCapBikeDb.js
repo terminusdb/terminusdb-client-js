@@ -1,0 +1,43 @@
+module.exports={
+   "@id":"doc:Database%5fadmin%7Cbike",
+   "@type":"terminus:Database",
+   "rdfs:comment":{
+      "@language":"en",
+      "@value":"bike desc"
+   },
+   "rdfs:label":[
+      {
+         "@language":"en",
+         "@value":"admin|bike"
+      },
+      {
+         "@language":"en",
+         "@value":"bike test"
+      }
+   ],
+   "terminus:allow_origin":{
+      "@type":"xsd:string",
+      "@value":"*"
+   },
+   "terminus:database_state":{
+      "@id":"terminus:finalized",
+      "@type":"terminus:DatabaseState"
+   },
+   "terminus:resource_name":{
+      "@type":"xsd:string",
+      "@value":"admin|bike"
+   },
+   "terminus:authority":[
+      "terminus:class_frame",
+      "terminus:create_database",
+      "terminus:create_document",
+      "terminus:delete_database",
+      "terminus:delete_document",
+      "terminus:get_document",
+      "terminus:get_schema",
+      "terminus:read_access",
+      "terminus:update_document",
+      "terminus:update_schema",
+      "terminus:write_access"
+   ]
+}

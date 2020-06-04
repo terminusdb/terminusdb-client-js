@@ -1,16 +1,20 @@
-before_script:
-  - |
-    if [[  $TRAVIS_BRANCH == 'master' && $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*  ]]; then
-      echo "__INCREMENT_VERSION_NUMBER__"
-      export PACKAGE_VERSION=$(npm version patch)
-      npm install -g documentation
-      npm run doc
-    fi
-
 language: node_js
 sudo: required
 node_js:
   - stable
+
+stages:
+  - build
+  - name: deploy_dev
+    if: branch = dev
+
+jobs:
+  include:
+    - stage: build
+
+    - stage: deploy_dev
+      script:
+        - bash .ci/publish_dev.sh
 
 # travis call prepare
 # Send coverage data to Coveralls
@@ -22,46 +26,26 @@ branches:
   only:
     - master
     - dev
+    - v2.0
+
 
 before_deploy:
-  - |
-    if [[ ! $TRAVIS_VAR ]]; then
-      npm run build
-      echo "___TRAVIS_VAR____"
-      export TRAVIS_VAR="1.$TRAVIS_BUILD_NUMBER"
-      git commit --amend -m "[skip travis] version changed $PACKAGE_VERSION"
-      git push https://${GITHUB_TOKEN}@github.com/$TRAVIS_REPO_SLUG HEAD:$TRAVIS_BRANCH
-      git tag -f -a "$PACKAGE_VERSION" -m "new version $PACKAGE_VERSION"
-      export LAST_HASH=$(git ls-remote https://github.com/$TRAVIS_REPO_SLUG refs/heads/$TRAVIS_BRANCH | awk '{ print $1}')
-      echo $NPM_TOKEN
-    fi
+  - npm run doc
 
 deploy:
-  - provider: releases
-    target_commitish : $LAST_HASH
-    keep_history: true
-    api_key: $GITHUB_TOKEN
-    skip_cleanup: true
-    overwrite: true
-    file : package-lock.json
-    on:
-      branch: master 
-      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*  
   - provider: script
-    skip_cleanup: true
-    keep_history: true
-    script: bash public_pages.sh
+    script: bash .ci/publish_docs.sh
     on:
-      branch: master 
-      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*    
+      branch: master
+      tags: true
   - provider: npm
     registry: "https://registry.npmjs.org/"
     skip_cleanup: true
     access: public
-    email: "francesca@datachemist.com"
+    email: "robin@datachemist.com"
     api_key: $NPM_TOKEN
     keep_history: true
     auth_method: "authToken"
     on:
       branch : master
-      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
+      tags: true
