@@ -29,28 +29,11 @@ branches:
     - v2.0
 
 deploy:
-  - provider: script
-    skip_cleanup: true
-    keep_history: true
-    script: bash public_pages.sh
-    on:
-      branch: master 
-      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
-  - provider: releases
-    target_commitish : $LAST_HASH
-    keep_history: true
-    api_key: $GITHUB_TOKEN
-    skip_cleanup: true
-    overwrite: true
-    file : package-lock.json
-    on:
-      branch: master 
-      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*  
   - provider: npm
     registry: "https://registry.npmjs.org/"
     skip_cleanup: true
     access: public
-    email: "francesca@datachemist.com"
+    email: "robin@datachemist.com"
     api_key: $NPM_TOKEN
     keep_history: true
     auth_method: "authToken"
