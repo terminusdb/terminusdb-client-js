@@ -39,4 +39,4 @@ deploy:
     auth_method: "authToken"
     on:
       branch : master
-      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
+      tags: true
