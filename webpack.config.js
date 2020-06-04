@@ -12,7 +12,7 @@ const config = {
   entry: path.resolve(__dirname, 'index.js'),
   // Output
   output: {
-    path: path.resolve(__dirname, `public_pages/${version}/dist`),
+    path: path.resolve(__dirname, `dist/`),
     filename: 'terminus-client.min.js',
     sourceMapFilename: 'terminus-client.min.js.map',
     libraryTarget: 'var',
