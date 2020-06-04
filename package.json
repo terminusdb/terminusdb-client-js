@@ -1,6 +1,6 @@
 {
   "name": "@terminusdb/terminusdb-client",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "TerminusDB client library",
   "main": "index.js",
   "files": [
@@ -51,7 +51,6 @@
   },
   "scripts": {
     "doc": "documentation build lib/** -f html -o public_pages/$npm_package_version/docs",
-    "clean": "rimraf -r public_pages/$npm_package_version/dist",
     "test": "npm run cover",
     "test:only": "mocha --require @babel/register --require @babel/preset-env --recursive  ",
     "test:watch": "mocha --watch --require @babel/register --require @babel/preset-env --recursive",
@@ -59,7 +58,6 @@
     "cover": "nyc --check-coverage --lines 30 npm run test:only ",
     "lint": "eslint --fix ./",
     "build": "webpack --mode production",
-    "prepare": "npm run clean && npm run test",
     "coveralls-after": "nyc report --reporter=text-lcov | coveralls",
     "npm:publish": "npm publish --access public",
     "test-single": "mocha $1",
