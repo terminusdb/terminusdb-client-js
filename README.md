@@ -9,12 +9,12 @@ Promise based terminus client for the browser and node.js
 
 ## Requirements
 
-- [TerminusDB](https://github.com/terminusdb/terminus-server)
+- [TerminusDB](https://github.com/terminusdb/terminusdb-server)
 - [NodeJS 8.1.4+](https://nodejs.org/en/)
 
 ## Installation
 
-Terminus Client can be used as either a Node.js module available through the npm registry, or directly included in web-sites by including the script tag below.
+TerminusDB Client can be used as either a Node.js module available through the npm registry, or directly included in web-sites by including the script tag below.
 
 ### NPM Module
 Before installing, download and install Node.js. Node.js 0.10 or higher is required.
