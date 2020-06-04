@@ -22,12 +22,6 @@ jobs:
 after_script:
   - npm run coveralls-after
 
-branches:
-  only:
-    - master
-    - dev
-    - v2.0
-
 
 before_deploy:
   - npm run doc
