@@ -8,6 +8,9 @@
     "test": "test",
     "dist": "dist"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "kevin@datachemist.com",
   "license": "Apache-2.0",
   "dependencies": {
