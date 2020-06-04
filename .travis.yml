@@ -6,7 +6,7 @@ node_js:
 stages:
   - build
   - name: deploy_dev
-    if: branch = v2.0
+    if: branch = dev
 
 jobs:
   include:
@@ -28,7 +28,16 @@ branches:
     - dev
     - v2.0
 
+
+before_deploy:
+  - npm run doc
+
 deploy:
+  - provider: script
+    script: bash .ci/publish_docs.sh
+    on:
+      branch: master
+      tags: true
   - provider: npm
     registry: "https://registry.npmjs.org/"
     skip_cleanup: true
@@ -39,4 +48,4 @@ deploy:
     auth_method: "authToken"
     on:
       branch : master
-      condition: $TRAVIS_COMMIT_MESSAGE == *"[run deploy]"*
+      tags: true

@@ -8,12 +8,6 @@
     "test": "test",
     "dist": "dist"
   },
-  "publishConfig": {
-    "access": "public",
-    "publishConfig": {
-      "registry": "https://npm.pkg.github.com/"
-    }
-  },
   "author": "kevin@datachemist.com",
   "license": "Apache-2.0",
   "dependencies": {
