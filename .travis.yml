@@ -6,7 +6,7 @@ node_js:
 stages:
   - build
   - name: deploy_dev
-    if: branch = v2.0
+    if: branch = dev
 
 jobs:
   include:
