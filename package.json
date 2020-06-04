@@ -3,6 +3,11 @@
   "version": "2.0.0",
   "description": "TerminusDB client library",
   "main": "index.js",
+  "files": [
+    "*.md",
+    "lib",
+    "dist"
+  ],
   "directories": {
     "lib": "lib",
     "test": "test",
