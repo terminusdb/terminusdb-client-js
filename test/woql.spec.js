@@ -65,7 +65,9 @@ describe('woql queries', function () {
 
 		const woqlObject=WOQL.limit(10).start(0);
 
-		const jsonObj={"@type": "woql:Limit",
+    console.log("___LIMIT___",woqlObject.json())
+
+		/*const jsonObj={"@type": "woql:Limit",
                   "woql:limit": {
                       "@type": "woql:Datatype",
                       "woql:datatype": {
@@ -84,10 +86,10 @@ describe('woql queries', function () {
                       },
                       "woql:query": {}
                   }
-              }
+              }*/
 
 
-		//expect(woqlObject.json()).to.eql(jsonObj);
+		//expect(woqlObject.json()).to.eql({});
 
 	})
 
@@ -260,9 +262,6 @@ describe('woql queries', function () {
   it('check the minus method',function(){
 
     const woqlObject=WOQL.minus("2","1");
-
-    const jsonObj={ minus: [ '2', '1' ] };
-    //console.log(JSON.stringify(woqlObject.json(), null, 4));
     expect(woqlObject.json()).to.eql(woqlMathJson.minusJson);
 
   })
@@ -278,10 +277,7 @@ describe('woql queries', function () {
 
   it('check the times method',function(){
 
-    const woqlObject=WOQL.times("2","1");
-
-    const jsonObj={ times: [ '2', '1' ] };
-    
+    const woqlObject=WOQL.times("2","1");    
     expect(woqlObject.json()).to.eql(woqlMathJson.timesJson);
 
   })
@@ -289,9 +285,14 @@ describe('woql queries', function () {
   it('check the divide method',function(){
 
     const woqlObject=WOQL.divide("2","1");
-
-    const jsonObj={ divide: [ '2', '1' ] };
     expect(woqlObject.json()).to.eql(woqlMathJson.divideJson);
+
+  })
+
+  it('check the div method',function(){
+
+    const woqlObject=WOQL.div("2","1");
+    expect(woqlObject.json()).to.eql(woqlMathJson.divJson);
 
   })
 
