@@ -30,11 +30,6 @@ describe('triple builder', function () {
 
   })
 
-  it('check the delete_class method',function(){
-    const woqlObject=WOQL.delete_class("id");
-    expect(woqlObject.json()).to.eql(woqlDeleteJson);
-  })
-
   it('check the sub method',function(){
     const woqlObject=WOQL.sub("ClassA","ClassB");
     expect(woqlObject.json()).to.eql(woqlJson.subsumptionJson);
@@ -92,9 +87,4 @@ describe('triple builder', function () {
 
   })
 
-  it('check the delete_property method',function(){
-    const woqlObject=WOQL.delete_property("some_property", "string");  
-    expect(woqlObject.json()).to.eql(woqlJson.deletePropertyJson);
-
-  })
 })
