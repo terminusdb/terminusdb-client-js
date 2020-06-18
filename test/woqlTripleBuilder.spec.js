@@ -86,7 +86,6 @@ describe('triple builder chaining methods', function() {
     it('check the max method', function() {
         const woqlObject = WOQL.add_property('P', 'string').max(4)
         expect(woqlObject.json()).to.eql(woqlJson.propertyMaxJson)
-        console.log(JSON.stringify(woqlObject.json(), null, 4))
     })
 
     it('check the min method', function() {
@@ -117,7 +116,6 @@ describe('triple builder chaining methods', function() {
             .label('aaa')
             .property('prop2', 'integer')
             .label('abe')
-
         expect(woqlObject.json()).to.eql(woqlJson.chainDoctypeJson)
         //console.log(JSON.stringify(woqlObject.json(), null, 4));
     })
