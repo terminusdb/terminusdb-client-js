@@ -65,7 +65,6 @@ describe('woql queries', function () {
 
 		const woqlObject=WOQL.limit(10).start(0);
 
-    console.log("___LIMIT___",woqlObject.json())
 
 		/*const jsonObj={"@type": "woql:Limit",
                   "woql:limit": {
