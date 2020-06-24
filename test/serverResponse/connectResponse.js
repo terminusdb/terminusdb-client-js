@@ -4,11 +4,11 @@ module.exports={
       "owl":"http://www.w3.org/2002/07/owl#",
       "rdf":"http://www.w3.org/1999/02/22-rdf-syntax-ns#",
       "rdfs":"http://www.w3.org/2000/01/rdf-schema#",
-      "terminus":"https://localhost/ontology/terminus#",
+      "system":"https://localhost/ontology/system#",
       "xsd":"http://www.w3.org/2001/XMLSchema#"
    },
    "@id":"doc:admin",
-   "@type":"terminus:User",
+   "@type":"system:User",
    "rdfs:comment":{
       "@language":"en",
       "@value":"This is the server super user account"
@@ -17,9 +17,9 @@ module.exports={
       "@language":"en",
       "@value":"Server Admin User"
    },
-   "terminus:authority":{
+   "system:authority":{
       "@id":"doc:access_all_areas",
-      "@type":"terminus:ServerCapability",
+      "@type":"system:ServerCapability",
       "rdfs:comment":{
          "@language":"en",
          "@value":"Access all server functions"
@@ -28,56 +28,56 @@ module.exports={
          "@language":"en",
          "@value":"All Capabilities"
       },
-      "terminus:action":[
+      "system:action":[
          {
-            "@id":"terminus:class_frame",
-            "@type":"terminus:DBAction"
+            "@id":"system:class_frame",
+            "@type":"system:DBAction"
          },
          {
-            "@id":"terminus:create_database",
-            "@type":"terminus:DBAction"
+            "@id":"system:create_database",
+            "@type":"system:DBAction"
          },
          {
-            "@id":"terminus:create_document",
-            "@type":"terminus:DBAction"
+            "@id":"system:create_document",
+            "@type":"system:DBAction"
          },
          {
-            "@id":"terminus:delete_database",
-            "@type":"terminus:DBAction"
+            "@id":"system:delete_database",
+            "@type":"system:DBAction"
          },
          {
-            "@id":"terminus:delete_document",
-            "@type":"terminus:DBAction"
+            "@id":"system:delete_document",
+            "@type":"system:DBAction"
          },
          {
-            "@id":"terminus:get_document",
-            "@type":"terminus:DBAction"
+            "@id":"system:get_document",
+            "@type":"system:DBAction"
          },
          {
-            "@id":"terminus:get_schema",
-            "@type":"terminus:DBAction"
+            "@id":"system:get_schema",
+            "@type":"system:DBAction"
          },
          {
-            "@id":"terminus:update_document",
-            "@type":"terminus:DBAction"
+            "@id":"system:update_document",
+            "@type":"system:DBAction"
          },
          {
-            "@id":"terminus:update_schema",
-            "@type":"terminus:DBAction"
+            "@id":"system:update_schema",
+            "@type":"system:DBAction"
          },
          {
-            "@id":"terminus:woql_select",
-            "@type":"terminus:DBAction"
+            "@id":"system:woql_select",
+            "@type":"system:DBAction"
          },
          {
-            "@id":"terminus:woql_update",
-            "@type":"terminus:DBAction"
+            "@id":"system:woql_update",
+            "@type":"system:DBAction"
          }
       ],
-      "terminus:authority_scope":[
+      "system:authority_scope":[
          {
             "@id":"doc:first_database",
-            "@type":"terminus:Database",
+            "@type":"system:Database",
             "rdfs:comment":{
                "@language":"en",
                "@value":"First TerminusDB"
@@ -86,14 +86,14 @@ module.exports={
                "@language":"en",
                "@value":"First TerminusDB"
             },
-            "terminus:allow_origin":{
+            "system:allow_origin":{
                "@type":"xsd:string",
                "@value":"*"
             }
          },
          {
             "@id":"doc:second_database",
-            "@type":"terminus:Database",
+            "@type":"system:Database",
             "rdfs:comment":{
                "@language":"en",
                "@value":"Second TerminusDB"
@@ -102,14 +102,14 @@ module.exports={
                "@language":"en",
                "@value":"Second TerminusDB"
             },
-            "terminus:allow_origin":{
+            "system:allow_origin":{
                "@type":"xsd:string",
                "@value":"*"
             }
          },
          {
             "@id":"doc:test_database",
-            "@type":"terminus:Database",
+            "@type":"system:Database",
             "rdfs:comment":{
                "@language":"en",
                "@value":"Test TerminusDB"
@@ -118,14 +118,14 @@ module.exports={
                "@language":"en",
                "@value":"Test TerminusDB"
             },
-            "terminus:allow_origin":{
+            "system:allow_origin":{
                "@type":"xsd:string",
                "@value":"*"
             }
          },
          {
             "@id":"doc:terminus",
-            "@type":"terminus:Database",
+            "@type":"system:Database",
             "rdfs:comment":{
                "@language":"en",
                "@value":"The master database contains the meta-data about databases, users and roles"
@@ -134,14 +134,14 @@ module.exports={
                "@language":"en",
                "@value":"Master Database"
             },
-            "terminus:allow_origin":{
+            "system:allow_origin":{
                "@type":"xsd:string",
                "@value":"*"
             }
          },
          {
             "@id":"doc:server",
-            "@type":"terminus:Server",
+            "@type":"system:Server",
             "rdfs:comment":{
                "@language":"en",
                "@value":"The current Database Server itself"
@@ -150,22 +150,22 @@ module.exports={
                "@language":"en",
                "@value":"The DB server"
             },
-            "terminus:allow_origin":{
+            "system:allow_origin":{
                "@type":"xsd:string",
                "@value":"*"
             },
-            "terminus:resource_includes":[
+            "system:resource_includes":[
                {
                   "@id":"doc:first_database",
-                  "@type":"terminus:Database"
+                  "@type":"system:Database"
                },
                {
                   "@id":"doc:second_database",
-                  "@type":"terminus:Database"
+                  "@type":"system:Database"
                },
                {
                   "@id":"doc:terminus",
-                  "@type":"terminus:Database"
+                  "@type":"system:Database"
                }
             ]
          }

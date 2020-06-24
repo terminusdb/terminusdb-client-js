@@ -11,7 +11,7 @@ describe('create new db tests', function () {
                 label: "test02 label"}
 
       const accountid="account01"
-   		global.sandbox.stub(axiosInstance, "post").returns(Promise.resolve({status:200, data: {"terminus:status":"terminus:success"}}));
+   		global.sandbox.stub(axiosInstance, "post").returns(Promise.resolve({status:200, data: {"system:status":"system:success"}}));
    			
       expect(global.client.connectionConfig.serverURL()).to.equal('http://localhost:6363/');
    		global.client.createDatabase(dbid, doc, accountid).then(function(response){
@@ -19,7 +19,7 @@ describe('create new db tests', function () {
  			*check that the connection object is filled well
  			*/
    			
-   		expect(response["terminus:status"]).to.equal("terminus:success");
+   		expect(response["system:status"]).to.equal("system:success");
   		
       }).then(done, done);
 		
