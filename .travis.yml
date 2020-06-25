@@ -7,6 +7,8 @@ stages:
   - build
   - name: deploy_dev
     if: branch = dev
+  - name: deploy_canary
+    if: branch = canary
 
 jobs:
   include:
@@ -15,6 +17,9 @@ jobs:
     - stage: deploy_dev
       script:
         - bash .ci/publish_dev.sh
+    - stage: deploy_canary
+      script:
+        - bash .ci/publish_canary.sh
 
 # travis call prepare
 # Send coverage data to Coveralls
