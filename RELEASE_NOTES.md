@@ -1,3 +1,16 @@
+# TerminusDB Client v2.0.4 Release Notes
+
+## new
+
+Added tests for inferred use of ands
+
+## bug fixes
+
+Fixed remaining bugs in cardinality functions
+Fixed bugs in PUT JSON-LD generation
+Fixed tests for chaining and cardinality functions
+
+
 # TerminusDB Client v2.0.3 Release Notes
 
 ## New

@@ -17,7 +17,7 @@ describe('triple builder chaining methods', function() {
             .graph('schema/main')
             .label('my label', 'en')
 
-        const jsonObj = {}
+        const jsonObj = {}        
 
         expect(woqlObject.json()).to.eql(jsonObj)
         expect(woqlObject2.json()).to.eql(woqlJson.graphMethodJson)
@@ -84,17 +84,17 @@ describe('triple builder chaining methods', function() {
     })
 
     it('check the max method', function() {
-        const woqlObject = WOQL.add_property('P', 'string').max(4)
+        const woqlObject = WOQL.add_property('P', 'string').domain("A").max(4)
         expect(woqlObject.json()).to.eql(woqlJson.propertyMaxJson)
     })
 
     it('check the min method', function() {
-        const woqlObject = WOQL.add_property('P', 'string').min(2)
+        const woqlObject = WOQL.add_property('P', 'string').domain("A").min(2)
         expect(woqlObject.json()).to.eql(woqlJson.propMinJson)
     })
 
     it('check the cardinality method', function() {
-        const woqlObject = WOQL.add_property('P', 'string').cardinality(3)
+        const woqlObject = WOQL.add_property('P', 'string').domain("A").cardinality(3)
         expect(woqlObject.json()).to.eql(woqlJson.propCardinalityJson)
     })
 
@@ -119,4 +119,18 @@ describe('triple builder chaining methods', function() {
         expect(woqlObject.json()).to.eql(woqlJson.chainDoctypeJson)
         //console.log(JSON.stringify(woqlObject.json(), null, 4));
     })
+
+    it('check the dot chaining ', function() {
+        const woqlObject = WOQL.triple('A', 'B', 'C').triple('D', 'E', 'F')
+        const v2 = WOQL.and(
+            WOQL.triple('A', 'B', 'C'),
+            WOQL.triple('D', 'E', 'F')
+        )
+        const v3 = WOQL.triple('A', 'B', 'C').and().triple('D', 'E', 'F')
+        
+        expect(woqlObject.json()).to.eql(v2.json())
+        expect(woqlObject.json()).to.eql(v3.json())
+        //console.log(JSON.stringify(woqlObject.json(), null, 4));
+    })
+
 })

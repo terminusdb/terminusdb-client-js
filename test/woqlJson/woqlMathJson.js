@@ -2,25 +2,25 @@ module.exports={
         divJson:{
           '@type': 'woql:Div',
           'woql:first': {
-            '@type': 'woql:ArithmeticValue',
+            '@type': 'woql:Datatype',
             'woql:datatype': { '@type': 'xsd:decimal', '@value': '2' }
           },
           'woql:second': {
-            '@type': 'woql:ArithmeticValue',
+            '@type': 'woql:Datatype',
             'woql:datatype': { '@type': 'xsd:decimal', '@value': '1' }
           }
         },
         minusJson:{
                 "@type": "woql:Minus",
                 "woql:first": {
-                    "@type": "woql:ArithmeticValue",
+                    "@type": "woql:Datatype",
                     "woql:datatype": {
                         "@type": "xsd:decimal",
                         "@value": "2"
                     }
                 },
                 "woql:second": {
-                    "@type": "woql:ArithmeticValue",
+                    "@type": "woql:Datatype",
                     "woql:datatype": {
                         "@type": "xsd:decimal",
                         "@value": "1"
@@ -40,14 +40,14 @@ module.exports={
         plusJson:{
             "@type": "woql:Plus",
             "woql:first": {
-                "@type": "woql:ArithmeticValue",
+                "@type": "woql:Datatype",
                 "woql:datatype": {
                     "@type": "xsd:decimal",
                     "@value": "2"
                 }
             },
             "woql:second": {
-                "@type": "woql:ArithmeticValue",
+                "@type": "woql:Datatype",
                 "woql:datatype": {
                     "@type": "xsd:decimal",
                     "@value": "1"
@@ -57,14 +57,14 @@ module.exports={
         timesJson:{
                 "@type": "woql:Times",
                 "woql:first": {
-                    "@type": "woql:ArithmeticValue",
+                    "@type": "woql:Datatype",
                     "woql:datatype": {
                         "@type": "xsd:decimal",
                         "@value": "2"
                     }
                 },
                 "woql:second": {
-                    "@type": "woql:ArithmeticValue",
+                    "@type": "woql:Datatype",
                     "woql:datatype": {
                         "@type": "xsd:decimal",
                         "@value": "1"
@@ -74,14 +74,14 @@ module.exports={
         divideJson:{
             "@type": "woql:Divide",
             "woql:first": {
-                "@type": "woql:ArithmeticValue",
+                "@type": "woql:Datatype",
                 "woql:datatype": {
                     "@type": "xsd:decimal",
                     "@value": "2"
                 }
             },
             "woql:second": {
-                "@type": "woql:ArithmeticValue",
+                "@type": "woql:Datatype",
                 "woql:datatype": {
                     "@type": "xsd:decimal",
                     "@value": "1"
@@ -91,14 +91,14 @@ module.exports={
         expJson:{
             "@type": "woql:Exp",
             "woql:first": {
-                "@type": "woql:ArithmeticValue",
+                "@type": "woql:Datatype",
                 "woql:datatype": {
                     "@type": "xsd:decimal",
                     "@value": "2"
                 }
             },
             "woql:second": {
-                "@type": "woql:ArithmeticValue",
+                "@type": "woql:Datatype",
                 "woql:datatype": {
                     "@type": "xsd:decimal",
                     "@value": "1"
