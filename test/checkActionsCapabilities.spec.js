@@ -29,12 +29,3 @@ describe('capabilities Actions', function() {
         expect(connectionCapabilities.getServerRecord()).to.eql(serverRecordsFromCap)
     })
 })
-
-WOQL.with("temp://graph", WOQL.remote('https://terminusdb.github.io/terminus-tutorials/seshat-tutorial/seshat-2018.ttl', {"type":"turtle"}), 
-    WOQL.quad("v:Node", "v:Predicate", "v:Target", "temp://graph"))
-
-WOQL.get(
-    WOQL.as("v:Node")
-        .as("v:Predicate")
-        .as("v:Target")
-    ).remote('https://terminusdb.github.io/terminus-tutorials/seshat-tutorial/seshat-2018.ttl',{"type":"turtle"})
