@@ -14,7 +14,9 @@ describe('connectionConfig tests', function() {
     it('check get server URL', function() {
         expect(connectionConfig.serverURL()).to.equal(startServerUrl)
         expect(connectionConfig.dbURL()).to.equal(dbURL)
-        expect(connectionConfig.basicAuth()).to.equal('admin:myKey')
+        let cconf = {type: 'basic', user: 'admin', key: 'myKey'}
+        console.log(connectionConfig.localAuth())
+        expect(connectionConfig.localAuth()).to.eql(cconf)
     })
 
     it('check set branch', function() {
