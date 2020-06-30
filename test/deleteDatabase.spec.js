@@ -7,10 +7,6 @@ describe('delete a db', function() {
     const dbID = 'bike'
     const organization = 'admin'
 
-    it('check database document record', function() {
-        expect(global.client.connection.getDBRecord(dbID, organization)).to.eql(getCapRecord)
-    })
-
     it('delete a db by id', function(done) {
         global.sandbox
             .stub(axiosInstance, 'delete')
@@ -22,7 +18,7 @@ describe('delete a db', function() {
                 /*
                  *check that the db is deleted
                  */
-                expect(global.client.connection.getDBRecord(dbID, organization)).to.eql(undefined)
+                expect(global.client.connection.get_database(dbID, organization)).to.eql(undefined)
 
                 expect(response['system:status']).to.equal('system:success')
             })
