@@ -1,3 +1,10 @@
+# TerminusDB Client v2.0.5 Release Notes
+
+## bug fixes
+
++ Fixed PUT
++ Some other fixes as well
+
 # TerminusDB Client v2.0.4 Release Notes
 
 ## new
