@@ -45,7 +45,7 @@ module.exports={
                 },
                 "woql:object": {
                     "@type": "woql:Node",
-                    "woql:node": "terminus:Document"
+                    "woql:node": "system:Document"
                 },
                 "woql:graph": {
                     "@type": "xsd:string",

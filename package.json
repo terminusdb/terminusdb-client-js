@@ -16,7 +16,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "author": "kevin@datachemist.com",
+  "author": "kevin@terminusdb.com",
   "license": "Apache-2.0",
   "dependencies": {
     "axios": "^0.19.2",

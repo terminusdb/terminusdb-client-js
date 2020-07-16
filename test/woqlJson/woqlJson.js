@@ -649,11 +649,11 @@ module.exports = {
         },
         'woql:predicate': {
             '@type': 'woql:Node',
-            'woql:node': 'terminus:tag',
+            'woql:node': 'system:tag',
         },
         'woql:object': {
             '@type': 'woql:Node',
-            'woql:node': 'terminus:abstract',
+            'woql:node': 'system:abstract',
         },
         'woql:graph': {
             '@type': 'xsd:string',
@@ -1448,7 +1448,7 @@ module.exports = {
                     },
                     'woql:object': {
                         '@type': 'woql:Node',
-                        'woql:node': 'terminus:Document',
+                        'woql:node': 'system:Document',
                     },
                     'woql:graph': {
                         '@type': 'xsd:string',

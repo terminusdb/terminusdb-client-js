@@ -1,6 +1,6 @@
 module.exports={
     "@id": "doc:server",
-    "@type": "terminus:Server",
+    "@type": "system:Server",
     "rdfs:comment": {
         "@language": "en",
         "@value": "The current Database Server itself"
@@ -9,47 +9,47 @@ module.exports={
         "@language": "en",
         "@value": "The DB server"
     },
-    "terminus:allow_origin": {
+    "system:allow_origin": {
         "@type": "xsd:string",
         "@value": "*"
     },
-    "terminus:resource_includes": [
+    "system:resource_includes": [
         {
             "@id": "doc:Database%5fadmin%7CTEST",
-            "@type": "terminus:Database"
+            "@type": "system:Database"
         },
         {
             "@id": "doc:Database%5fadmin%7Cbike",
-            "@type": "terminus:Database"
+            "@type": "system:Database"
         },
         {
             "@id": "doc:Database%5fadmin%7Ctesting123",
-            "@type": "terminus:Database"
+            "@type": "system:Database"
         },
         {
             "@id": "doc:Database%5ffalse%7Cadfadsf",
-            "@type": "terminus:Database"
+            "@type": "system:Database"
         },
         {
             "@id": "doc:terminus",
-            "@type": "terminus:Database"
+            "@type": "system:Database"
         }
     ],
-    "terminus:resource_name": {
+    "system:resource_name": {
         "@type": "xsd:string",
         "@value": "http://195.201.12.87:6380"
     },
-    "terminus:authority": [
-        "terminus:class_frame",
-        "terminus:create_database",
-        "terminus:create_document",
-        "terminus:delete_database",
-        "terminus:delete_document",
-        "terminus:get_document",
-        "terminus:get_schema",
-        "terminus:read_access",
-        "terminus:update_document",
-        "terminus:update_schema",
-        "terminus:write_access"
+    "system:authority": [
+        "system:class_frame",
+        "system:create_database",
+        "system:create_document",
+        "system:delete_database",
+        "system:delete_document",
+        "system:get_document",
+        "system:get_schema",
+        "system:read_access",
+        "system:update_document",
+        "system:update_schema",
+        "system:write_access"
     ]
 }

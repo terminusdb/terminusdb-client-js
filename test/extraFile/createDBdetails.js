@@ -3,7 +3,7 @@ module.exports={
       "rdfs":"http://www.w3.org/2000/01/rdf-schema#",
       "terminus":"http://terminusdb.com/schema/terminus#"
    },
-   "@type":"terminus:Database",
+   "@type":"system:Database",
    "rdfs:label":{  
       "@language":"en",
       "@value":"test 01"
@@ -12,7 +12,7 @@ module.exports={
       "@language":"en",
       "@value":"description"
    },
-   "terminus:allow_origin":{  
+   "system:allow_origin":{  
       "@type":"xsd:string",
       "@value":"*"
    }

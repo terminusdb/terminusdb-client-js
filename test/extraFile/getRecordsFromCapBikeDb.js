@@ -1,6 +1,6 @@
 module.exports={
    "@id":"doc:Database%5fadmin%7Cbike",
-   "@type":"terminus:Database",
+   "@type":"system:Database",
    "rdfs:comment":{
       "@language":"en",
       "@value":"bike desc"
@@ -15,29 +15,29 @@ module.exports={
          "@value":"bike test"
       }
    ],
-   "terminus:allow_origin":{
+   "system:allow_origin":{
       "@type":"xsd:string",
       "@value":"*"
    },
-   "terminus:database_state":{
-      "@id":"terminus:finalized",
-      "@type":"terminus:DatabaseState"
+   "system:database_state":{
+      "@id":"system:finalized",
+      "@type":"system:DatabaseState"
    },
-   "terminus:resource_name":{
+   "system:resource_name":{
       "@type":"xsd:string",
       "@value":"admin|bike"
    },
-   "terminus:authority":[
-      "terminus:class_frame",
-      "terminus:create_database",
-      "terminus:create_document",
-      "terminus:delete_database",
-      "terminus:delete_document",
-      "terminus:get_document",
-      "terminus:get_schema",
-      "terminus:read_access",
-      "terminus:update_document",
-      "terminus:update_schema",
-      "terminus:write_access"
+   "system:authority":[
+      "system:class_frame",
+      "system:create_database",
+      "system:create_document",
+      "system:delete_database",
+      "system:delete_document",
+      "system:get_document",
+      "system:get_schema",
+      "system:read_access",
+      "system:update_document",
+      "system:update_schema",
+      "system:write_access"
    ]
 }
