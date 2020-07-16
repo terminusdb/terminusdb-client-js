@@ -1,3 +1,16 @@
+# TerminusDB Client v2.0.6 Release Notes
+
+## new
+
+Added support for remote database status resolution to connection capabilities
+Added new databases() api support
+Added global assets_overview query
+Added new general time travel function - getCommitAtTime()
+
+## bug fixes
+
+Fixed bug with idgen 
+
 # TerminusDB Client v2.0.5 Release Notes
 
 ## bug fixes

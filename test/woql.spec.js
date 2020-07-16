@@ -358,7 +358,7 @@ describe('woql queries', function () {
 
     const woqlObject=WOQL.idgen("doc:Station",["v:Start_ID","v:End_ID"],"v:Start_Station_URL");
 
-    //console.log(JSON.stringify(woqlObject.json(), null, 4));
+    //console.log("____ID___GEN___",JSON.stringify(woqlObject.json(), null, 4));
 
     expect(woqlObject.json()).to.eql(idGenJson);
 
