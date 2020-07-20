@@ -16,7 +16,7 @@ describe('get a terminusDB schema', function () {
 	    expect(global.client.connectionConfig.server).to.equal(global.url);
 
 	  // console.log(JSON.stringify(global.client.connectionConfig.triplesURL('schema'), null, 4));
-	    const schemaURL='http://localhost:6363/triples/admin/second_database/local/branch/master/schema/main';
+	    const schemaURL='http://localhost:6363/triples/admin/second_database/local/branch/main/schema/main';
 	    expect(global.client.connectionConfig.triplesURL('schema')).to.equal(schemaURL);
 	})
 
