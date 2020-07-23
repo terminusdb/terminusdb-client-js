@@ -195,7 +195,7 @@ module.exports = {
                         "@type": "xsd:string"
                     }
                 },
-                "woql:descending": {
+                "woql:ascending": {
                     "@type": "xsd:boolean",
                     "@value": true
                 }
@@ -213,7 +213,7 @@ module.exports = {
                         "@type": "xsd:string"
                     }
                 },
-                "woql:descending": {
+                "woql:ascending": {
                     "@type": "xsd:boolean",
                     "@value": true
                 }
@@ -231,7 +231,7 @@ module.exports = {
                         "@type": "xsd:string"
                     }
                 },
-                "woql:descending": {
+                "woql:ascending": {
                     "@type": "xsd:boolean",
                     "@value": true
                 }
