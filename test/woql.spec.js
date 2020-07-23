@@ -448,6 +448,7 @@ describe('woql queries', function () {
     
 
     const woqlObject01=WOQL.order_by("v:A", "v:B asc", "v:C asc").triple("v:A", "v:B", "v:C");
+    
     expect(woqlObject01.json()).to.eql(woqlJson.orderbyJson);
     
     //console.log(JSON.stringify(woqlObject01.json(), null, 4));
