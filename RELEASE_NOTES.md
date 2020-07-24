@@ -1,3 +1,14 @@
+# TerminusDB Client v2.0.7 Release Notes
+
+## new
+
+New Fetch API Call
+
+## bug fixes
+
+Fixed bug in WOQL.order_by to make descending work
+
+
 # TerminusDB Client v2.0.6 Release Notes
 
 ## new
