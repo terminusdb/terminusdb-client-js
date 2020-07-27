@@ -7,6 +7,8 @@ stages:
   - build
   - name: deploy_dev
     if: branch = dev
+  - name: deploy_rc
+    if: branch = rc
   - name: deploy_canary
     if: branch = canary
 
@@ -17,6 +19,11 @@ jobs:
     - stage: deploy_dev
       script:
         - bash .ci/publish_dev.sh
+
+    - stage: deploy_rc
+      script:
+        - bash .ci/publish_rc.sh
+
     - stage: deploy_canary
       script:
         - bash .ci/publish_canary.sh
