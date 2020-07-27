@@ -9,7 +9,7 @@ describe('connectionConfig tests', function() {
     const params = {db: startDBid, organization: organization, user: organization, key: 'myKey'}
     const connectionConfig = new ConnectionConfig(startServerUrl, params)
 
-    const dbURL = 'http://localhost:6363/db/admin/testDB'
+    const dbURL = 'http://localhost:6363/api/db/admin/testDB'
 
     it('check get server URL', function() {
         expect(connectionConfig.serverURL()).to.equal(startServerUrl)
@@ -21,7 +21,7 @@ describe('connectionConfig tests', function() {
 
     it('check set branch', function() {
         connectionConfig.setBranch('myBranch')
-        const queryURLBranch = 'http://localhost:6363/woql/admin/testDB/local/branch/myBranch'
+        const queryURLBranch = 'http://localhost:6363/api/woql/admin/testDB/local/branch/myBranch'
         /*
          * the dbURL dosen't change
          */
@@ -32,14 +32,14 @@ describe('connectionConfig tests', function() {
     it('check set refId', function() {
         connectionConfig.setRef('gfhfjkflfgorpyuiioo')
 
-        const queryURL = 'http://localhost:6363/woql/admin/testDB/local/commit/gfhfjkflfgorpyuiioo'
+        const queryURL = 'http://localhost:6363/api/woql/admin/testDB/local/commit/gfhfjkflfgorpyuiioo'
 
         expect(connectionConfig.queryURL()).to.equal(queryURL)
     })
 
     it('check set class frameUrl', function() {
         const classFrameURL =
-            'http://localhost:6363/frame/admin/testDB/local/commit/gfhfjkflfgorpyuiioo'
+            'http://localhost:6363/api/frame/admin/testDB/local/commit/gfhfjkflfgorpyuiioo'
 
         //console.log(JSON.stringify(connectionConfig.triplesURL(), null, 4));
 
@@ -51,7 +51,7 @@ describe('connectionConfig tests', function() {
      */
     it('check set class tripleUrl', function() {
         const classTripleURL =
-            'http://localhost:6363/triples/admin/testDB/local/commit/gfhfjkflfgorpyuiioo/schema/main'
+            'http://localhost:6363/api/triples/admin/testDB/local/commit/gfhfjkflfgorpyuiioo/schema/main'
 
         // console.log(JSON.stringify(connectionConfig.triplesURL(), null, 4));
 
@@ -59,10 +59,10 @@ describe('connectionConfig tests', function() {
     })
 
     it('check remove the refCommit', function() {
-        const queryUrlBranch01 = 'http://localhost:6363/woql/admin/testDB/local/branch/myBranch'
-        const queryFrameBranch01 = 'http://localhost:6363/frame/admin/testDB/local/branch/myBranch'
+        const queryUrlBranch01 = 'http://localhost:6363/api/woql/admin/testDB/local/branch/myBranch'
+        const queryFrameBranch01 = 'http://localhost:6363/api/frame/admin/testDB/local/branch/myBranch'
         const queryTriplesBranch01 =
-            'http://localhost:6363/triples/admin/testDB/local/branch/myBranch/schema/main'
+            'http://localhost:6363/api/triples/admin/testDB/local/branch/myBranch/schema/main'
         /*
          *remove the ref commit it come to the
          */
@@ -75,10 +75,10 @@ describe('connectionConfig tests', function() {
     })
 
     it('check remove the branch', function() {
-        const queryUrlBranch01 = 'http://localhost:6363/woql/admin/testDB/local/branch/main'
-        const queryFrameBranch01 = 'http://localhost:6363/frame/admin/testDB/local/branch/main'
+        const queryUrlBranch01 = 'http://localhost:6363/api/woql/admin/testDB/local/branch/main'
+        const queryFrameBranch01 = 'http://localhost:6363/api/frame/admin/testDB/local/branch/main'
         const queryTriplesBranch01 =
-            'http://localhost:6363/triples/admin/testDB/local/branch/main/instance/myschemaName'
+            'http://localhost:6363/api/triples/admin/testDB/local/branch/main/instance/myschemaName'
         /*
          *remove the ref commit it come to the
          */
@@ -96,7 +96,7 @@ describe('connectionConfig tests', function() {
      *Generate URL for create / delete graph api endpoint
      */
     it('check graphURL', function() {
-        const graphURL = 'http://localhost:6363/graph/admin/testDB/local/branch/main/schema/main'
+        const graphURL = 'http://localhost:6363/api/graph/admin/testDB/local/branch/main/schema/main'
         expect(connectionConfig.graphURL('schema', 'main')).to.equal(graphURL)
         //expect(connectionConfig.classFrameURL()).to.equal(queryFrameBranch01);
         //expect(connectionConfig.triplesURL('instance','myschemaName')).to.equal(queryTriplesBranch01);
