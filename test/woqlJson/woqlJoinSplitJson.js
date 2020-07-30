@@ -10,7 +10,7 @@ module.exports={joinJson:{
                             "@type": "xsd:string"
                         },
                         "woql:index": {
-                            "@type": "xsd:nonNegativeInteger`",
+                            "@type": "xsd:nonNegativeInteger",
                             "@value": 0
                         }
                     },
@@ -21,7 +21,7 @@ module.exports={joinJson:{
                             "@type": "xsd:string"
                         },
                         "woql:index": {
-                            "@type": "xsd:nonNegativeInteger`",
+                            "@type": "xsd:nonNegativeInteger",
                             "@value": 1
                         }
                     }
