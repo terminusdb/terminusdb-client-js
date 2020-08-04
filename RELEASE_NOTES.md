@@ -1,3 +1,15 @@
+# TerminusDB Client v2.0.8 Release Notes
+
+## new
+
+Ability to set default branch id in connection configuration init 
+WOQL.all()
+WOQL.vars()
+
+## bug-fixes
+
+Removed extraneous ` from nonNegativeInteger datatype
+
 # TerminusDB Client v2.0.7 Release Notes
 
 ## new
