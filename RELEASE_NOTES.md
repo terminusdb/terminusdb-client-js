@@ -5,10 +5,14 @@
 Ability to set default branch id in connection configuration init 
 WOQL.all()
 WOQL.vars()
+WOQL.nuke()
+
+Promoted stable parts of WOQL.schema() and WOQL.lib() to fully fledged WOQLQuery status to enable chaining
 
 ## bug-fixes
 
 Removed extraneous ` from nonNegativeInteger datatype
+Removed export of all internal objects
 
 # TerminusDB Client v2.0.7 Release Notes
 
@@ -19,7 +23,6 @@ New Fetch API Call
 ## bug fixes
 
 Fixed bug in WOQL.order_by to make descending work
-
 
 # TerminusDB Client v2.0.6 Release Notes
 

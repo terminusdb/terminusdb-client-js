@@ -1,8 +1,8 @@
 const expect = require('chai').expect;
 
 var WOQL = require('../lib/woql');
-var WOQLRule = require('../lib/woqlRule');
-var FrameRule = require('../lib/frameRule');
+var WOQLRule = require('../lib/viewer/woqlRule');
+var FrameRule = require('../lib/viewer/frameRule');
 
 describe('woql rules', function () { 
     

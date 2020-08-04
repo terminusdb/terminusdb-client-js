@@ -98,9 +98,182 @@ describe('connectionConfig tests', function() {
     it('check graphURL', function() {
         const graphURL = 'http://localhost:6363/api/graph/admin/testDB/local/branch/main/schema/main'
         expect(connectionConfig.graphURL('schema', 'main')).to.equal(graphURL)
-        //expect(connectionConfig.classFrameURL()).to.equal(queryFrameBranch01);
-        //expect(connectionConfig.triplesURL('instance','myschemaName')).to.equal(queryTriplesBranch01);
-
-        //console.log(JSON.stringify(connectionConfig.graphURL('schema','main'), null, 4));
     })
+
+    it('check copy', function() {
+        let copy = connectionConfig.copy()        
+        expect(connectionConfig).to.eql(copy)
+    })
+
+    it('check update', function() {
+        connectionConfig.update({key:"hello"})   
+        let res = {type: 'basic', user: "admin", key: "hello" }     
+        expect(connectionConfig.local_auth).to.eql(res)
+    })
+
+    it('check local basic auth', function() {
+        connectionConfig.setLocalBasicAuth("hello", "john")   
+        let res = {type: 'basic', user: "john", key: "hello" }     
+        expect(connectionConfig.local_auth).to.eql(res)
+    })
+
+    it('check local auth', function() {
+        let res = {type: 'basic', user: "john", key: "hello" }     
+        connectionConfig.setLocalAuth(res)   
+        expect(connectionConfig.local_auth).to.eql(res)
+    })
+
+    it('check remote auth', function() {
+        let res = {type: 'basic', user: "john", key: "hello" }     
+        connectionConfig.setRemoteAuth(res)   
+        expect(connectionConfig.remoteAuth()).to.eql(res)
+    })
+
+    it('check user URL', function() {
+        let u = connectionConfig.userURL("john")
+        let construct = `${startServerUrl}api/user/john`
+        expect(u).to.equal(construct)
+    })
+
+    it('check organization URL', function() {
+        let o = connectionConfig.organizationURL("us")
+        let construct = `${startServerUrl}api/organization/us`
+        expect(o).to.equal(construct)
+    })
+
+    it('check roles URL', function() {
+        let o = connectionConfig.rolesURL()
+        let construct = `${startServerUrl}api/role`
+        expect(o).to.equal(construct)
+    })
+
+    it('check update roles URL', function() {
+        let o = connectionConfig.updateRolesURL()
+        let construct = `${startServerUrl}api/update_role`
+        expect(o).to.equal(construct)
+    })
+
+    it('check clone URL', function() {
+        let o = connectionConfig.cloneURL("frank")
+        let construct = `${startServerUrl}api/clone/${organization}/frank`
+        expect(o).to.equal(construct)
+    })
+
+    it('check cloneable URL', function() {
+        let o = connectionConfig.cloneableURL()
+        let construct = `${startServerUrl}${organization}/${startDBid}`
+        expect(o).to.equal(construct)
+    })
+
+    it('check pull URL', function() {
+        let o = connectionConfig.pullURL()
+        let construct = `${startServerUrl}api/pull/${organization}/${startDBid}/local/branch/main`
+        expect(o).to.equal(construct)
+    })
+
+    it('check fetch URL', function() {
+        let o = connectionConfig.fetchURL("origin")
+        let construct = `${startServerUrl}api/fetch/${organization}/${startDBid}/origin/_commits`
+        expect(o).to.equal(construct)
+    })
+
+    it('check rebase URL', function() {
+        let o = connectionConfig.rebaseURL()
+        let construct = `${startServerUrl}api/rebase/${organization}/${startDBid}/local/branch/main`
+        expect(o).to.equal(construct)
+    })
+
+    it('check push URL', function() {
+        let o = connectionConfig.pushURL()
+        let construct = `${startServerUrl}api/push/${organization}/${startDBid}/local/branch/main`
+        expect(o).to.equal(construct)
+    })
+
+    it('check branch URL', function() {
+        let o = connectionConfig.branchURL("dev")
+        let construct = `${startServerUrl}api/branch/${organization}/${startDBid}/local/branch/dev`
+        expect(o).to.equal(construct)
+    })
+
+    it('check api URL', function() {
+        let o = connectionConfig.apiURL()
+        let construct = `${startServerUrl}api/`
+        expect(o).to.equal(construct)
+    })
+
+    it('check db', function() {
+        let o = connectionConfig.db()
+        expect(o).to.equal(startDBid)
+    })
+
+    it('check branch', function() {
+        let o = connectionConfig.branch()
+        expect(o).to.equal(connectionConfig.default_branch_id)
+    })
+
+    it('check ref', function() {
+        let o = connectionConfig.ref()
+        expect(o).to.equal(false)
+    })
+
+    it('check organization', function() {
+        let o = connectionConfig.organization()
+        expect(o).to.equal("admin")
+    })
+
+    it('check repo', function() {
+        let o = connectionConfig.repo()
+        expect(o).to.equal("local")
+    })
+
+    it('check local user', function() {
+        let o = connectionConfig.local_user()
+        expect(o).to.equal("john")
+    })
+
+    it('check user', function() {
+        let o = connectionConfig.user()
+        expect(o).to.equal("john")
+    })
+
+    it('check parseServerURL', function() {
+        let o = connectionConfig.parseServerURL("https:/adf.com/")
+        expect(o).to.equal(false)
+    })
+
+    it('check clearCursor', function() {
+        connectionConfig.clearCursor()
+        expect(connectionConfig.db()).to.equal(false)
+    })
+
+    it('check setCursor', function() {
+        connectionConfig.setCursor(false, "abc", "origin")
+        expect(connectionConfig.db()).to.equal("abc")
+    })
+
+    it('check setError', function() {
+        connectionConfig.setError("error 123")
+        expect(connectionConfig.connection_error).to.equal("error 123")
+    })
+
+    it('check setDB', function() {
+        connectionConfig.setDB("123")
+        expect(connectionConfig.db()).to.equal("123")
+    })
+
+    it('check setOrganization', function() {
+        connectionConfig.setOrganization("123")
+        expect(connectionConfig.organization()).to.equal("123")
+    })
+
+    it('check setRepo', function() {
+        connectionConfig.setRepo("origin")
+        expect(connectionConfig.repo()).to.equal("origin")
+    })
+
+    //const startServerUrl = 'http://localhost:6363/'
+    //const startDBid = 'testDB'
+    //const organization = 'admin'
+
+
 })

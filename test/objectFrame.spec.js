@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 
-var ObjectFrame = require('../lib/objectFrame');
+var ObjectFrame = require('../lib/viewer/objectFrame');
 
 describe('Object Frame Rules', function () { 
     it('check the Object Frame constructor',function(){
