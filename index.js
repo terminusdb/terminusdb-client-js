@@ -1,19 +1,10 @@
 module.exports = {
     WOQLClient:require('./lib/woqlClient'),
-    ConnectionCapabilities:require('./lib/connectionCapabilities'),
-    ConnectionConfig:require('./lib/connectionConfig'),
-    ErrorMessage:require('./lib/errorMessage'),
     UTILS:require('./lib/utils'),
-    WOQLResult:require('./lib/woqlResult'),
-    WOQLRule:require('./lib/woqlRule'),
-    FrameRule:require('./lib/frameRule'),
-    View:require('./lib/woqlView'),
-    DocumentFrame:require('./lib/viewer/documentFrame'),
-    WOQLGraph:require('./lib/viewer/woqlGraph'),
-    WOQLTable:require('./lib/viewer/woqlTable'),
-    WOQLChooser:require('./lib/viewer/woqlChooser'),
-    WOQLChart:require('./lib/viewer/woqlChart'),
-    WOQLStream:require('./lib/viewer/woqlStream'),
+    View:require('./lib/viewer/woqlView'),
     WOQL:require('./lib/woql'),
+    WOQLResult:require('./lib/viewer/woqlResult'),
+    WOQLTable:require('./lib/viewer/woqlTable'),
+    WOQLGraph:require('./lib/viewer/woqlGraph'),
     axiosInstance:require('./lib/axiosInstance')
 };
