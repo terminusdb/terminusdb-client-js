@@ -1,3 +1,21 @@
+# TerminusDB Client v2.0.9 Release Notes
+
+## new
+
+Ability to set no commit as starting point for a new branch in client branch api 
+
+Functions for more convenient navigation of the commit graph 
+* lib().commit_history()
+* lib().commit_future()
+* lib().commit_timeline()
+* lib().next_commits()
+* lib().previous_commits()
+* lib().active_commit()
+
+## bug-fixes
+
+Fixed automatic type detection to recognise terminusdb:/// iris
+
 # TerminusDB Client v2.0.8 Release Notes
 
 ## new
