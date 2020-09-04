@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 
-var View = require('../lib/woqlView');
+var View = require('../lib/viewer/woqlView');
 
 /*describe('Viewer rules', function () { 
     it('check the View Rule',function(){
