@@ -1,3 +1,12 @@
+# TerminusDB Client v3.0.0
+
+The liberation release 
+
+## new
+
+support for including prefixes
+full support for Terminus Server Collaboration API
+
 # TerminusDB Client v2.0.9 Release Notes
 
 ## new
