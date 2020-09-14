@@ -183,6 +183,12 @@ describe('connectionConfig tests', function() {
         expect(o).to.equal(construct)
     })
 
+    it('check reset URL', function() {
+        let o = connectionConfig.resetURL()
+        let construct = `${startServerUrl}api/reset/${organization}/${startDBid}/local/branch/main`
+        expect(o).to.equal(construct)
+    })
+
     it('check push URL', function() {
         let o = connectionConfig.pushURL()
         let construct = `${startServerUrl}api/push/${organization}/${startDBid}/local/branch/main`
