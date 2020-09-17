@@ -78,19 +78,19 @@ describe('woql rules', function () {
     it('Check woql Rule set Variables',function(){
         const woqlRule = new WOQLRule();
         woqlRule.setVariables(["a", "b"])
-        const jsonObj = {pattern: {variables: ["v:a", "v:b"] }};
+        const jsonObj = {pattern: {variables: ["a", "b"] }};
         expect(woqlRule.json()).to.eql(jsonObj);        
     })
     it('Check woql Rule set Variable',function(){
         const woqlRule = new WOQLRule();
         woqlRule.scope("row").v("a").in(4);
-        const jsonObj = {pattern: {scope: "row", constraints: {"v:a": [[4]]}}};
+        const jsonObj = {pattern: {scope: "row", constraints: {"a": [[4]]}}};
         expect(woqlRule.json()).to.eql(jsonObj);        
     })
     it('Check woql Rule edge',function(){
         const woqlRule = new WOQLRule();
         woqlRule.edge("a", "b");
-        const jsonObj = {pattern: {scope: "edge", source: "v:a", target: "v:b", variables: ["v:a"] }};
+        const jsonObj = {pattern: {scope: "edge", source: "a", target: "b", variables: ["a"] }};
         expect(woqlRule.json()).to.eql(jsonObj);        
     })
     it('Check woql Rule rownum',function(){
@@ -102,44 +102,44 @@ describe('woql rules', function () {
     it('Check woql Rule in',function(){
         const woqlRule = new WOQLRule();
         woqlRule.v("a").in("a", "b", "abc");
-        const jsonObj = {pattern: {constraints: {"v:a": [["a", "b", "abc"]]}}};
+        const jsonObj = {pattern: {constraints: {"a": [["a", "b", "abc"]]}}};
         expect(woqlRule.json()).to.eql(jsonObj);        
     })
     it('Check woql Rule filter',function(){
         const woqlRule = new WOQLRule();
         var ff = function(a){ if (a == "abc") return true; return false;}
         woqlRule.v("a").filter(eval(ff));
-        const jsonObj = {pattern: {constraints: {"v:a": [ff]}}};
+        const jsonObj = {pattern: {constraints: {"a": [ff]}}};
         expect(woqlRule.json()).to.eql(jsonObj);        
     })
     it('Check woql Rule matchRow',function(){
         const r1 = new WOQLRule();
         r1.scope("row").v("a").in(1).rownum(3);  
-        const row = {"v:a": 1, "v:b": "43"};
+        const row = {"a": 1, "b": "43"};
         expect(r1.matchRow([r1], row, 3).length).to.equal(1);        
     })
     it('Check woql Rule matchColumn',function(){
         const r1 = new WOQLRule();
         r1.scope("column").vars("b");  
-        expect(r1.matchColumn([r1], "v:b").length).to.equal(1);        
+        expect(r1.matchColumn([r1], "b").length).to.equal(1);        
     })
     it('Check woql Rule matchCell',function(){
         const r1 = new WOQLRule();
         r1.vars("b");  
-        const row = {"v:a": 1, "v:b": "43"};
-        expect(r1.matchCell([r1], row, "v:b", 1).length).to.equal(1);        
+        const row = {"a": 1, "b": "43"};
+        expect(r1.matchCell([r1], row, "b", 1).length).to.equal(1);        
     })
     it('Check woql Rule matchPair',function(){
         const r1 = new WOQLRule();
         r1.edge("a", "b");  
-        const row = {"v:a": 1, "v:b": "43"};
-        expect(r1.matchPair([r1], row, "v:a", "v:b").length).to.equal(1);        
+        const row = {"a": 1, "b": "43"};
+        expect(r1.matchPair([r1], row, "a", "b").length).to.equal(1);        
     })
     it('Check woql Rule matchNode',function(){
         const r1 = new WOQLRule();
-        r1.scope("node").vars("v:a").in(">0");  
-        const row = {"v:a": 1, "v:b": "43"};
-        expect(r1.matchNode([r1], row, "v:a").length).to.equal(1);        
+        r1.scope("node").vars("a").in(">0");  
+        const row = {"a": 1, "b": "43"};
+        expect(r1.matchNode([r1], row, "a").length).to.equal(1);        
     })
     it('Check frame Rule scope',function(){
         const fr = new FrameRule();
