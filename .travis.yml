@@ -18,6 +18,7 @@ jobs:
 
     - stage: deploy_dev
       script:
+        - npm run build
         - bash .ci/publish_dev.sh
 
     - stage: deploy_rc
