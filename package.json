@@ -20,7 +20,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "axios": "^0.19.2",
-    "documentation": "^12.1.4"
+    "documentation": "^13.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
