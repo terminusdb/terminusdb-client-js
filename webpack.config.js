@@ -13,9 +13,9 @@ const config = {
   // Output
   output: {
     path: path.resolve(__dirname, `dist/`),
-    filename: 'terminus-client.min.js',
-    sourceMapFilename: 'terminus-client.min.js.map',
-    libraryTarget: 'var',
+    filename: 'terminusdb-client.min.js',
+    sourceMapFilename: 'terminusdb-client.min.js.map',
+    libraryTarget: 'umd',
     library: 'TerminusClient',
   },
   node: {
