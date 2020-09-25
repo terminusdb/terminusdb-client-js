@@ -50,10 +50,14 @@ For the [full Documentation](https://terminusdb.com/docs/client_api)
 const TerminusClient = require('@terminusdb/terminusdb-client');
 
 //Create a new instance of terminusDB client
-const client = new TerminusClient.WOQLClient();
+const client = new TerminusClient.WOQLClient(http://localhost:6363/,{
+    dbid:"test_db",
+    user:"admin",
+    key:"my_secret_key"
+});
 
 //Connect to a TerminusDB server at the given URI with an API key
-client.connect("http://localhost:6363/", 'myKey').
+client.connect().
  .then(function (response) {
     // handle success
     console.log(response);
@@ -70,7 +74,7 @@ client.connect("http://localhost:6363/", 'myKey').
 //use async/await.
 async function getCapabilities() {
   try {
-    const response = await client.connect("http://localhost:6363/", 'myKey');
+    const response = await client.connect();
     console.log(response);
   } catch (err) {
     console.error(err);
