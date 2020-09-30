@@ -1,3 +1,18 @@
+# TerminusDB Client v3.0.3
+
+The liberation release 
+
+## new
+
+* Upgrade dependencies
+* Path predicate directions
+* Add switch for forcing db deletes
+
+## fixes
+
+* Fix length and predicate pattern compilation
+* Fix bug with non-text nodes
+
 # TerminusDB Client v3.0.0
 
 The liberation release 
