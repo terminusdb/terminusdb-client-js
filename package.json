@@ -1,6 +1,6 @@
 {
   "name": "@terminusdb/terminusdb-client",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "TerminusDB client library",
   "main": "index.js",
   "files": [
@@ -66,7 +66,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/terminusdb/terminusdb-client.git"
+    "url": "git+https://github.com/terminusdb/terminusdb-client-js.git"
   },
   "keywords": [
     "Terminus",
