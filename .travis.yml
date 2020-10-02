@@ -30,7 +30,7 @@ jobs:
 
     - stage: deploy_canary
       script:
-        - npn run build
+        - npm run build
         - bash .ci/publish_canary.sh
 
 
