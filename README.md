@@ -43,7 +43,7 @@ Download the terminusdb-client.min.js file from the /dist directory and save it 
 ```
 
 ## Usage
-For the [full Documentation](https://terminusdb.com/docs/client_api)
+For the [full Documentation](https://terminusdb.com/docs/reference/js-client)
 
 ```javascript
 //
@@ -57,7 +57,7 @@ const client = new TerminusClient.WOQLClient("https://127.0.0.1:6363/",{
 });
 
 //Connect to a TerminusDB server at the given URI with an API key
-client.connect().
+client.connect()
  .then(function (response) {
     // handle success
     console.log(response);
@@ -89,6 +89,8 @@ async function getCapabilities() {
 connections options.
 
 To initialize `TerminusDB client` with custom options use
+NOTE: `user: "admin", "key": "root"` are the default values
+if you've just created a graph and didn't update the credentials
 
 ```js
 const TerminusClient = require('@terminusdb/terminusdb-client')
@@ -102,7 +104,7 @@ const client = new TerminusClient.WOQLClient("https://127.0.0.1:6363/", {
 ```
 ## API
 
-The API is documented at: https://terminusdb.github.io/terminusdb-client/
+The API is documented at: https://terminusdb.com/docs/reference/js-client/core/#terminusdb-client-api
 
 ## Report Issues
 
@@ -121,3 +123,4 @@ Please check [Contributing.md](Contributing.md) for more information.
 The APACHE 2.0 License
 
 Copyright (c) 2019
+
