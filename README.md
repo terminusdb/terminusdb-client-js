@@ -45,6 +45,9 @@ Download the terminusdb-client.min.js file from the /dist directory and save it 
 ## Usage
 For the [full Documentation](https://terminusdb.com/docs/reference/js-client)
 
+NOTE: `user: "admin", "key": "root"` are the default credentials
+if you've just created a graph and didn't update them
+
 ```javascript
 //
 const TerminusClient = require('@terminusdb/terminusdb-client');
@@ -89,8 +92,6 @@ async function getCapabilities() {
 connections options.
 
 To initialize `TerminusDB client` with custom options use
-NOTE: `user: "admin", "key": "root"` are the default values
-if you've just created a graph and didn't update the credentials
 
 ```js
 const TerminusClient = require('@terminusdb/terminusdb-client')
