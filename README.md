@@ -45,7 +45,7 @@ Download the terminusdb-client.min.js file from the /dist directory and save it 
 ## Usage
 
 This example creates a simple Express.js server that will post an account to
-a database with the id "banker" and the default "admin" user
+a database with the id "banker" and the default "admin" user with password "root"
 For the [full Documentation](https://terminusdb.com/docs/reference/js-client)
 
 ```javascript
@@ -86,7 +86,7 @@ async function postAccount() {
   }
 }
 
-app.post("/mem", (req, res) => {
+app.post("/account", (req, res) => {
   postAccount().then((dbres) => res.send(JSON.stringify(dbres)));
 });
 
