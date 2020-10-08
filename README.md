@@ -114,7 +114,7 @@ To initialize `TerminusDB client` with custom options use
 ```js
 const TerminusClient = require("@terminusdb/terminusdb-client");
 
-const client = new TerminusClient.WOQLClient("http://localhost/", {
+const client = new TerminusClient.WOQLClient("https://127.0.0.1:6363/", {
   dbid: "test_db",
   user: "admin",
   key: "my_secret_key",
@@ -123,7 +123,7 @@ const client = new TerminusClient.WOQLClient("http://localhost/", {
 
 ## API
 
-The API is documented at: https://terminusdb.github.io/terminusdb-client/
+The API is documented at: https://terminusdb.com/docs/reference/js-client/core/#terminusdb-client-api
 
 ## Report Issues
 
