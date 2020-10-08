@@ -43,17 +43,24 @@ Download the terminusdb-client.min.js file from the /dist directory and save it 
 ```
 
 ## Usage
-For the [full Documentation](https://terminusdb.com/docs/client_api)
+For the [full Documentation](https://terminusdb.com/docs/reference/js-client)
+
+NOTE: `user: "admin", "key": "root"` are the default credentials
+if you've just created a graph and didn't update them
 
 ```javascript
 //
 const TerminusClient = require('@terminusdb/terminusdb-client');
 
 //Create a new instance of terminusDB client
-const client = new TerminusClient.WOQLClient();
+const client = new TerminusClient.WOQLClient("https://127.0.0.1:6363/",{
+    dbid:"test_db",
+    user:"admin",
+    key:"my_secret_key"
+});
 
 //Connect to a TerminusDB server at the given URI with an API key
-client.connect("http://localhost:6363/", 'myKey').
+client.connect()
  .then(function (response) {
     // handle success
     console.log(response);
@@ -70,7 +77,7 @@ client.connect("http://localhost:6363/", 'myKey').
 //use async/await.
 async function getCapabilities() {
   try {
-    const response = await client.connect("http://localhost:6363/", 'myKey');
+    const response = await client.connect();
     console.log(response);
   } catch (err) {
     console.error(err);
@@ -89,7 +96,7 @@ To initialize `TerminusDB client` with custom options use
 ```js
 const TerminusClient = require('@terminusdb/terminusdb-client')
 
-const client = new TerminusClient.WOQLClient("http://localhost/", {
+const client = new TerminusClient.WOQLClient("https://127.0.0.1:6363/", {
     dbid:"test_db",
     user:"admin",
     key:"my_secret_key"
@@ -98,7 +105,7 @@ const client = new TerminusClient.WOQLClient("http://localhost/", {
 ```
 ## API
 
-The API is documented at: https://terminusdb.github.io/terminusdb-client/
+The API is documented at: https://terminusdb.com/docs/reference/js-client/core/#terminusdb-client-api
 
 ## Report Issues
 
@@ -117,3 +124,4 @@ Please check [Contributing.md](Contributing.md) for more information.
 The APACHE 2.0 License
 
 Copyright (c) 2019
+
