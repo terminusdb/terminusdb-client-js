@@ -1,7 +1,7 @@
 language: node_js
 sudo: required
 node_js:
-  - "stable"
+  - stable
 
 stages:
   - build
@@ -25,10 +25,12 @@ jobs:
 
     - stage: deploy_rc
       script:
+        - npm run build
         - bash .ci/publish_rc.sh
 
     - stage: deploy_canary
       script:
+        - npm run build
         - bash .ci/publish_canary.sh
 
 
