@@ -1,3 +1,19 @@
+# TerminusDB Client v4.0.0
+
+## new
+
+* add update_quad
+* add update_triple
+* add woql word once
+* add context to using
+* add type_of
+* better error reporting
+* add csv uploading
+
+## fixes
+
+* Fix group_by
+
 # TerminusDB Client v3.0.3
 
 The liberation release 
