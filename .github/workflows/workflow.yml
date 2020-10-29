@@ -14,13 +14,12 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Extract branch name
-      shell: bash
-      run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//_/g')"
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: 14
     - run: npm install
     - run: npm run build
-    - run: bash ".ci/publish_$BRANCH_NAME.sh"
+    - run: bash ".ci/publish_${GITHUB_REF##*/}.sh"
+      env:
+        BINTRAY_API_TOKEN: ${{ secrets.BINTRAY_API_TOKEN }}
