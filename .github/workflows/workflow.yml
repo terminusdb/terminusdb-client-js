@@ -14,15 +14,13 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+    - name: Extract branch name
+      shell: bash
+      run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//_/g')"
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: 14
-    - name: Set up bintray
-      run:
-        |
-          curl -u "rrooij:$BINTRAY_API_TOKEN" https://api.bintray.com/npm/terminusdb/npm-dev/auth > .npmrc
-          echo "@terminusdb:$(cat .npmrc)" > .npmrc
     - run: npm install
     - run: npm run build
-    - run: bash ".ci/publish_${GITHUB_REF##*/}.sh"
+    - run: bash ".ci/publish_$BRANCH_NAME.sh"
