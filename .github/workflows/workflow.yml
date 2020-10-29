@@ -5,7 +5,6 @@ on:
       - dev
       - canary
       - rc
-      - master
 
 jobs:
   setup-build-publish-deploy:
@@ -20,6 +19,6 @@ jobs:
         node-version: 14
     - run: npm install
     - run: npm run build
-    - run: bash ".ci/publish_${GITHUB_REF##*/}.sh"
+    - run: bash ".ci/publish_bintray.sh" "${GITHUB_REF##*/}"
       env:
         BINTRAY_API_TOKEN: ${{ secrets.BINTRAY_API_TOKEN }}
