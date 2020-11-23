@@ -10,6 +10,7 @@ describe('Object Frame Rules', function () {
         expect(frames).to.eql(jsonObj);
     })
     it('check the Class Frame Loading',function(){
+        this.skip()
         const dof = new ObjectFrame("mycls");
         dof.subjid = "doc:utop";
         const frames = [{domain: "mycls", domainValue : "doc:utop", property: "mprop", range: "xsd:string", type: "datatypeProperty", rangeValue: {"@value": "", "@type": "xsd:string"}, label: {"@value": "Prop label", "@type": "xsd:string"}}];
@@ -19,7 +20,7 @@ describe('Object Frame Rules', function () {
         const extract = dof.extract();
         const jsonObj= {"@id": "doc:utop", "@type": "mycls", mprop: [{ "@type": "xsd:string", "@value": "helloworld"}]};
         expect(extract).to.eql(jsonObj);
-    }).skip()
+    })
 })
 
 
