@@ -1,38 +1,16 @@
 language: node_js
 sudo: required
 node_js:
-  - "stable"
+  - stable
 
 stages:
   - build
-  - name: deploy_dev
-    if: branch = dev
-  - name: deploy_rc
-    if: branch = rc
-  - name: deploy_canary
-    if: branch = canary
 
 jobs:
   include:
     - stage: build
       after_script:
         - npm run coveralls-after
-
-    - stage: deploy_dev
-      script:
-        - npm run build
-        - bash .ci/publish_dev.sh
-
-    - stage: deploy_rc
-      script:
-        - npm run build
-        - bash .ci/publish_rc.sh
-
-    - stage: deploy_canary
-      script:
-        - npn run build
-        - bash .ci/publish_canary.sh
-
 
 before_deploy:
   - npm run doc

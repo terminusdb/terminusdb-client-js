@@ -756,7 +756,7 @@ module.exports = {
                     '@type': 'woql:AddQuad',
                     'woql:subject': {
                         '@type': 'woql:Node',
-                        'woql:node': 'scm:P_max',
+                        'woql:node': 'scm:P_max_4',
                     },
                     'woql:predicate': {
                         '@type': 'woql:Node',
@@ -782,7 +782,7 @@ module.exports = {
                     '@type': 'woql:AddQuad',
                     'woql:subject': {
                         '@type': 'woql:Node',
-                        'woql:node': 'scm:P_max',
+                        'woql:node': 'scm:P_max_4',
                     },
                     'woql:predicate': {
                         '@type': 'woql:Node',
@@ -808,7 +808,7 @@ module.exports = {
                     '@type': 'woql:AddQuad',
                     'woql:subject': {
                         '@type': 'woql:Node',
-                        'woql:node': 'scm:P_max',
+                        'woql:node': 'scm:P_max_4',
                     },
                     'woql:predicate': {
                         '@type': 'woql:Node',
@@ -845,7 +845,7 @@ module.exports = {
                     },
                     'woql:object': {
                         '@type': 'woql:Node',
-                        'woql:node': 'scm:P_max',
+                        'woql:node': 'scm:P_max_4',
                     },
                     'woql:graph': {
                         '@type': 'xsd:string',
@@ -946,7 +946,7 @@ module.exports = {
                     '@type': 'woql:AddQuad',
                     'woql:subject': {
                         '@type': 'woql:Node',
-                        'woql:node': 'scm:P_min',
+                        'woql:node': 'scm:P_min_2',
                     },
                     'woql:predicate': {
                         '@type': 'woql:Node',
@@ -972,7 +972,7 @@ module.exports = {
                     '@type': 'woql:AddQuad',
                     'woql:subject': {
                         '@type': 'woql:Node',
-                        'woql:node': 'scm:P_min',
+                        'woql:node': 'scm:P_min_2',
                     },
                     'woql:predicate': {
                         '@type': 'woql:Node',
@@ -998,7 +998,7 @@ module.exports = {
                     '@type': 'woql:AddQuad',
                     'woql:subject': {
                         '@type': 'woql:Node',
-                        'woql:node': 'scm:P_min',
+                        'woql:node': 'scm:P_min_2',
                     },
                     'woql:predicate': {
                         '@type': 'woql:Node',
@@ -1035,7 +1035,7 @@ module.exports = {
                     },
                     'woql:object': {
                         '@type': 'woql:Node',
-                        'woql:node': 'scm:P_min',
+                        'woql:node': 'scm:P_min_2',
                     },
                     'woql:graph': {
                         '@type': 'xsd:string',
@@ -1136,7 +1136,7 @@ module.exports = {
                     '@type': 'woql:AddQuad',
                     'woql:subject': {
                         '@type': 'woql:Node',
-                        'woql:node': 'scm:P_cardinality',
+                        'woql:node': 'scm:P_cardinality_3',
                     },
                     'woql:predicate': {
                         '@type': 'woql:Node',
@@ -1162,7 +1162,7 @@ module.exports = {
                     '@type': 'woql:AddQuad',
                     'woql:subject': {
                         '@type': 'woql:Node',
-                        'woql:node': 'scm:P_cardinality',
+                        'woql:node': 'scm:P_cardinality_3',
                     },
                     'woql:predicate': {
                         '@type': 'woql:Node',
@@ -1188,7 +1188,7 @@ module.exports = {
                     '@type': 'woql:AddQuad',
                     'woql:subject': {
                         '@type': 'woql:Node',
-                        'woql:node': 'scm:P_cardinality',
+                        'woql:node': 'scm:P_cardinality_3',
                     },
                     'woql:predicate': {
                         '@type': 'woql:Node',
@@ -1225,7 +1225,7 @@ module.exports = {
                     },
                     'woql:object': {
                         '@type': 'woql:Node',
-                        'woql:node': 'scm:P_cardinality',
+                        'woql:node': 'scm:P_cardinality_3',
                     },
                     'woql:graph': {
                         '@type': 'xsd:string',
