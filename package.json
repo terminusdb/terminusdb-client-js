@@ -19,10 +19,10 @@
   "author": "kevin@terminusdb.com",
   "license": "Apache-2.0",
   "dependencies": {
-    "axios": "^0.19.2",
-    "documentation": "^13.0.2"
+    "axios": "^0.19.2"
   },
   "devDependencies": {
+    "documentation": "^13.0.2",
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "@babel/register": "^7.8.3",
