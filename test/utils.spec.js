@@ -34,7 +34,7 @@ describe('utils tests', function () {
 
  it('check genBNID',function(){		
     const bnid = UTILS.genBNID();
-    expect(bnid.substring(0, 2)).to.equal("_:");
+    expect(bnid.substring(0, 4)).to.equal("doc:");
  })
 
  it('check getShorthand',function(){		

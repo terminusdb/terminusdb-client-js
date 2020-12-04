@@ -1,5 +1,4 @@
-terminusdb-client
-===============
+# terminusdb-client
 
 [![build status](https://api.travis-ci.com/terminusdb/terminusdb-client.svg?branch=master)](https://travis-ci.com/terminusdb/terminusdb-client)
 [![Coverage Status](https://coveralls.io/repos/github/terminusdb/terminusdb-client/badge.svg?branch=master)](https://coveralls.io/repos/github/terminusdb/terminusdb-client/badge.svg?branch=master)
@@ -16,6 +15,7 @@ Promise based terminus client for the browser and node.js
 TerminusDB Client can be used as either a Node.js module available through the npm registry, or directly included in web-sites by including the script tag below.
 
 ### NPM Module
+
 Before installing, download and install Node.js. Node.js 0.10 or higher is required.
 
 Installation is done using the npm install command:
@@ -43,66 +43,87 @@ Download the terminusdb-client.min.js file from the /dist directory and save it 
 ```
 
 ## Usage
-For the [full Documentation](https://terminusdb.com/docs/client_api)
+
+This example creates a simple Express.js server that will post an account to
+a database with the id "banker" and the default "admin" user with password "root"
+For the [full Documentation](https://terminusdb.com/docs/reference/js-client)
 
 ```javascript
-//
-const TerminusClient = require('@terminusdb/terminusdb-client');
+const express = require("express");
+const app = express();
+const port = 3000;
 
-//Create a new instance of terminusDB client
-const client = new TerminusClient.WOQLClient("https://127.0.0.1:6363/",{
-    dbid:"test_db",
-    user:"admin",
-    key:"my_secret_key"
+const TerminusClient = require("@terminusdb/terminusdb-client");
+
+// Connect and configure the TerminusClient
+const client = new TerminusClient.WOQLClient("https://127.0.0.1:6363/", {
+  dbid: "banker",
+  user: "admin",
+  key: "root",
 });
+client.db("banker");
+client.organization("admin");
 
-//Connect to a TerminusDB server at the given URI with an API key
-client.connect().
- .then(function (response) {
-    // handle success
-    console.log(response);
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  })
-  .finally(function () {
-    // always executed
-  });
-
-
-//use async/await.
-async function getCapabilities() {
+async function postAccount() {
   try {
-    const response = await client.connect();
-    console.log(response);
+    const WOQL = TerminusClient.WOQL;
+    const query = WOQL.using("admin/banker").and(
+      WOQL.add_triple("doc:smog", "type", "scm:BankAccount"),
+      WOQL.add_triple("doc:smog", "owner", "smog"),
+      WOQL.add_triple("doc:smog", "balance", 999)
+    );
+    await client.connect();
+    client
+      .query(query, "adding smog's bank account")
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
   } catch (err) {
     console.error(err);
   }
 }
 
+app.post("/account", (req, res) => {
+  postAccount().then((dbres) => res.send(JSON.stringify(dbres)));
+});
+
+app.listen(port, () => {
+  console.log(`Backend Server listening at http://localhost:${port}`);
+  client
+    .connect()
+    .then(function (response) {
+      // handle success
+      console.log(response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+});
 ```
 
-
-
 ## Options
+
 connections options.
 
 To initialize `TerminusDB client` with custom options use
 
 ```js
-const TerminusClient = require('@terminusdb/terminusdb-client')
+const TerminusClient = require("@terminusdb/terminusdb-client");
 
 const client = new TerminusClient.WOQLClient("https://127.0.0.1:6363/", {
-    dbid:"test_db",
-    user:"admin",
-    key:"my_secret_key"
+  dbid: "test_db",
+  user: "admin",
+  key: "my_secret_key",
 });
-
 ```
+
 ## API
 
-The API is documented at: https://terminusdb.github.io/terminusdb-client/
+The API is documented at: https://terminusdb.com/docs/reference/js-client/core/#terminusdb-client-api
 
 ## Report Issues
 
