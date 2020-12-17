@@ -1,3 +1,9 @@
+# TerminusDB Client v4.1.0
+
+## new
+
++ Enhancements to graph view and document view
+
 # TerminusDB Client v4.0.0
 
 ## new
