@@ -1,0 +1,14 @@
+{
+  // Change this to match your project
+  "include": ["index.js"],
+
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "types/generated"
+  },
+}
