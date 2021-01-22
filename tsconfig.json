@@ -1,0 +1,10 @@
+{
+  "include": ["lib/connectionConfig.js"],
+
+  "compilerOptions": {
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist",
+  },
+}
