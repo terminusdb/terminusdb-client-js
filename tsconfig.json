@@ -1,5 +1,6 @@
 {
-  "include": ["lib/connectionConfig.js"],
+  "include": ["lib/connectionConfig.js", 
+  			  "lib/woqlClient.js","index.js"],
 
   "compilerOptions": {
     "allowJs": true,
