@@ -19,11 +19,10 @@
   "author": "kevin@terminusdb.com",
   "license": "Apache-2.0",
   "dependencies": {
-    "axios": "^0.21.1" 
+    "axios": "^0.21.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
-    "docsify-cli": "^4.4.2",
     "@babel/preset-env": "^7.8.4",
     "@babel/register": "^7.8.3",
     "babel-eslint": "^10.0.3",
@@ -32,6 +31,7 @@
     "chai-json-equal": "0.0.1",
     "coveralls": "^3.0.9",
     "cross-env": "^5.2.1",
+    "docsify-cli": "^4.4.2",
     "documentation": "^13.0.2",
     "eslint": "7.9.0",
     "eslint-config-prettier": "6.11.0",
@@ -40,6 +40,7 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "install": "^0.13.0",
+    "jsdoc-parse": "^5.0.0",
     "jsdoc-to-markdown": "^6.0.1",
     "mocha": "^8.1.3",
     "nyc": "^15.0.0",
@@ -53,7 +54,11 @@
     "webpack-dev-server": "^3.11.0"
   },
   "scripts": {
-    "doc01":"jsdoc2md ./lib/woql.js > ./dist/doc",
+    "test005":"jsdoc2md --help",
+    "mkdocs:src": "docco lib/*.js -l plain -x md -o docs/api",
+    "mkdocs:api": "jsdoc2md --configure docs/doc_config.json --partial  scope.hbs member-index.hbs header.hbs --helper testFormat.js --files lib/woql.js > docs/api/woql.js.md",
+    "mkdocs": "cp README.md docs/ && npm run mkdocs:api",
+    "docs": "docsify serve docs",
     "doc": "documentation build lib/** -f html -o dist/docs",
     "test": "npm run cover",
     "test:only": "mocha --require @babel/register --require @babel/preset-env --recursive  ",
