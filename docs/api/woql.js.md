@@ -2,9 +2,7 @@
 ## WOQL
 
 #### WOQL
-<?js
-    var data = obj;
-?>**License**: Apache Version 2  
+**License**: Apache Version 2  
 
 
 #### new WOQL()
@@ -12,17 +10,13 @@ The WOQL object is a wrapper around the WOQLQuery object
 Syntactic sugar to allow writing WOQL.triple()... instead of new WOQLQuery().triple()
 Every function matches one of the public api functions of the woql query object
 
-<?js
-    var data = obj;
-?>
+
 ### eval
 
 #### WOQL.eval ⇒ <code>WOQLQuery</code>
 Evaluates the passed arithmetic expression and generates or matches the result value
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - WOQLQuery  
+**Returns**: <code>WOQLQuery</code> - WOQLQuery  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -35,9 +29,7 @@ Evaluates the passed arithmetic expression and generates or matches the result v
 #### WOQL.using(refPath, subquery) ⇒ <code>WOQLQuery</code>
 Query running against any specific commit Id
 
-<?js
-    var data = obj;
-?>
+
 | Param | Type | Description |
 | --- | --- | --- |
 | refPath | <code>string</code> | path to specific reference Id or commit Id |
@@ -53,9 +45,7 @@ WOQL.using("userName/dbName/local/commit|branch/commitID").triple("v:A", "v:B", 
 #### WOQL.comment(comment, subquery) ⇒ <code>WOQLQuery</code>
 Adds a text comment to a query - can also be used to wrap any part of a query to turn it off
 
-<?js
-    var data = obj;
-?>
+
 | Param | Type | Description |
 | --- | --- | --- |
 | comment | <code>string</code> | text comment |
@@ -67,9 +57,7 @@ Adds a text comment to a query - can also be used to wrap any part of a query to
 #### WOQL.select(...varNames) ⇒ <code>WOQLQuery</code>
 Filters the query so that only the variables included in [V1...Vn] are returned in the bindings
 
-<?js
-    var data = obj;
-?>
+
 | Param | Type | Description |
 | --- | --- | --- |
 | ...varNames | <code>string</code> | only these variables are returned |
@@ -84,9 +72,7 @@ WOQL.select("v:a",triple("v:a","v:b","v:c"))
 #### WOQL.distinct(...varNames) ⇒ <code>WOQLQuery</code>
 Filter the query to return only results that are distinct in the given variables
 
-<?js
-    var data = obj;
-?>
+
 | Param | Type | Description |
 | --- | --- | --- |
 | ...varNames | <code>string</code> | these variables are guaranteed to be unique as a tuple |
@@ -97,9 +83,7 @@ Filter the query to return only results that are distinct in the given variables
 #### WOQL.and(...subqueries) ⇒ <code>WOQLQuery</code>
 Logical conjunction of the contained queries - all queries must match or the entire clause fails
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - - A WOQLQuery object containing the conjunction of queries  
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery object containing the conjunction of queries  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -122,9 +106,7 @@ WOQL.and(
 #### WOQL.or(...subqueries) ⇒ <code>WOQLQuery</code>
 Creates a logical OR of the arguments
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - - A WOQLQuery object containing the logical Or of the subqueries  
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery object containing the logical Or of the subqueries  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -140,40 +122,42 @@ or(
 
 ### from
 
-#### WOQL.from(graph, [query]) ⇒ <code>WOQLQuery</code>
+#### WOQL.from(graphRef-, [query]) ⇒ <code>WOQLQuery</code>
 Specifies the database URL that will be the default database for the enclosed query
 
-<?js
-    var data = obj;
-?>
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery object containing the from expression  
+
 | Param | Type | Description |
 | --- | --- | --- |
-| graph | <code>string</code> | The resource identifier of a graph (e.g. schema/*) |
-| [query] | <code>WOQLQuery</code> | WOQL Query object |
+| graphRef- | <code>typedef.GraphRef</code> | A valid graph resource identifier string |
+| [query] | <code>WOQLQuery</code> | The query |
 
 
 ### into
 
-#### WOQL.into(graph, query) ⇒ <code>WOQLQuery</code>
-Sets the current output graph for writing output to.
+#### WOQL.into(graphRef-, subquery) ⇒ <code>WOQLQuery</code>
+Specifies the graph resource to write the contained query into
 
-<?js
-    var data = obj;
-?>
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which will be written into the graph in question  
+
 | Param | Type | Description |
 | --- | --- | --- |
-| graph | <code>string</code> | The resource identifier of a graph (e.g. instance/main) that will be written to |
-| query | <code>WOQLQuery</code> | WOQL Query object |
+| graphRef- | <code>typedef.GraphRef</code> | A valid graph resource identifier string |
+| subquery | <code>WOQLQuery</code> | The query which will be written into the graph |
 
+**Example**  
+```js
+//Subq is an argument or a chained query
+using("admin/minecraft").into("instance/main").add_triple("a", "type", "scm:X")
+//writes a single tripe (doc:a, rdf:type, scm:X) into the main instance graph
+```
 
 ### triple
 
 #### WOQL.triple(subject, predicate, object) ⇒ <code>WOQLQuery</code>
 Creates a triple pattern matching rule for the triple [S, P, O] (Subject, Predicate, Object)
 
-<?js
-    var data = obj;
-?>
+
 | Param | Type | Description |
 | --- | --- | --- |
 | subject | <code>string</code> | The IRI of a triple’s subject or a variable |
@@ -186,9 +170,7 @@ Creates a triple pattern matching rule for the triple [S, P, O] (Subject, Predic
 #### WOQL.added\_triple(subject, predicate, object) ⇒ <code>WOQLQuery</code>
 Creates a triple pattern matching rule for the triple [S, P, O] (Subject, Predicate, Object) added in the current layer
 
-<?js
-    var data = obj;
-?>
+
 | Param | Type | Description |
 | --- | --- | --- |
 | subject | <code>string</code> | The IRI of a triple’s subject or a variable |
@@ -201,9 +183,7 @@ Creates a triple pattern matching rule for the triple [S, P, O] (Subject, Predic
 #### WOQL.removed\_triple(subject, predicate, object) ⇒ <code>WOQLQuery</code>
 Creates a triple pattern matching rule for the triple [S, P, O] (Subject, Predicate, Object) added in the current commit
 
-<?js
-    var data = obj;
-?>
+
 | Param | Type | Description |
 | --- | --- | --- |
 | subject | <code>string</code> | The IRI of a triple’s subject or a variable |
@@ -213,50 +193,44 @@ Creates a triple pattern matching rule for the triple [S, P, O] (Subject, Predic
 
 ### quad
 
-#### WOQL.quad(subject, predicate, object, graph) ⇒ <code>WOQLQuery</code>
+#### WOQL.quad(subject, predicate, object, graphRef) ⇒ <code>WOQLQuery</code>
 Creates a pattern matching rule for the quad [S, P, O, G] (Subject, Predicate, Object, Graph)
 
-<?js
-    var data = obj;
-?>
+
 | Param | Type | Description |
 | --- | --- | --- |
 | subject | <code>string</code> | The IRI of a triple’s subject or a variable |
 | predicate | <code>string</code> | The IRI of a property or a variable |
 | object | <code>string</code> | The IRI of a node or a variable, or a literal |
-| graph | <code>string</code> | the resource identifier of a graph possible value are schema/{main - myschema - *} | instance/{main - myschema - *}  | inference/{main - myschema - *} |
+| graphRef | <code>typedef.GraphRef</code> | A valid graph resource identifier string |
 
 
 ### added_quad
 
-#### WOQL.added\_quad(subject, predicate, object, graph) ⇒ <code>WOQLQuery</code>
+#### WOQL.added\_quad(subject, predicate, object, graphRef-) ⇒ <code>WOQLQuery</code>
 Creates a pattern matching rule for the quad [S, P, O, G] (Subject, Predicate, Object, Graph) removed from the current commit
 
-<?js
-    var data = obj;
-?>
+
 | Param | Type | Description |
 | --- | --- | --- |
 | subject | <code>string</code> | The IRI of a triple’s subject or a variable |
 | predicate | <code>string</code> | The IRI of a property or a variable |
 | object | <code>string</code> | The IRI of a node or a variable, or a literal |
-| graph | <code>string</code> | the resource identifier of a graph possible value are schema/{main - myschema - *} | instance/{main - myschema - *}  | inference/{main - myschema - *} |
+| graphRef- | <code>typedef.GraphRef</code> | A valid graph resource identifier string |
 
 
 ### removed_quad
 
-#### WOQL.removed\_quad(subject, predicate, object, graph) ⇒ <code>WOQLQuery</code>
+#### WOQL.removed\_quad(subject, predicate, object, graphRef-) ⇒ <code>WOQLQuery</code>
 Creates a pattern matching rule for the quad [S, P, O, G] (Subject, Predicate, Object, Graph) removed from the current commit
 
-<?js
-    var data = obj;
-?>
+
 | Param | Type | Description |
 | --- | --- | --- |
 | subject | <code>string</code> | The IRI of a triple’s subject or a variable |
 | predicate | <code>string</code> | The IRI of a property or a variable |
 | object | <code>string</code> | The IRI of a node or a variable, or a literal |
-| graph | <code>string</code> | the resource identifier of a graph possible value are schema/{main - myschema - *} | instance/{main - myschema - *}  | inference/{main - myschema - *} |
+| graphRef- | <code>typedef.GraphRef</code> | A valid graph resource identifier string |
 
 
 ### sub
@@ -264,9 +238,7 @@ Creates a pattern matching rule for the quad [S, P, O, G] (Subject, Predicate, O
 #### WOQL.sub(classA, classB) ⇒ <code>boolean</code>
 Returns true if ClassA subsumes ClassB, according to the current DB schema
 
-<?js
-    var data = obj;
-?>**Returns**: <code>boolean</code> - WOQLQuery  
+**Returns**: <code>boolean</code> - WOQLQuery  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -279,38 +251,19 @@ Returns true if ClassA subsumes ClassB, according to the current DB schema
 #### WOQL.eq(varName, varValue) ⇒ <code>WOQLQuery</code>
 Matches if a is equal to b
 
-<?js
-    var data = obj;
-?>**See**: WOQLQuery().woql_or for WOQL.py version of the same function  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | varName | <code>string</code> | literal, variable or id |
 | varValue | <code>string</code> | literal, variable or id |
 
-**Example**  
-```js
-find triples that are of type scm:Journey, and have
-a start_station v:Start, and that start_station is labeled
-v:Start_Label
-
-WOQL.and(
-     WOQL.triple("v:Journey", "type", "scm:Journey"),
-     WOQL.or(
-         WOQL.triple("v:Journey", "scm:start_station", "doc:Station31007"),
-         WOQL.triple("v:Journey", "scm:start_station", "doc:Station31114")),
-     WOQL.triple("v:Journey", "scm:start_station", "v:Start"),
-     WOQL.triple("v:Start", "label", "v:Start_Label"))
-```
 
 ### substr
 
 #### WOQL.substr(string, before, [length], [after], [substring]) ⇒ <code>WOQLQuery</code>
 Substring
 
-<?js
-    var data = obj;
-?>
+
 | Param | Type | Description |
 | --- | --- | --- |
 | string | <code>string</code> | String or variable |
@@ -325,9 +278,7 @@ Substring
 #### WOQL.update\_object(JSON) ⇒ <code>WOQLQuery</code>
 Updates a document (or any object) in the db with the passed copy
 
-<?js
-    var data = obj;
-?>
+
 | Param | Type | Description |
 | --- | --- | --- |
 | JSON | <code>string</code> | JSON-LD document |
@@ -338,9 +289,7 @@ Updates a document (or any object) in the db with the passed copy
 #### WOQL.delete\_object(JSON_or_IRI) ⇒ <code>WOQLQuery</code>
 Deletes a node identified by an IRI or a JSON-LD document
 
-<?js
-    var data = obj;
-?>
+
 | Param | Type | Description |
 | --- | --- | --- |
 | JSON_or_IRI | <code>string</code> \| <code>object</code> | IRI or a JSON-LD document |
@@ -348,44 +297,53 @@ Deletes a node identified by an IRI or a JSON-LD document
 
 ### read_object
 
-#### WOQL.read\_object(IRI, output, format) ⇒ <code>WOQLQuery</code>
-Deletes a node identified by an IRI or a JSON-LD document
+#### WOQL.read\_object(IRI, output, [formatObj]) ⇒ <code>WOQLQuery</code>
+Saves the entire document with IRI DocumentIRI into the JSONLD variable
 
-<?js
-    var data = obj;
-?>
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the document retrieval expression  
+
 | Param | Type | Description |
 | --- | --- | --- |
-| IRI | <code>string</code> | the url that identifies the document |
-| output | <code>string</code> | - |
-| format | <code>string</code> | the export format |
+| IRI | <code>string</code> | either an IRI literal or a variable containing an IRI |
+| output | <code>string</code> | a variable into which the document’s will be saved |
+| [formatObj] | <code>typedef.DataFormatObj</code> | the export format descriptor, default value is JSON-LD |
 
+**Example**  
+```js
+const [mydoc] = vars("mydoc")
+read_object("doc:a", mydoc)
+//mydoc will have the json-ld document with ID doc:x stored in it
+```
 
 ### get
 
 #### WOQL.get(asvars, queryResource) ⇒ <code>WOQLQuery</code>
-Imports the Target Resource to the variables defined in vars
+Retrieves the exernal resource defined by QueryResource and copies values from it into variables defined in AsVars
 
-<?js
-    var data = obj;
-?>
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the get expression  
+
 | Param | Type | Description |
 | --- | --- | --- |
-| asvars | <code>object</code> | An AS query (or json representation) |
-| queryResource | <code>WOQLQuery</code> | description of where the resource is to be got from (WOQL.file, WOQL.remote, WOQL.post) |
+| asvars | <code>WOQLQuery</code> \| <code>string</code> | an array of AsVar variable mappings (see as for format below) |
+| queryResource | <code>WOQLQuery</code> | an external resource (remote, file, post) to query |
 
+**Example**  
+```js
+let [a, b] = vars("a", "b")
+get(as("a", a).as("b", b)).remote("http://my.url.com/x.csv")
+//copies the values from column headed "a" into a variable a and from column
+//"b" into a variable b from remote CSV
+```
 
 ### put
 
 #### WOQL.put(varsToExp, query, fileResource) ⇒ <code>WOQLQuery</code>
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - WOQLQuery  
-**Put**: Exports the Target Resource to the file, with the variables defined in WOQL.as()  
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the put expression  
+**Put**: Outputs the results of a query to a file  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| varsToExp | <code>WOQLQuery</code> | An AS query (or json representation) |
+| varsToExp | <code>WOQLQuery</code> \| <code>String</code> | an array of AsVar variable mappings (see as for format below) |
 | query | <code>WOQLQuery</code> | The query which will be executed to produce the results |
 | fileResource | <code>string</code> | an file resource local to the server |
 
@@ -401,9 +359,7 @@ WOQL.put(WOQL.as("s", s).as("p", p).as("o", o), WOQL.all())
 #### WOQL.as(source, target, [type]) ⇒ <code>WOQLQuery</code>
 Imports the value identified by Source to a Target variable
 
-<?js
-    var data = obj;
-?>
+
 | Param | Type | Description |
 | --- | --- | --- |
 | source | <code>string</code> \| <code>number</code> | Source |
@@ -418,61 +374,62 @@ WOQL.as("first var", "v:First_Var", "string").as("second var", "v:Second_Var")
 
 ### remote
 
-#### WOQL.remote(url, [opts]) ⇒ <code>WOQLQuery</code>
+#### WOQL.remote(url, [formatObj]) ⇒ <code>WOQLQuery</code>
 Identifies a remote resource by URL and specifies the format of the resource through the options
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - WOQLQuery  
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the remote resource identifier  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | url | <code>string</code> | The URL at which the remote resource can be accessed |
-| [opts] | <code>typedef.resourceType</code> | The format of the resource data {} |
+| [formatObj] | <code>typedef.DataFormatObj</code> | The format of the resource data {} |
 
 **Example**  
 ```js
-WOQL.remote("http://seshatdatabank.info/wp-content/uploads/2020/01/Iron-Updated.csv")
+remote("http://url.of.resource", {type: "csv"})
 ```
 
 ### file
 
-#### WOQL.file(url, opts) ⇒ <code>object</code>
-Provides details of a file source in a JSON format that includes a URL property
+#### WOQL.file(url, [formatObj]) ⇒ <code>WOQLQuery</code>
+Identifies a file resource as a path on the server and specifies the format through the options
 
-<?js
-    var data = obj;
-?>**Returns**: <code>object</code> - WOQLQuery  
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the file resource identifier  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| url | <code>object</code> | file data source in a JSON format |
-| opts | <code>object</code> | imput options, optional |
+| url | <code>object</code> | The Path on the server at which the file resource can be accessed |
+| [formatObj] | <code>typedef.DataFormatObj</code> | imput options |
 
+**Example**  
+```js
+file("/path/to/file", {type: 'turtle'} )
+```
 
 ### post
 
-#### WOQL.post(url, opts) ⇒ <code>WOQLQuery</code>
-Provides details of a file source in a JSON format that includes a URL property
+#### WOQL.post(url, [formatObj]) ⇒ <code>WOQLQuery</code>
+Identifies a resource as a local path on the client, to be sent to the server through a
+HTTP POST request, with the format defined through the options
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - -  
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the Post resource identifier  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| url | <code>object</code> | file data source in a JSON format |
-| opts | <code>object</code> | imput options, optional |
+| url | <code>string</code> | The Path on the server at which the file resource can be accessed |
+| [formatObj] | <code>typedef.DataFormatObj</code> | imput options, optional |
 
+**Example**  
+```js
+post("/.../.../", {type:'csv'})
+```
 
 ### delete_triple
 
 #### WOQL.delete\_triple(subject, predicate, object) ⇒ <code>WOQLQuery</code>
 Deletes a single triple from the default graph of the database
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Triple Deletion statement  
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Triple Deletion statement  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -480,22 +437,24 @@ Deletes a single triple from the default graph of the database
 | predicate | <code>string</code> | The IRI of a property or a variable |
 | object | <code>string</code> | The IRI of a node or a variable, or a literal |
 
+**Example**  
+```js
+delete_triple("john", "age", 42)
+```
 
 ### delete_quad
 
-#### WOQL.delete\_quad(subject, predicate, object, graph) ⇒ <code>WOQLQuery</code>
-Deletes any quads that match the rule [Subject, Predicate, Object, Graph]
+#### WOQL.delete\_quad(subject, predicate, object, graphRef) ⇒ <code>WOQLQuery</code>
+Deletes a single triple from the graph [Subject, Predicate, Object, Graph]
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Delete Quad Statement  
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Delete Quad Statement  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | subject | <code>string</code> | The IRI of a triple’s subject or a variable |
 | predicate | <code>string</code> | The IRI of a property or a variable |
 | object | <code>string</code> | The IRI of a node or a variable, or a literal |
-| graph | <code>string</code> | the resource identifier of a graph possible value are schema/{main - myschema - *} | instance/{main - myschema - *}  | inference/{main - myschema - *} |
+| graphRef | <code>typedef.GraphRef</code> | A valid graph resource identifier string |
 
 **Example**  
 ```js
@@ -508,9 +467,7 @@ WOQL.delete_quad("Person", "type", "owl:Class", "schema/main")
 #### WOQL.add\_triple(subject, predicate, object) ⇒ <code>object</code>
 Adds triples according to the the pattern [subject,predicate,object]
 
-<?js
-    var data = obj;
-?>**Returns**: <code>object</code> - WOQLQuery  
+**Returns**: <code>object</code> - WOQLQuery  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -521,19 +478,17 @@ Adds triples according to the the pattern [subject,predicate,object]
 
 ### add_quad
 
-#### WOQL.add\_quad(subject, predicate, object, graph) ⇒ <code>object</code>
+#### WOQL.add\_quad(subject, predicate, object, graphRef-) ⇒ <code>object</code>
 Adds quads according to the pattern [S,P,O,G]
 
-<?js
-    var data = obj;
-?>**Returns**: <code>object</code> - WOQLQuery  
+**Returns**: <code>object</code> - WOQLQuery  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | subject | <code>string</code> | The IRI of a triple’s subject or a variable |
 | predicate | <code>string</code> | The IRI of a property or a variable |
 | object | <code>string</code> | The IRI of a node or a variable, or a literal |
-| graph | <code>string</code> | the resource identifier of a graph possible value are schema/{main - myschema - *} | instance/{main - myschema - *}  | inference/{main - myschema - *} |
+| graphRef- | <code>typedef.GraphRef</code> | A valid graph resource identifier string |
 
 
 ### when
@@ -541,9 +496,7 @@ Adds quads according to the pattern [S,P,O,G]
 #### WOQL.when(subquery, [updateQuery]) ⇒ <code>WOQLQuery</code>
 When the subquery is met, the update query is executed
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - -  A WOQLQuery which contains the when expression  
+**Returns**: <code>WOQLQuery</code> - -  A WOQLQuery which contains the when expression  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -560,9 +513,7 @@ when(true()).triple("a", "b", "c")
 #### WOQL.trim(inputStr, resultVarName) ⇒ <code>WOQLQuery</code>
 Remove whitespace from both sides of a string:
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the Trim pattern matching expression  
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the Trim pattern matching expression  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -580,9 +531,7 @@ trim("hello   ","v:trimmed")
 #### WOQL.evaluate(arithExp, resultVarName) ⇒ <code>WOQLQuery</code>
 Evaluates the passed arithmetic expression and generates or matches the result value
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the Arithmetic function  
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the Arithmetic function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -597,11 +546,9 @@ evaluate(plus(2, minus(3, 1)), "v:result")
 ### plus
 
 #### WOQL.plus(...args) ⇒ <code>WOQLQuery</code>
-Adds """two""" numbers together
+Adds the numbers together
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the addition expression  
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the addition expression  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -617,9 +564,7 @@ evaluate(plus(2, plus(3, 1)), "v:result")
 #### WOQL.minus(...args) ⇒ <code>WOQLQuery</code>
 Subtracts Numbers N1..Nn
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the subtraction expression  
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the subtraction expression  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -635,9 +580,7 @@ evaluate(minus(2.1, plus(0.2, 1)), "v:result")
 #### WOQL.times(...args) ⇒ <code>WOQLQuery</code>
 Multiplies numbers N1...Nn together
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the multiplication expression  
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the multiplication expression  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -654,9 +597,7 @@ evaluate(times(10, minus(2.1, plus(0.2, 1))), "v:result")
 #### WOQL.divide(...args) ⇒ <code>WOQLQuery</code>
 Divides numbers N1...Nn by each other left, to right precedence
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the division expression
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the division expression
 evaluate(divide(times(10, minus(2.1, plus(0.2, 1))), 10), "v:result")
  //result contains 0.9000000000000001  
 
@@ -670,9 +611,7 @@ evaluate(divide(times(10, minus(2.1, plus(0.2, 1))), 10), "v:result")
 #### WOQL.div(...args) ⇒ <code>WOQLQuery</code>
 Division - integer division - args are divided left to right
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the division expression  
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the division expression  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -690,9 +629,7 @@ evaluate(div(10, 3), result)
 #### WOQL.exp(varNum, expNum) ⇒ <code>WOQLQuery</code>
 Exponent - raises varNum01 to the power of varNum02
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the exponent expression  
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the exponent expression  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -710,9 +647,7 @@ evaluate(exp(3, 2), "v:result")
 #### WOQL.floor(varNum) ⇒ <code>WOQLQuery</code>
 Generates the nearest lower integer to the passed number
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the floor expression  
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the floor expression  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -730,9 +665,7 @@ evaluate(divide(floor(times(10, minus(2.1, plus(0.2, 1)))), 10), result)
 #### WOQL.isa(instanceIRI, classId) ⇒ <code>WOQLQuery</code>
 Tests whether a given instance IRI has type Class, according to the current state of the DB
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - A WOQLQuery object containing the type test  
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery object containing the type test  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -750,9 +683,7 @@ isa(subject, "Person")
 #### WOQL.like(stringA, stringB, distance) ⇒ <code>WOQLQuery</code>
 Generates a string Leverstein distance measure between stringA and stringB
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the Like pattern matching expression  
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the Like pattern matching expression  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -772,9 +703,7 @@ like("hello", "hallo", dist)
 #### WOQL.less(varNum01, varNum02) ⇒ <code>WOQLQuery</code>
 Compares the value of v1 against v2 and returns true if v1 is less than v2
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the comparison expression  
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the comparison expression  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -792,9 +721,7 @@ less(1, 1.1).eq("v:result", literal(true, "boolean"))
 #### WOQL.greater(varNum01, varNum02) ⇒ <code>WOQLQuery</code>
 Compares the value of v1 against v2 and returns true if v1 is greater than v2
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the comparison expression  
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the comparison expression  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -807,14 +734,48 @@ greater(1.2, 1.1).eq("v:result", literal(true, "boolean"))
 //result contains true
 ```
 
+### split
+
+#### WOQL.split(inputVarName, separator, resultVarName) ⇒ <code>WOQLQuery</code>
+Splits a string (Input) into a list strings (Output) by removing separator
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the Split pattern matching expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| inputVarName | <code>string</code> | A string or variable representing the unsplit string |
+| separator | <code>string</code> | A string or variable containing a sequence of charatcters to use as a separator |
+| resultVarName | <code>string</code> | variable that stores output list |
+
+**Example**  
+```js
+split("joe has a hat", " ", "v:words")
+```
+
+### member
+
+#### WOQL.member(element, list) ⇒ <code>WOQLQuery</code>
+Matches if List includes Element
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the List inclusion pattern matching expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| element | <code>string</code> \| <code>object</code> | Either a variable, IRI or any simple datatype |
+| list | <code>string</code> | List ([string, literal] or string*) Either a variable representing a list or a list of variables or literals |
+
+**Example**  
+```js
+let [name] = vars("name")
+member("name", ["john", "joe", "frank"])
+```
+
 ### sum
 
 #### WOQL.sum(subquery, total) ⇒ <code>WOQLQuery</code>
 computes the sum of the List of values passed. In contrast to other arithmetic functions, sum self-evaluates - it does not have to be passed to evaluate()
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Sum expression  
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Sum expression  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -826,14 +787,155 @@ computes the sum of the List of values passed. In contrast to other arithmetic f
 sum([2, 3, 4, 5], "v:total")
 ```
 
+### once
+
+#### WOQL.once([subquery]) ⇒ <code>WOQLQuery</code>
+Results in one solution of the subqueries
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery object containing the once sub Query  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [subquery] | <code>string</code> \| <code>WOQLQuery</code> | WOQL Query objects |
+
+
+### immediately
+
+#### WOQL.immediately([subquery]) ⇒ <code>WOQLQuery</code>
+Runs the query without backtracking on side-effects
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery object containing the immediately sub Query  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [subquery] | <code>string</code> \| <code>WOQLQuery</code> | WOQL Query objects |
+
+
+### count
+
+#### WOQL.count(countVarName, [subquery]) ⇒ <code>WOQLQuery</code>
+Creates a count of the results of the query
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery object containing the count sub Query  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| countVarName | <code>string</code> \| <code>number</code> | variable or integer count |
+| [subquery] | <code>WOQLQuery</code> |  |
+
+
+### order_by
+
+#### WOQL.order\_by(...varNames) ⇒ <code>WOQLQuery</code>
+Orders the results of the contained subquery by a precedence list of variables
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the ordering expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ...varNames | <code>string</code> | A sequence of variables, by which to order the results, each optionally followed by either “asc” or “desc” to represent order |
+
+**Example**  
+```js
+WOQL.order_by("v:A", "v:B asc", "v:C desc").triple("v:A", "v:B", "v:C");
+```
+
+### insert
+
+#### WOQL.insert(classId, classType, [graphRef]) ⇒ <code>WOQLQuery</code>
+Inserts a single triple into the database declaring the Node to have type Type, optionally into the specified graph
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the insert expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| classId | <code>string</code> | IRI string or variable containing the IRI of the node to be inserted |
+| classType | <code>string</code> | IRI string or variable containing the IRI of the type of the node (class/document name) |
+| [graphRef] | <code>typedef.GraphRef</code> | Optional Graph resource identifier |
+
+**Example**  
+```js
+insert("mydoc", "MyType")
+//equivalent to add_triple("mydoc", "type", "MyType")
+```
+
+### schema
+
+#### WOQL.schema([graphRef]) ⇒ <code>WOQLQuery</code>
+Generates an empty query object - identical to query - included for backwards compatibility as before v3.0, the schema functions were in their own namespace.
+
+**Returns**: <code>WOQLQuery</code> - An empty WOQLQuery with the internal schema graph pointes set to Graph  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [graphRef] | <code>typedef.GraphRef</code> | Resource String identifying the graph which will be used for subsequent chained schema calls |
+
+**Example**  
+```js
+schema("schema/dev").add_class("X")
+```
+
+### graph
+
+#### WOQL.graph([graphRef]) ⇒ <code>WOQLQuery</code>
+Sets the graph resource ID that will be used for subsequent chained function calls
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the partial Graph pattern matching expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [graphRef] | <code>typedef.GraphRef</code> | Resource String identifying the graph which will be used for subsequent chained schema calls |
+
+**Example**  
+```js
+node("MyClass", "AddQuad").graph("schema/main").label("My Class Label")
+//equivalent to add_quad("MyClass", "label", "My Class Label", "schema/main")
+```
+
+### add_property
+
+#### WOQL.add\_property(propId, propType, [schemaGraph]) ⇒ <code>WOQLQuery</code>
+Generates a new Property with the given PropertyID and a range of type and writes it to the DB schema
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the add property expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| propId | <code>string</code> | IRI or variable containing IRI of the new property to be added (prefix default to scm) |
+| propType | <code>string</code> | optional IRI or variable containing IRI of the range type of the new property (defaults to xsd:string) |
+| [schemaGraph] | <code>string</code> | Optional Resource String identifying the schema graph into which the property definition will be written |
+
+**Example**  
+```js
+add_property("myprop")
+//equivalent to add_quad("myprop", "type", "owl:DatatypeProperty", "schema/main")
+//.add_quad("myprop", "range", "xsd:string", "schema/main")
+```
+
+### delete_class
+
+#### WOQL.delete\_class(classId, [schemaGraph], [classVarName]) ⇒ <code>WOQLQuery</code>
+Deletes the Class with the passed ID form the schema (and all references to it)
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the class deletion expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| classId | <code>string</code> | IRI or variable containing IRI of the class to be deleted (prefix default to scm) |
+| [schemaGraph] | <code>string</code> | Optional Resource String identifying the schema graph |
+| [classVarName] | <code>string</code> | The var name, default value "v:Class" |
+
+**Example**  
+```js
+delete_class("MyClass")
+```
+
 ### insert_doctype_data
 
 #### WOQL.insert\_doctype\_data(classObj, [schemaGraph]) ⇒ <code>WOQLQuery</code>
 Inserts data about a class as a json object - enabling a class and all its properties to be specified in a single function
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the insertion expression  
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the insertion expression  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -859,9 +961,7 @@ insert_doctype_data(data)
 #### WOQL.insert\_property\_data(propObj, [schemaGraph]) ⇒ <code>WOQLQuery</code>
 Inserts data about a document class as a json object - enabling a document class and all its properties to be specified in a single function
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the insertion expression  
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the insertion expression  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -883,16 +983,14 @@ let data = {
 
 ### nuke
 
-#### WOQL.nuke([graph]) ⇒ <code>WOQLQuery</code>
+#### WOQL.nuke([graphRef]) ⇒ <code>WOQLQuery</code>
 Deletes all triples in the passed graph (defaults to instance/main)
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the deletion expression  
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the deletion expression  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [graph] | <code>string</code> | Resource String identifying the graph from which all triples will be removed |
+| [graphRef] | <code>typedef.GraphRef</code> | Resource String identifying the graph from which all triples will be removed |
 
 **Example**  
 ```js
@@ -905,9 +1003,7 @@ nuke("schema/main")
 #### WOQL.query() ⇒ <code>WOQLQuery</code>
 Generates an empty WOQLQuery object
 
-<?js
-    var data = obj;
-?>**Example**  
+**Example**  
 ```js
 let q = query()
 //then q.triple(1, 1) ...
@@ -918,9 +1014,7 @@ let q = query()
 #### WOQL.json([JSON_LD]) ⇒ <code>WOQLQuery</code> \| <code>object</code>
 Generates a WOQLQuery object from the passed WOQL JSON - if an argument is passed, the query object is created from it, if none is passed, the current state is returned as a JSON-LD
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> \| <code>object</code> - either a JSON-LD or a WOQLQuery object
+**Returns**: <code>WOQLQuery</code> \| <code>object</code> - either a JSON-LD or a WOQLQuery object
 
 json version of query for passing to api  
 
@@ -934,9 +1028,7 @@ json version of query for passing to api
 #### WOQL.string(val) ⇒ <code>object</code>
 Generates explicitly a JSON-LD string literal from the input
 
-<?js
-    var data = obj;
-?>**Returns**: <code>object</code> - - A JSON-LD string literal  
+**Returns**: <code>object</code> - - A JSON-LD string literal  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -953,9 +1045,7 @@ string(1)
 #### WOQL.literal(val, type) ⇒ <code>object</code>
 Generates explicitly a JSON-LD string literal from the input
 
-<?js
-    var data = obj;
-?>**Returns**: <code>object</code> - - A JSON-LD literal  
+**Returns**: <code>object</code> - - A JSON-LD literal  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -973,9 +1063,7 @@ literal(1, "nonNegativeInteger")
 #### WOQL.iri(val) ⇒ <code>object</code>
 Explicitly sets a value to be an IRI - avoiding automatic type marshalling
 
-<?js
-    var data = obj;
-?>**Returns**: <code>object</code> - - A JSON-LD IRI value  
+**Returns**: <code>object</code> - - A JSON-LD IRI value  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -987,9 +1075,7 @@ Explicitly sets a value to be an IRI - avoiding automatic type marshalling
 #### WOQL.vars(...varNames) ⇒ <code>array</code>
 Generates javascript variables for use as WOQL variables within a query
 
-<?js
-    var data = obj;
-?>**Returns**: <code>array</code> - an array of javascript variables which can be dereferenced using the array destructuring operation  
+**Returns**: <code>array</code> - an array of javascript variables which can be dereferenced using the array destructuring operation  
 
 | Param | Type |
 | --- | --- |
@@ -1006,9 +1092,7 @@ const [a, b, c] = WOQL.vars("a", "b", "c")
 #### WOQL.client(client) ⇒ <code>WOQLClient</code>
 Gets/Sets woqlClient
 
-<?js
-    var data = obj;
-?>
+
 | Param | Type |
 | --- | --- |
 | client | <code>WOQLClient</code> | 
@@ -1019,9 +1103,7 @@ Gets/Sets woqlClient
 #### WOQL.update\_triple(subject, predicate, newObjValue, oldObjValue) ⇒ <code>WOQLQuery</code>
 Update a pattern matching rule for the triple (Subject, Predicate, oldObjValue) with the new one (Subject, Predicate, newObjValue)
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the a Update Triple Statement  
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the a Update Triple Statement  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1033,67 +1115,59 @@ Update a pattern matching rule for the triple (Subject, Predicate, oldObjValue) 
 
 ### update_quad
 
-#### WOQL.update\_quad(subject, predicate, newObject, graph) ⇒ <code>WOQLQuery</code>
+#### WOQL.update\_quad(subject, predicate, newObject, graphRef) ⇒ <code>WOQLQuery</code>
 Update a pattern matching rule for the quad [S, P, O, G] (Subject, Predicate, Object, Graph)
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the a Update Quad Statement  
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the a Update Quad Statement  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | subject | <code>string</code> | The IRI of a triple’s subject or a variable |
 | predicate | <code>string</code> | The IRI of a property or a variable |
 | newObject | <code>string</code> | The value to update or a literal |
-| graph | <code>string</code> | The resource identifier of a graph possible value are schema/{main - myschema - *} | instance/{main - myschema - *}  | inference/{main - myschema - *} |
+| graphRef | <code>typedef.GraphRef</code> | A valid graph resource identifier string |
 
 
 ### value
 
-#### WOQL.value(subject, predicate, objValue, [graph]) ⇒ <code>WOQLQuery</code>
+#### WOQL.value(subject, predicate, objValue, [graphRef]) ⇒ <code>WOQLQuery</code>
 Creates a pattern matching rule for a quad [Subject, Predicate, Object, Graph] or for a triple [Subject, Predicate, Object]
 add extra information about the type of the value object
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the a quad or a triple Statement  
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the a quad or a triple Statement  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | subject | <code>string</code> | The IRI of a triple’s subject or a variable |
 | predicate | <code>string</code> | The IRI of a property or a variable |
 | objValue | <code>string</code> \| <code>number</code> \| <code>boolean</code> | an specific value |
-| [graph] | <code>string</code> | the resource identifier of a graph possible value are schema/{main - myschema - *} | instance/{main - myschema - *}  | inference/{main - myschema - *} |
+| [graphRef] | <code>typedef.GraphRef</code> | the resource identifier of a graph possible value are schema/{main - myschema - *} | instance/{main - myschema - *}  | inference/{main - myschema - *} |
 
 
 ### link
 
-#### WOQL.link(subject, predicate, object, [graph]) ⇒ <code>WOQLQuery</code>
+#### WOQL.link(subject, predicate, object, [graphRef]) ⇒ <code>WOQLQuery</code>
 Creates a pattern matching rule for a quad [Subject, Predicate, Object, Graph] or for a triple [Subject, Predicate, Object]
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the a quad or a triple Statement  
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the a quad or a triple Statement  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | subject | <code>string</code> | The IRI of a triple’s subject or a variable |
 | predicate | <code>string</code> | The IRI of a property or a variable |
 | object | <code>string</code> | The IRI of a node or a variable, or a literal |
-| [graph] | <code>string</code> | the resource identifier of a graph possible value are schema/{main - myschema - *} | instance/{main - myschema - *}  | inference/{main - myschema - *} |
+| [graphRef] | <code>typedef.GraphRef</code> | the resource identifier of a graph possible value are schema/{main - myschema - *} | instance/{main - myschema - *}  | inference/{main - myschema - *} |
 
 
 ### makeEnum
 
 #### WOQL.makeEnum(woqlClient, prop, classId, classLabel, [classDesc], [schemaGraph]) ⇒ <code>WOQLQuery</code>
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Create Enum Class Statement  
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Create Enum Class Statement  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | woqlClient | <code>WOQLClient</code> | an WoqlClient instance |
-| prop | <code>\*</code> | ?? |
+| prop | <code>string</code> | - |
 | classId | <code>string</code> | the enum class id |
 | classLabel | <code>string</code> | the enum class label |
 | [classDesc] | <code>string</code> | the enum class description |
@@ -1105,9 +1179,7 @@ Creates a pattern matching rule for a quad [Subject, Predicate, Object, Graph] o
 #### WOQL.generateChoiceList(classId, classLabel, classDesc, choices, [schemaGraph], [parent]) ⇒ <code>WOQLQuery</code>
 Generates a class representing a choice list - an enumerated list of specific options
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Generate Enum/Choice Class Statement  
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Generate Enum/Choice Class Statement  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1124,9 +1196,7 @@ Generates a class representing a choice list - an enumerated list of specific op
 #### WOQL.updateChoiceList(classId, classLabel, classDesc, choices, [schemaGraph]) ⇒ <code>WOQLQuery</code>
 update or create an enumeration class. You have to add at least one permitted values in the list
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Update Enum/Choice Class Statement  
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Update Enum/Choice Class Statement  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1142,9 +1212,7 @@ update or create an enumeration class. You have to add at least one permitted va
 #### WOQL.deleteChoiceList(classId, [schemaGraph]) ⇒ <code>WOQLQuery</code>
 delete the enum list for a specific enumeration class, but not the class
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Delete Choice List Statement  
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Delete Choice List Statement  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1157,9 +1225,7 @@ delete the enum list for a specific enumeration class, but not the class
 #### WOQL.libs(libs, parent, graph, prefix)
 Called to load Terminus Predefined libraries:
 
-<?js
-    var data = obj;
-?>
+
 | Param | Type |
 | --- | --- |
 | libs | <code>\*</code> | 
@@ -1173,9 +1239,7 @@ Called to load Terminus Predefined libraries:
 #### WOQL.boxClasses(prefix, classes, except, [schemaGraph]) ⇒ <code>WOQLQuery</code>
 creating a structure ScopedMyClass -> myClass -> MyClass
 
-<?js
-    var data = obj;
-?>**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Box Classes Creating Statement  
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Box Classes Creating Statement  
 
 | Param | Type | Description |
 | --- | --- | --- |

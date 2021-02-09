@@ -8,7 +8,7 @@
   - [Contribute](README?id=contribute)
   - [Licence](README?id=licence)
 - [JS Client](api/woqlClient.js.md)
-  - [Library functions](api/woqlClient.js.md?id=connect)
+  - [Library functions](api/woqlClient.js.md)
     - [Connect](api/woqlClient.js?id=connect)
     - [Create Database](api/woqlClient.js?id=createdatabase)
     - [Delete Database](api/woqlClient.js?id=deletedatabase)

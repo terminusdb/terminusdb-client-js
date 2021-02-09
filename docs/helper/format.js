@@ -74,3 +74,16 @@ exports.testData = function(options) {
     return options.fn({name: 'hello', test: 'hhhhhhh'})
     //}
 }
+/**
+ * add only the not deprecated in the menu
+ */
+exports.isDeprecated = function() {
+    if (this.deprecated === undefined) return true
+    return false
+}
+exports.indentItem = function() {
+    if (this.kind === 'class') {
+        return ''
+    }
+    return '  '
+}

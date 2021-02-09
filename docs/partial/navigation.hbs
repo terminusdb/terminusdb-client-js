@@ -1,0 +1,8 @@
+{{#if meta}}
+{{!#if (equal kind "class")}}
+{{!else}}
+{{#if (isDeprecated deprecated)~}}
+{{indentItem}}- [{{name}}](api/{{meta.filename}}?id={{name}})
+{{/if}}
+{{!/if}}
+{{/if}}
