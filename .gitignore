@@ -1,5 +1,7 @@
 package-lock.json
 
+local_test
+
 dist
 # Logs
 local.txt

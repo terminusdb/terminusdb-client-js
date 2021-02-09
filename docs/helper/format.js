@@ -1,17 +1,3 @@
-/*const arr = [
-    connect,
-    createDatabase,
-    deleteDatabase,
-    createGraph,
-    deleteGraph,
-    getTriples,
-    updateTriples,
-    query,
-    clonedb,
-    branch,
-    rebase,
-]*/
-
 const test = [
     {
         id: 'WOQLClient',
