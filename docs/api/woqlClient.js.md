@@ -28,11 +28,15 @@ const turtle = await client.getTriples("schema", "main")
 #### ~~woqlClient.get\_database~~
 ***Deprecated***
 
+Use [#databaseInfo](#databaseInfo) instead
+
 
 ### set_system_db
 
 #### ~~woqlClient.set\_system\_db~~
 ***Deprecated***
+
+Use [#setSystemDb](#setSystemDb) instead.
 
 
 ### local_auth
@@ -40,11 +44,15 @@ const turtle = await client.getTriples("schema", "main")
 #### ~~woqlClient.local\_auth~~
 ***Deprecated***
 
+Use [#localAuth](#localAuth) instead.
+
 
 ### remote_auth
 
 #### ~~woqlClient.remote\_auth~~
 ***Deprecated***
+
+Use [#remoteAuth](#remoteAuth) instead.
 
 
 ### copy
@@ -285,27 +293,6 @@ of the current context for "commits" "meta" "branch" and "ref" special resources
 **Example**  
 ```js
 const branch_resource = client.resource("branch")
-```
-
-### connect
-
-#### woqlClient.connect([params]) ⇒ <code>Promise</code>
-Connect to a Terminus server at the given URI with an API key
-Stores the system:ServerCapability document returned
-in the connection register which stores, the url, key, capabilities,
-and database meta-data for the connected server
-this.connectionConfig.server will be used if present,
-or the promise will be rejected.
-
-**Returns**: <code>Promise</code> - - the connection capabilities response object or an error object  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [params] | <code>typedef.ParamsObj</code> | TerminusDB Server connection parameters |
-
-**Example**  
-```js
-client.connect({key="mykey",user="admin"})
 ```
 
 ### createDatabase
@@ -892,3 +879,25 @@ Change the user role for existing users in your organisation, including your own
 | --- | --- |
 | newRolesObj | <code>typedef.RolesObj</code> | 
 
+
+### connect
+
+#### woqlClient.connect([params]) ⇒ <code>Promise</code>
+Connect to a Terminus server at the given URI with an API key
+Stores the system:ServerCapability document returned
+in the connection register which stores, the url, key, capabilities,
+and database meta-data for the connected server
+this.connectionConfig.server will be used if present,
+or the promise will be rejected.
+
+**Returns**: <code>Promise</code> - - the connection capabilities response object or an error object  
+**Category**: TerminusDB Client API  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [params] | <code>typedef.ParamsObj</code> | TerminusDB Server connection parameters |
+
+**Example**  
+```js
+client.connect({key="mykey",user="admin"})
+```

@@ -52,10 +52,11 @@
     "name": "get_database",
     "kind": "member",
     "scope": "instance",
+    "description": "Use {@link #databaseInfo} instead",
     "memberof": "WOQLClient",
-    "deprecated": "use {@link #databaseInfo} instead.",
+    "deprecated": true,
     "meta": {
-      "lineno": 145,
+      "lineno": 146,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -67,10 +68,11 @@
     "name": "set_system_db",
     "kind": "member",
     "scope": "instance",
+    "description": "Use {@link #setSystemDb} instead.",
     "memberof": "WOQLClient",
-    "deprecated": "use {@link #setSystemDb} instead.",
+    "deprecated": true,
     "meta": {
-      "lineno": 172,
+      "lineno": 174,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -82,10 +84,11 @@
     "name": "local_auth",
     "kind": "member",
     "scope": "instance",
+    "description": "Use {@link #localAuth} instead.",
     "memberof": "WOQLClient",
-    "deprecated": "use {@link #localAuth} instead.",
+    "deprecated": true,
     "meta": {
-      "lineno": 232,
+      "lineno": 235,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -97,10 +100,11 @@
     "name": "remote_auth",
     "kind": "member",
     "scope": "instance",
+    "description": "Use {@link #remoteAuth} instead.",
     "memberof": "WOQLClient",
-    "deprecated": "use {@link #remoteAuth} instead.",
+    "deprecated": true,
     "meta": {
-      "lineno": 252,
+      "lineno": 256,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -428,7 +432,7 @@
       }
     ],
     "meta": {
-      "lineno": 154,
+      "lineno": 155,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -443,7 +447,7 @@
     "description": "Sets the internal client context to allow it to talk to the server’s internal system database",
     "memberof": "WOQLClient",
     "meta": {
-      "lineno": 165,
+      "lineno": 166,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -484,7 +488,7 @@
       }
     ],
     "meta": {
-      "lineno": 181,
+      "lineno": 183,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -521,7 +525,7 @@
       }
     ],
     "meta": {
-      "lineno": 193,
+      "lineno": 195,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -562,7 +566,7 @@
       }
     ],
     "meta": {
-      "lineno": 208,
+      "lineno": 210,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -601,7 +605,7 @@
       }
     ],
     "meta": {
-      "lineno": 222,
+      "lineno": 224,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -640,7 +644,7 @@
       }
     ],
     "meta": {
-      "lineno": 241,
+      "lineno": 244,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -680,7 +684,7 @@
       }
     ],
     "meta": {
-      "lineno": 261,
+      "lineno": 265,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -708,7 +712,7 @@
       "sets several of the internal state values in a single call (similar to connect, but only sets internal client state, does not communicate with server)\nclient.set({key: \"mypass\", branch: \"dev\", repo: \"origin\"})"
     ],
     "meta": {
-      "lineno": 273,
+      "lineno": 277,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -757,51 +761,11 @@
       }
     ],
     "meta": {
-      "lineno": 286,
+      "lineno": 290,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
     "order": 24
-  },
-  {
-    "id": "WOQLClient#connect",
-    "longname": "WOQLClient#connect",
-    "name": "connect",
-    "kind": "function",
-    "scope": "instance",
-    "description": "Connect to a Terminus server at the given URI with an API key\nStores the system:ServerCapability document returned\nin the connection register which stores, the url, key, capabilities,\nand database meta-data for the connected server\nthis.connectionConfig.server will be used if present,\nor the promise will be rejected.",
-    "memberof": "WOQLClient",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "typedef.ParamsObj"
-          ]
-        },
-        "optional": true,
-        "description": "TerminusDB Server connection parameters",
-        "name": "params"
-      }
-    ],
-    "examples": [
-      "client.connect({key=\"mykey\",user=\"admin\"})"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Promise"
-          ]
-        },
-        "description": "- the connection capabilities response object or an error object"
-      }
-    ],
-    "meta": {
-      "lineno": 311,
-      "filename": "woqlClient.js",
-      "path": "/var/www/html/terminusdb-client/lib"
-    },
-    "order": 25
   },
   {
     "id": "WOQLClient#createDatabase",
@@ -854,7 +818,7 @@
       }
     ],
     "meta": {
-      "lineno": 339,
+      "lineno": 343,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -912,7 +876,7 @@
       }
     ],
     "meta": {
-      "lineno": 362,
+      "lineno": 366,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -969,7 +933,7 @@
       }
     ],
     "meta": {
-      "lineno": 384,
+      "lineno": 388,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1026,7 +990,7 @@
       }
     ],
     "meta": {
-      "lineno": 413,
+      "lineno": 417,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1074,7 +1038,7 @@
       }
     ],
     "meta": {
-      "lineno": 436,
+      "lineno": 440,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1140,7 +1104,7 @@
       }
     ],
     "meta": {
-      "lineno": 459,
+      "lineno": 463,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1203,7 +1167,7 @@
       }
     ],
     "meta": {
-      "lineno": 483,
+      "lineno": 487,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1251,7 +1215,7 @@
       }
     ],
     "meta": {
-      "lineno": 509,
+      "lineno": 513,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1317,7 +1281,7 @@
       }
     ],
     "meta": {
-      "lineno": 542,
+      "lineno": 546,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1356,7 +1320,7 @@
       }
     ],
     "meta": {
-      "lineno": 566,
+      "lineno": 570,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1404,7 +1368,7 @@
       }
     ],
     "meta": {
-      "lineno": 582,
+      "lineno": 586,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1450,7 +1414,7 @@
       }
     ],
     "meta": {
-      "lineno": 603,
+      "lineno": 607,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1496,7 +1460,7 @@
       }
     ],
     "meta": {
-      "lineno": 617,
+      "lineno": 621,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1524,7 +1488,7 @@
       }
     ],
     "meta": {
-      "lineno": 630,
+      "lineno": 634,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1582,7 +1546,7 @@
       }
     ],
     "meta": {
-      "lineno": 646,
+      "lineno": 650,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1631,7 +1595,7 @@
       }
     ],
     "meta": {
-      "lineno": 678,
+      "lineno": 682,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1670,7 +1634,7 @@
       }
     ],
     "meta": {
-      "lineno": 703,
+      "lineno": 707,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1706,7 +1670,7 @@
       }
     ],
     "meta": {
-      "lineno": 717,
+      "lineno": 721,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1745,7 +1709,7 @@
       }
     ],
     "meta": {
-      "lineno": 729,
+      "lineno": 733,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1784,7 +1748,7 @@
       }
     ],
     "meta": {
-      "lineno": 745,
+      "lineno": 749,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1820,7 +1784,7 @@
       }
     ],
     "meta": {
-      "lineno": 769,
+      "lineno": 773,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1878,7 +1842,7 @@
       }
     ],
     "meta": {
-      "lineno": 784,
+      "lineno": 788,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1933,7 +1897,7 @@
       }
     ],
     "meta": {
-      "lineno": 802,
+      "lineno": 806,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -1978,7 +1942,7 @@
       }
     ],
     "meta": {
-      "lineno": 822,
+      "lineno": 826,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -2014,7 +1978,7 @@
       }
     ],
     "meta": {
-      "lineno": 835,
+      "lineno": 839,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -2050,7 +2014,7 @@
       }
     ],
     "meta": {
-      "lineno": 847,
+      "lineno": 851,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -2085,7 +2049,7 @@
       }
     ],
     "meta": {
-      "lineno": 894,
+      "lineno": 898,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -2121,7 +2085,7 @@
       }
     ],
     "meta": {
-      "lineno": 927,
+      "lineno": 931,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -2156,7 +2120,7 @@
       }
     ],
     "meta": {
-      "lineno": 950,
+      "lineno": 954,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -2200,7 +2164,7 @@
       }
     ],
     "meta": {
-      "lineno": 963,
+      "lineno": 967,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -2245,7 +2209,7 @@
       }
     ],
     "meta": {
-      "lineno": 980,
+      "lineno": 984,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -2280,7 +2244,7 @@
       }
     ],
     "meta": {
-      "lineno": 996,
+      "lineno": 1000,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -2324,7 +2288,7 @@
       }
     ],
     "meta": {
-      "lineno": 1007,
+      "lineno": 1011,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -2359,7 +2323,7 @@
       }
     ],
     "meta": {
-      "lineno": 1023,
+      "lineno": 1027,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -2404,7 +2368,7 @@
       }
     ],
     "meta": {
-      "lineno": 1040,
+      "lineno": 1044,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -2440,7 +2404,7 @@
       }
     ],
     "meta": {
-      "lineno": 1060,
+      "lineno": 1064,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -2485,7 +2449,7 @@
       }
     ],
     "meta": {
-      "lineno": 1073,
+      "lineno": 1077,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -2521,7 +2485,7 @@
       }
     ],
     "meta": {
-      "lineno": 1095,
+      "lineno": 1099,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -2576,7 +2540,7 @@
       }
     ],
     "meta": {
-      "lineno": 1114,
+      "lineno": 1118,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
@@ -2611,10 +2575,51 @@
       }
     ],
     "meta": {
-      "lineno": 1134,
+      "lineno": 1138,
       "filename": "woqlClient.js",
       "path": "/var/www/html/terminusdb-client/lib"
     },
     "order": 65
+  },
+  {
+    "id": "WOQLClient#connect",
+    "longname": "WOQLClient#connect",
+    "name": "connect",
+    "kind": "function",
+    "scope": "instance",
+    "description": "Connect to a Terminus server at the given URI with an API key\nStores the system:ServerCapability document returned\nin the connection register which stores, the url, key, capabilities,\nand database meta-data for the connected server\nthis.connectionConfig.server will be used if present,\nor the promise will be rejected.",
+    "memberof": "WOQLClient",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "typedef.ParamsObj"
+          ]
+        },
+        "optional": true,
+        "description": "TerminusDB Server connection parameters",
+        "name": "params"
+      }
+    ],
+    "examples": [
+      "client.connect({key=\"mykey\",user=\"admin\"})"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Promise"
+          ]
+        },
+        "description": "- the connection capabilities response object or an error object"
+      }
+    ],
+    "category": "TerminusDB Client API",
+    "meta": {
+      "lineno": 315,
+      "filename": "woqlClient.js",
+      "path": "/var/www/html/terminusdb-client/lib"
+    },
+    "order": 25
   }
 ]
