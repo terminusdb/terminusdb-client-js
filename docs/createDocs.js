@@ -50,7 +50,7 @@ function createFile(filePath, options) {
     const output = jsdoc2md.renderSync(options)
     fs.writeFileSync(path.resolve(outputDir, `${fileName}.md`), output)
 }
-
+////([\w-]+)(.js)/
 function getFileName(filePath) {
     const regEx = /[\w-]+\.js/
     return filePath.match(regEx)[0]

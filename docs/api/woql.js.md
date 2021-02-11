@@ -55,8 +55,6 @@ Adds a text comment to a query - can also be used to wrap any part of a query to
 ### select
 
 #### WOQL.select(...varNames) ⇒ <code>WOQLQuery</code>
-Filters the query so that only the variables included in [V1...Vn] are returned in the bindings
-
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -65,6 +63,7 @@ Filters the query so that only the variables included in [V1...Vn] are returned 
 **Example**  
 ```js
 WOQL.select("v:a",triple("v:a","v:b","v:c"))
+Filters the query so that only the variables included in [V1...Vn] are returned in the bindings
 ```
 
 ### distinct
@@ -324,7 +323,7 @@ Retrieves the exernal resource defined by QueryResource and copies values from i
 
 | Param | Type | Description |
 | --- | --- | --- |
-| asvars | <code>WOQLQuery</code> \| <code>string</code> | an array of AsVar variable mappings (see as for format below) |
+| asvars | <code>WOQLQuery</code> | an array of AsVar variable mappings (see as for format below) |
 | queryResource | <code>WOQLQuery</code> | an external resource (remote, file, post) to query |
 
 **Example**  
@@ -343,7 +342,7 @@ get(as("a", a).as("b", b)).remote("http://my.url.com/x.csv")
 
 | Param | Type | Description |
 | --- | --- | --- |
-| varsToExp | <code>WOQLQuery</code> \| <code>String</code> | an array of AsVar variable mappings (see as for format below) |
+| varsToExp | <code>WOQLQuery</code> | an array of AsVar variable mappings (see as for format below) |
 | query | <code>WOQLQuery</code> | The query which will be executed to produce the results |
 | fileResource | <code>string</code> | an file resource local to the server |
 
@@ -500,7 +499,7 @@ When the subquery is met, the update query is executed
 
 | Param | Type | Description |
 | --- | --- | --- |
-| subquery | <code>WOQLQuery</code> \| <code>string</code> | the condition query |
+| subquery | <code>WOQLQuery</code> | the condition query |
 | [updateQuery] | <code>WOQLQuery</code> |  |
 
 **Example**  
@@ -734,6 +733,120 @@ greater(1.2, 1.1).eq("v:result", literal(true, "boolean"))
 //result contains true
 ```
 
+### opt
+
+#### WOQL.opt([subquery]) ⇒ <code>WOQLQuery</code>
+Specifies that the Subquery is optional - if it does not match the query will not fail
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery object containing the optional sub Query  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [subquery] | <code>WOQLQuery</code> | A subquery which will be optionally matched |
+
+**Example**  
+```js
+let [subject] = vars("subject")
+opt(triple(subject, 'label', "A"))
+//Subq is an argument or a chained query
+opt().triple(subject, 'label', "A")
+```
+
+### unique
+
+#### WOQL.unique(prefix, inputVarList, resultVarName) ⇒ <code>WOQLQuery</code>
+Generate a new IRI from the prefix and a hash of the variables which will be unique for any given combination of variables
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery object containing the unique ID generating function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| prefix | <code>string</code> | A prefix for the IRI - typically formed of the doc prefix and the classtype of the entity (“doc:Person”) |
+| inputVarList | <code>array</code> \| <code>string</code> | An array of variables and / or strings from which the unique hash will be generated |
+| resultVarName | <code>string</code> | Variable in which the unique ID is stored |
+
+**Example**  
+```js
+unique("doc:Person", ["John", "Smith"], "v:newid")
+```
+
+### idgen
+
+#### WOQL.idgen(prefix, inputVarList, resultVarName) ⇒ <code>WOQLQuery</code>
+Generate a new IRI from the prefix and concatention of the variables
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery object containing the ID generating function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| prefix | <code>string</code> | A prefix for the IRI - typically formed of the doc prefix and the classtype of the entity (“doc:Person”) |
+| inputVarList | <code>array</code> \| <code>string</code> | An array of variables and / or strings from which the unique hash will be generated |
+| resultVarName | <code>string</code> | Variable in which the unique ID is stored |
+
+**Example**  
+```js
+let [newid] = vars("newid")
+idgen("doc:Person", ["John", "Smith"], newid)
+```
+
+### upper
+
+#### WOQL.upper(inputVarName, resultVarName) ⇒ <code>WOQLQuery</code>
+Changes a string to upper-case
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the Upper case pattern matching expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| inputVarName | <code>string</code> | string or variable representing the uncapitalized string |
+| resultVarName | <code>string</code> | variable that stores the capitalized string output |
+
+**Example**  
+```js
+upper("aBCe", "v:allcaps")
+//upper contains "ABCE"
+```
+
+### lower
+
+#### WOQL.lower(inputVarName, resultVarName) ⇒ <code>WOQLQuery</code>
+Changes a string to lower-case
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the Lower case pattern matching expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| inputVarName | <code>string</code> | string or variable representing the non-lowercased string |
+| resultVarName | <code>string</code> | variable that stores the lowercased string output |
+
+**Example**  
+```js
+let [lower] = var("l")
+lower("aBCe", lower)
+//lower contains "abce"
+```
+
+### pad
+
+#### WOQL.pad(inputVarName, pad, len, resultVarName) ⇒ <code>WOQLQuery</code>
+Pads out the string input to be exactly len long by appending the pad character pad to form output
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the Pad pattern matching expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| inputVarName | <code>string</code> | The input string or variable in unpadded state |
+| pad | <code>string</code> | The characters to use to pad the string or a variable representing them |
+| len | <code>number</code> \| <code>string</code> | The variable or integer value representing the length of the output string |
+| resultVarName | <code>string</code> | stores output |
+
+**Example**  
+```js
+let [fixed] = vars("fixed length")
+pad("joe", " ", 8, fixed)
+//fixed contains "joe     "
+```
+
 ### split
 
 #### WOQL.split(inputVarName, separator, resultVarName) ⇒ <code>WOQLQuery</code>
@@ -770,6 +883,43 @@ let [name] = vars("name")
 member("name", ["john", "joe", "frank"])
 ```
 
+### concat
+
+#### WOQL.concat(varList, resultVarName) ⇒ <code>WOQLQuery</code>
+takes a variable number of string arguments and concatenates them into a single string
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the Concatenation pattern matching expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| varList | <code>array</code> \| <code>string</code> | a variable representing a list or a list of variables or strings - variables can be embedded in the string if they do not contain spaces |
+| resultVarName | <code>string</code> | A variable or string containing the output string |
+
+**Example**  
+```js
+concat(["v:first_name", " ", "v:last_name"], "v:full_name")
+WOQL.concat(["first_name", " ", "last_name"], "full_name")
+//both versions work
+```
+
+### join
+
+#### WOQL.join(varList, glue, resultVarName) ⇒ <code>WOQLQuery</code>
+Joins a list variable together (Input) into a string variable (Output) by glueing the strings together with Glue
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the Join pattern matching expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| varList | <code>string</code> \| <code>array</code> | a variable representing a list or a list of strings and / or variables |
+| glue | <code>string</code> | A variable (v:glue) or (glue) string representing the characters to put in between the joined strings in input |
+| resultVarName | <code>string</code> | A variable or string containing the output string |
+
+**Example**  
+```js
+join(["joe", "has", "a", "hat", " ", "v:sentence")
+```
+
 ### sum
 
 #### WOQL.sum(subquery, total) ⇒ <code>WOQLQuery</code>
@@ -779,12 +929,105 @@ computes the sum of the List of values passed. In contrast to other arithmetic f
 
 | Param | Type | Description |
 | --- | --- | --- |
-| subquery | <code>WOQLQuery</code> \| <code>array</code> | a subquery or ([string or numeric]) - a list variable, or a list of variables or numeric literals |
+| subquery | <code>WOQLQuery</code> | a subquery or ([string or numeric]) - a list variable, or a list of variables or numeric literals |
 | total | <code>number</code> | the variable name with the sum result of the values in List |
 
 **Example**  
 ```js
 sum([2, 3, 4, 5], "v:total")
+```
+
+### start
+
+#### WOQL.start(start, [subquery]) ⇒ <code>WOQLQuery</code>
+Specifies an offset position in the results to start listing results from
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery whose results will be returned starting from the specified offset  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| start | <code>number</code> \| <code>string</code> | A variable that refers to an interger or an integer literal |
+| [subquery] | <code>WOQLQuery</code> | WOQL Query object, you can pass a subquery as an argument or a chained query |
+
+**Example**  
+```js
+let [a, b, c] = vars("a", "b", "c")
+start(100).triple(a, b, c)
+```
+
+### limit
+
+#### WOQL.limit(limit, [subquery]) ⇒ <code>WOQLQuery</code>
+Specifies a maximum number of results that will be returned from the subquery
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery whose results will be returned starting from the specified offset  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| limit | <code>number</code> \| <code>string</code> | A variable that refers to an non-negative integer or a non-negative integer |
+| [subquery] | <code>WOQLQuery</code> | A subquery whose results will be limited |
+
+**Example**  
+```js
+let [a, b, c] = vars("a", "b", "c")
+limit(100).triple(a, b, c)
+//subquery is an argument or a chained query
+limit(100,triple(a, b, c))
+```
+
+### re
+
+#### WOQL.re(pattern, inputVarName, resultVarList) ⇒ <code>WOQLQuery</code>
+Matches the regular expression defined in Patern against the Test string, to produce the matched patterns in Matches
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the Regular Expression pattern matching expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pattern | <code>string</code> | string or variable using normal PCRE regular expression syntax with the exception that special characters have to be escaped twice (to enable transport in JSONLD) |
+| inputVarName | <code>string</code> | string or variable containing the string to be tested for patterns with the regex |
+| resultVarList | <code>string</code> \| <code>array</code> \| <code>object</code> | variable representing the list of matches or a list of strings or variables |
+
+**Example**  
+```js
+WOQL.re("h(.).*", "hello", ["v:All", "v:Sub"])
+//e contains 'e', llo contains 'llo'
+//p is a regex pattern (.*) using normal regular expression syntax, the only unusual thing is that special characters have to be escaped twice, s is the string to be matched and m is a list of matches:
+```
+
+### length
+
+#### WOQL.length(inputVarList, resultVarName) ⇒ <code>WOQLQuery</code>
+Calculates the length of the list in va and stores it in vb
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the Length pattern matching expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| inputVarList | <code>string</code> \| <code>array</code> | Either a variable representing a list or a list of variables or literals |
+| resultVarName | <code>string</code> | A variable in which the length of the list is stored or the length of the list as a non-negative integer |
+
+**Example**  
+```js
+let [count] = vars("count")
+length(["john", "joe", "frank"], count)
+```
+
+### not
+
+#### WOQL.not([subquery]) ⇒ <code>WOQLQuery</code>
+Logical negation of the contained subquery - if the subquery matches, the query will fail to match
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery object containing the negated sub Query  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [subquery] | <code>string</code> \| <code>WOQLQuery</code> | A subquery which will be negated |
+
+**Example**  
+```js
+let [subject, label] = vars("subject", "label")
+not().triple(subject, 'label', label)
 ```
 
 ### once
@@ -824,6 +1067,24 @@ Creates a count of the results of the query
 | [subquery] | <code>WOQLQuery</code> |  |
 
 
+### typecast
+
+#### WOQL.typecast(varName, varType, resultVarName) ⇒ <code>WOQLQuery</code>
+Casts the value of Input to a new value of type Type and stores the result in CastVar
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the casting expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| varName | <code>string</code> \| <code>number</code> \| <code>object</code> | Either a single variable or a literal of any basic type |
+| varType | <code>string</code> | Either a variable or a basic datatype (xsd / xdd) |
+| resultVarName | <code>string</code> | save the return variable |
+
+**Example**  
+```js
+cast("22/3/98", "xsd:dateTime", "v:time")
+```
+
 ### order_by
 
 #### WOQL.order\_by(...varNames) ⇒ <code>WOQLQuery</code>
@@ -838,6 +1099,165 @@ Orders the results of the contained subquery by a precedence list of variables
 **Example**  
 ```js
 WOQL.order_by("v:A", "v:B asc", "v:C desc").triple("v:A", "v:B", "v:C");
+```
+
+### group_by
+
+#### WOQL.group\_by(varList, patternVars, resultVarName, [subquery]) ⇒ <code>WOQLQuery</code>
+Groups the results of the contained subquery on the basis of identical values for Groupvars, extracts the patterns defined in PatternVars and stores the results in GroupedVar
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the grouping expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| varList | <code>array</code> \| <code>string</code> | Either a single variable or an array of variables |
+| patternVars | <code>array</code> \| <code>string</code> | Either a single variable or an array of variables |
+| resultVarName | <code>string</code> | output variable name |
+| [subquery] | <code>WOQLQuery</code> | The query whose results will be grouped |
+
+**Example**  
+```js
+//subquery is an argument or a chained query
+let [age, last_name, first_name, age_group, person] = vars("age", "last name", "first name", "age group", "person")
+group_by(age, [last_name, first_name], age_group)
+  .triple(person, "first_name", first_name)
+  .triple(person, "last_name", last_name)
+  .triple(person, "age", age)
+```
+
+### true
+
+#### WOQL.true() ⇒ <code>WOQLQuery</code>
+A function that always matches, always returns true
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery object containing the true value that will match any pattern  
+**Example**  
+```js
+when(true()).triple("a", "b", "c")
+```
+
+### path
+
+#### WOQL.path(subject, pattern, object, resultVarName) ⇒ <code>WOQLQuery</code>
+Performs a path regular expression match on the graph
+
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the path regular expression matching expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| subject | <code>string</code> | An IRI or variable that refers to an IRI representing the subject, i.e. the starting point of the path |
+| pattern | <code>string</code> | (string) - A path regular expression describing a pattern through multiple edges of the graph Path regular expressions consist of a sequence of predicates and / or a set of alternatives, with quantification operators The characters that are interpreted specially are the following: - representing alternative choices , - representing a sequence of predcitates + - Representing a quantification of 1 or more of the preceding pattern in a sequence {min, max} - Representing at least min examples and at most max examples of the preceding pattern - Representing any predicate () - Parentheses, interpreted in the normal way to group clauses |
+| object | <code>string</code> | An IRI or variable that refers to an IRI representing the object, i.e. ending point of the path |
+| resultVarName | <code>string</code> | A variable in which the actual paths traversed will be stored |
+
+**Example**  
+```js
+let [person, grand_uncle, lineage] = vars("person", "grand uncle", "lineage")
+path(person, ((father|mother) {2,2}), brother), grand_uncle, lineage)
+```
+
+### size
+
+#### WOQL.size(resourceId, resultVarName)
+Calculates the size in bytes of the contents of the resource identified in ResourceID
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| resourceId | <code>string</code> | A valid resource identifier string (can refer to any graph / branch / commit / db) |
+| resultVarName | <code>string</code> | The variable name |
+
+**Example**  
+```js
+size("admin/minecraft/local/branch/main/instance/main", "v:varSize")
+//returns the number of bytes in the main instance graph on the main branch
+```
+
+### triple_count
+
+#### WOQL.triple\_count(resourceId, tripleCount) ⇒ <code>WOQLQuery</code>
+Calculates the number of triples of the contents of the resource identified in ResourceID
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the size expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| resourceId | <code>string</code> | A valid resource identifier string (can refer to any graph / branch / commit / db) |
+| tripleCount | <code>string</code> \| <code>number</code> | An integer literal with the size in bytes or a variable containing that integer |
+
+**Example**  
+```js
+let [tc] = vars("s")
+triple_count("admin/minecraft/local/_commits", tc)
+//returns the number of bytes in the local commit graph
+```
+
+### type_of
+
+#### WOQL.type\_of(elementId, elementType) ⇒ <code>WOQLQuery</code>
+Returns true if 'elementId' is of type 'elementType', according to the current DB schema
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery object containing the type_of pattern matching rule  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| elementId | <code>string</code> | the id of a schema graph element |
+| elementType | <code>string</code> | the element type |
+
+
+### star
+
+#### WOQL.star([graph], [subject], [predicate], [object]) ⇒ <code>WOQLQuery</code>
+Generates a query that by default matches all triples in a graph identified by "graph" or in all the current terminusDB's graph
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the pattern matching expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [graph] | <code>string</code> \| <code>boolean</code> | false or the resource identifier of a graph possible value are schema/{main - myschema - *} | instance/{main - myschema - *}  | inference/{main - myschema - *} |
+| [subject] | <code>string</code> | The IRI of a triple’s subject or a variable,  default value "v:Subject" |
+| [predicate] | <code>string</code> | The IRI of a property or a variable, default value "v:Predicate" |
+| [object] | <code>string</code> | The IRI of a node or a variable, or a literal,  default value "v:Object" |
+
+**Example**  
+```js
+star("schema/main")
+//will return every triple in schema/main graph
+```
+
+### all
+
+#### WOQL.all([subject], [predicate], [object], [graphRef]) ⇒ <code>WOQLQuery</code>
+Generates a query that by default matches all triples in a graph - identical to star() except for order of arguments
+
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the pattern matching expression
+all("mydoc")
+//will return every triple in the instance/main graph that has "doc:mydoc" as its subject  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [subject] | <code>string</code> | The IRI of a triple’s subject or a variable |
+| [predicate] | <code>string</code> | The IRI of a property or a variable |
+| [object] | <code>string</code> | The IRI of a node or a variable, or a literal |
+| [graphRef] | <code>typedef.GraphRef</code> | the resource identifier of a graph possible value are schema/{main - myschema - *} | instance/{main - myschema - *}  | inference/{main - myschema - *} |
+
+
+### node
+
+#### WOQL.node(nodeid, [chainType]) ⇒ <code>WOQLQuery</code>
+Specifies the identity of a node that can then be used in subsequent builder functions. Note that node() requires subsequent chained functions to complete the triples / quads that it produces - by itself it only generates the subject.
+
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the partial Node pattern matching expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| nodeid | <code>string</code> | The IRI of a node or a variable containing an IRI which will be the subject of the builder functions |
+| [chainType] | <code>typedef.FuntionType</code> | Optional type of builder function to build  (default is triple) |
+
+**Example**  
+```js
+node("mydoc").label("my label")
+//equivalent to triple("mydoc", "label", "my label")
 ```
 
 ### insert
@@ -892,6 +1312,24 @@ node("MyClass", "AddQuad").graph("schema/main").label("My Class Label")
 //equivalent to add_quad("MyClass", "label", "My Class Label", "schema/main")
 ```
 
+### add_class
+
+#### WOQL.add\_class(classId, [schemaGraph]) ⇒ <code>WOQLQuery</code>
+Generates a new Class with the given ClassID and writes it to the DB schema
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the add class expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| classId | <code>string</code> | IRI or variable containing IRI of the new class to be added (prefix default to scm) |
+| [schemaGraph] | <code>string</code> | Optional Resource String identifying the schema graph into which the class definition will be written |
+
+**Example**  
+```js
+add_class("MyClass")
+//equivalent to add_quad("MyClass", "type", "owl:Class", "schema/main")
+```
+
 ### add_property
 
 #### WOQL.add\_property(propId, propType, [schemaGraph]) ⇒ <code>WOQLQuery</code>
@@ -928,6 +1366,84 @@ Deletes the Class with the passed ID form the schema (and all references to it)
 **Example**  
 ```js
 delete_class("MyClass")
+```
+
+### delete_property
+
+#### WOQL.delete\_property(propId, [schemaGraph], [propVarName]) ⇒ <code>WOQLQuery</code>
+Deletes a property from the schema and all its references incoming and outgoing
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the property deletion expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| propId | <code>string</code> | IRI or a variable containing IRI of the property to be deleted (prefix defaults to scm) |
+| [schemaGraph] | <code>string</code> | Resource String identifying the schema graph from which the property definition will be deleted |
+| [propVarName] | <code>string</code> |  |
+
+**Example**  
+```js
+delete_property("MyProp")
+```
+
+### doctype
+
+#### WOQL.doctype(classId, [schemaGraph]) ⇒ <code>WOQLQuery</code>
+Creates a new document class in the schema
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the add document class expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| classId | <code>string</code> | IRI or variable containing IRI of the new document class to be added (prefix default to scm) |
+| [schemaGraph] | <code>string</code> | Resource String identifying the schema graph from which the document definition will be added |
+
+**Example**  
+```js
+doctype("MyClass")
+//equivalent to add_quad("MyClass", "type", "owl:Class", "schema/main")
+//.add_quad("MyClass", "subClassOf", "system:Document", "schema/main")
+```
+
+### insert_data
+
+#### WOQL.insert\_data(dataObj, [instanceGraph]) ⇒ <code>WOQLQuery</code>
+Inserts data as an object - enabling multiple property values to be inserted in one go
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the insertion expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| dataObj | <code>object</code> | json object which contains fields: mandatory: id, type optional: label, description, [property] (valid property ids) |
+| [instanceGraph] | <code>string</code> | al graph resource identifier (defaults to “instance/main” if no using or into is specified) |
+
+**Example**  
+```js
+let data = {id: "doc:joe",
+  type: "Person",
+  label: "Joe",
+  description: "My friend Joe",
+  age: 42
+ }
+ insert_data(data)
+```
+
+### insert_class_data
+
+#### WOQL.insert\_class\_data(classObj, [schemaGraph]) ⇒ <code>WOQLQuery</code>
+Inserts data about a class as a json object - enabling a class and all its properties to be specified in a single function
+
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the insertion expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| classObj | <code>typedef.ClassObj</code> | with id, label, description, parent and properties |
+| [schemaGraph] | <code>string</code> | the resource identifier of a schema graph. The Default value is schema/main |
+
+**Example**  
+```js
+let data = { id: "Robot", label: "Robot", parent: ["MyClass001", "MyClass002"]}
+insert_class_data(data)
 ```
 
 ### insert_doctype_data
@@ -1098,6 +1614,18 @@ Gets/Sets woqlClient
 | client | <code>WOQLClient</code> | 
 
 
+### emerge
+
+#### WOQL.emerge(auto_eval)
+query module
+allow you to use WOQL words as top level functions
+
+
+| Param | Type |
+| --- | --- |
+| auto_eval | <code>\*</code> | 
+
+
 ### update_triple
 
 #### WOQL.update\_triple(subject, predicate, newObjValue, oldObjValue) ⇒ <code>WOQLQuery</code>
@@ -1161,13 +1689,13 @@ Creates a pattern matching rule for a quad [Subject, Predicate, Object, Graph] o
 
 ### makeEnum
 
-#### WOQL.makeEnum(woqlClient, prop, classId, classLabel, [classDesc], [schemaGraph]) ⇒ <code>WOQLQuery</code>
+#### WOQL.makeEnum(woqlClient, propId, classId, classLabel, [classDesc], [schemaGraph]) ⇒ <code>WOQLQuery</code>
 **Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Create Enum Class Statement  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | woqlClient | <code>WOQLClient</code> | an WoqlClient instance |
-| prop | <code>string</code> | - |
+| propId | <code>string</code> | property id |
 | classId | <code>string</code> | the enum class id |
 | classLabel | <code>string</code> | the enum class label |
 | [classDesc] | <code>string</code> | the enum class description |
@@ -1226,12 +1754,12 @@ delete the enum list for a specific enumeration class, but not the class
 Called to load Terminus Predefined libraries:
 
 
-| Param | Type |
-| --- | --- |
-| libs | <code>\*</code> | 
-| parent | <code>\*</code> | 
-| graph | <code>\*</code> | 
-| prefix | <code>\*</code> | 
+| Param | Type | Description |
+| --- | --- | --- |
+| libs | <code>\*</code> | xsd,xdd,box |
+| parent | <code>\*</code> |  |
+| graph | <code>\*</code> | -graph ref |
+| prefix | <code>\*</code> | -prefix you want use |
 
 
 ### boxClasses

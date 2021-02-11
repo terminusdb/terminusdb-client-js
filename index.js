@@ -4,19 +4,19 @@ module.exports = {
      */
     WOQLClient: require('./lib/woqlClient'),
     /**
-     * @type {import('./lib/utils')}
+     * @type {typeof import('./lib/utils')}
      */
     UTILS: require('./lib/utils'),
     /**
-     * @type {import('./lib/woqlView')}
+     * @type {typeof import('./lib/viewer/woqlView')}
      */
     View: require('./lib/viewer/woqlView'),
     /**
-     * @type {import('./lib/woql')}
+     * @type {typeof import('./lib/woql')}
      */
     WOQL: require('./lib/woql'),
     /**
-     * @type {import('./lib/viewer/woqlResult')}
+     * @type {typeof import('./lib/viewer/woqlResult')}
      */
     WOQLResult: require('./lib/viewer/woqlResult'),
     /**

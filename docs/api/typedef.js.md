@@ -20,7 +20,7 @@
 <dd></dd>
 <dt><a href="#CredentialObj">CredentialObj</a> : <code>Object</code></dt>
 <dd></dd>
-<dt><a href="#ActionType">ActionType</a> : <code>&#x27;graph&#x27;</code> | <code>&#x27;db&#x27;</code> | <code>&#x27;clone&#x27;</code> | <code>&#x27;triples&#x27;</code> | <code>&#x27;woql&#x27;</code> | <code>&#x27;frame&#x27;</code> | <code>&#x27;fetch&#x27;</code> | <code>&#x27;pull&#x27;</code> | <code>&#x27;rebase&#x27;</code> | <code>&#x27;csv&#x27;</code> | <code>&#x27;branch&#x27;</code> | <code>&#x27;reset&#x27;</code> | <code>&#x27;push&#x27;</code></dt>
+<dt><a href="#ActionType">ActionType</a> : <code>&#x27;graph&#x27;</code> | <code>&#x27;db&#x27;</code> | <code>&#x27;clone&#x27;</code> | <code>&#x27;triples&#x27;</code> | <code>&#x27;woql&#x27;</code> | <code>&#x27;frame&#x27;</code> | <code>&#x27;fetch&#x27;</code> | <code>&#x27;pull&#x27;</code> | <code>&#x27;rebase&#x27;</code> | <code>&#x27;csv&#x27;</code> | <code>&#x27;branch&#x27;</code> | <code>&#x27;reset&#x27;</code> | <code>&#x27;push&#x27;</code> | <code>&#x27;squash&#x27;</code></dt>
 <dd></dd>
 <dt><a href="#ParamsObj">ParamsObj</a> : <code>Object</code></dt>
 <dd></dd>
@@ -51,7 +51,7 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| [type] | <code>&quot;csv&quot;</code> \| <code>&quot;turtle&quot;</code> \| <code>&quot;json&quot;</code> | the format type |
+| [type] | <code>&quot;csv&quot;</code> \| <code>&quot;turtle&quot;</code> | the format type |
 | [format_header] | <code>string</code> | header format type |
 
 
@@ -117,7 +117,7 @@ an object that describe a property element
 
 ## ActionType
 
-#### ActionType : <code>&#x27;graph&#x27;</code> \| <code>&#x27;db&#x27;</code> \| <code>&#x27;clone&#x27;</code> \| <code>&#x27;triples&#x27;</code> \| <code>&#x27;woql&#x27;</code> \| <code>&#x27;frame&#x27;</code> \| <code>&#x27;fetch&#x27;</code> \| <code>&#x27;pull&#x27;</code> \| <code>&#x27;rebase&#x27;</code> \| <code>&#x27;csv&#x27;</code> \| <code>&#x27;branch&#x27;</code> \| <code>&#x27;reset&#x27;</code> \| <code>&#x27;push&#x27;</code>
+#### ActionType : <code>&#x27;graph&#x27;</code> \| <code>&#x27;db&#x27;</code> \| <code>&#x27;clone&#x27;</code> \| <code>&#x27;triples&#x27;</code> \| <code>&#x27;woql&#x27;</code> \| <code>&#x27;frame&#x27;</code> \| <code>&#x27;fetch&#x27;</code> \| <code>&#x27;pull&#x27;</code> \| <code>&#x27;rebase&#x27;</code> \| <code>&#x27;csv&#x27;</code> \| <code>&#x27;branch&#x27;</code> \| <code>&#x27;reset&#x27;</code> \| <code>&#x27;push&#x27;</code> \| <code>&#x27;squash&#x27;</code>
 
 ## ParamsObj
 
@@ -167,9 +167,9 @@ an object that describe a property element
 | id | <code>string</code> | The database identification name |
 | label | <code>string</code> | "Textual DB Name" |
 | [comment] | <code>string</code> | "Text description of DB" |
-| sharing | <code>string</code> |  |
+| [public] | <code>boolean</code> |  |
 | [icon] | <code>string</code> | The database's icon |
-| prefixes | <code>object</code> | {scm: "http://url.to.use/for/scm", doc: "http://url.to.use/for/doc"} |
+| [prefixes] | <code>object</code> | {scm: "http://url.to.use/for/scm", doc: "http://url.to.use/for/doc"} |
 | [schema] | <code>boolean</code> | if set to true, a schema graph will be created |
 
 

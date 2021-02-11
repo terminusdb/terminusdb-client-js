@@ -202,7 +202,7 @@ Gets/Sets the client’s internal branch context value (defaults to ‘main’)
 
 ### ref
 
-#### woqlClient.ref([refId]) ⇒ <code>string</code> \| <code>boolean</code>
+#### woqlClient.ref([commitId]) ⇒ <code>string</code> \| <code>boolean</code>
 Sets / gets the current ref pointer (pointer to a commit within a branch)
 Reference ID or Commit ID are unique hashes that are created whenever a new commit is recorded
 
@@ -210,7 +210,7 @@ Reference ID or Commit ID are unique hashes that are created whenever a new comm
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [refId] | <code>string</code> | the reference ID or commit ID |
+| [commitId] | <code>string</code> | the reference ID or commit ID |
 
 **Example**  
 ```js
@@ -295,11 +295,33 @@ of the current context for "commits" "meta" "branch" and "ref" special resources
 const branch_resource = client.resource("branch")
 ```
 
+### connect
+
+#### woqlClient.connect([params]) ⇒ <code>Promise</code>
+Connect to a Terminus server at the given URI with an API key
+Stores the system:ServerCapability document returned
+in the connection register which stores, the url, key, capabilities,
+and database meta-data for the connected server
+this.connectionConfig.server will be used if present,
+or the promise will be rejected.
+
+**Returns**: <code>Promise</code> - the connection capabilities response object or an error object  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [params] | <code>typedef.ParamsObj</code> | TerminusDB Server connection parameters |
+
+**Example**  
+```js
+client.connect({key="mykey",user="admin"})
+```
+
 ### createDatabase
 
 #### woqlClient.createDatabase(dbId, dbDetails, [orgId]) ⇒ <code>Promise</code>
 Creates a new database in TerminusDB server
 
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -317,7 +339,7 @@ client.createDatabase("mydb", {label: "My Database", comment: "Testing", schema:
 #### woqlClient.deleteDatabase(dbId, [orgId], [force]) ⇒ <code>Promise</code>
 Deletes a database from a TerminusDB server
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -371,7 +393,7 @@ client.deleteGraph("schema", "alt", "Deleting alt schema graph")
 #### woqlClient.getTriples(graphType, graphId) ⇒ <code>Promise</code>
 Retrieve the contents of a graph within a TerminusDB as triples, encoded in the turtle (ttl) format
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object (with the contents being a string representing a set of triples in turtle (ttl) format), or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object (with the contents being a string representing a set of triples in turtle (ttl) format), or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -407,7 +429,7 @@ client.updateTriples("schema", "alt", turtle_string, "dumping triples to graph a
 #### woqlClient.insertTriples(graphType, graphId, turtle, commitMsg) ⇒ <code>Promise</code>
 Appends the passed turtle to the contents of a graph
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -422,7 +444,7 @@ Appends the passed turtle to the contents of a graph
 #### woqlClient.insertCSV(csvPathList, commitMsg) ⇒ <code>Promise</code>
 Inserts a csv from a specified path
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -437,18 +459,16 @@ client.insertCSV(filePath, "inserting a CSV file", "instance", "main")
 
 ### updateCSV
 
-#### woqlClient.updateCSV(csvPathList, commitMsg, graphType, graphId) ⇒ <code>Promise</code>
+#### woqlClient.updateCSV(csvPathList, commitMsg) ⇒ <code>Promise</code>
 Updates the contents of the specified path with a csv, creating the appropriate
 diff object as the commit.
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | csvPathList | <code>array</code> | Array csvs to upload |
 | commitMsg | <code>string</code> | Textual message describing the reason for the update |
-| graphType | <code>string</code> | type of graph  |instance|schema|inference| |
-| graphId | <code>string</code> | TerminusDB Graph ID to update, main is the default value |
 
 **Example**  
 ```js
@@ -498,7 +518,7 @@ client.deleteCSV(name, "deleting CSV")
 #### woqlClient.message(message, [pathname]) ⇒ <code>Promise</code>
 Sends a message to the server
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -511,7 +531,7 @@ Sends a message to the server
 #### woqlClient.action(actionName, [payload]) ⇒ <code>Promise</code>
 Sends an action to the server
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -524,7 +544,7 @@ Sends an action to the server
 #### woqlClient.info() ⇒ <code>Promise</code>
 Gets TerminusDB Server Information
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 **Example**  
 ```js
 client.info()
@@ -535,7 +555,7 @@ client.info()
 #### woqlClient.query(woql, [commitMsg], [allWitnesses]) ⇒ <code>Promise</code>
 Executes a WOQL query on the specified database and returns the results
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -553,7 +573,7 @@ const result = await client.query(WOQL.star())
 #### woqlClient.branch(newBranchId, [sourceFree]) ⇒ <code>Promise</code>
 Creates a new branch with a TerminusDB database, starting from the current context of the client (branch / ref)
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -565,12 +585,62 @@ Creates a new branch with a TerminusDB database, starting from the current conte
 client.branch("dev")
 ```
 
+### squashBranch
+
+#### woqlClient.squashBranch(branchId, commitMsg) ⇒ <code>Promise</code>
+Squash branch commits
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| branchId | <code>string</code> | local identifier of the new branch |
+| commitMsg | <code>string</code> | Textual message describing the reason for the update |
+
+
+### resetBranch
+
+#### woqlClient.resetBranch(branchId, commitId) ⇒ <code>Promise</code>
+Reset branch to a commit id, Reference ID or Commit ID are unique hashes that are created whenever a new commit is recorded
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| branchId | <code>string</code> | local identifier of the new branch |
+| commitId | <code>string</code> | Reference ID or Commit ID |
+
+
+### optimizeBranch
+
+#### woqlClient.optimizeBranch(branchId) ⇒ <code>Promise</code>
+Optimize db branch
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| branchId | <code>string</code> | local identifier of the new branch |
+
+
+### deleteBranch
+
+#### woqlClient.deleteBranch(branchId) ⇒ <code>Promise</code>
+Deletes a branch from database
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| branchId | <code>string</code> | local identifier of the branch |
+
+
 ### pull
 
 #### woqlClient.pull(remoteSourceRepo) ⇒ <code>Promise</code>
 Pull changes from a branch on a remote database to a branch on a local database
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -586,7 +656,7 @@ client.pull({remote: "origin", remote_branch: "main", message: "Pulling from rem
 #### woqlClient.fetch(remoteId) ⇒ <code>Promise</code>
 Fetch updates to a remote database to a remote repository with the local database
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -598,7 +668,7 @@ Fetch updates to a remote database to a remote repository with the local databas
 #### woqlClient.push(remoteTargetRepo) ⇒ <code>Promise</code>
 Push changes from a branch on a local database to a branch on a remote database
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -614,7 +684,7 @@ client.push({remote: "origin", remote_branch: "main", message: "Pulling from rem
 #### woqlClient.rebase(rebaseSource) ⇒ <code>Promise</code>
 Merges the passed branch into the current one using the rebase operation
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -630,7 +700,7 @@ client.rebase({rebase_from: "dev", message: "Merging from dev")
 #### woqlClient.reset(commitPath) ⇒ <code>Promise</code>
 Reset the current branch HEAD to the specified commit path
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -642,7 +712,7 @@ Reset the current branch HEAD to the specified commit path
 #### woqlClient.clonedb(cloneSource, newDbId, [orgId]) ⇒ <code>Promise</code>
 Clones a remote repo and creates a local copy
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -660,7 +730,7 @@ client.clonedb({remote_url: "https://my.terminusdb.com/myorg/mydb", label "Clone
 #### woqlClient.dispatch() ⇒ <code>Promise</code>
 Common request dispatch function
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 **Properties**
 
 | Name | Type | Description |
@@ -680,6 +750,17 @@ Generates the json structure for commit messages
 | --- | --- | --- |
 | msg | <code>string</code> | textual string describing reason for the change |
 | [author] | <code>string</code> | optional author id string - if absent current user id will be used |
+
+
+### generateCommitDescriptor
+
+#### woqlClient.generateCommitDescriptor(commitId)
+Generates the json structure for commit descriptor
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| commitId | <code>string</code> | a valid commit id o |
 
 
 ### prepareRevisionControlArgs
@@ -711,6 +792,7 @@ add the prefix at the connection database list
 #### woqlClient.getClassFrame(docType) ⇒ <code>Promise</code>
 Retrieves a class frame for the specified class
 
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -722,7 +804,7 @@ Retrieves a class frame for the specified class
 #### woqlClient.updateDatabase(dbDoc) ⇒ <code>Promise</code>
 update the database details
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -757,7 +839,7 @@ Check from the capabilities object if the action is permitted
 #### woqlClient.createUser(userId, userDoc) ⇒ <code>Promise</code>
 For creating an user
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -770,7 +852,7 @@ For creating an user
 #### woqlClient.getUser(userId) ⇒ <code>Promise</code>
 Get the logged user details.
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type |
 | --- | --- |
@@ -782,7 +864,7 @@ Get the logged user details.
 #### woqlClient.updateUser(userId, userDoc) ⇒ <code>Promise</code>
 Update an user from the database.
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -795,7 +877,7 @@ Update an user from the database.
 #### woqlClient.deleteUser(userId) ⇒ <code>Promise</code>
 Delete an user from the database Only a user with DBA authority can delete a user.
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type |
 | --- | --- |
@@ -807,7 +889,7 @@ Delete an user from the database Only a user with DBA authority can delete a use
 #### woqlClient.createOrganization(orgId, orgDoc) ⇒ <code>Promise</code>
 Create a new organization for the registered user
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -820,7 +902,7 @@ Create a new organization for the registered user
 #### woqlClient.getOrganization(orgId) ⇒ <code>Promise</code>
 Gets all the information about the given organization
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -834,7 +916,7 @@ only if you have the permission you can delete an organization
  Before you can delete the organization, you must first remove all accounts and databases
  from the organization
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -849,7 +931,7 @@ only if you have the permission you can delete an organization
  Before you can delete the organization, you must first remove all accounts and databases
  from the organization
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -859,7 +941,7 @@ only if you have the permission you can delete an organization
 ### getRoles
 
 #### woqlClient.getRoles(userId, [orgId], [dbId]) ⇒ <code>Promise</code>
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -873,31 +955,9 @@ only if you have the permission you can delete an organization
 #### woqlClient.updateRoles(newRolesObj) ⇒ <code>Promise</code>
 Change the user role for existing users in your organisation, including your own
 
-**Returns**: <code>Promise</code> - - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type |
 | --- | --- |
 | newRolesObj | <code>typedef.RolesObj</code> | 
 
-
-### connect
-
-#### woqlClient.connect([params]) ⇒ <code>Promise</code>
-Connect to a Terminus server at the given URI with an API key
-Stores the system:ServerCapability document returned
-in the connection register which stores, the url, key, capabilities,
-and database meta-data for the connected server
-this.connectionConfig.server will be used if present,
-or the promise will be rejected.
-
-**Returns**: <code>Promise</code> - - the connection capabilities response object or an error object  
-**Category**: TerminusDB Client API  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [params] | <code>typedef.ParamsObj</code> | TerminusDB Server connection parameters |
-
-**Example**  
-```js
-client.connect({key="mykey",user="admin"})
-```
