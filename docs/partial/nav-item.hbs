@@ -2,7 +2,7 @@
 {{!#if (equal kind "class")}}
 {{!else}}
 {{#if (isDeprecated deprecated)~}}
-{{indentItem}}- [{{#if label}}{{label}}{{else}}{{name}}{{/if}}](./api/{{meta.filename}}?id={{navItemAnchor}})
+{{indentItem}}- [{{#if label}}{{label}}{{else}}{{name}}{{/if}}](api/{{meta.filename}}?id={{navItemAnchor}})
 {{/if}}
 {{!/if}}
 {{/if}}

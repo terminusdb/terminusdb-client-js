@@ -18,7 +18,6 @@ module.exports.woqlClientMenu = {
         {label: 'Push', id: 'push'},
         {label: 'Fetch', id: 'fetch'},
         {label: 'Insert CSV', id: 'insertCSV'},
-        {label: 'Update CSV', id: 'updateCSV'},
         {label: 'Get CSV', id: 'getCSV'},
         {label: 'Update CSV', id: 'updateCSV'},
         {label: 'Delete CSV', id: 'deleteCSV'},

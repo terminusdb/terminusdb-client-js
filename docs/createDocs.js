@@ -102,13 +102,12 @@ function formatDataOrder(dataProvider, orderMenu) {
             return element.name === item.id
         })
 
-        console.log('INDEX___', index, item.id)
         if (index !== -1) {
             /**
              * @type {array}
              */
             const found = dataProvider.splice(index, 1)
-            console.log('found', found.length)
+            //console.log('found', found.length)
             if (found.length > 0) {
                 found[0]['label'] = item.label
                 newData.push(found[0])
