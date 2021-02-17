@@ -44,19 +44,24 @@ const test = [
     return options.fn(options)
 }*/
 
-exports.checkType = function(options) {
+exports.addAnchor = function(options) {
     if (this.kind === 'constructor') return false
     return true
 }
 
-exports.makeAnchor = function(options) {
-    if (typeof options === 'string') {
-        const arr = options.split(/\+|\./)
+exports.addSigName = function(options) {
+    if (this.kind === 'group') return false
+    return true
+}
+
+exports.makeAnchor = function(anchorName) {
+    if (typeof anchorName === 'string') {
+        const arr = anchorName.split(/\+|\./)
         if (arr.length === 2) {
             return arr[1]
         }
     }
-    return options
+    return anchorName
 }
 
 exports.docsFilter = function(data, options) {
@@ -81,9 +86,27 @@ exports.isDeprecated = function() {
     if (this.deprecated === undefined) return true
     return false
 }
-exports.indentItem = function() {
-    if (this.kind === 'class') {
+
+exports.navItemAnchor = function() {
+    if (typeof this.label === 'string') {
+        const anchorName = this.label.replace(/ /g, '-')
+        return anchorName.toLowerCase()
+    }
+    return this.name
+}
+var indentItemSub = false
+
+exports.indentItem = function(options) {
+    if (this.kind === 'class' || this.kind === 'module') {
+        indentItemSub = false
         return ''
+    }
+    if (this.kind === 'group') {
+        indentItemSub = true
+        return '  '
+    }
+    if (indentItemSub) {
+        return '    '
     }
     return '  '
 }

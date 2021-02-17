@@ -39,11 +39,9 @@
 
 
 ## GraphRef
-
 #### GraphRef : <code>&quot;schema/main&quot;</code> \| <code>&quot;schema/\*&quot;</code> \| <code>&quot;instance/main&quot;</code> \| <code>&quot;instance/\*&quot;</code> \| <code>&quot;inference/main&quot;</code> \| <code>&quot;inference/\*&quot;</code> \| <code>string</code>
 
 ## DataFormatObj
-
 #### DataFormatObj : <code>Object</code>
 (export/import)
 
@@ -56,11 +54,9 @@
 
 
 ## FuntionType
-
 #### FuntionType : <code>&quot;add\_quad&quot;</code> \| <code>&quot;delete\_quad&quot;</code> \| <code>&quot;add\_triple&quot;</code> \| <code>&quot;delete\_triple&quot;</code> \| <code>&quot;quad&quot;</code> \| <code>&quot;triple&quot;</code>
 
 ## ClassObj
-
 #### ClassObj : <code>Object</code>
 the class details object
 
@@ -77,7 +73,6 @@ the class details object
 
 
 ## PropertyObj
-
 #### PropertyObj : <code>Object</code>
 an object that describe a property element
 
@@ -96,15 +91,12 @@ an object that describe a property element
 
 
 ## ResourceType
-
 #### ResourceType : <code>&quot;commits&quot;</code> \| <code>&quot;meta&quot;</code> \| <code>&quot;branch&quot;</code> \| <code>&quot;ref&quot;</code> \| <code>&quot;repo&quot;</code> \| <code>&quot;db&quot;</code>
 
 ## GraphType
-
 #### GraphType : <code>&quot;inference&quot;</code> \| <code>&quot;schema&quot;</code> \| <code>&quot;instance&quot;</code>
 
 ## CredentialObj
-
 #### CredentialObj : <code>Object</code>
 **Properties**
 
@@ -116,11 +108,9 @@ an object that describe a property element
 
 
 ## ActionType
-
 #### ActionType : <code>&#x27;graph&#x27;</code> \| <code>&#x27;db&#x27;</code> \| <code>&#x27;clone&#x27;</code> \| <code>&#x27;triples&#x27;</code> \| <code>&#x27;woql&#x27;</code> \| <code>&#x27;frame&#x27;</code> \| <code>&#x27;fetch&#x27;</code> \| <code>&#x27;pull&#x27;</code> \| <code>&#x27;rebase&#x27;</code> \| <code>&#x27;csv&#x27;</code> \| <code>&#x27;branch&#x27;</code> \| <code>&#x27;reset&#x27;</code> \| <code>&#x27;push&#x27;</code> \| <code>&#x27;squash&#x27;</code>
 
 ## ParamsObj
-
 #### ParamsObj : <code>Object</code>
 **Properties**
 
@@ -139,7 +129,6 @@ an object that describe a property element
 
 
 ## RolesObj
-
 #### RolesObj : <code>Object</code>
 **Properties**
 
@@ -153,11 +142,9 @@ an object that describe a property element
 
 
 ## RepoType
-
 #### RepoType : <code>&quot;local&quot;</code> \| <code>&quot;remote&quot;</code>
 
 ## DbDetails
-
 #### DbDetails : <code>Object</code>
 **Properties**
 
@@ -174,7 +161,6 @@ an object that describe a property element
 
 
 ## RemoteRepoDetails
-
 #### RemoteRepoDetails : <code>Object</code>
 {remote: "origin", "remote_branch": "main", "author": "admin", "message": "message"}
 
@@ -189,7 +175,6 @@ an object that describe a property element
 
 
 ## CloneSourceDetails
-
 #### CloneSourceDetails : <code>Object</code>
 **Properties**
 
