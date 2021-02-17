@@ -24,12 +24,12 @@ const optionsDefault = {
 const template = `{{>navigation}}`
 
 inputFile.forEach(filePath => {
-    let options = JSON.parse(JSON.stringify(optionsDefault));
+    let options = JSON.parse(JSON.stringify(optionsDefault))
     options['files'] = filePath
     /* get template data */
     const fileName = getFileName(filePath)
     let templateData = jsdoc2md.getTemplateDataSync({files: filePath})
-    if (fileName === 'woqlClient.js') {
+    if (fileName === 'woqlClient') {
         templateData = formatDataOrder(templateData, woqlClientMenu)
         options['data'] = templateData
     }
@@ -39,21 +39,25 @@ inputFile.forEach(filePath => {
         path.resolve(outputDir, `${fileName}.json`),
         JSON.stringify(templateData, null, 2),
     )
-    createFile(filePath, options)
+    createFile(filePath, options, outputDir)
 })
 // create the navigationbar
-createFile('./doc/api/navtest.js', {
-    data: navigationArr,
-    template: template,
-    helper: './docs/helper/format.js',
-    partial: [
-        './docs/partial/navigation.hbs',
-        './docs/partial/nav-item.hbs',
-        './docs/partial/getting-started.hbs',
-    ],
-})
+createFile(
+    '_sidebar.js',
+    {
+        data: navigationArr,
+        template: template,
+        helper: './docs/helper/format.js',
+        partial: [
+            './docs/partial/navigation.hbs',
+            './docs/partial/nav-item.hbs',
+            './docs/partial/getting-started.hbs',
+        ],
+    },
+    './docs',
+)
 
-function createFile(filePath, options) {
+function createFile(filePath, options, outputDir) {
     const fileName = getFileName(filePath)
     //const template = `{{#class name="${className}"}}{{>docs}}{{/class}}`
     console.log(`rendering ${filePath}`)
@@ -62,8 +66,8 @@ function createFile(filePath, options) {
 }
 ////([\w-]+)(.js)/
 function getFileName(filePath) {
-    const regEx = /[\w-]+\.js/
-    return filePath.match(regEx)[0]
+    const regEx = /([\w-]+)(.js)/ ///[\w-]+\.js/
+    return filePath.match(regEx)[1]
 }
 
 function formatDataOrder(dataProvider, orderMenu) {
