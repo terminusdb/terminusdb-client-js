@@ -1,4 +1,4 @@
-# terminusdb-client
+# TerminusDB-Client
 
 [![build status](https://api.travis-ci.com/terminusdb/terminusdb-client.svg?branch=master)](https://travis-ci.com/terminusdb/terminusdb-client)
 [![Coverage Status](https://coveralls.io/repos/github/terminusdb/terminusdb-client/badge.svg?branch=master)](https://coveralls.io/repos/github/terminusdb/terminusdb-client/badge.svg?branch=master)
@@ -57,11 +57,13 @@ const TerminusClient = require("@terminusdb/terminusdb-client");
 
 // Connect and configure the TerminusClient
 const client = new TerminusClient.WOQLClient("https://127.0.0.1:6363/", {
-  dbid: "banker",
+  db: "banker",
   user: "admin",
   key: "root",
 });
-client.db("banker");
+
+//to change the starting settings
+client.db("banker01");
 client.organization("admin");
 
 async function postAccount() {
@@ -115,7 +117,7 @@ To initialize `TerminusDB client` with custom options use
 const TerminusClient = require("@terminusdb/terminusdb-client");
 
 const client = new TerminusClient.WOQLClient("https://127.0.0.1:6363/", {
-  dbid: "test_db",
+  id: "test_db",
   user: "admin",
   key: "my_secret_key",
 });

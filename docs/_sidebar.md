@@ -1,12 +1,4 @@
-- [Getting started](README.md)
-  - [Requirements](README?id=requirements)
-  - [Installation](README?id=installation)
-  - [NPM Module](README?id=npm-module)
-  - [Minified Script](README?id=minified-script)
-  - [Usage](README?id=usage)
-  - [Report Issues](README?id=report-issues)
-  - [Contribute](README?id=contribute)
-  - [Licence](README?id=licence)
+<!-- docs/_sidebar.md -->
 - [WOQLClient](api/woqlClient.js?id=WOQLClient)
   - [TerminusDB Client API](api/woqlClient.js?id=terminusdb-client-api)
     - [Connect](api/woqlClient.js?id=connect)
