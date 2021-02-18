@@ -3,6 +3,7 @@
   "version": "4.1.0",
   "description": "TerminusDB client library",
   "main": "index.js",
+  "types": "./dist/typescript/index.d.ts",
   "files": [
     "*.md",
     "lib",
@@ -32,7 +33,6 @@
     "coveralls": "^3.0.9",
     "cross-env": "^5.2.1",
     "docsify-cli": "^4.4.2",
-    "documentation": "^13.0.2",
     "eslint": "7.9.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-import": "^2.19.1",
@@ -54,13 +54,12 @@
     "webpack-dev-server": "^3.11.0"
   },
   "scripts": {
-    "test005":"jsdoc2md --help",
+    "test005": "jsdoc2md --help",
     "mkdocs:multi": "node ./docs/createDocs.js",
     "mkdocs:src": "docco lib/*.js -l plain -x md -o docs/api",
     "mkdocs:api": "jsdoc2md --configure docs/doc_config.json --partial  docs/partial/scope.hbs docs/partial/member-index.hbs docs/partial/header.hbs --helper docs/helper/format.js --files lib/woql.js lib/woqlClient.js lib/typedef.js > docs/api/api.js.md",
     "mkdocs": "cp README.md docs/ && npm run mkdocs:multi",
     "docs": "docsify serve docs",
-    "doc": "documentation build lib/** -f html -o dist/docs",
     "test": "npm run cover",
     "test:only": "mocha --require @babel/register --require @babel/preset-env --recursive  ",
     "test:watch": "mocha --watch --require @babel/register --require @babel/preset-env --recursive",
