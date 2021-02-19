@@ -1,4 +1,9 @@
 package-lock.json
+docs/api/*.json
+
+.vscode
+
+local_test
 
 dist
 # Logs

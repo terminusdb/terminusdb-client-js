@@ -1,6 +1,6 @@
 *.log
 npm-debug.log*
-
+docs
 public_pages
 
 # Coverage directory used by tools like istanbul
