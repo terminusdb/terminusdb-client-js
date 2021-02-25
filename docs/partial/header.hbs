@@ -1,0 +1,8 @@
+{{!Markdown doesn't seem to mind where you put the anchor point. A useful place to put it is in a header.}}
+
+{{#if (addAnchor)}}
+{{>heading-indent}}{{#if this.label}}{{label}}{{else}}{{makeAnchor (anchorName)}}{{/if}}
+{{/if}}
+{{#if (addSigName)}}
+#### {{>sig-name}}
+{{/if}}
