@@ -1,3 +1,5 @@
+//https://auth0.com/docs/api/management/v2#!/Clients/post_clients
+//https://terminusdb.eu.auth0.com/api/v2/
 'use strict'
 const jsdoc2md = require('jsdoc-to-markdown')
 const fs = require('fs')
