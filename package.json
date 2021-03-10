@@ -54,7 +54,6 @@
     "webpack-dev-server": "^3.11.0"
   },
   "scripts": {
-    "test005": "jsdoc2md --help",
     "mkdocs:multi": "node ./docs/createDocs.js",
     "mkdocs:src": "docco lib/*.js -l plain -x md -o docs/api",
     "mkdocs:api": "jsdoc2md --configure docs/doc_config.json --partial  docs/partial/scope.hbs docs/partial/member-index.hbs docs/partial/header.hbs --helper docs/helper/format.js --files lib/woql.js lib/woqlClient.js lib/typedef.js > docs/api/api.js.md",
