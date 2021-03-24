@@ -30,8 +30,9 @@ inputFile.forEach(filePath => {
     options['files'] = filePath
     /* get template data */
     const fileName = getFileName(filePath)
+    console.log(fileName)
     let templateData = jsdoc2md.getTemplateDataSync({files: filePath})
-    if (fileName === 'woqlClient') {
+    if (fileName === 'woqlClient.js') {
         templateData = formatDataOrder(templateData, woqlClientMenu)
         options['data'] = templateData
     }
@@ -68,8 +69,8 @@ function createFile(filePath, options, outputDir) {
 }
 ////([\w-]+)(.js)/
 function getFileName(filePath) {
-    const regEx = /([\w-]+)(.js)/ ///[\w-]+\.js/
-    return filePath.match(regEx)[1]
+    const regEx = /[\w-]+\.js/;
+    return filePath.match(regEx)[0]
 }
 
 function formatDataOrder(dataProvider, orderMenu) {
