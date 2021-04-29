@@ -213,7 +213,10 @@ Merges the passed branch into the current one using the rebase operation
 
 **Example**  
 ```js
-client.rebase({rebase_from: "dev", message: "Merging from dev")
+//from the branch head
+client.rebase({rebase_from: "admin/db_name/local/branch/branch_name", message: "Merging from dev")
+//or from a commit id
+client.rebase({rebase_from: "admin/db_name/local/commit/9w8hk3y6rb8tjdy961de3i536ntkqd8", message: "Merging from dev")
 ```
 
 ### Pull
@@ -274,6 +277,22 @@ const filePath = ["C:/Users/User Name/Documents/example.csv"]
 client.insertCSV(filePath, "inserting a CSV file", "instance", "main")
 ```
 
+### Get CSV
+#### woqlClient.getCSV(csvName) ⇒ <code>Promise</code>
+Retrieves the contents of the specified graph as a CSV
+
+**Returns**: <code>Promise</code> - An API success message  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| csvName | <code>string</code> | Name of csv to dump from the specified database to extract |
+
+**Example**  
+```js
+const name = ["example.csv"]
+client.getCSV(name, true, "instance", "main")
+```
+
 ### Update CSV
 #### woqlClient.updateCSV(csvPathList, commitMsg) ⇒ <code>Promise</code>
 Updates the contents of the specified path with a csv, creating the appropriate
@@ -292,22 +311,6 @@ const filePath = [{fileToBeUpdated: "File.csv", updateWith: "C:/Users/User Name/
 client.updateCSV(filePath, "updating a CSV file", "instance", "main")
 // Here fileToBeUpdated is the CSV in TerminusDB which we are going to update. updateWith includes the file path of the CSV whose contents is going to be updated to fileToBeUpdated. Note that during an Update CSV only
 //the diffs are considered and are updated which makes update of big files more efficient.
-```
-
-### Get CSV
-#### woqlClient.getCSV(csvName) ⇒ <code>Promise</code>
-Retrieves the contents of the specified graph as a CSV
-
-**Returns**: <code>Promise</code> - An API success message  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| csvName | <code>string</code> | Name of csv to dump from the specified database to extract |
-
-**Example**  
-```js
-const name = ["example.csv"]
-client.getCSV(name, true, "instance", "main")
 ```
 
 ### Delete CSV

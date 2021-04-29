@@ -3,9 +3,6 @@
 //Task and Job are Objects
 //
 
-is this definition  correct?
-nothing change in insert and query the only things that change is when you delete a Document all the Object related will be deleted too
-
 const project="Project01"
 const task="Task01"
 

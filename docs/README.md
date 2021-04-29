@@ -57,13 +57,11 @@ const TerminusClient = require("@terminusdb/terminusdb-client");
 
 // Connect and configure the TerminusClient
 const client = new TerminusClient.WOQLClient("https://127.0.0.1:6363/", {
-  db: "banker",
+  dbid: "banker",
   user: "admin",
   key: "root",
 });
-
-//to change the starting settings
-client.db("banker01");
+client.db("banker");
 client.organization("admin");
 
 async function postAccount() {
@@ -117,7 +115,7 @@ To initialize `TerminusDB client` with custom options use
 const TerminusClient = require("@terminusdb/terminusdb-client");
 
 const client = new TerminusClient.WOQLClient("https://127.0.0.1:6363/", {
-  id: "test_db",
+  dbid: "test_db",
   user: "admin",
   key: "my_secret_key",
 });
