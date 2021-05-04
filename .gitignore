@@ -1,6 +1,6 @@
 package-lock.json
 docs/api/*.json
-
+docs/api/local_doc
 .vscode
 
 local_test
