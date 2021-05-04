@@ -23,6 +23,9 @@
     "axios": "^0.21.1"
   },
   "devDependencies": {
+     "y18n": ">=4.0.1",
+    "sockjs": ">=0.3.20",
+    "ssri": ">=6.0.2",
     "@babel/core": "^7.13.10",
     "@babel/preset-env": "^7.13.12",
     "@babel/register": "^7.13.8",
@@ -41,7 +44,7 @@
     "html-webpack-plugin": "^3.2.0",
     "install": "^0.13.0",
     "jsdoc-parse": "^5.0.0",
-    "jsdoc-to-markdown": "^6.0.1",
+    "jsdoc-to-markdown": "^7.0.1",
     "mocha": "^8.3.2",
     "nyc": "^15.0.0",
     "prettier": "^1.19.1",
