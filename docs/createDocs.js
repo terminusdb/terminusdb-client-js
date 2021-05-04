@@ -1,3 +1,5 @@
+//https://auth0.com/docs/api/management/v2#!/Clients/post_clients
+//https://terminusdb.eu.auth0.com/api/v2/
 'use strict'
 const jsdoc2md = require('jsdoc-to-markdown')
 const fs = require('fs')
@@ -28,8 +30,9 @@ inputFile.forEach(filePath => {
     options['files'] = filePath
     /* get template data */
     const fileName = getFileName(filePath)
+    console.log(fileName)
     let templateData = jsdoc2md.getTemplateDataSync({files: filePath})
-    if (fileName === 'woqlClient') {
+    if (fileName === 'woqlClient.js') {
         templateData = formatDataOrder(templateData, woqlClientMenu)
         options['data'] = templateData
     }
@@ -66,8 +69,8 @@ function createFile(filePath, options, outputDir) {
 }
 ////([\w-]+)(.js)/
 function getFileName(filePath) {
-    const regEx = /([\w-]+)(.js)/ ///[\w-]+\.js/
-    return filePath.match(regEx)[1]
+    const regEx = /[\w-]+\.js/;
+    return filePath.match(regEx)[0]
 }
 
 function formatDataOrder(dataProvider, orderMenu) {
