@@ -22,7 +22,8 @@
   "dependencies": {
     "axios": "^0.21.1",
     "ssri": ">=8.0.1",
-    "elliptic": ">=6.5.4"
+    "elliptic": ">=6.5.4",
+    "url-parse": ">=1.5.0"
   },
   "devDependencies": {
      "y18n": ">=4.0.1",
