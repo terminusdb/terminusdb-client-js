@@ -11,15 +11,11 @@ const config = {
     entry: path.resolve(__dirname, 'index.js'),
     // Output
     output: {
-        path: path.resolve(__dirname, `dist/`),
         filename: 'terminusdb-client.min.js',
         sourceMapFilename: 'terminusdb-client.min.js.map',
         libraryTarget: 'umd',
         library: 'TerminusDBClient',
         globalObject: 'this',
-    },
-    node: {
-        process: false,
     },
     // Loaders
     module: {
@@ -33,7 +29,12 @@ const config = {
         ],
     },
     devtool: 'source-map',
-    // Plugins
+  // Plugins
+  resolve: {
+    fallback: {
+      "https": false,
+    }
+  }
 }
 
 module.exports = function(env, argv) {
