@@ -7,28 +7,28 @@ var version = `v${PACKAGE.version}`
 require('@babel/register')
 // Webpack Configuration
 const config = {
-    // Entry
-    entry: path.resolve(__dirname, 'index.js'),
-    // Output
-    output: {
-        filename: 'terminusdb-client.min.js',
-        sourceMapFilename: 'terminusdb-client.min.js.map',
-        libraryTarget: 'umd',
-        library: 'TerminusDBClient',
-        globalObject: 'this',
-    },
-    // Loaders
-    module: {
-        rules: [
-            // JavaScript/JSX Files
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader',
-            },
-        ],
-    },
-    devtool: 'source-map',
+  // Entry
+  entry: path.resolve(__dirname, 'index.js'),
+  // Output
+  output: {
+    filename: 'terminusdb-client.min.js',
+    sourceMapFilename: 'terminusdb-client.min.js.map',
+    libraryTarget: 'umd',
+    library: 'TerminusDBClient',
+    globalObject: 'this',
+  },
+  // Loaders
+  module: {
+    rules: [
+      // JavaScript/JSX Files
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+      },
+    ],
+  },
+  devtool: 'source-map',
   // Plugins
   resolve: {
     fallback: {
@@ -38,20 +38,20 @@ const config = {
 }
 
 module.exports = function(env, argv) {
-    if (argv.mode === 'development') {
-        config.watch = true
-    }
+  if (argv.mode === 'development') {
+    config.watch = true
+  }
 
-    if (argv.mode === 'production') {
-        config.plugins = [
-            new HtmlWebPackPlugin({
-                template: './index.html',
-                filename: 'index.html',
-            }),
-        ]
-    }
+  if (argv.mode === 'production') {
+    config.plugins = [
+      new HtmlWebPackPlugin({
+        template: './index.html',
+        filename: 'index.html',
+      }),
+    ]
+  }
 
-    return config
+  return config
 }
 
 // Exports
