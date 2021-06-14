@@ -1015,7 +1015,7 @@ Casts the value of Input to a new value of type Type and stores the result in Ca
 
 **Example**  
 ```js
-cast("22/3/98", "xsd:dateTime", "v:time")
+typecast("22/3/98", "xsd:dateTime", "v:time")
 ```
 
 ### order_by

@@ -7,7 +7,7 @@ Promise based terminus client for the browser and node.js
 
 ## Requirements
 
-- [TerminusDB](https://github.com/terminusdb/terminusdb-server)
+- [TerminusDB](https://github.com/terminusdb/terminusdb)
 - [NodeJS 8.1.4+](https://nodejs.org/en/)
 
 ## Installation
@@ -46,7 +46,7 @@ Download the terminusdb-client.min.js file from the /dist directory and save it 
 
 This example creates a simple Express.js server that will post an account to
 a database with the id "banker" and the default "admin" user with password "root"
-For the [full Documentation](https://terminusdb.com/docs/reference/js-client)
+For the [full Documentation](https://terminusdb.github.io/terminusdb-client-js)
 
 ```javascript
 const express = require("express");
@@ -124,13 +124,13 @@ const client = new TerminusClient.WOQLClient("https://127.0.0.1:6363/", {
 
 ## API
 
-The API is documented at: https://terminusdb.com/docs/reference/js-client/core/#terminusdb-client-api
+The API is documented at: https://terminusdb.com/docs/terminusdb/#/reference/API
 
 ## Report Issues
 
 If you have encounter any issues, please report it with your os and environment setup, version that you are using and a simple reproducible case.
 
-If you encounter other questions, you can ask in our community [forum](https://community.terminusdb.com/) or [Slack channel](http://bit.ly/terminusdb-slack).
+If you encounter other questions, you can ask in our [Discord Server](https://discord.gg/hTU3XWSzuZ).
 
 ## Contribute
 

@@ -1,4 +1,4 @@
-# Contributing to Terminus Client
+# Contributing to TerminusDB JS Client
 
 Thanks for your interest in contributing to Terminus Client. To get started, fork this repo and follow the [instruction setting up dev environment](#setting-up-dev-environment). If you don't have idea where to start, you can look for [`good first issue`](https://github.com/terminusdb/terminus-client/contribute) or the `help wanted` label at issues. All pull requests should follow the [Pull Request Format Guideline](#pull-request-format-guideline) and pull requests (PR) that involving coding should come with [tests](#writing-tests-and-testing) and [documentation](#writing-documentation). **All pull request should be made towards `dev` branch**
 
