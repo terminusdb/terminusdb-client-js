@@ -23,7 +23,8 @@
     "axios": "^0.21.1",
     "ssri": ">=8.0.1",
     "elliptic": ">=6.5.4",
-    "url-parse": ">=1.5.0"
+    "url-parse": ">=1.5.0",
+     "dns-packet": ">=1.3.2"
   },
   "devDependencies": {
      "y18n": ">=4.0.1",
