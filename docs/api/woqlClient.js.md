@@ -17,7 +17,7 @@ For situations where you want to communicate with a TerminusDB server API, the W
 
 **Example**  
 ```js
-const client = new TerminusClient.Client(SERVER_URL)
+const client = new TerminusClient.WOQLClient(SERVER_URL)
 await client.connect(params)
 client.db("test")
 client.checkout("dev")
@@ -45,7 +45,7 @@ or the promise will be rejected.
 
 **Example**  
 ```js
-client.connect({key="mykey",user="admin"})
+client.connect({key:"mykey",user:"admin"})
 ```
 
 ### Create Database
