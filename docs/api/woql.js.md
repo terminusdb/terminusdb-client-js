@@ -1075,7 +1075,7 @@ Performs a path regular expression match on the graph
 | Param | Type | Description |
 | --- | --- | --- |
 | subject | <code>string</code> | An IRI or variable that refers to an IRI representing the subject, i.e. the starting point of the path |
-| pattern | <code>string</code> | (string) - A path regular expression describing a pattern through multiple edges of the graph Path regular expressions consist of a sequence of predicates and / or a set of alternatives, with quantification operators The characters that are interpreted specially are the following: | representing alternative choices , - representing a sequence of predcitates + - Representing a quantification of 1 or more of the preceding pattern in a sequence {min, max} - Representing at least min examples and at most max examples of the preceding pattern - Representing any predicate () - Parentheses, interpreted in the normal way to group clauses |
+| pattern | <code>string</code> | A regular expression describing a path through multiple edges of the graph. Path regular expressions consist of predicates and special characters including `\|` for alternatives, `,` for sequences, `+` for 1 or more predicates, `{min, max}` for matching a minimum and maximum number of times, `*` for matching anything, and `()` for grouping. |
 | object | <code>string</code> | An IRI or variable that refers to an IRI representing the object, i.e. ending point of the path |
 | resultVarName | <code>string</code> | A variable in which the actual paths traversed will be stored |
 
