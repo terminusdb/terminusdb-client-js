@@ -1,24 +1,18 @@
 module.exports={
-    "@type": "woql:Regexp",
-    "woql:pattern": {
-        "@type": "woql:Datatype",
-        "woql:datatype": {
+    "@type": "Regexp",
+    "pattern": {
+        "@type": "DataValue",
+        "data": {
             "@type": "xsd:string",
             "@value": ".*"
         }
     },
-    "woql:regexp_string": {
-        "@type": "woql:Variable",
-        "woql:variable_name": {
-            "@value": "string",
-            "@type": "xsd:string"
-        }
+    "string": {
+        "@type": "DataValue",
+        "variable": "string"
     },
-    "woql:regexp_list": {
-        "@type": "woql:Variable",
-        "woql:variable_name": {
-            "@value": "formated",
-            "@type": "xsd:string"
-        }
+    "list": {
+        "@type": "Variable",
+        "variable": "formated"
     }
 }

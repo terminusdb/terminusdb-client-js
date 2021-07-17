@@ -25,7 +25,7 @@ describe('triple builder', function () {
 
   it('check the add_class method',function(){
 
-    const woqlObject=WOQL.add_class("id");  
+    const woqlObject=WOQL.add_class("id");
     expect(woqlObject.json()).to.eql(woqlJson.addClassJson);
 
   })
@@ -40,7 +40,7 @@ describe('triple builder', function () {
     const woqlObject=WOQL.isa("instance","Class");
 
     const jsonObj={ isa: [ "scm:instance", "owl:Class" ] };
-    
+
     expect(woqlObject.json()).to.eql(woqlJson.isAJson);
 
   })

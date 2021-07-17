@@ -12,12 +12,12 @@ describe('triple builder chaining methods', function() {
     })
 
     it('check the graph method', function() {
-        const woqlObject = WOQL.node('a', 'AddQuad').graph('schema/main')
-        const woqlObject2 = WOQL.node('doc:x', 'add_quad')
-            .graph('schema/main')
+        const woqlObject = WOQL.node('a', 'AddQuad').graph('schema')
+        const woqlObject2 = WOQL.node('x', 'add_quad')
+            .graph('schema')
             .label('my label', 'en')
 
-        const jsonObj = {}        
+        const jsonObj = {}
 
         expect(woqlObject.json()).to.eql(jsonObj)
         expect(woqlObject2.json()).to.eql(woqlJson.graphMethodJson)
@@ -34,38 +34,6 @@ describe('triple builder chaining methods', function() {
     it('check the add class and description method', function() {
         const woqlObject = WOQL.add_class('NewClass').description('A new class object.')
         expect(woqlObject.json()).to.eql(woqlJson.addClassDescJson)
-    })
-
-    it('check the comment method', function() {
-        const woqlObject = WOQL.comment('my comment')
-
-        const woqlObject01 = WOQL.node('doc:x', 'add_quad').comment('my comment')
-
-        const jsonObj = {
-            '@type': 'woql:Comment',
-            'woql:comment': {'@type': 'xsd:string', '@value': 'my comment'},
-        }
-
-        expect(woqlObject.json()).to.eql(jsonObj)
-
-        // console.log("__COMMENT__", JSON.stringify(woqlObject01.json(), null, 4));
-
-        /*
-    {
-    "@type": "woql:And",
-    "woql:query_list": [
-        {
-            "@type": "woql:QueryListElement",
-            "woql:index": {
-                "@type": "xsd:nonNegativeInteger",
-                "@value": 1
-            }
-        }
-    ]
-}
-  */
-
-        //const woqlObject=WOQL.node("doc:x", "add_quad").comment("my comment");
     })
 
     it('check node and property method', function() {

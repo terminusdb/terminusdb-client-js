@@ -1,44 +1,21 @@
 module.exports = {
-    "@type": "woql:IDGenerator",
-    "woql:base": {
-        "@type": "woql:Datatype",
-        "woql:datatype": {
-            "@type": "woql:Node",
-            "woql:node": "doc:Station"
-        }
+    "@type": "LexicalKey",
+    "base": {
+        "@type": "Value",
+        "node": "doc:Station"
     },
-    "woql:key_list": {
-        "@type": "woql:Array",
-        "woql:array_element": [
+    "key_list": [
             {
-                "@type": "woql:ArrayElement",
-                "woql:variable_name": {
-                    "@value": "Start_ID",
-                    "@type": "xsd:string"
-                },
-                "woql:index": {
-                    "@type": "xsd:nonNegativeInteger",
-                    "@value": 0
-                }
+                "@type": "DataValue",
+                "variable": "Start_ID"
             },
             {
-                "@type": "woql:ArrayElement",
-                "woql:variable_name": {
-                    "@value": "End_ID",
-                    "@type": "xsd:string"
-                },
-                "woql:index": {
-                    "@type": "xsd:nonNegativeInteger",
-                    "@value": 1
-                }
+                "@type": "DataValue",
+                "variable": "End_ID",
             }
-        ]
-    },
-    "woql:uri": {
-        "@type": "woql:Variable",
-        "woql:variable_name": {
-            "@value": "Start_Station_URL",
-            "@type": "xsd:string"
-        }
+    ],
+    "uri": {
+        "@type": "NodeValue",
+        "variable": "Start_Station_URL"
     }
 }

@@ -1,72 +1,40 @@
 module.exports={
-    "@type": "woql:And",
-    "woql:query_list": [
-        {
-            "@type": "woql:QueryListElement",
-            "woql:index": {
-                "@type": "xsd:nonNegativeInteger",
-                "@value": 0
-            },
-            "woql:query": {
-                "@type": "woql:DeleteQuad",
-                "woql:subject": {
-                    "@type": "woql:Node",
-                    "woql:node": "scm:id"
+    "@type": "And",
+    "and": [
+             {
+                "@type": "DeleteTriple",
+                "subject": {
+                    "@type": "NodeValue",
+                    "node": "scm:id"
                 },
-                "woql:predicate": {
-                    "@type": "woql:Variable",
-                    "woql:variable_name": {
-                        "@value": "Outgoing",
-                        "@type": "xsd:string"
-                    }
+                "predicate": {
+                    "@type": "NodeValue",
+                    "variable": "Outgoing"
                 },
-                "woql:object": {
-                    "@type": "woql:Variable",
-                    "woql:variable_name": {
-                        "@value": "Value",
-                        "@type": "xsd:string"
-                    }
+                "object": {
+                    "@type": "Value",
+                    "variable": "Value"
                 },
-                "woql:graph": {
-                    "@type": "xsd:string",
-                    "@value": "schema/main"
+                "graph": "schema"
+             },
+             {
+                "@type": "Optional",
+                "query": {
+                    "@type": "DeleteTriple",
+                    "subject": {
+                        "@type": "NodeValue",
+                        "variable": "Other"
+                    },
+                    "predicate": {
+                        "@type": "NodeValue",
+                        "variable": "Incoming"
+                    },
+                    "object": {
+                        "@type": "Value",
+                        "node": "scm:id"
+                    },
+                    "graph": "schema"
                 }
             }
-        },
-        {
-            "@type": "woql:QueryListElement",
-            "woql:index": {
-                "@type": "xsd:nonNegativeInteger",
-                "@value": 1
-            },
-            "woql:query": {
-                "@type": "woql:Optional",
-                "woql:query": {
-                    "@type": "woql:DeleteQuad",
-                    "woql:subject": {
-                        "@type": "woql:Variable",
-                        "woql:variable_name": {
-                            "@value": "Other",
-                            "@type": "xsd:string"
-                        }
-                    },
-                    "woql:predicate": {
-                        "@type": "woql:Variable",
-                        "woql:variable_name": {
-                            "@value": "Incoming",
-                            "@type": "xsd:string"
-                        }
-                    },
-                    "woql:object": {
-                        "@type": "woql:Node",
-                        "woql:node": "scm:id"
-                    },
-                    "woql:graph": {
-                        "@type": "xsd:string",
-                        "@value": "schema/main"
-                    }
-                }
-            }
-        }
     ]
 }
