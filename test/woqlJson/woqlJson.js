@@ -48,24 +48,18 @@ module.exports = {
     memberJson: {
         '@type': 'Member',
         'member': {
-            '@type': 'DataValue',
-            'variable': {
-                '@value': 'member',
-                '@type': 'xsd:string',
-            },
+            '@type': 'Value',
+            'variable': 'member'
         },
         'list': {
-            '@type': 'DataValue',
-            'variable': {
-                '@value': 'list_obj',
-                '@type': 'xsd:string',
-            },
+            '@type': 'Value',
+            'variable': 'list_obj'
         },
     },
     groupbyJson: {
         '@type': 'GroupBy',
         'group_by': ['A','B'],
-        'group_template': ['C'],
+        'template': ['C'],
         'grouped': {
             '@type': 'Value',
             'variable': 'New'
@@ -74,24 +68,15 @@ module.exports = {
             '@type': 'Triple',
             'subject': {
                 '@type': 'NodeValue',
-                'variable': {
-                    '@value': 'A',
-                    '@type': 'xsd:string',
-                },
+                'variable': 'A'
             },
             'predicate': {
                 '@type': 'NodeValue',
-                'variable': {
-                    '@value': 'B',
-                    '@type': 'xsd:string',
-                },
+                'variable': 'B'
             },
             'object': {
                 '@type': 'Value',
-                'variable': {
-                    '@value': 'C',
-                    '@type': 'xsd:string',
-                },
+                'variable': 'C'
             },
         },
     },
@@ -166,7 +151,7 @@ module.exports = {
         },
         'type': {
             '@type': 'NodeValue',
-            'node': 'owl:Class',
+            'node': 'Class',
         },
     },
     deleteTripleJson: {
@@ -244,8 +229,8 @@ module.exports = {
                         'node': 'rdf:type',
                     },
                     'object': {
-                        '@type': 'NodeValue',
-                        'node': 'owl:ValueProperty',
+                        '@type': 'Value',
+                        'node': 'owl:DatatypeProperty',
                     },
                     'graph': 'schema'
                 },
@@ -260,7 +245,7 @@ module.exports = {
                         'node': 'rdfs:range',
                     },
                     'object': {
-                        '@type': 'NodeValue',
+                        '@type': 'Value',
                         'node': 'xsd:string',
                     },
                     'graph': 'schema'
@@ -427,7 +412,7 @@ module.exports = {
             'node': 'rdfs:subClassOf',
         },
         'object': {
-            '@type': 'NodeValue',
+            '@type': 'Value',
             'node': 'classParentName',
         },
         'graph': 'schema'
@@ -443,7 +428,7 @@ module.exports = {
             'node': 'system:tag',
         },
         'object': {
-            '@type': 'NodeValue',
+            '@type': 'Value',
             'node': 'system:abstract',
         },
         'graph': 'schema'

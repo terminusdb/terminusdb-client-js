@@ -44,15 +44,6 @@ describe('woql queries', function () {
      //console.log(JSON.stringify(woqlObject.json(), null, 4));
 	})
 
-
-  it('check the doctype method',function(){
-		const woqlObject=WOQL.doctype("Station");
-		//expect(woqlObject.json()).to.eql(woqlDoctypeJson);
-
-    //console.log(JSON.stringify(woqlObject.json(), null, 4));
-
-	})
-
   it('check the limit method',function(){
     const woqlObject=WOQL.limit(10);
 
@@ -122,6 +113,7 @@ describe('woql queries', function () {
 
   it('check the and method',function(){
 		const woqlObject=WOQL.and(WOQL.triple("a", "b", "c"),WOQL.triple("1", "2", "3"));
+    //console.log(woqlObject.json());
 		expect(woqlObject.json()).to.eql(woqlAndJson);
 	})
 
@@ -130,18 +122,6 @@ describe('woql queries', function () {
 		const woqlObject=WOQL.or(WOQL.triple("a", "b", "c"),WOQL.triple("1", "2", "3"));
 		expect(woqlObject.json()).to.eql(woqlOrJson);
 	})
-
-
-  it('check the when method',function(){
-    const woqlObject=WOQL.when(true, WOQL.add_class("id"));
-
-    //const woqlObjectChain=WOQL.when(true).add_class("id")
-    //console.log(JSON.stringify(woqlObject.json(), null, 4));
-
-    expect(woqlObject.json()).to.eql(woqlWhenJson);
-    //expect(woqlObjectChain.json()).to.eql(jsonObj);
-
-  })
 
   it('check the opt method',function(){
 
@@ -303,10 +283,9 @@ describe('woql queries', function () {
     const jsonObj={ "@type": "QueryResource",
                     "source": {
                       "@type": "Source",
-                      "@value": {
-                          "url": "http://url"
-                      }
-                    }
+                      "url": "http://url"
+                    },
+                    "format" : "csv"
                   }
 
     //console.log(JSON.stringify(woqlObject.json(), null, 4));
@@ -316,7 +295,7 @@ describe('woql queries', function () {
 
   it('check the idgen method',function(){
 
-    const woqlObject=WOQL.idgen("doc:Station",["v:Start_ID","v:End_ID"],"v:Start_Station_URL");
+    const woqlObject=WOQL.idgen("Station",["v:Start_ID","v:End_ID"],"v:Start_Station_URL");
 
     //console.log("____ID___GEN___",JSON.stringify(woqlObject.json(), null, 4));
 

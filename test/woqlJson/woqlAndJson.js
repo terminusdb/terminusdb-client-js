@@ -28,10 +28,7 @@ module.exports={
                 },
                 "object": {
                     "@type": "Value",
-                    "data": {
-                        "@type": "xsd:string",
-                        "@value": "3"
-                    }
+                    "node": "3"
                 }
         }
     ]

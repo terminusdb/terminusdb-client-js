@@ -1,8 +1,8 @@
 module.exports = {
     "@type": "LexicalKey",
     "base": {
-        "@type": "Value",
-        "node": "doc:Station"
+        "@type": "DataValue",
+        "data": { "@type": "xsd:string", "@value": "Station"}
     },
     "key_list": [
             {

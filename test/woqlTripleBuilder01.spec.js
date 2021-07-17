@@ -39,7 +39,7 @@ describe('triple builder', function () {
 
     const woqlObject=WOQL.isa("instance","Class");
 
-    const jsonObj={ isa: [ "scm:instance", "owl:Class" ] };
+    const jsonObj={ isa: [ "instance", "Class" ] };
 
     expect(woqlObject.json()).to.eql(woqlJson.isAJson);
 

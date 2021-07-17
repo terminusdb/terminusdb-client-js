@@ -12,7 +12,7 @@ module.exports={joinJson:{
             ],
             "separator": {
                 "@type": "DataValue",
-                "datatype": {
+                "data": {
                     "@type": "xsd:string",
                     "@value": ", "
                 }
@@ -26,14 +26,14 @@ module.exports={joinJson:{
             "@type": "Split",
             "string": {
                 "@type": "DataValue",
-                "datatype": {
+                "data": {
                     "@type": "xsd:string",
                     "@value": "A, B, C"
                 }
             },
             "pattern": {
                 "@type": "DataValue",
-                "datatype": {
+                "data": {
                     "@type": "xsd:string",
                     "@value": ", "
                 }

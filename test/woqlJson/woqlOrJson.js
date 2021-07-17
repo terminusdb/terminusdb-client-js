@@ -5,36 +5,30 @@ module.exports={
                 "@type": "Triple",
                 "subject": {
                     "@type": "NodeValue",
-                    "node": "doc:a"
+                    "node": "a"
                 },
                 "predicate": {
                     "@type": "NodeValue",
-                    "node": "scm:b"
+                    "node": "b"
                 },
                 "object": {
                     "@type": "Value",
-                    "datatype": {
-                        "@type": "xsd:string",
-                        "@value": "c"
-                    }
+                    "node": "c"
                 }
              },
              {
                 "@type": "Triple",
                 "subject": {
                     "@type": "NodeValue",
-                    "node": "doc:1"
+                    "node": "1"
                 },
                 "predicate": {
                     "@type": "NodeValue",
-                    "node": "scm:2"
+                    "node": "2"
                 },
                 "object": {
                     "@type": "Value",
-                    "data": {
-                        "@type": "xsd:string",
-                        "@value": "3"
-                    }
+                    "node": "3"
                 }
             }
     ]

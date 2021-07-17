@@ -1,6 +1,6 @@
 module.exports={"@type": "Typecast",
                 "value": {
-                    "@type": "DataValue",
+                    "@type": "Value",
                     "variable": "Duration"
                 },
                 "type": {
@@ -8,7 +8,7 @@ module.exports={"@type": "Typecast",
                     "node": "xsd:integer"
                 },
                 "result": {
-                    "@type": "Variable",
+                    "@type": "Value",
                     "variable": "Duration_Cast"
                 }
             }

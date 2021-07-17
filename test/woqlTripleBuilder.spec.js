@@ -24,8 +24,8 @@ describe('triple builder chaining methods', function() {
     })
 
     it('check the node and label method', function() {
-        const woqlObject = WOQL.node('doc:x', 'add_quad').label('my label', 'en')
-        const woqlObject2 = WOQL.node('doc:x', 'add_quad').label('v:label')
+        const woqlObject = WOQL.node('x', 'add_quad').label('my label', 'en')
+        const woqlObject2 = WOQL.node('x', 'add_quad').label('v:label')
         expect(woqlObject.json()).to.eql(woqlJson.labelMethodJson)
 
         expect(woqlObject2.json()).to.eql(woqlJson.labelMethodJson2)
@@ -37,17 +37,17 @@ describe('triple builder chaining methods', function() {
     })
 
     it('check node and property method', function() {
-        const woqlObject = WOQL.node('doc:x', 'add_triple').property('myprop', 'value')
+        const woqlObject = WOQL.node('x', 'add_triple').property('myprop', 'value')
         expect(woqlObject.json()).to.eql(woqlJson.addNodePropJson)
     })
 
     it('check node and  parent method', function() {
-        const woqlObject = WOQL.node('doc:x', 'add_quad').parent('classParentName')
+        const woqlObject = WOQL.node('x', 'add_quad').parent('classParentName')
         expect(woqlObject.json()).to.eql(woqlJson.nodeParentJson)
     })
 
     it('check the abstract method', function() {
-        const woqlObject = WOQL.node('doc:x', 'add_quad').abstract()
+        const woqlObject = WOQL.node('x', 'add_quad').abstract()
         expect(woqlObject.json()).to.eql(woqlJson.nodeAbstractJson)
     })
 

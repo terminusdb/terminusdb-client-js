@@ -11,8 +11,8 @@ module.exports={
         "@type": "DataValue",
         "variable": "string"
     },
-    "list": {
-        "@type": "Variable",
+    "result": {
+        "@type": "DataValue",
         "variable": "formated"
     }
 }

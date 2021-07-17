@@ -1,6 +1,6 @@
 module.exports={
     "@type": "Concatenate",
-    "concat_list": [
+    "list": [
             {
                 "@type": "DataValue",
                 "variable": "Duration"
@@ -17,7 +17,7 @@ module.exports={
                 "variable": "Duration_Cast"
             }
     ],
-    "concatenated": {
+    "result": {
         "@type": "DataValue",
         "data": {
             "@type": "xsd:string",
