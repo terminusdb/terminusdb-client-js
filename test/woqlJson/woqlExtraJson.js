@@ -37,10 +37,7 @@ module.exports={
             },
     usingJson:{
         "@type": "Using",
-        "collection": {
-            "@type": "xsd:string",
-            "@value": "userName/dbName/local/commit/commitID"
-        },
+        "collection": "userName/dbName/local/commit/commitID",
         "query": {
             "@type": "Triple",
             "subject": {
@@ -62,10 +59,7 @@ module.exports={
             "and": [
                      {
                         "@type": "Using",
-                        "collection": {
-                            "@type": "xsd:string",
-                            "@value": "admin/dbName/local/commit/commitID_1"
-                        },
+                        "collection": "admin/dbName/local/commit/commitID_1",
                         "query": {
                             "@type": "Triple",
                             "subject": {
@@ -84,10 +78,7 @@ module.exports={
                      },
                      {
                         "@type": "Using",
-                        "collection": {
-                            "@type": "xsd:string",
-                            "@value": "admin/dbName/local/commit/commitID_2"
-                        },
+                        "collection": "admin/dbName/local/commit/commitID_2",
                         "query": {
                             "@type": "Not",
                             "query": {
