@@ -1,18 +1,15 @@
-module.exports={onlyNode:{"@type": "woql:AddTriple",
-	                    "woql:subject": {
-	                        "@type": "woql:Variable",
-	                        "woql:variable_name": {
-	                            "@value": "Bike_URL",
-	                            "@type": "xsd:string"
-	                        }
+module.exports={onlyNode:{"@type": "AddTriple",
+	                    "subject": {
+	                        "@type": "NodeValue",
+	                        "variable": "Bike_URL"
 	                    },
-	                    "woql:predicate": {
-	                        "@type": "woql:Node",
-	                        "woql:node": "rdf:type"
+	                    "predicate": {
+	                        "@type": "NodeValue",
+	                        "node": "rdf:type"
 	                    },
-	                    "woql:object": {
-	                        "@type": "woql:Node",
-	                        "woql:node": "scm:Bicycle"
+	                    "object": {
+	                        "@type": "Value",
+	                        "node": "@schema:Bicycle"
 	                    }
 	                },
 	            withGraph:{}

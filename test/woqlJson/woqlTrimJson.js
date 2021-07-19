@@ -1,15 +1,15 @@
 module.exports={
-    "@type": "woql:Trim",
-    "woql:untrimmed": {
-        "@type": "woql:Datatype",
-        "woql:datatype": {
+    "@type": "Trim",
+    "untrimmed": {
+        "@type": "DataValue",
+        "data": {
             "@type": "xsd:string",
             "@value": "a"
         }
     },
-    "woql:trimmed": {
-        "@type": "woql:Datatype",
-        "woql:datatype": {
+    "trimmed": {
+        "@type": "DataValue",
+        "data": {
             "@type": "xsd:string",
             "@value": "b"
         }
