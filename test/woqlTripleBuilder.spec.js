@@ -12,20 +12,20 @@ describe('triple builder chaining methods', function() {
     })
 
     it('check the graph method', function() {
-        const woqlObject = WOQL.node('a', 'AddQuad').graph('schema/main')
-        const woqlObject2 = WOQL.node('doc:x', 'add_quad')
-            .graph('schema/main')
+        const woqlObject = WOQL.node('a', 'AddQuad').graph('schema')
+        const woqlObject2 = WOQL.node('x', 'add_quad')
+            .graph('schema')
             .label('my label', 'en')
 
-        const jsonObj = {}        
+        const jsonObj = {}
 
         expect(woqlObject.json()).to.eql(jsonObj)
         expect(woqlObject2.json()).to.eql(woqlJson.graphMethodJson)
     })
 
     it('check the node and label method', function() {
-        const woqlObject = WOQL.node('doc:x', 'add_quad').label('my label', 'en')
-        const woqlObject2 = WOQL.node('doc:x', 'add_quad').label('v:label')
+        const woqlObject = WOQL.node('x', 'add_quad').label('my label', 'en')
+        const woqlObject2 = WOQL.node('x', 'add_quad').label('v:label')
         expect(woqlObject.json()).to.eql(woqlJson.labelMethodJson)
 
         expect(woqlObject2.json()).to.eql(woqlJson.labelMethodJson2)
@@ -36,50 +36,18 @@ describe('triple builder chaining methods', function() {
         expect(woqlObject.json()).to.eql(woqlJson.addClassDescJson)
     })
 
-    it('check the comment method', function() {
-        const woqlObject = WOQL.comment('my comment')
-
-        const woqlObject01 = WOQL.node('doc:x', 'add_quad').comment('my comment')
-
-        const jsonObj = {
-            '@type': 'woql:Comment',
-            'woql:comment': {'@type': 'xsd:string', '@value': 'my comment'},
-        }
-
-        expect(woqlObject.json()).to.eql(jsonObj)
-
-        // console.log("__COMMENT__", JSON.stringify(woqlObject01.json(), null, 4));
-
-        /*
-    {
-    "@type": "woql:And",
-    "woql:query_list": [
-        {
-            "@type": "woql:QueryListElement",
-            "woql:index": {
-                "@type": "xsd:nonNegativeInteger",
-                "@value": 1
-            }
-        }
-    ]
-}
-  */
-
-        //const woqlObject=WOQL.node("doc:x", "add_quad").comment("my comment");
-    })
-
     it('check node and property method', function() {
-        const woqlObject = WOQL.node('doc:x', 'add_triple').property('myprop', 'value')
+        const woqlObject = WOQL.node('x', 'add_triple').property('myprop', 'value')
         expect(woqlObject.json()).to.eql(woqlJson.addNodePropJson)
     })
 
     it('check node and  parent method', function() {
-        const woqlObject = WOQL.node('doc:x', 'add_quad').parent('classParentName')
+        const woqlObject = WOQL.node('x', 'add_quad').parent('classParentName')
         expect(woqlObject.json()).to.eql(woqlJson.nodeParentJson)
     })
 
     it('check the abstract method', function() {
-        const woqlObject = WOQL.node('doc:x', 'add_quad').abstract()
+        const woqlObject = WOQL.node('x', 'add_quad').abstract()
         expect(woqlObject.json()).to.eql(woqlJson.nodeAbstractJson)
     })
 

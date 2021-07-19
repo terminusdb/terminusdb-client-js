@@ -1,55 +1,35 @@
 module.exports={
-    "@type": "woql:And",
-    "woql:query_list": [
+    "@type": "And",
+    "and": [
         {
-            "@type": "woql:QueryListElement",
-            "woql:index": {
-                "@type": "xsd:nonNegativeInteger",
-                "@value": 0
-            },
-            "woql:query": {
-                "@type": "woql:Triple",
-                "woql:subject": {
-                    "@type": "woql:Node",
-                    "woql:node": "doc:a"
+                "@type": "Triple",
+                "subject": {
+                    "@type": "NodeValue",
+                    "node": "a"
                 },
-                "woql:predicate": {
-                    "@type": "woql:Node",
-                    "woql:node": "scm:b"
+                "predicate": {
+                    "@type": "NodeValue",
+                    "node": "b"
                 },
-                "woql:object": {
-                    "@type": "woql:Datatype",
-                    "woql:datatype": {
-                        "@type": "xsd:string",
-                        "@value": "c"
-                    }
+                "object": {
+                    "@type": "Value",
+                    "node": "c"
                 }
-            }
         },
         {
-            "@type": "woql:QueryListElement",
-            "woql:index": {
-                "@type": "xsd:nonNegativeInteger",
-                "@value": 1
-            },
-            "woql:query": {
-                "@type": "woql:Triple",
-                "woql:subject": {
-                    "@type": "woql:Node",
-                    "woql:node": "doc:1"
+                "@type": "Triple",
+                "subject": {
+                    "@type": "NodeValue",
+                    "node": "1"
                 },
-                "woql:predicate": {
-                    "@type": "woql:Node",
-                    "woql:node": "scm:2"
+                "predicate": {
+                    "@type": "NodeValue",
+                    "node": "2"
                 },
-                "woql:object": {
-                    "@type": "woql:Datatype",
-                    "woql:datatype": {
-                        "@type": "xsd:string",
-                        "@value": "3"
-                    }
+                "object": {
+                    "@type": "Value",
+                    "node": "3"
                 }
-            }
         }
     ]
 }

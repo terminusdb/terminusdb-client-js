@@ -1,109 +1,108 @@
 module.exports={
         divJson:{
-          '@type': 'woql:Div',
-          'woql:first': {
-            '@type': 'woql:Datatype',
-            'woql:datatype': { '@type': 'xsd:decimal', '@value': '2' }
+          '@type': 'Div',
+          'left': {
+            '@type': 'ArithmeticValue',
+            'data': { '@type': 'xsd:decimal', '@value': '2' }
           },
-          'woql:second': {
-            '@type': 'woql:Datatype',
-            'woql:datatype': { '@type': 'xsd:decimal', '@value': '1' }
+          'right': {
+            '@type': 'ArithmeticValue',
+            'data': { '@type': 'xsd:decimal', '@value': '1' }
           }
         },
         minusJson:{
-                "@type": "woql:Minus",
-                "woql:first": {
-                    "@type": "woql:Datatype",
-                    "woql:datatype": {
+                "@type": "Minus",
+                "left": {
+                    "@type": "ArithmeticValue",
+                    "data": {
                         "@type": "xsd:decimal",
                         "@value": "2"
                     }
                 },
-                "woql:second": {
-                    "@type": "woql:Datatype",
-                    "woql:datatype": {
+                "right": {
+                    "@type": "ArithmeticValue",
+                    "data": {
                         "@type": "xsd:decimal",
                         "@value": "1"
                     }
                 }
             },
-        evalJson:{"@type": "woql:Eval",
-                        "woql:expression": "1+2",
-                        "woql:result": {
-                            "@type": "woql:Datatype",
-                            "woql:datatype": {
+        evalJson:{"@type": "Eval",
+                        "expression": "1+2",
+                        "result": {
+                            "@type": "ArithmeticValue",
+                            "data": {
                                 "@type": "xsd:string",
                                 "@value": "b"
                             }
                         }
                 },
         plusJson:{
-            "@type": "woql:Plus",
-            "woql:first": {
-                "@type": "woql:Datatype",
-                "woql:datatype": {
+            "@type": "Plus",
+            "left": {
+                "@type": "ArithmeticValue",
+                "data": {
                     "@type": "xsd:decimal",
                     "@value": "2"
                 }
             },
-            "woql:second": {
-                "@type": "woql:Datatype",
-                "woql:datatype": {
+            "right": {
+                "@type": "ArithmeticValue",
+                "data": {
                     "@type": "xsd:decimal",
                     "@value": "1"
                 }
             }
         },
         timesJson:{
-                "@type": "woql:Times",
-                "woql:first": {
-                    "@type": "woql:Datatype",
-                    "woql:datatype": {
+                "@type": "Times",
+                "left": {
+                    "@type": "ArithmeticValue",
+                    "data": {
                         "@type": "xsd:decimal",
                         "@value": "2"
                     }
                 },
-                "woql:second": {
-                    "@type": "woql:Datatype",
-                    "woql:datatype": {
+                "right": {
+                    "@type": "ArithmeticValue",
+                    "data": {
                         "@type": "xsd:decimal",
                         "@value": "1"
                     }
                 }
             },
         divideJson:{
-            "@type": "woql:Divide",
-            "woql:first": {
-                "@type": "woql:Datatype",
-                "woql:datatype": {
+            "@type": "Divide",
+            "left": {
+                "@type": "ArithmeticValue",
+                "data": {
                     "@type": "xsd:decimal",
                     "@value": "2"
                 }
             },
-            "woql:second": {
-                "@type": "woql:Datatype",
-                "woql:datatype": {
+            "right": {
+                "@type": "ArithmeticValue",
+                "data": {
                     "@type": "xsd:decimal",
                     "@value": "1"
                 }
             }
         },
         expJson:{
-            "@type": "woql:Exp",
-            "woql:first": {
-                "@type": "woql:Datatype",
-                "woql:datatype": {
+            "@type": "Exp",
+            "left": {
+                "@type": "ArithmeticValue",
+                "data": {
                     "@type": "xsd:decimal",
                     "@value": "2"
                 }
             },
-            "woql:second": {
-                "@type": "woql:Datatype",
-                "woql:datatype": {
+            "right": {
+                "@type": "ArithmeticValue",
+                "data": {
                     "@type": "xsd:decimal",
                     "@value": "1"
                 }
             }
-}
-
+        }
 }
