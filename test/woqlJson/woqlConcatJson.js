@@ -1,46 +1,25 @@
 module.exports={
-    "@type": "woql:Concatenate",
-    "woql:concat_list": {
-        "@type": "woql:Array",
-        "woql:array_element": [
+    "@type": "Concatenate",
+    "list": [
             {
-                "@type": "woql:ArrayElement",
-                "woql:variable_name": {
-                    "@value": "Duration",
-                    "@type": "xsd:string"
-                },
-                "woql:index": {
-                    "@type": "xsd:nonNegativeInteger",
-                    "@value": 0
-                }
+                "@type": "DataValue",
+                "variable": "Duration"
             },
             {
-                "@type": "woql:ArrayElement",
-                "woql:datatype": {
+                "@type": "DataValue",
+                "data": {
                     "@type": "xsd:string",
                     "@value": " yo "
-                },
-                "woql:index": {
-                    "@type": "xsd:nonNegativeInteger",
-                    "@value": 1
                 }
             },
             {
-                "@type": "woql:ArrayElement",
-                "woql:variable_name": {
-                    "@value": "Duration_Cast",
-                    "@type": "xsd:string"
-                },
-                "woql:index": {
-                    "@type": "xsd:nonNegativeInteger",
-                    "@value": 2
-                }
+                "@type": "DataValue",
+                "variable": "Duration_Cast"
             }
-        ]
-    },
-    "woql:concatenated": {
-        "@type": "woql:Datatype",
-        "woql:datatype": {
+    ],
+    "result": {
+        "@type": "DataValue",
+        "data": {
             "@type": "xsd:string",
             "@value": "x"
         }
