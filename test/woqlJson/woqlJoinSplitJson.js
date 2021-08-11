@@ -1,15 +1,16 @@
 module.exports={joinJson:{
             "@type": "Join",
-            "list": [
-                      {
-                          "@type": "DataValue",
-                          "variable": "A_obj"
-                      },
-                      {
-                          "@type": "DataValue",
-                          "variable": "B_obj"
-                      }
-            ],
+            "list": { "@type" : "DataValue",
+                      "list" : [
+                          {
+                              "@type": "DataValue",
+                              "variable": "A_obj"
+                          },
+                          {
+                              "@type": "DataValue",
+                              "variable": "B_obj"
+                          }
+                      ]},
             "separator": {
                 "@type": "DataValue",
                 "data": {
