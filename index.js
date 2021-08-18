@@ -4,10 +4,6 @@ module.exports = {
      */
     WOQLClient: require('./lib/woqlClient'),
     /**
-     * @type {typeof import('./lib/woqlClientTools')}
-     */
-    WOQLClientTools: require('./lib/woqlClientTools'),
-    /**
      * @type {typeof import('./lib/utils')}
      */
     UTILS: require('./lib/utils'),
