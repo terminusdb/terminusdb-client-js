@@ -24,7 +24,8 @@
     "ssri": ">=8.0.1",
     "elliptic": ">=6.5.4",
     "url-parse": ">=1.5.0",
-     "dns-packet": ">=1.3.2"
+     "dns-packet": ">=1.3.2",
+    "path-parse": ">=1.0.7"
   },
   "devDependencies": {
      "y18n": ">=4.0.1",
