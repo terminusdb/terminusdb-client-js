@@ -1,18 +1,6 @@
 ## Typedefs
 
 <dl>
-<dt><a href="#DocParamsGet">DocParamsGet</a> : <code>Object</code></dt>
-<dd><p>the GET document interface query parameters</p>
-</dd>
-<dt><a href="#DocParamsPost">DocParamsPost</a> : <code>Object</code></dt>
-<dd><p>the POST document interface query parameters</p>
-</dd>
-<dt><a href="#DocParamsPut">DocParamsPut</a> : <code>Object</code></dt>
-<dd><p>the PUT document interface query parameters</p>
-</dd>
-<dt><a href="#DocParamsDelete">DocParamsDelete</a> : <code>Object</code></dt>
-<dd><p>the DELETE document interface query parameters</p>
-</dd>
 <dt><a href="#GraphRef">GraphRef</a> : <code>&quot;schema/main&quot;</code> | <code>&quot;schema/*&quot;</code> | <code>&quot;instance/main&quot;</code> | <code>&quot;instance/*&quot;</code> | <code>&quot;inference/main&quot;</code> | <code>&quot;inference/*&quot;</code> | <code>string</code></dt>
 <dd></dd>
 <dt><a href="#DataFormatObj">DataFormatObj</a> : <code>Object</code></dt>
@@ -48,62 +36,6 @@
 <dt><a href="#CloneSourceDetails">CloneSourceDetails</a> : <code>Object</code></dt>
 <dd></dd>
 </dl>
-
-
-## DocParamsGet
-#### DocParamsGet : <code>Object</code>
-the GET document interface query parameters
-
-**Properties**
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| [graph_type] | <code>string</code> | <code>&quot;instance&quot;</code> | instance|schema default value is instance. Used to switch between getting documents from the instance or the schema graph. |
-| [type] | <code>string</code> |  | only documents of the given type are returned. |
-| [id] | <code>string</code> |  | only the document with the given ID is returned. |
-| [prefixed] | <code>boolean</code> | <code>true</code> | return IRIs using a prefixed notation wherever possible. If false, full IRIs are used. |
-| [minimized] | <code>boolean</code> | <code>false</code> | return the documents with very little whitespace. Each json document will be on its own line. |
-| [unfold] | <code>boolean</code> | <code>true</code> | any subdocuments contained in the returned document are returned too. If false, these are referred to by their ID instead. |
-| [skip] | <code>number</code> | <code>0</code> | How many results to skip |
-| [count] | <code>number</code> |  | count	 - How many results to return. If this option is absent, all results are returned. |
-| [as_list] | <code>boolean</code> | <code>false</code> | If true, don't return a stream of json objects, but a json list. |
-| [graph_type] | <code>string</code> |  | instance|schema default value is instance |
-
-
-## DocParamsPost
-#### DocParamsPost : <code>Object</code>
-the POST document interface query parameters
-
-**Properties**
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| [graph_type] | <code>string</code> | <code>&quot;instance&quot;</code> | instance|schema Used to switch between getting documents from the instance or the schema graph. |
-| [full_replace] | <code>boolean</code> | <code>false</code> | If true, all existing documents are deleted before inserting the posted documents. This allows the full replacement of the contents of a database. This is especially useful for replacing the schema. |
-
-
-## DocParamsPut
-#### DocParamsPut : <code>Object</code>
-the PUT document interface query parameters
-
-**Properties**
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| [graph_type] | <code>string</code> | <code>&quot;instance&quot;</code> | instance|schema Used to switch between getting documents from the instance or the schema graph. |
-
-
-## DocParamsDelete
-#### DocParamsDelete : <code>Object</code>
-the DELETE document interface query parameters
-
-**Properties**
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| [graph_type] | <code>string</code> | <code>&quot;instance&quot;</code> | instance|schema Used to switch between getting documents from the instance or the schema graph. |
-| id | <code>string</code> \| <code>array</code> |  | a single id or a list of ids to delete. |
-| [nuke] | <code>booleam</code> | <code>false</code> | If true, delete everything at this resource location (dangerous!). |
 
 
 ## GraphRef
@@ -191,7 +123,8 @@ an object that describe a property element
 | [repo] | [<code>RepoType</code>](#RepoType) \| <code>string</code> | set cursor to this repo |
 | [branch] | <code>string</code> | set branch to this id |
 | [ref] | <code>string</code> | set commit ref |
-| [jwt] | <code>string</code> | jwt token, can use that token to get access to the associated resources in the cloud |
+| [jwt] | <code>string</code> | jwt token |
+| [jwt_user] | <code>string</code> | jwt user id |
 | [default_branch_id] | <code>string</code> | set the default branch id |
 
 
