@@ -143,7 +143,7 @@ describe('woql queries', function () {
     const woqlObject=WOQL.from("http://dburl", WOQLQuery);
     const jsonObj={
                     "@type": "From",
-                    "graph_filter": "http://dburl",
+                    "graph": "http://dburl",
                     "query": {
                         "@type": "Limit",
                         "limit": 10,
