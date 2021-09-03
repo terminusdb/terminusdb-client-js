@@ -1,149 +1,139 @@
 {
-    "@type": "Limit",
-    "limit": 10,
+    "@type": "Using",
+    "collection": "_commits",
     "query": {
-        "@type": "Select",
-        "variables": [
-            "Parent ID",
-            "Commit ID",
-            "Time",
-            "Author",
-            "Branch ID",
-            "Message"
-        ],
+        "@type": "Limit",
+        "limit": 10,
         "query": {
-            "@type": "And",
-            "and": [
-                {
-                    "@type": "Triple",
-                    "subject": {
-                        "@type": "NodeValue",
-                        "variable": "Branch"
-                    },
-                    "predicate": {
-                        "@type": "NodeValue",
-                        "node": "name"
-                    },
-                    "object": {
-                        "@type": "Value",
-                        "data": {
-                            "@type": "xsd:string",
-                            "@value": "main"
-                        }
-                    }
-                },
-                {
-                    "@type": "Triple",
-                    "subject": {
-                        "@type": "NodeValue",
-                        "variable": "Branch"
-                    },
-                    "predicate": {
-                        "@type": "NodeValue",
-                        "node": "head"
-                    },
-                    "object": {
-                        "@type": "Value",
-                        "variable": "Active Commit ID"
-                    }
-                },
-                {
-                    "@type": "Path",
-                    "subject": {
-                        "@type": "NodeValue",
-                        "variable": "Active Commit ID"
-                    },
-                    "pattern": {
-                        "@type": "PathStar",
-                        "star": {
-                            "@type": "PathPredicate",
-                            "predicate": "parent"
+            "@type": "Select",
+            "variables": [
+                "Parent ID",
+                "Commit ID",
+                "Time",
+                "Author",
+                "Branch ID",
+                "Message"
+            ],
+            "query": {
+                "@type": "And",
+                "and": [
+                    {
+                        "@type": "Triple",
+                        "subject": {
+                            "@type": "NodeValue",
+                            "variable": "Branch"
+                        },
+                        "predicate": {
+                            "@type": "NodeValue",
+                            "node": "name"
+                        },
+                        "object": {
+                            "@type": "Value",
+                            "data": {
+                                "@type": "xsd:string",
+                                "@value": "main"
+                            }
                         }
                     },
-                    "object": {
-                        "@type": "Value",
-                        "variable": "Parent"
+                    {
+                        "@type": "Triple",
+                        "subject": {
+                            "@type": "NodeValue",
+                            "variable": "Branch"
+                        },
+                        "predicate": {
+                            "@type": "NodeValue",
+                            "node": "head"
+                        },
+                        "object": {
+                            "@type": "Value",
+                            "variable": "Active Commit ID"
+                        }
                     },
-                    "path": {
-                        "@type": "Value",
-                        "variable": "Path"
-                    }
-                },
-                {
-                    "@type": "Triple",
-                    "subject": {
-                        "@type": "NodeValue",
-                        "variable": "Parent"
+                    {
+                        "@type": "Path",
+                        "subject": {
+                            "@type": "NodeValue",
+                            "variable": "Active Commit ID"
+                        },
+                        "pattern": {
+                            "@type": "PathStar",
+                            "star": {
+                                "@type": "PathPredicate",
+                                "predicate": "parent"
+                            }
+                        },
+                        "object": {
+                            "@type": "Value",
+                            "variable": "Parent"
+                        },
+                        "path": {
+                            "@type": "Value",
+                            "variable": "Path"
+                        }
                     },
-                    "predicate": {
-                        "@type": "NodeValue",
-                        "node": "timestamp"
+                    {
+                        "@type": "Triple",
+                        "subject": {
+                            "@type": "NodeValue",
+                            "variable": "Parent"
+                        },
+                        "predicate": {
+                            "@type": "NodeValue",
+                            "node": "timestamp"
+                        },
+                        "object": {
+                            "@type": "Value",
+                            "variable": "Time"
+                        }
                     },
-                    "object": {
-                        "@type": "Value",
-                        "variable": "Time"
-                    }
-                },
-                {
-                    "@type": "Less",
-                    "left": {
-                        "@type": "DataValue",
-                        "variable": "Time"
+                    {
+                        "@type": "Triple",
+                        "subject": {
+                            "@type": "NodeValue",
+                            "variable": "Parent"
+                        },
+                        "predicate": {
+                            "@type": "NodeValue",
+                            "node": "identifier"
+                        },
+                        "object": {
+                            "@type": "Value",
+                            "variable": "Commit ID"
+                        }
                     },
-                    "right": {
-                        "@type": "DataValue",
-                        "data": {
-                            "@type": "xsd:decimal",
-                            "@value": 1630328716.027
+                    {
+                        "@type": "Triple",
+                        "subject": {
+                            "@type": "NodeValue",
+                            "variable": "Parent"
+                        },
+                        "predicate": {
+                            "@type": "NodeValue",
+                            "node": "author"
+                        },
+                        "object": {
+                            "@type": "Value",
+                            "variable": "Author"
+                        }
+                    },
+                    {
+                        "@type": "Triple",
+                        "subject": {
+                            "@type": "NodeValue",
+                            "variable": "Parent"
+                        },
+                        "predicate": {
+                            "@type": "NodeValue",
+                            "node": "message"
+                        },
+                        "object": {
+                            "@type": "Value",
+                            "variable": "Message"
                         }
                     }
-                },
-                {
-                    "@type": "Triple",
-                    "subject": {
-                        "@type": "NodeValue",
-                        "variable": "Parent"
-                    },
-                    "predicate": {
-                        "@type": "NodeValue",
-                        "node": "identifier"
-                    },
-                    "object": {
-                        "@type": "Value",
-                        "variable": "Commit ID"
-                    }
-                },
-                {
-                    "@type": "Triple",
-                    "subject": {
-                        "@type": "NodeValue",
-                        "variable": "Parent"
-                    },
-                    "predicate": {
-                        "@type": "NodeValue",
-                        "node": "author"
-                    },
-                    "object": {
-                        "@type": "Value",
-                        "variable": "Author"
-                    }
-                },
-                {
-                    "@type": "Triple",
-                    "subject": {
-                        "@type": "NodeValue",
-                        "variable": "Parent"
-                    },
-                    "predicate": {
-                        "@type": "NodeValue",
-                        "node": "message"
-                    },
-                    "object": {
-                        "@type": "Value",
-                        "variable": "Message"
-                    }
-                }
-            ]
+                ]
+            }
         }
     }
 }

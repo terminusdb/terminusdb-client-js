@@ -246,50 +246,11 @@ Substring
 | Param | Type | Description |
 | --- | --- | --- |
 | string | <code>string</code> | String or variable |
-| before | <code>string</code> | integer or variable (characters from start to begin) |
-| [length] | <code>string</code> | integer or variable (length of substring) |
-| [after] | <code>string</code> | integer or variable (number of characters after substring) |
+| before | <code>number</code> | integer or variable (characters from start to begin) |
+| [length] | <code>number</code> | integer or variable (length of substring) |
+| [after] | <code>number</code> | integer or variable (number of characters after substring) |
 | [substring] | <code>string</code> | String or variable |
 
-
-### update_object
-#### WOQL.update\_object(JSON) ⇒ <code>WOQLQuery</code>
-Updates a document (or any object) in the db with the passed copy
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| JSON | <code>string</code> | JSON-LD document |
-
-
-### delete_object
-#### WOQL.delete\_object(JSON_or_IRI) ⇒ <code>WOQLQuery</code>
-Deletes a node identified by an IRI or a JSON-LD document
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| JSON_or_IRI | <code>string</code> \| <code>object</code> | IRI or a JSON-LD document |
-
-
-### read_object
-#### WOQL.read\_object(IRI, output, [formatObj]) ⇒ <code>WOQLQuery</code>
-Saves the entire document with IRI DocumentIRI into the JSONLD variable
-
-**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the document retrieval expression  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| IRI | <code>string</code> | either an IRI literal or a variable containing an IRI |
-| output | <code>string</code> | a variable into which the document’s will be saved |
-| [formatObj] | <code>typedef.DataFormatObj</code> | the export format descriptor, default value is JSON-LD |
-
-**Example**  
-```js
-const [mydoc] = vars("mydoc")
-read_object("doc:a", mydoc)
-//mydoc will have the json-ld document with ID doc:x stored in it
-```
 
 ### get
 #### WOQL.get(asvars, queryResource) ⇒ <code>WOQLQuery</code>
@@ -1102,8 +1063,7 @@ Calculates the number of triples of the contents of the resource identified in R
 
 **Example**  
 ```js
-let [tc] = vars("s")
-triple_count("admin/minecraft/local/_commits", tc)
+triple_count("admin/minecraft/local/_commits", "v:count")
 //returns the number of bytes in the local commit graph
 ```
 
@@ -1365,7 +1325,7 @@ add extra information about the type of the value object
 | subject | <code>string</code> | The IRI of a triple’s subject or a variable |
 | predicate | <code>string</code> | The IRI of a property or a variable |
 | objValue | <code>string</code> \| <code>number</code> \| <code>boolean</code> | an specific value |
-| [graphRef] | <code>typedef.GraphRef</code> | the resource identifier of a graph possible value are schema/{main - myschema - *} | instance/{main - myschema - *}  | inference/{main - myschema - *} |
+| [graphRef] | <code>typedef.GraphRef</code> | specify a graph type, default is instance schema|instance |
 
 
 ### link
@@ -1379,7 +1339,7 @@ Creates a pattern matching rule for a quad [Subject, Predicate, Object, Graph] o
 | subject | <code>string</code> | The IRI of a triple’s subject or a variable |
 | predicate | <code>string</code> | The IRI of a property or a variable |
 | object | <code>string</code> | The IRI of a node or a variable, or a literal |
-| [graphRef] | <code>typedef.GraphRef</code> | the resource identifier of a graph possible value are schema/{main - myschema - *} | instance/{main - myschema - *}  | inference/{main - myschema - *} |
+| [graphRef] | <code>typedef.GraphRef</code> | specify a graph type, default is instance schema|instance |
 
 
 ### libs
