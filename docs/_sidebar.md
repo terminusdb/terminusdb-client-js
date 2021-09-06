@@ -58,6 +58,7 @@
     - [getRoles](api/woqlClient.js?id=getRoles)
     - [updateRoles](api/woqlClient.js?id=updateRoles)
     - [addDocument](api/woqlClient.js?id=addDocument)
+    - [queryDocument](api/woqlClient.js?id=queryDocument)
     - [getDocument](api/woqlClient.js?id=getDocument)
     - [updateDocument](api/woqlClient.js?id=updateDocument)
     - [deleteDocument](api/woqlClient.js?id=deleteDocument)

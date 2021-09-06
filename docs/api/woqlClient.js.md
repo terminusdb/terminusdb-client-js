@@ -795,6 +795,28 @@ const json = [{ "@type" : "Class",
 client.addDocument(json,{"graph_type":"schema"},"mydb","add new schema")
 ```
 
+### queryDocument
+#### woqlClient.queryDocument([query], [params], [dbId], [branch]) ⇒ <code>Promise</code>
+Retrieves all documents that match a given document template
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [query] | <code>object</code> | the query template |
+| [params] | <code>typedef.DocParamsGet</code> | the get parameters |
+| [dbId] | <code>string</code> | the database id |
+| [branch] | <code>string</code> | the database branch |
+
+**Example**  
+```js
+const query = {
+  "type": "Person",
+  "query": { "age": 42 },
+ }
+client.queryDocument(query,{"as_list":true})
+```
+
 ### getDocument
 #### woqlClient.getDocument([params], [dbId], [branch]) ⇒ <code>Promise</code>
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
