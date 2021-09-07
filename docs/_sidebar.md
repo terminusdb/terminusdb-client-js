@@ -145,6 +145,7 @@
   - [nuke](api/woql.js?id=nuke)
   - [query](api/woql.js?id=query)
   - [json](api/woql.js?id=json)
+  - [lib](api/woql.js?id=lib)
   - [string](api/woql.js?id=string)
   - [literal](api/woql.js?id=literal)
   - [iri](api/woql.js?id=iri)

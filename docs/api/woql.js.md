@@ -1204,6 +1204,21 @@ json version of query for passing to api
 | [JSON_LD] | <code>object</code> | JSON-LD woql document encoding a query |
 
 
+### lib
+#### WOQL.lib() ⇒ <code>WOQLQuery</code>
+get the predefined library query
+
+**Returns**: <code>WOQLQuery</code> - WOQLQuery object  
+**Example**  
+```js
+//get commits older than the specified commit id
+const query = WOQL.lib().previousCommits('m8vpxewh2aovfauebfkbzwmj4qwr5lb')
+
+//return the commits of a specific branch starting from the head
+//if a timestamp is given, gets the commits before the specified timestamp
+const query = WOQL.lib().commits('main',10,1630683082.9278786)
+```
+
 ### string
 #### WOQL.string(val) ⇒ <code>object</code>
 Generates explicitly a JSON-LD string literal from the input
