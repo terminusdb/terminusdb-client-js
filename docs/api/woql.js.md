@@ -1356,16 +1356,3 @@ Creates a pattern matching rule for a quad [Subject, Predicate, Object, Graph] o
 | object | <code>string</code> | The IRI of a node or a variable, or a literal |
 | [graphRef] | <code>typedef.GraphRef</code> | specify a graph type, default is instance schema|instance |
 
-
-### libs
-#### WOQL.libs(libs, parent, graph, prefix)
-Called to load Terminus Predefined libraries:
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| libs | <code>\*</code> | xsd,xdd,box |
-| parent | <code>\*</code> |  |
-| graph | <code>\*</code> | -graph ref |
-| prefix | <code>\*</code> | -prefix you want use |
-
