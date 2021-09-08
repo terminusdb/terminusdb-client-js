@@ -19,21 +19,25 @@ For situations where you want to communicate with a TerminusDB server API, the W
 ```js
 //to connect with your local terminusDB
 const client = new TerminusClient.WOQLClient(SERVER_URL,{user:"admin",key:"myKey"})
-await client.connect()
-client.db("test")
-client.checkout("dev")
-const schema = await client.getSchema()
+async function getSchema() {
+     await client.connect()
+     client.db("test")
+     client.checkout("dev")
+     const schema = await client.getSchema()
+}
 //The client has an internal state which defines what
 //organization / database / repository / branch / ref it is currently attached to
 
 //to connect with your TerminusDB Cloud Instance
 const client = new TerminusClient.WOQLClient(SERVER_URL,{user:"myemail@something.com",
-                                                        jwt:"MY_ACCESS_TOKEN",
                                                         organization:'mycloudTeam'})
-await client.connect()
-client.db("test")
-client.checkout("dev")
-const schema = await client.getSchema()
+client.setApiKey(MY_ACCESS_TOKEN)
+async function getSchema() {
+     await client.connect()
+     client.db("test")
+     client.checkout("dev")
+     const schema = await client.getSchema()
+}
 ```
 
 ### TerminusDB Client API
@@ -250,6 +254,8 @@ Use [#remoteAuth](#remoteAuth) instead.
 
 ### setApiKey
 #### woqlClient.setApiKey(accessToken)
+set the api key to access the cloud resources
+
 
 | Param | Type |
 | --- | --- |
@@ -264,16 +270,6 @@ add extra headers to your request
 | Param | Type |
 | --- | --- |
 | customHeaders | <code>object</code> | 
-
-
-### setApiKey
-#### woqlClient.setApiKey(accessToken)
-set the api access token to connect to TerminusX Cloud
-
-
-| Param | Type |
-| --- | --- |
-| accessToken | <code>string</code> | 
 
 
 ### copy

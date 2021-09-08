@@ -15,7 +15,6 @@
     - [Fetch](api/woqlClient.js?id=fetch)
     - [setApiKey](api/woqlClient.js?id=setApiKey)
     - [customHeaders](api/woqlClient.js?id=customHeaders)
-    - [setApiKey](api/woqlClient.js?id=setApiKey)
     - [copy](api/woqlClient.js?id=copy)
     - [server](api/woqlClient.js?id=server)
     - [api](api/woqlClient.js?id=api)

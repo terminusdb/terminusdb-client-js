@@ -191,7 +191,6 @@ an object that describe a property element
 | [repo] | [<code>RepoType</code>](#RepoType) \| <code>string</code> | set cursor to this repo |
 | [branch] | <code>string</code> | set branch to this id |
 | [ref] | <code>string</code> | set commit ref |
-| [jwt] | <code>string</code> | jwt token, can use that token to get access to the associated resources in the cloud |
 | [default_branch_id] | <code>string</code> | set the default branch id |
 
 
