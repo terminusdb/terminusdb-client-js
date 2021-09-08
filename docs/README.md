@@ -8,7 +8,7 @@ Promise based terminus client for the browser and node.js
 ## Requirements
 
 - [TerminusDB](https://github.com/terminusdb/terminusdb-server)
-- [NodeJS 8.1.4+](https://nodejs.org/en/)
+- [NodeJS 10+](https://nodejs.org/en/)
 
 ## Installation
 
@@ -56,52 +56,40 @@ const port = 3000;
 const TerminusClient = require("@terminusdb/terminusdb-client");
 
 // Connect and configure the TerminusClient
-const client = new TerminusClient.WOQLClient("https://127.0.0.1:6363/", {
-  dbid: "banker",
+
+// Connect and configure the TerminusClient
+const client = new TerminusClient.WOQLClient("http://127.0.0.1:6363/", {
   user: "admin",
   key: "root",
+  db:"mydb",
 });
+
+//change database, set the banker database
 client.db("banker");
-client.organization("admin");
 
-async function postAccount() {
-  try {
-    const WOQL = TerminusClient.WOQL;
-    const query = WOQL.using("admin/banker").and(
-      WOQL.add_triple("doc:smog", "type", "scm:BankAccount"),
-      WOQL.add_triple("doc:smog", "owner", "smog"),
-      WOQL.add_triple("doc:smog", "balance", 999)
-    );
-    await client.connect();
-    client
-      .query(query, "adding smog's bank account")
-      .then((response) => {
-        return response;
-      })
-      .catch((err) => {
-        console.log("error", err);
-      });
-  } catch (err) {
-    console.error(err);
-  }
-}
+//we are insert the data in the banker db
+app.post("/account", async(req, res) => {
+  try{
+    const owner = req.body.owner
+    const balance = req.body.balance
+    const accountObj = {'@type':'BankAccount',
+                         'owner':owner,
+                         'balance':balance}
 
-app.post("/account", (req, res) => {
-  postAccount().then((dbres) => res.send(JSON.stringify(dbres)));
-});
+
+    await client.connect()
+    const response = await client.addDocument(accountObj)
+    res.json({message:'account added'})
+
+    }catch(err){
+        console.error(err.message)
+        const status=err.status || 500
+        res.status(status).send({message: 'Failed to add a new account','err':err.message});
+    }
+  })
 
 app.listen(port, () => {
   console.log(`Backend Server listening at http://localhost:${port}`);
-  client
-    .connect()
-    .then(function (response) {
-      // handle success
-      console.log(response);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    });
 });
 ```
 
@@ -114,8 +102,8 @@ To initialize `TerminusDB client` with custom options use
 ```js
 const TerminusClient = require("@terminusdb/terminusdb-client");
 
-const client = new TerminusClient.WOQLClient("https://127.0.0.1:6363/", {
-  dbid: "test_db",
+const client = new TerminusClient.WOQLClient("http://127.0.0.1:6363/", {
+  db: "test_db",
   user: "admin",
   key: "my_secret_key",
 });

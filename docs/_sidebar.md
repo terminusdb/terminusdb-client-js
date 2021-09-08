@@ -176,4 +176,5 @@
   - [DbDetails](api/typedef.js?id=DbDetails)
   - [RemoteRepoDetails](api/typedef.js?id=RemoteRepoDetails)
   - [CloneSourceDetails](api/typedef.js?id=CloneSourceDetails)
+- [ParamType](api/typedef.js?id=typedef)
 
