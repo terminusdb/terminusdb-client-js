@@ -248,6 +248,14 @@ Use [#localAuth](#localAuth) instead.
 Use [#remoteAuth](#remoteAuth) instead.
 
 
+### setApiKey
+#### woqlClient.setApiKey(accessToken)
+
+| Param | Type |
+| --- | --- |
+| accessToken | <code>string</code> | 
+
+
 ### customHeaders
 #### woqlClient.customHeaders(customHeaders) ⇒ <code>object</code>
 add extra headers to your request
@@ -256,6 +264,16 @@ add extra headers to your request
 | Param | Type |
 | --- | --- |
 | customHeaders | <code>object</code> | 
+
+
+### setApiKey
+#### woqlClient.setApiKey(accessToken)
+set the api access token to connect to TerminusX Cloud
+
+
+| Param | Type |
+| --- | --- |
+| accessToken | <code>string</code> | 
 
 
 ### copy

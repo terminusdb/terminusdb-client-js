@@ -1217,6 +1217,9 @@ const query = WOQL.lib().previousCommits('m8vpxewh2aovfauebfkbzwmj4qwr5lb')
 //return the commits of a specific branch starting from the head
 //if a timestamp is given, gets the commits before the specified timestamp
 const query = WOQL.lib().commits('main',10,1630683082.9278786)
+
+//return the branches list with the timestamp and commits id
+const query = WOQL.lib().branches()
 ```
 
 ### string
