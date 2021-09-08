@@ -8,7 +8,7 @@ Promise based terminus client for the browser and node.js
 ## Requirements
 
 - [TerminusDB](https://github.com/terminusdb/terminusdb)
-- [NodeJS 8.1.4+](https://nodejs.org/en/)
+- [NodeJS 10+](https://nodejs.org/en/)
 
 ## Installation
 
