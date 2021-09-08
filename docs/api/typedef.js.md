@@ -57,7 +57,7 @@ the DELETE document interface query parameters
 
 
 ## GraphRef
-#### GraphRef : <code>&quot;schema/main&quot;</code> \| <code>&quot;schema/\*&quot;</code> \| <code>&quot;instance/main&quot;</code> \| <code>&quot;instance/\*&quot;</code> \| <code>&quot;inference/main&quot;</code> \| <code>&quot;inference/\*&quot;</code> \| <code>string</code>
+#### GraphRef : <code>&quot;schema/main&quot;</code> \| <code>&quot;instance/main&quot;</code> \| <code>string</code>
 
 ## DataFormatObj
 #### DataFormatObj : <code>Object</code>
@@ -74,45 +74,11 @@ the DELETE document interface query parameters
 ## FuntionType
 #### FuntionType : <code>&quot;add\_quad&quot;</code> \| <code>&quot;delete\_quad&quot;</code> \| <code>&quot;add\_triple&quot;</code> \| <code>&quot;delete\_triple&quot;</code> \| <code>&quot;quad&quot;</code> \| <code>&quot;triple&quot;</code>
 
-## ClassObj
-#### ClassObj : <code>Object</code>
-the class details object
-
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| id | <code>string</code> | IRI or variable containing IRI of the class to be inserted |
-| [label] | <code>string</code> |  |
-| [description] | <code>string</code> |  |
-| [abstract] | <code>boolean</code> |  |
-| [parent] | <code>array</code> \| <code>string</code> | if not parent the new class will be a class ObjectW |
-| [{k:string}] | <code>any</code> | properties |
-
-
-## PropertyObj
-#### PropertyObj : <code>Object</code>
-an object that describe a property element
-
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| id | <code>string</code> |  |
-| range | <code>string</code> | the type of property (class id or a native type xsd:number etc.. ) |
-| [label] | <code>string</code> |  |
-| [description] | <code>string</code> |  |
-| domain | <code>string</code> | the ID of the class to which the property belongs |
-| [max] | <code>string</code> | the max property's cardinality |
-| [min] | <code>string</code> | the min property's cardinality |
-| [cardinality] | <code>string</code> | the property cardinality (max and min value) |
-
-
 ## ResourceType
 #### ResourceType : <code>&quot;commits&quot;</code> \| <code>&quot;meta&quot;</code> \| <code>&quot;branch&quot;</code> \| <code>&quot;ref&quot;</code> \| <code>&quot;repo&quot;</code> \| <code>&quot;db&quot;</code>
 
 ## GraphType
-#### GraphType : <code>&quot;inference&quot;</code> \| <code>&quot;schema&quot;</code> \| <code>&quot;instance&quot;</code>
+#### GraphType :  <code>&quot;schema&quot;</code> \| <code>&quot;instance&quot;</code>
 
 ## CredentialObj
 #### CredentialObj : <code>Object</code>
@@ -126,7 +92,7 @@ an object that describe a property element
 
 
 ## ActionType
-#### ActionType : <code>&#x27;graph&#x27;</code> \| <code>&#x27;db&#x27;</code> \| <code>&#x27;clone&#x27;</code> \| <code>&#x27;triples&#x27;</code> \| <code>&#x27;woql&#x27;</code> \| <code>&#x27;frame&#x27;</code> \| <code>&#x27;fetch&#x27;</code> \| <code>&#x27;pull&#x27;</code> \| <code>&#x27;rebase&#x27;</code> \| <code>&#x27;csv&#x27;</code> \| <code>&#x27;branch&#x27;</code> \| <code>&#x27;reset&#x27;</code> \| <code>&#x27;push&#x27;</code> \| <code>&#x27;squash&#x27;</code>
+#### ActionType : <code>&#x27;graph&#x27;</code> \| <code>&#x27;db&#x27;</code> \| <code>&#x27;clone&#x27;</code> \| <code>&#x27;triples&#x27;</code> \| <code>&#x27;woql&#x27;</code> \| <code>&#x27;fetch&#x27;</code> \| <code>&#x27;pull&#x27;</code> \| <code>&#x27;rebase&#x27;</code> \| <code>&#x27;branch&#x27;</code> \| <code>&#x27;reset&#x27;</code> \| <code>&#x27;push&#x27;</code> \| <code>&#x27;squash&#x27;</code>
 
 ## ParamsObj
 #### ParamsObj : <code>Object</code>

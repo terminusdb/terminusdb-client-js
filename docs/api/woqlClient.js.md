@@ -29,8 +29,9 @@ async function getSchema() {
 //organization / database / repository / branch / ref it is currently attached to
 
 //to connect with your TerminusDB Cloud Instance
-const client = new TerminusClient.WOQLClient(SERVER_URL,{user:"myemail@something.com",
-                                                        organization:'mycloudTeam'})
+const client = new TerminusClient.WOQLClient('SERVER_CLOUD_URL/mycloudTeam',
+                     {user:"myemail@something.com", organization:'mycloudTeam'})
+                                          
 client.setApiKey(MY_ACCESS_TOKEN)
 async function getSchema() {
      await client.connect()
@@ -798,14 +799,18 @@ to add a new document or a list of new documents into the instance or the schema
 **Example**  
 ```js
 const json = [{ "@type" : "Class",   
-  "@id" : "Coordinate",
-  "x" : "xsd:decimal",
-  "y" : "xsd:decimal" },
-  { "@type" : "Class",
-    "@id" : "Country",
-    "name" : "xsd:string",
-    "perimeter" : { "@type" : "List", 
-                 "@class" : "Coordinate" } }]
+             "@id" : "Coordinate",
+             "@key" : { '@type' : 'Hash', 
+             '@fields' : ['x','y'] }, 
+             "x" : "xsd:decimal",
+             "y" : "xsd:decimal" },
+             { "@type" : "Class",
+             "@id" : "Country",
+             "@key" : { '@type' : 'Lexical', 
+                         '@fields' : [name] }, 
+             "name" : "xsd:string",
+             "perimeter" : { "@type" : "List", 
+                             "@class" : "Coordinate" } }]
 client.addDocument(json,{"graph_type":"schema"},"mydb","add new schema")
 ```
 

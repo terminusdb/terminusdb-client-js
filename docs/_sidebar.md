@@ -157,6 +157,7 @@
   - [update_quad](api/woql.js?id=update_quad)
   - [value](api/woql.js?id=value)
   - [link](api/woql.js?id=link)
+- [ParamType](api/typedef.js?id=typedef)
   - [DocParamsGet](api/typedef.js?id=DocParamsGet)
   - [DocParamsPost](api/typedef.js?id=DocParamsPost)
   - [DocParamsPut](api/typedef.js?id=DocParamsPut)
@@ -176,5 +177,4 @@
   - [DbDetails](api/typedef.js?id=DbDetails)
   - [RemoteRepoDetails](api/typedef.js?id=RemoteRepoDetails)
   - [CloneSourceDetails](api/typedef.js?id=CloneSourceDetails)
-- [ParamType](api/typedef.js?id=typedef)
 
