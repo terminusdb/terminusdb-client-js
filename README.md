@@ -124,7 +124,7 @@ const client = new TerminusClient.WOQLClient("https://127.0.0.1:6363/", {
 
 ## API
 
-The API is documented at: https://terminusdb.com/docs/terminusdb/#/reference/API
+The API of the most recent release is documented at: <https://docs.terminusdb.com/v4.2/#/reference/API>
 
 ## Report Issues
 
