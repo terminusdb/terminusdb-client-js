@@ -20,7 +20,7 @@
   "author": "kevin@terminusdb.com",
   "license": "Apache-2.0",
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": ">=0.21.1",
     "ssri": ">=8.0.1",
     "elliptic": ">=6.5.4",
     "url-parse": ">=1.5.0",
