@@ -1,25 +1,22 @@
 module.exports={
-    "@type": "woql:When",
-    "woql:query": {
-        "@type": "woql:True"
+    "@type": "When",
+    "query": {
+        "@type": "True"
     },
-    "woql:consequent": {
-        "@type": "woql:AddQuad",
-        "woql:subject": {
-            "@type": "woql:Node",
-            "woql:node": "scm:id"
+    "consequent": {
+        "@type": "AddTriple",
+        "subject": {
+            "@type": "NodeValue",
+            "node": "scm:id"
         },
-        "woql:predicate": {
-            "@type": "woql:Node",
-            "woql:node": "rdf:type"
+        "predicate": {
+            "@type": "NodeValue",
+            "node": "rdf:type"
         },
-        "woql:object": {
-            "@type": "woql:Node",
-            "woql:node": "owl:Class"
+        "object": {
+            "@type": "NodeValue",
+            "node": "owl:Class"
         },
-        "woql:graph": {
-            "@type": "xsd:string",
-            "@value": "schema/main"
-        }
+        "graph": "schema"
     }
 }

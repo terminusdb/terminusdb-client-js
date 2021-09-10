@@ -37,15 +37,6 @@ describe('connectionConfig tests', function() {
         expect(connectionConfig.queryURL()).to.equal(queryURL)
     })
 
-    it('check set class frameUrl', function() {
-        const classFrameURL =
-            'http://localhost:6363/api/frame/admin/testDB/local/commit/gfhfjkflfgorpyuiioo'
-
-        //console.log(JSON.stringify(connectionConfig.triplesURL(), null, 4));
-
-        expect(connectionConfig.classFrameURL()).to.equal(classFrameURL)
-    })
-
     /*
      * get the schema in owl turtle encoding
      */
@@ -60,7 +51,7 @@ describe('connectionConfig tests', function() {
 
     it('check remove the refCommit', function() {
         const queryUrlBranch01 = 'http://localhost:6363/api/woql/admin/testDB/local/branch/myBranch'
-        const queryFrameBranch01 = 'http://localhost:6363/api/frame/admin/testDB/local/branch/myBranch'
+       // const queryFrameBranch01 = 'http://localhost:6363/api/frame/admin/testDB/local/branch/myBranch'
         const queryTriplesBranch01 =
             'http://localhost:6363/api/triples/admin/testDB/local/branch/myBranch/schema/main'
         /*
@@ -68,7 +59,7 @@ describe('connectionConfig tests', function() {
          */
         connectionConfig.setRef(false)
         expect(connectionConfig.queryURL()).to.equal(queryUrlBranch01)
-        expect(connectionConfig.classFrameURL()).to.equal(queryFrameBranch01)
+        ///expect(connectionConfig.classFrameURL()).to.equal(queryFrameBranch01)
         expect(connectionConfig.triplesURL('schema')).to.equal(queryTriplesBranch01)
 
         //console.log(JSON.stringify(connectionConfig.queryURL(), null, 4));
@@ -76,34 +67,26 @@ describe('connectionConfig tests', function() {
 
     it('check remove the branch', function() {
         const queryUrlBranch01 = 'http://localhost:6363/api/woql/admin/testDB/local/branch/main'
-        const queryFrameBranch01 = 'http://localhost:6363/api/frame/admin/testDB/local/branch/main'
+        //const queryFrameBranch01 = 'http://localhost:6363/api/frame/admin/testDB/local/branch/main'
         const queryTriplesBranch01 =
-            'http://localhost:6363/api/triples/admin/testDB/local/branch/main/instance/myschemaName'
+            'http://localhost:6363/api/triples/admin/testDB/local/branch/main/instance/main'
         /*
          *remove the ref commit it come to the
          */
         connectionConfig.setBranch(false)
         expect(connectionConfig.queryURL()).to.equal(queryUrlBranch01)
-        expect(connectionConfig.classFrameURL()).to.equal(queryFrameBranch01)
-        expect(connectionConfig.triplesURL('instance', 'myschemaName')).to.equal(
+        //expect(connectionConfig.classFrameURL()).to.equal(queryFrameBranch01)
+        expect(connectionConfig.triplesURL('instance')).to.equal(
             queryTriplesBranch01,
         )
 
         //console.log(JSON.stringify(connectionConfig.queryURL(), null, 4));
     })
 
-    /*
-     *Generate URL for create / delete graph api endpoint
-     */
-    it('check graphURL', function() {
-        const graphURL = 'http://localhost:6363/api/graph/admin/testDB/local/branch/main/schema/main'
-        expect(connectionConfig.graphURL('schema', 'main')).to.equal(graphURL)
-    })
-
-    it('check copy', function() {
+    /*it('check copy', function() {
         let copy = connectionConfig.copy()        
         expect(connectionConfig).to.eql(copy)
-    })
+    })*/
 
     it('check update', function() {
         connectionConfig.update({key:"hello"})   
@@ -141,7 +124,7 @@ describe('connectionConfig tests', function() {
         expect(o).to.equal(construct)
     })
 
-    it('check roles URL', function() {
+   it('check roles URL', function() {
         let o = connectionConfig.rolesURL()
         let construct = `${startServerUrl}api/role`
         expect(o).to.equal(construct)
@@ -233,7 +216,7 @@ describe('connectionConfig tests', function() {
     })
 
     it('check local user', function() {
-        let o = connectionConfig.local_user()
+        let o = connectionConfig.localUser()
         expect(o).to.equal("john")
     })
 
@@ -243,19 +226,19 @@ describe('connectionConfig tests', function() {
     })
 
     it('check parseServerURL', function() {
-        let o = connectionConfig.parseServerURL("https:/adf.com/")
-        expect(o).to.equal(false)
+        const str = "https:/adf.com/"
+        expect(function(){
+            connectionConfig.parseServerURL(str)
+        }).to.throw(`Invalid Server URL: ${str}`);
     })
 
     it('check clearCursor', function() {
         connectionConfig.clearCursor()
-        expect(connectionConfig.db()).to.equal(false)
+        expect(function(){
+            connectionConfig.db()
+        }).to.throw('Invalid database name');
     })
 
-    it('check setCursor', function() {
-        connectionConfig.setCursor(false, "abc", "origin")
-        expect(connectionConfig.db()).to.equal("abc")
-    })
 
     it('check setError', function() {
         connectionConfig.setError("error 123")

@@ -2,7 +2,7 @@ const expect = require('chai').expect;
 
 var WOQL = require('../lib/woql');
 var WOQLRule = require('../lib/viewer/woqlRule');
-var FrameRule = require('../lib/viewer/frameRule');
+//var FrameRule = require('../lib/viewer/frameRule');
 
 describe('woql rules', function () { 
     
@@ -12,13 +12,13 @@ describe('woql rules', function () {
         const jsonObj= {pattern: {literal : true, type: ["xdd:coordinatePolygon"], scope: "cell"}}
         expect(woqlRule.json()).to.eql(jsonObj);
 	})
-    it('Direct Create frame rule',function(){
+   /* it('Direct Create frame rule',function(){
         const woqlRule= new FrameRule();
         woqlRule.literal(true).type("xdd:coordinatePolygon").scope("data")
         const jsonObj= {pattern: {literal : true, type: ["xdd:coordinatePolygon"], scope: "data"}}
         expect(woqlRule.json()).to.eql(jsonObj);
-    })
-    it('Check Terminus Rule literal',function(){
+    })*/
+    /*it('Check Terminus Rule literal',function(){
         const woqlRule= new WOQLRule();
         const frameRule= new FrameRule();
         woqlRule.literal(true); 
@@ -56,7 +56,7 @@ describe('woql rules', function () {
         const jsonObj = {pattern: {value: [t] }};
         expect(woqlRule.json()).to.eql(jsonObj);
        // expect(woqlRule.json()).to.eql(frameRule.json());
-    })
+    })*/
     it('Check Terminus Pattern',function(){
         const woqlRule = new WOQLRule();
         var t = "hello world";
@@ -141,6 +141,7 @@ describe('woql rules', function () {
         const row = {"a": 1, "b": "43"};
         expect(r1.matchNode([r1], row, "a").length).to.equal(1);        
     })
+    /*
     it('Check frame Rule scope',function(){
         const fr = new FrameRule();
         fr.scope("object");  
@@ -234,13 +235,13 @@ describe('woql rules', function () {
         fr.scope("property").children(par.pattern);  
         const jsonObj = {pattern: {scope: "property", children: [{subject: ["s"]}]}};
         expect(fr.json()).to.eql(jsonObj);              
-    })
+    })*/
 });
 
-describe('woql test frame', function () { 
+/*describe('woql test frame', function () { 
     it('Check frame pattern 1',function(){
         const fr = new FrameRule();
         fr.scope("*");  
         //fr.patternMatchesFrame(pframe);
     })
-})
+})*/

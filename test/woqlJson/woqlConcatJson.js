@@ -1,46 +1,26 @@
 module.exports={
-    "@type": "woql:Concatenate",
-    "woql:concat_list": {
-        "@type": "woql:Array",
-        "woql:array_element": [
-            {
-                "@type": "woql:ArrayElement",
-                "woql:variable_name": {
-                    "@value": "Duration",
-                    "@type": "xsd:string"
-                },
-                "woql:index": {
-                    "@type": "xsd:nonNegativeInteger",
-                    "@value": 0
-                }
-            },
-            {
-                "@type": "woql:ArrayElement",
-                "woql:datatype": {
-                    "@type": "xsd:string",
-                    "@value": " yo "
-                },
-                "woql:index": {
-                    "@type": "xsd:nonNegativeInteger",
-                    "@value": 1
-                }
-            },
-            {
-                "@type": "woql:ArrayElement",
-                "woql:variable_name": {
-                    "@value": "Duration_Cast",
-                    "@type": "xsd:string"
-                },
-                "woql:index": {
-                    "@type": "xsd:nonNegativeInteger",
-                    "@value": 2
-                }
-            }
-        ]
-    },
-    "woql:concatenated": {
-        "@type": "woql:Datatype",
-        "woql:datatype": {
+    "@type": "Concatenate",
+    "list": { "@type" : "DataValue",
+              "list" : [
+                  {
+                      "@type": "DataValue",
+                      "variable": "Duration"
+                  },
+                  {
+                      "@type": "DataValue",
+                      "data": {
+                          "@type": "xsd:string",
+                          "@value": " yo "
+                      }
+                  },
+                  {
+                      "@type": "DataValue",
+                      "variable": "Duration_Cast"
+                  }
+              ]},
+    "result": {
+        "@type": "DataValue",
+        "data": {
             "@type": "xsd:string",
             "@value": "x"
         }
