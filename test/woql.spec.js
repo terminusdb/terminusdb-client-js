@@ -143,7 +143,7 @@ describe('woql queries', function () {
     const woqlObject=WOQL.from("http://dburl", WOQLQuery);
     const jsonObj={
                     "@type": "From",
-                    "graph_filter": "http://dburl",
+                    "graph": "http://dburl",
                     "query": {
                         "@type": "Limit",
                         "limit": 10,
@@ -278,7 +278,7 @@ describe('woql queries', function () {
 
   it('check the remote method',function(){
 
-    const woqlObject=WOQL.remote({url: "http://url"});
+    const woqlObject=WOQL.remote("http://url");
 
     const jsonObj={ "@type": "QueryResource",
                     "source": {

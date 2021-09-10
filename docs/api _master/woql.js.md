@@ -246,11 +246,50 @@ Substring
 | Param | Type | Description |
 | --- | --- | --- |
 | string | <code>string</code> | String or variable |
-| before | <code>number</code> | integer or variable (characters from start to begin) |
-| [length] | <code>number</code> | integer or variable (length of substring) |
-| [after] | <code>number</code> | integer or variable (number of characters after substring) |
+| before | <code>string</code> | integer or variable (characters from start to begin) |
+| [length] | <code>string</code> | integer or variable (length of substring) |
+| [after] | <code>string</code> | integer or variable (number of characters after substring) |
 | [substring] | <code>string</code> | String or variable |
 
+
+### update_object
+#### WOQL.update\_object(JSON) ⇒ <code>WOQLQuery</code>
+Updates a document (or any object) in the db with the passed copy
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| JSON | <code>string</code> | JSON-LD document |
+
+
+### delete_object
+#### WOQL.delete\_object(JSON_or_IRI) ⇒ <code>WOQLQuery</code>
+Deletes a node identified by an IRI or a JSON-LD document
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| JSON_or_IRI | <code>string</code> \| <code>object</code> | IRI or a JSON-LD document |
+
+
+### read_object
+#### WOQL.read\_object(IRI, output, [formatObj]) ⇒ <code>WOQLQuery</code>
+Saves the entire document with IRI DocumentIRI into the JSONLD variable
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the document retrieval expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| IRI | <code>string</code> | either an IRI literal or a variable containing an IRI |
+| output | <code>string</code> | a variable into which the document’s will be saved |
+| [formatObj] | <code>typedef.DataFormatObj</code> | the export format descriptor, default value is JSON-LD |
+
+**Example**  
+```js
+const [mydoc] = vars("mydoc")
+read_object("doc:a", mydoc)
+//mydoc will have the json-ld document with ID doc:x stored in it
+```
 
 ### get
 #### WOQL.get(asvars, queryResource) ⇒ <code>WOQLQuery</code>
@@ -286,7 +325,7 @@ get(as("a", a).as("b", b)).remote("http://my.url.com/x.csv")
 ```js
 let [s, p, o] = vars("Subject", "Predicate", "Object")
 WOQL.put(WOQL.as("s", s).as("p", p).as("o", o), WOQL.all())
-.file({file:"/app/local_files/dump.csv"})
+.file("/app/local_files/dump.csv")
 ```
 
 ### as
@@ -302,24 +341,24 @@ Imports the value identified by Source to a Target variable
 
 **Example**  
 ```js
-WOQL.as("first var", "v:First_Var",{} "string").as("second var", "v:Second_Var")
+WOQL.as("first var", "v:First_Var", "string").as("second var", "v:Second_Var")
  WOQL.as(["first var", "v:First_Var", "string"], ["second var", "v:Second_Var"])
 ```
 
 ### remote
-#### WOQL.remote(remoteObj, [formatObj]) ⇒ <code>WOQLQuery</code>
+#### WOQL.remote(url, [formatObj]) ⇒ <code>WOQLQuery</code>
 Identifies a remote resource by URL and specifies the format of the resource through the options
 
 **Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the remote resource identifier  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| remoteObj | <code>object</code> | The URL at which the remote resource can be accessed |
+| url | <code>string</code> | The URL at which the remote resource can be accessed |
 | [formatObj] | <code>typedef.DataFormatObj</code> | The format of the resource data {} |
 
 **Example**  
 ```js
-remote({url:"http://url.of.resource"}, {type: "csv"})
+remote("http://url.of.resource", {type: "csv"})
 ```
 
 ### file
@@ -417,6 +456,22 @@ Adds quads according to the pattern [S,P,O,G]
 | object | <code>string</code> | The IRI of a node or a variable, or a literal |
 | graphRef- | <code>typedef.GraphRef</code> | A valid graph resource identifier string |
 
+
+### when
+#### WOQL.when(subquery, [updateQuery]) ⇒ <code>WOQLQuery</code>
+When the subquery is met, the update query is executed
+
+**Returns**: <code>WOQLQuery</code> - -  A WOQLQuery which contains the when expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| subquery | <code>WOQLQuery</code> | the condition query |
+| [updateQuery] | <code>WOQLQuery</code> |  |
+
+**Example**  
+```js
+when(true()).triple("a", "b", "c")
+```
 
 ### trim
 #### WOQL.trim(inputStr, resultVarName) ⇒ <code>WOQLQuery</code>
@@ -945,10 +1000,6 @@ Creates a count of the results of the query
 | countVarName | <code>string</code> \| <code>number</code> | variable or integer count |
 | [subquery] | <code>WOQLQuery</code> |  |
 
-**Example**  
-```js
-WOQL.count("v:count").triple("v:Person","type","scm:Person")
-```
 
 ### typecast
 #### WOQL.typecast(varName, varType, resultVarName) ⇒ <code>WOQLQuery</code>
@@ -1024,7 +1075,7 @@ Performs a path regular expression match on the graph
 | Param | Type | Description |
 | --- | --- | --- |
 | subject | <code>string</code> | An IRI or variable that refers to an IRI representing the subject, i.e. the starting point of the path |
-| pattern | <code>string</code> | (string) - A path regular expression describing a pattern through multiple edges of the graph Path regular expressions consist of a sequence of predicates and / or a set of alternatives, with quantification operators The characters that are interpreted specially are the following: | representing alternative choices , - representing a sequence of predcitates + - Representing a quantification of 1 or more of the preceding pattern in a sequence {min, max} - Representing at least min examples and at most max examples of the preceding pattern - Representing any predicate () - Parentheses, interpreted in the normal way to group clauses |
+| pattern | <code>string</code> | A regular expression describing a path through multiple edges of the graph. Path regular expressions consist of predicates and special characters including `\|` for alternatives, `,` for sequences, `+` for 1 or more predicates, `{min, max}` for matching a minimum and maximum number of times, `*` for matching anything, and `()` for grouping. |
 | object | <code>string</code> | An IRI or variable that refers to an IRI representing the object, i.e. ending point of the path |
 | resultVarName | <code>string</code> | A variable in which the actual paths traversed will be stored |
 
@@ -1063,7 +1114,8 @@ Calculates the number of triples of the contents of the resource identified in R
 
 **Example**  
 ```js
-triple_count("admin/minecraft/local/_commits", "v:count")
+let [tc] = vars("s")
+triple_count("admin/minecraft/local/_commits", tc)
 //returns the number of bytes in the local commit graph
 ```
 
@@ -1149,6 +1201,21 @@ insert("mydoc", "MyType")
 //equivalent to add_triple("mydoc", "type", "MyType")
 ```
 
+### schema
+#### WOQL.schema([graphRef]) ⇒ <code>WOQLQuery</code>
+Generates an empty query object - identical to query - included for backwards compatibility as before v3.0, the schema functions were in their own namespace.
+
+**Returns**: <code>WOQLQuery</code> - An empty WOQLQuery with the internal schema graph pointes set to Graph  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [graphRef] | <code>typedef.GraphRef</code> | Resource String identifying the graph which will be used for subsequent chained schema calls |
+
+**Example**  
+```js
+schema("schema/dev").add_class("X")
+```
+
 ### graph
 #### WOQL.graph([graphRef]) ⇒ <code>WOQLQuery</code>
 Sets the graph resource ID that will be used for subsequent chained function calls
@@ -1161,8 +1228,184 @@ Sets the graph resource ID that will be used for subsequent chained function cal
 
 **Example**  
 ```js
-WOQL.graph("schema")
+node("MyClass", "AddQuad").graph("schema/main").label("My Class Label")
 //equivalent to add_quad("MyClass", "label", "My Class Label", "schema/main")
+```
+
+### add_class
+#### WOQL.add\_class(classId, [schemaGraph]) ⇒ <code>WOQLQuery</code>
+Generates a new Class with the given ClassID and writes it to the DB schema
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the add class expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| classId | <code>string</code> | IRI or variable containing IRI of the new class to be added (prefix default to scm) |
+| [schemaGraph] | <code>string</code> | Optional Resource String identifying the schema graph into which the class definition will be written |
+
+**Example**  
+```js
+add_class("MyClass")
+//equivalent to add_quad("MyClass", "type", "owl:Class", "schema/main")
+```
+
+### add_property
+#### WOQL.add\_property(propId, propType, [schemaGraph]) ⇒ <code>WOQLQuery</code>
+Generates a new Property with the given PropertyID and a range of type and writes it to the DB schema
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the add property expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| propId | <code>string</code> | IRI or variable containing IRI of the new property to be added (prefix default to scm) |
+| propType | <code>string</code> | optional IRI or variable containing IRI of the range type of the new property (defaults to xsd:string) |
+| [schemaGraph] | <code>string</code> | Optional Resource String identifying the schema graph into which the property definition will be written |
+
+**Example**  
+```js
+add_property("myprop")
+//equivalent to add_quad("myprop", "type", "owl:DatatypeProperty", "schema/main")
+//.add_quad("myprop", "range", "xsd:string", "schema/main")
+```
+
+### delete_class
+#### WOQL.delete\_class(classId, [schemaGraph], [classVarName]) ⇒ <code>WOQLQuery</code>
+Deletes the Class with the passed ID form the schema (and all references to it)
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the class deletion expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| classId | <code>string</code> | IRI or variable containing IRI of the class to be deleted (prefix default to scm) |
+| [schemaGraph] | <code>string</code> | Optional Resource String identifying the schema graph |
+| [classVarName] | <code>string</code> | The var name, default value "v:Class" |
+
+**Example**  
+```js
+delete_class("MyClass")
+```
+
+### delete_property
+#### WOQL.delete\_property(propId, [schemaGraph], [propVarName]) ⇒ <code>WOQLQuery</code>
+Deletes a property from the schema and all its references incoming and outgoing
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the property deletion expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| propId | <code>string</code> | IRI or a variable containing IRI of the property to be deleted (prefix defaults to scm) |
+| [schemaGraph] | <code>string</code> | Resource String identifying the schema graph from which the property definition will be deleted |
+| [propVarName] | <code>string</code> |  |
+
+**Example**  
+```js
+delete_property("MyProp")
+```
+
+### doctype
+#### WOQL.doctype(classId, [schemaGraph]) ⇒ <code>WOQLQuery</code>
+Creates a new document class in the schema
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the add document class expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| classId | <code>string</code> | IRI or variable containing IRI of the new document class to be added (prefix default to scm) |
+| [schemaGraph] | <code>string</code> | Resource String identifying the schema graph from which the document definition will be added |
+
+**Example**  
+```js
+doctype("MyClass")
+//equivalent to add_quad("MyClass", "type", "owl:Class", "schema/main")
+//.add_quad("MyClass", "subClassOf", "system:Document", "schema/main")
+```
+
+### insert_data
+#### WOQL.insert\_data(dataObj, [instanceGraph]) ⇒ <code>WOQLQuery</code>
+Inserts data as an object - enabling multiple property values to be inserted in one go
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the insertion expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| dataObj | <code>object</code> | json object which contains fields: mandatory: id, type optional: label, description, [property] (valid property ids) |
+| [instanceGraph] | <code>string</code> | al graph resource identifier (defaults to “instance/main” if no using or into is specified) |
+
+**Example**  
+```js
+let data = {id: "doc:joe",
+  type: "Person",
+  label: "Joe",
+  description: "My friend Joe",
+  age: 42
+ }
+ insert_data(data)
+```
+
+### insert_class_data
+#### WOQL.insert\_class\_data(classObj, [schemaGraph]) ⇒ <code>WOQLQuery</code>
+Inserts data about a class as a json object - enabling a class and all its properties to be specified in a single function
+
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the insertion expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| classObj | <code>typedef.ClassObj</code> | with id, label, description, parent and properties |
+| [schemaGraph] | <code>string</code> | the resource identifier of a schema graph. The Default value is schema/main |
+
+**Example**  
+```js
+let data = { id: "Robot", label: "Robot", parent: ["MyClass001", "MyClass002"]}
+insert_class_data(data)
+```
+
+### insert_doctype_data
+#### WOQL.insert\_doctype\_data(classObj, [schemaGraph]) ⇒ <code>WOQLQuery</code>
+Inserts data about a class as a json object - enabling a class and all its properties to be specified in a single function
+
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the insertion expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| classObj | <code>typedef.ClassObj</code> | with id, label, description, parent and properties |
+| [schemaGraph] | <code>string</code> | the resource identifier of a schema graph. The Default value is schema/main |
+
+**Example**  
+```js
+let data = {
+  id: "Person",
+  label: "Person",
+  age: {
+      label: "Age",
+      range: "xsd:integer",
+      max: 1
+   }
+}
+insert_doctype_data(data)
+```
+
+### insert_property_data
+#### WOQL.insert\_property\_data(propObj, [schemaGraph]) ⇒ <code>WOQLQuery</code>
+Inserts data about a document class as a json object - enabling a document class and all its properties to be specified in a single function
+
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the insertion expression  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| propObj | <code>typedef.PropertyObj</code> | json object which contains fields: |
+| [schemaGraph] | <code>string</code> | the resource identifier of a schema graph. The Default value id schema/main |
+
+**Example**  
+```js
+let data = {
+  id: "prop",
+  label: "Property",
+  description: "prop desc",
+  range: "X",
+  domain: "X",
+  max: 2,
+  min: 1}
+  insert_property_data(data)
 ```
 
 ### nuke
@@ -1203,24 +1446,6 @@ json version of query for passing to api
 | --- | --- | --- |
 | [JSON_LD] | <code>object</code> | JSON-LD woql document encoding a query |
 
-
-### lib
-#### WOQL.lib() ⇒ <code>WOQLQuery</code>
-get the predefined library query
-
-**Returns**: <code>WOQLQuery</code> - WOQLQuery object  
-**Example**  
-```js
-//get commits older than the specified commit id
-const query = WOQL.lib().previousCommits('m8vpxewh2aovfauebfkbzwmj4qwr5lb')
-
-//return the commits of a specific branch starting from the head
-//if a timestamp is given, gets the commits before the specified timestamp
-const query = WOQL.lib().commits('main',10,1630683082.9278786)
-
-//return the branches list with the timestamp and commits id
-const query = WOQL.lib().branches()
-```
 
 ### string
 #### WOQL.string(val) ⇒ <code>object</code>
@@ -1343,7 +1568,7 @@ add extra information about the type of the value object
 | subject | <code>string</code> | The IRI of a triple’s subject or a variable |
 | predicate | <code>string</code> | The IRI of a property or a variable |
 | objValue | <code>string</code> \| <code>number</code> \| <code>boolean</code> | an specific value |
-| [graphRef] | <code>typedef.GraphRef</code> | specify a graph type, default is instance schema|instance |
+| [graphRef] | <code>typedef.GraphRef</code> | the resource identifier of a graph possible value are schema/{main - myschema - *} | instance/{main - myschema - *}  | inference/{main - myschema - *} |
 
 
 ### link
@@ -1357,5 +1582,89 @@ Creates a pattern matching rule for a quad [Subject, Predicate, Object, Graph] o
 | subject | <code>string</code> | The IRI of a triple’s subject or a variable |
 | predicate | <code>string</code> | The IRI of a property or a variable |
 | object | <code>string</code> | The IRI of a node or a variable, or a literal |
-| [graphRef] | <code>typedef.GraphRef</code> | specify a graph type, default is instance schema|instance |
+| [graphRef] | <code>typedef.GraphRef</code> | the resource identifier of a graph possible value are schema/{main - myschema - *} | instance/{main - myschema - *}  | inference/{main - myschema - *} |
+
+
+### makeEnum
+#### WOQL.makeEnum(woqlClient, propId, classId, classLabel, [classDesc], [schemaGraph]) ⇒ <code>WOQLQuery</code>
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Create Enum Class Statement  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| woqlClient | <code>WOQLClient</code> | an WoqlClient instance |
+| propId | <code>string</code> | property id |
+| classId | <code>string</code> | the enum class id |
+| classLabel | <code>string</code> | the enum class label |
+| [classDesc] | <code>string</code> | the enum class description |
+| [schemaGraph] | <code>string</code> | the resource identifier of a schema graph. The Default value id schema/main |
+
+
+### generateChoiceList
+#### WOQL.generateChoiceList(classId, classLabel, classDesc, choices, [schemaGraph], [parent]) ⇒ <code>WOQLQuery</code>
+Generates a class representing a choice list - an enumerated list of specific options
+
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Generate Enum/Choice Class Statement  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| classId | <code>string</code> | the enum class id |
+| classLabel | <code>string</code> | the enum class label |
+| classDesc | <code>string</code> | the enum class description |
+| choices | <code>array</code> | an list of permitted values [[id,label,comment],[id,label,comment]] |
+| [schemaGraph] | <code>string</code> | the resource identifier of a schema graph. The Default value id schema/main |
+| [parent] | <code>string</code> | the id of a class that this class inherits from (e.g. scm:Enumerated) |
+
+
+### updateChoiceList
+#### WOQL.updateChoiceList(classId, classLabel, classDesc, choices, [schemaGraph]) ⇒ <code>WOQLQuery</code>
+update or create an enumeration class. You have to add at least one permitted values in the list
+
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Update Enum/Choice Class Statement  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| classId | <code>string</code> | the enum class id |
+| classLabel | <code>string</code> | the enum class label |
+| classDesc | <code>string</code> | the enum class description |
+| choices | <code>array</code> | an list of permitted values [[id,label,comment],[id,label,comment]] |
+| [schemaGraph] | <code>string</code> | the resource identifier of a schema graph. The Default value id schema/main |
+
+
+### deleteChoiceList
+#### WOQL.deleteChoiceList(classId, [schemaGraph]) ⇒ <code>WOQLQuery</code>
+delete the enum list for a specific enumeration class, but not the class
+
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Delete Choice List Statement  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| classId | <code>string</code> | the enum class name |
+| [schemaGraph] | <code>string</code> | the resource identifier of a schema graph. The Default value id schema/main |
+
+
+### libs
+#### WOQL.libs(libs, parent, graph, prefix)
+Called to load Terminus Predefined libraries:
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| libs | <code>\*</code> | xsd,xdd,box |
+| parent | <code>\*</code> |  |
+| graph | <code>\*</code> | -graph ref |
+| prefix | <code>\*</code> | -prefix you want use |
+
+
+### boxClasses
+#### WOQL.boxClasses(prefix, classes, except, [schemaGraph]) ⇒ <code>WOQLQuery</code>
+creating a structure ScopedMyClass -> myClass -> MyClass
+
+**Returns**: <code>WOQLQuery</code> - - A WOQLQuery which contains the Box Classes Creating Statement  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| prefix | <code>string</code> | the url prefix that will be used for the boxed types (default scm:) |
+| classes | <code>array</code> | the classes to box - these classes and all their subclasses will have special boxed classes created around them |
+| except | <code>array</code> | the exceptions - these classes and their subclasses will not be boxed, even if they are included in the above array |
+| [schemaGraph] | <code>string</code> | the resource identifier of a schema graph. The Default value id schema/main |
 

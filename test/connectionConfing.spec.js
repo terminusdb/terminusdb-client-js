@@ -69,26 +69,18 @@ describe('connectionConfig tests', function() {
         const queryUrlBranch01 = 'http://localhost:6363/api/woql/admin/testDB/local/branch/main'
         //const queryFrameBranch01 = 'http://localhost:6363/api/frame/admin/testDB/local/branch/main'
         const queryTriplesBranch01 =
-            'http://localhost:6363/api/triples/admin/testDB/local/branch/main/instance/myschemaName'
+            'http://localhost:6363/api/triples/admin/testDB/local/branch/main/instance/main'
         /*
          *remove the ref commit it come to the
          */
         connectionConfig.setBranch(false)
         expect(connectionConfig.queryURL()).to.equal(queryUrlBranch01)
         //expect(connectionConfig.classFrameURL()).to.equal(queryFrameBranch01)
-        expect(connectionConfig.triplesURL('instance', 'myschemaName')).to.equal(
+        expect(connectionConfig.triplesURL('instance')).to.equal(
             queryTriplesBranch01,
         )
 
         //console.log(JSON.stringify(connectionConfig.queryURL(), null, 4));
-    })
-
-    /*
-     *Generate URL for create / delete graph api endpoint
-     */
-    it('check graphURL', function() {
-        const graphURL = 'http://localhost:6363/api/graph/admin/testDB/local/branch/main/schema/main'
-        expect(connectionConfig.graphURL('schema', 'main')).to.equal(graphURL)
     })
 
     /*it('check copy', function() {

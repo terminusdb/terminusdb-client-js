@@ -1,0 +1,138 @@
+{
+    "@type": "Using",
+    "collection": "_commits",
+    "query": {
+        "@type": "Select",
+        "variables": [
+            "Any Commit IRI"
+        ],
+        "query": {
+            "@type": "And",
+            "and": [
+                {
+                    "@type": "Triple",
+                    "subject": {
+                        "@type": "NodeValue",
+                        "variable": "Branch"
+                    },
+                    "predicate": {
+                        "@type": "NodeValue",
+                        "node": "name"
+                    },
+                    "object": {
+                        "@type": "Value",
+                        "data": {
+                            "@type": "xsd:string",
+                            "@value": "main"
+                        }
+                    }
+                },
+                {
+                    "@type": "And",
+                    "and": [
+                        {
+                            "@type": "Triple",
+                            "subject": {
+                                "@type": "NodeValue",
+                                "variable": "Branch"
+                            },
+                            "predicate": {
+                                "@type": "NodeValue",
+                                "node": "head"
+                            },
+                            "object": {
+                                "@type": "Value",
+                                "variable": "Active Commit ID"
+                            }
+                        },
+                        {
+                            "@type": "Path",
+                            "subject": {
+                                "@type": "NodeValue",
+                                "variable": "Active Commit ID"
+                            },
+                            "pattern": {
+                                "@type": "PathStar",
+                                "star": {
+                                    "@type": "PathPredicate",
+                                    "predicate": "parent"
+                                }
+                            },
+                            "object": {
+                                "@type": "Value",
+                                "variable": "Any Commit IRI"
+                            },
+                            "path": {
+                                "@type": "Value",
+                                "variable": "Path"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "@type": "Triple",
+                    "subject": {
+                        "@type": "NodeValue",
+                        "variable": "Any Commit IRI"
+                    },
+                    "predicate": {
+                        "@type": "NodeValue",
+                        "node": "@schema:identifier"
+                    },
+                    "object": {
+                        "@type": "Value",
+                        "variable": "Commit ID"
+                    }
+                },
+                {
+                    "@type": "Triple",
+                    "subject": {
+                        "@type": "NodeValue",
+                        "variable": "Any Commit IRI"
+                    },
+                    "predicate": {
+                        "@type": "NodeValue",
+                        "node": "@schema:author"
+                    },
+                    "object": {
+                        "@type": "Value",
+                        "variable": "Author"
+                    }
+                },
+                {
+                    "@type": "Triple",
+                    "subject": {
+                        "@type": "NodeValue",
+                        "variable": "Any Commit IRI"
+                    },
+                    "predicate": {
+                        "@type": "NodeValue",
+                        "node": "@schema:message"
+                    },
+                    "object": {
+                        "@type": "Value",
+                        "variable": "Message"
+                    }
+                },
+                {
+                    "@type": "Not",
+                    "query": {
+                        "@type": "Triple",
+                        "subject": {
+                            "@type": "NodeValue",
+                            "variable": "Any Commit IRI"
+                        },
+                        "predicate": {
+                            "@type": "NodeValue",
+                            "node": "@schema:parent"
+                        },
+                        "object": {
+                            "@type": "Value",
+                            "variable": "Parent IRI"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}
