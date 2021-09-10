@@ -7,8 +7,7 @@ Promise based terminus client for the browser and node.js
 
 ## Requirements
 
-- [TerminusDB](https://github.com/terminusdb/terminusdb-server)
-- [NodeJS 8.1.4+](https://nodejs.org/en/)
+- [NodeJS 10+](https://nodejs.org/en/)
 
 ## Installation
 
@@ -16,7 +15,8 @@ TerminusDB Client can be used as either a Node.js module available through the n
 
 ### NPM Module
 
-Before installing, download and install Node.js. Node.js 0.10 or higher is required.
+Before installing, download and install Node.js.<br> 
+NodeJS version 10.X or higher is required. NodeJS version 14.X is recommended.
 
 Installation is done using the npm install command:
 
@@ -44,65 +44,74 @@ Download the terminusdb-client.min.js file from the /dist directory and save it 
 
 ## Usage
 
-This example creates a simple Express.js server that will post an account to
-a database with the id "banker" and the default "admin" user with password "root"
+This example creates a simple dataProduct, starting to create a database model the schema
+and insert a simple document
+
 For the [full Documentation](https://terminusdb.com/docs/reference/js-client)
 
 ```javascript
-const express = require("express");
-const app = express();
-const port = 3000;
-
 const TerminusClient = require("@terminusdb/terminusdb-client");
 
 // Connect and configure the TerminusClient
-const client = new TerminusClient.WOQLClient("https://127.0.0.1:6363/", {
-  dbid: "banker",
-  user: "admin",
-  key: "root",
-});
-client.db("banker");
-client.organization("admin");
+const client = new TerminusClient.WOQLClient('SERVER_CLOUD_URL/mycloudTeam',
+                       {user:"myemail@something.com", organization:'mycloudTeam'})
+                                            
+client.setApiKey(MY_ACCESS_TOKEN)
 
-async function postAccount() {
-  try {
-    const WOQL = TerminusClient.WOQL;
-    const query = WOQL.using("admin/banker").and(
-      WOQL.add_triple("doc:smog", "type", "scm:BankAccount"),
-      WOQL.add_triple("doc:smog", "owner", "smog"),
-      WOQL.add_triple("doc:smog", "balance", 999)
-    );
-    await client.connect();
-    client
-      .query(query, "adding smog's bank account")
-      .then((response) => {
-        return response;
-      })
-      .catch((err) => {
-        console.log("error", err);
-      });
-  } catch (err) {
-    console.error(err);
+const bankerSchema = [
+   {
+      "@type":"Class",
+      "@id":"BankAccount",
+      "@key":{
+         "@type":"Hash",
+         "@fields":[
+            "account_id"
+         ]
+      },
+      "account_id":"xsd:string",
+      "owner":"Person",
+      "balance":"xsd:decimal"
+   },
+   {
+      "@type":"Class",
+      "@id":"Person",
+      "@key":{
+         "@type":"Hash",
+         "@fields":[
+            "name"
+         ]
+      },
+      "name":"xsd:string"
+   }
+]
+ 
+async function createDataProduct(){
+    try{
+        await client.connect()
+        await client.createDatabase("banker", {label: "Banker Account", 
+                                              comment: "Testing", schema: true})
+        //add the schema documents
+        await client.addDocument(bankerSchema,{"graph_type":"schema"},null,"add new schema") 
+    
+        const accountObj = {"@type":"BankAccount",
+                            "account_id":"DBZDFGET23456",
+                            "owner":{
+                                "@type":"Person",
+                                "name":"Tom"
+                            },
+                            "balance":1000
+                          }
+
+        //add a document instance
+        await client.addDocument(accountObj)
+
+        client.getDocument({"as_list":true,id:'Person/Tom'})
+
+    }catch(err){
+        console.error(err.message)
+    }
   }
-}
 
-app.post("/account", (req, res) => {
-  postAccount().then((dbres) => res.send(JSON.stringify(dbres)));
-});
-
-app.listen(port, () => {
-  console.log(`Backend Server listening at http://localhost:${port}`);
-  client
-    .connect()
-    .then(function (response) {
-      // handle success
-      console.log(response);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    });
-});
 ```
 
 ## Options
@@ -114,8 +123,8 @@ To initialize `TerminusDB client` with custom options use
 ```js
 const TerminusClient = require("@terminusdb/terminusdb-client");
 
-const client = new TerminusClient.WOQLClient("https://127.0.0.1:6363/", {
-  dbid: "test_db",
+const client = new TerminusClient.WOQLClient("http://127.0.0.1:6363/", {
+  db: "test_db",
   user: "admin",
   key: "my_secret_key",
 });

@@ -17,28 +17,13 @@ For situations where you want to communicate with a TerminusDB server API, the W
 
 **Example**  
 ```js
-//to connect with your local terminusDB
-const client = new TerminusClient.WOQLClient(SERVER_URL,{user:"admin",key:"myKey"})
-async function getSchema() {
-     await client.connect()
-     client.db("test")
-     client.checkout("dev")
-     const schema = await client.getSchema()
-}
-//The client has an internal state which defines what
+const client = new TerminusClient.WOQLClient(SERVER_URL)
+await client.connect(params)
+client.db("test")
+client.checkout("dev")
+const turtle = await client.getTriples("schema", "main")
+//The client has an internal state which defines what 
 //organization / database / repository / branch / ref it is currently attached to
-
-//to connect with your TerminusDB Cloud Instance
-const client = new TerminusClient.WOQLClient('SERVER_CLOUD_URL/mycloudTeam',
-                     {user:"myemail@something.com", organization:'mycloudTeam'})
-                                          
-client.setApiKey(MY_ACCESS_TOKEN)
-async function getSchema() {
-     await client.connect()
-     client.db("test")
-     client.checkout("dev")
-     const schema = await client.getSchema()
-}
 ```
 
 ### TerminusDB Client API
@@ -98,15 +83,50 @@ Deletes a database from a TerminusDB server
 client.deleteDatabase("mydb")
 ```
 
+### Create Graph
+#### woqlClient.createGraph(graphType, graphId, commitMsg) ⇒ <code>Promise</code>
+Creates a new named graph within a TerminusDB database
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| graphType | <code>typedef.GraphType</code> | type of graph |
+| graphId | <code>string</code> | id of the graph to be created |
+| commitMsg | <code>string</code> | a message describing the reason for the change that will be written into the commit log |
+
+**Example**  
+```js
+client.createGraph("schema", "alt", "Adding new schema graph")
+```
+
+### Delete Graph
+#### woqlClient.deleteGraph(graphType, graphId, commitMsg) ⇒ <code>Promise</code>
+Deletes a graph from a TerminusDB database
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| graphType | <code>typedef.GraphType</code> | type of graph |
+| graphId | <code>string</code> | local id of graph |
+| commitMsg | <code>string</code> | a message describing the reason for the change that will be written into the commit log |
+
+**Example**  
+```js
+client.deleteGraph("schema", "alt", "Deleting alt schema graph")
+```
+
 ### Get Triples
-#### woqlClient.getTriples(graphType) ⇒ <code>Promise</code>
+#### woqlClient.getTriples(graphType, graphId) ⇒ <code>Promise</code>
 Retrieve the contents of a graph within a TerminusDB as triples, encoded in the turtle (ttl) format
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object (with the contents being a string representing a set of triples in turtle (ttl) format), or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| graphType | <code>typedef.GraphType</code> | type of graph to get triples from, either “instance” or  “schema” |
+| graphType | <code>typedef.GraphType</code> | type of graph to get triples from, either “instance”, “schema” or “inference” |
+| graphId | <code>string</code> | TerminusDB Graph name |
 
 **Example**  
 ```js
@@ -114,7 +134,7 @@ const turtle = await client.getTriples("schema", "alt")
 ```
 
 ### Update Triples
-#### woqlClient.updateTriples(graphType, turtle, commitMsg) ⇒ <code>Promise</code>
+#### woqlClient.updateTriples(graphType, graphId, turtle, commitMsg) ⇒ <code>Promise</code>
 Replace the contents of the specified graph with the passed triples encoded in the turtle (ttl) format
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -122,6 +142,7 @@ Replace the contents of the specified graph with the passed triples encoded in t
 | Param | Type | Description |
 | --- | --- | --- |
 | graphType | <code>string</code> | type of graph  |instance|schema|inference| |
+| graphId | <code>string</code> | TerminusDB Graph ID |
 | turtle | <code>string</code> | string encoding triples in turtle (ttl) format |
 | commitMsg | <code>string</code> | Textual message describing the reason for the update |
 
@@ -239,6 +260,90 @@ Fetch updates to a remote database to a remote repository with the local databas
 | remoteId | <code>string</code> | if of the remote to fetch (eg: 'origin') |
 
 
+### Insert CSV
+#### woqlClient.insertCSV(csvPathList, commitMsg) ⇒ <code>Promise</code>
+Inserts a csv from a specified path
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| csvPathList | <code>array</code> | is an array of csv file names with file path |
+| commitMsg | <code>string</code> | Textual message describing the reason for the update |
+
+**Example**  
+```js
+const filePath = ["C:/Users/User Name/Documents/example.csv"]
+client.insertCSV(filePath, "inserting a CSV file", "instance", "main")
+```
+
+### Get CSV
+#### woqlClient.getCSV(csvName) ⇒ <code>Promise</code>
+Retrieves the contents of the specified graph as a CSV
+
+**Returns**: <code>Promise</code> - An API success message  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| csvName | <code>string</code> | Name of csv to dump from the specified database to extract |
+
+**Example**  
+```js
+const name = ["example.csv"]
+client.getCSV(name, true, "instance", "main")
+```
+
+### Update CSV
+#### woqlClient.updateCSV(csvPathList, commitMsg) ⇒ <code>Promise</code>
+Updates the contents of the specified path with a csv, creating the appropriate
+diff object as the commit.
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| csvPathList | <code>array</code> | Array csvs to upload |
+| commitMsg | <code>string</code> | Textual message describing the reason for the update |
+
+**Example**  
+```js
+const filePath = [{fileToBeUpdated: "File.csv", updateWith: "C:/Users/User Name/Documents/example.csv"}]
+client.updateCSV(filePath, "updating a CSV file", "instance", "main")
+// Here fileToBeUpdated is the CSV in TerminusDB which we are going to update. updateWith includes the file path of the CSV whose contents is going to be updated to fileToBeUpdated. Note that during an Update CSV only
+//the diffs are considered and are updated which makes update of big files more efficient.
+```
+
+### Delete CSV
+#### woqlClient.deleteCSV(csvName, commitMsg) ⇒ <code>Promise</code>
+Deletes CSV from your database
+
+**Returns**: <code>Promise</code> - the rest api call results  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| csvName | <code>array</code> | is an array of csv file names |
+| commitMsg | <code>string</code> | Textual message describing the reason for the delete |
+
+**Example**  
+```js
+const name = ["example.csv"]
+client.deleteCSV(name, "deleting CSV")
+```
+
+### get_database
+#### ~~woqlClient.get\_database~~
+***Deprecated***
+
+Use [#databaseInfo](#databaseInfo) instead
+
+
+### set_system_db
+#### ~~woqlClient.set\_system\_db~~
+***Deprecated***
+
+Use [#setSystemDb](#setSystemDb) instead.
+
+
 ### local_auth
 #### ~~woqlClient.local\_auth~~
 ***Deprecated***
@@ -251,26 +356,6 @@ Use [#localAuth](#localAuth) instead.
 ***Deprecated***
 
 Use [#remoteAuth](#remoteAuth) instead.
-
-
-### setApiKey
-#### woqlClient.setApiKey(accessToken)
-set the api key to access the cloud resources
-
-
-| Param | Type |
-| --- | --- |
-| accessToken | <code>string</code> | 
-
-
-### customHeaders
-#### woqlClient.customHeaders(customHeaders) ⇒ <code>object</code>
-add extra headers to your request
-
-
-| Param | Type |
-| --- | --- |
-| customHeaders | <code>object</code> | 
 
 
 ### copy
@@ -321,6 +406,12 @@ Gets the current user object as returned by the connect capabilities response
 user has fields: [id, name, notes, author]
 
 
+### uid
+#### woqlClient.uid() ⇒ <code>string</code>
+Retrieve the id of the user that is logged in with the client
+
+**Returns**: <code>string</code> - the id of the current user (always ‘admin’ for desktop client)  
+
 ### userOrganization
 #### woqlClient.userOrganization() ⇒ <code>string</code>
 **Returns**: <code>string</code> - the user organization name  
@@ -342,7 +433,7 @@ const my_dbs = client.databases()
 ```
 
 ### databaseInfo
-#### woqlClient.databaseInfo([dbId]) ⇒ <code>object</code>
+#### woqlClient.databaseInfo([dbId], [orgId]) ⇒ <code>object</code>
 Gets the database's details
 
 **Returns**: <code>object</code> - the database description object //getDatabaseInfo  
@@ -350,6 +441,7 @@ Gets the database's details
 | Param | Type | Description |
 | --- | --- | --- |
 | [dbId] | <code>string</code> | the datbase id |
+| [orgId] | <code>string</code> | the database organization |
 
 
 ### db
@@ -431,7 +523,6 @@ client.localAuth({user:"admin","key":"mykey","type":"basic"})
 ### remoteAuth
 #### woqlClient.remoteAuth([newCredential]) ⇒ <code>typedef.CredentialObj</code> \| <code>boolean</code>
 Sets/Gets the jwt token for authentication
-we need this to connect 2 terminusdb server to each other for push, pull, clone actions
 
 
 | Param | Type |
@@ -440,7 +531,7 @@ we need this to connect 2 terminusdb server to each other for push, pull, clone 
 
 **Example**  
 ```js
-client.remoteAuth({"key":"dhfmnmjglkrelgkptohkn","type":"jwt"})
+client.localAuth({"key":"dhfmnmjglkrelgkptohkn","type":"jwt"})
 ```
 
 ### author
@@ -489,7 +580,7 @@ const branch_resource = client.resource("branch")
 ```
 
 ### insertTriples
-#### woqlClient.insertTriples(graphType, turtle, commitMsg) ⇒ <code>Promise</code>
+#### woqlClient.insertTriples(graphType, graphId, turtle, commitMsg) ⇒ <code>Promise</code>
 Appends the passed turtle to the contents of a graph
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -497,6 +588,7 @@ Appends the passed turtle to the contents of a graph
 | Param | Type | Description |
 | --- | --- | --- |
 | graphType | <code>string</code> | type of graph  |instance|schema|inference| |
+| graphId | <code>string</code> | TerminusDB Graph ID to update, main is the default value |
 | turtle | <code>string</code> | is a valid set of triples in turtle format (OWL) |
 | commitMsg | <code>string</code> | Textual message describing the reason for the update |
 
@@ -637,6 +729,29 @@ Adds an author string (from the user object returned by connect) to the commit m
 | [rc_args] | <code>object</code> | 
 
 
+### _load_db_prefixes
+#### woqlClient.\_load\_db\_prefixes(dbs) ⇒ <code>array</code>
+Loads prefixes for each database connected to.
+add the prefix at the connection database list
+
+**Returns**: <code>array</code> - - the list of the databases  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| dbs | <code>array</code> | the user database list |
+
+
+### getClassFrame
+#### woqlClient.getClassFrame(docType) ⇒ <code>Promise</code>
+Retrieves a class frame for the specified class
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| docType | <code>string</code> | is the URL / ID of a document class that exists in the database schema |
+
+
 ### updateDatabase
 #### woqlClient.updateDatabase(dbDoc) ⇒ <code>Promise</code>
 update the database details
@@ -646,6 +761,27 @@ update the database details
 | Param | Type | Description |
 | --- | --- | --- |
 | dbDoc | <code>object</code> | an object that describe the database details |
+
+
+### organizations
+#### woqlClient.organizations(orgList) ⇒ <code>array</code>
+Gets/Sets the list of organizations that the user belongs to (has roles for)
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| orgList | <code>array</code> | list of organization name |
+
+
+### action_permitted
+#### woqlClient.action\_permitted(action, resource) ⇒ <code>boolean</code>
+Check from the capabilities object if the action is permitted
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| action | <code>string</code> | the action name |
+| resource | <code>string</code> | the name of the resource (databaseName or organizationName) |
 
 
 ### createUser
@@ -706,20 +842,8 @@ Create a new organization for the registered user
 | orgDoc | <code>object</code> | An object that describe the organization's details |
 
 
-### setOrganizationRoles
-#### woqlClient.setOrganizationRoles(orgId, orgDoc) ⇒ <code>Promise</code>
-Create a new organization for the registered user
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| orgId | <code>string</code> | the organization id |
-| orgDoc | <code>object</code> | An object that describe the organization's details |
-
-
 ### getOrganization
-#### woqlClient.getOrganization(orgId, [action]) ⇒ <code>Promise</code>
+#### woqlClient.getOrganization(orgId) ⇒ <code>Promise</code>
 Gets all the information about the given organization
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -727,7 +851,6 @@ Gets all the information about the given organization
 | Param | Type | Description |
 | --- | --- | --- |
 | orgId | <code>string</code> | the organization id |
-| [action] | <code>string</code> | set an action like recommendations | invitations | collaborators |
 
 
 ### updateOrganization
@@ -758,23 +881,19 @@ only if you have the permission you can delete an organization
 
 
 ### getRoles
-#### woqlClient.getRoles([userId], [orgId], [dbId]) ⇒ <code>Promise</code>
-get all the user roles (for the current logged user)
-or the user roles for a specific database and user
-(the logged used need to have the permission to see the roles info for another user)
-
+#### woqlClient.getRoles(userId, [orgId], [dbId]) ⇒ <code>Promise</code>
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [userId] | <code>string</code> | the user id |
+| userId | <code>string</code> | the user id |
 | [orgId] | <code>string</code> | the organization id |
 | [dbId] | <code>string</code> | the dbId |
 
 
 ### updateRoles
 #### woqlClient.updateRoles(newRolesObj) ⇒ <code>Promise</code>
-Change the user role for existing users in your organization, including your own
+Change the user role for existing users in your organisation, including your own
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
@@ -782,196 +901,3 @@ Change the user role for existing users in your organization, including your own
 | --- | --- |
 | newRolesObj | <code>typedef.RolesObj</code> | 
 
-
-### addDocument
-#### woqlClient.addDocument(json, [params], [dbId], [string]) ⇒ <code>Promise</code>
-to add a new document or a list of new documents into the instance or the schema graph.
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| json | <code>object</code> |  |
-| [params] | <code>typedef.DocParamsPost</code> | the post parameters |
-| [dbId] | <code>string</code> | the dbid |
-| [string] | <code>message</code> | the insert commit message |
-
-**Example**  
-```js
-const json = [{ "@type" : "Class",   
-             "@id" : "Coordinate",
-             "@key" : { '@type' : 'Hash', 
-             '@fields' : ['x','y'] }, 
-             "x" : "xsd:decimal",
-             "y" : "xsd:decimal" },
-             { "@type" : "Class",
-             "@id" : "Country",
-             "@key" : { '@type' : 'Lexical', 
-                         '@fields' : [name] }, 
-             "name" : "xsd:string",
-             "perimeter" : { "@type" : "List", 
-                             "@class" : "Coordinate" } }]
-client.addDocument(json,{"graph_type":"schema"},"mydb","add new schema")
-```
-
-### queryDocument
-#### woqlClient.queryDocument([query], [params], [dbId], [branch]) ⇒ <code>Promise</code>
-Retrieves all documents that match a given document template
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [query] | <code>object</code> | the query template |
-| [params] | <code>typedef.DocParamsGet</code> | the get parameters |
-| [dbId] | <code>string</code> | the database id |
-| [branch] | <code>string</code> | the database branch |
-
-**Example**  
-```js
-const query = {
-  "type": "Person",
-  "query": { "age": 42 },
- }
-client.queryDocument(query,{"as_list":true})
-```
-
-### getDocument
-#### woqlClient.getDocument([params], [dbId], [branch]) ⇒ <code>Promise</code>
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [params] | <code>typedef.DocParamsGet</code> | the get parameters |
-| [dbId] | <code>string</code> | the database id |
-| [branch] | <code>string</code> | the database branch |
-
-**Example**  
-```js
-//return the schema graph as a json array
-client.getDocument({"graph_type":"schema","as_list":true})
-
-//retutn the Country class document from the schema graph
-client.getDocument({"graph_type":"schema","as_list":true,"id":"Country"})
-```
-
-### updateDocument
-#### woqlClient.updateDocument(json, [params], [dbId], [message]) ⇒ <code>Promise</code>
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| json | <code>object</code> |  |
-| [params] | <code>typedef.DocParamsPut</code> | the Put parameters |
-| [dbId] | <code>\*</code> | the database id |
-| [message] | <code>\*</code> | the update commit message |
-
-
-### deleteDocument
-#### woqlClient.deleteDocument([params], [dbId], [message]) ⇒ <code>Promise</code>
-to delete the document
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [params] | <code>typedef.DocParamsDelete</code> |  |
-| [dbId] | <code>string</code> | the database id |
-| [message] | <code>string</code> | the delete message |
-
-**Example**  
-```js
-client.deleteDocument({"graph_type":"schema",id:['Country','Coordinate'])
-```
-
-### getSchemaFrame
-#### woqlClient.getSchemaFrame([type], [dbId]) ⇒ <code>Promise</code>
-The purpose of this method is to quickly discover the supported fields of a particular type.
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [type] | <code>string</code> | If given, the type to get information for. If omitted, information for all types is returned |
-| [dbId] | <code>string</code> | the database id |
-
-**Example**  
-```js
-client.getSchemaFrame("Country")
-```
-
-### getSchema
-#### woqlClient.getSchema([dbId], [branch]) ⇒ <code>Promise</code>
-get the database schema in json format
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [dbId] | <code>string</code> | the database id |
-| [branch] | <code>string</code> | specific a branch/collection |
-
-**Example**  
-```js
-client.getSchema()
-```
-
-### getClasses
-#### woqlClient.getClasses([dbId]) ⇒ <code>Promise</code>
-get all the schema classes (documents,subdocuments,abstracts)
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [dbId] | <code>string</code> | the database id |
-
-**Example**  
-```js
-client.getClasses()
-```
-
-### getEnums
-#### woqlClient.getEnums([dbId]) ⇒ <code>Promise</code>
-get all the Enum Objects
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type |
-| --- | --- |
-| [dbId] | <code>string</code> | 
-
-**Example**  
-```js
-client.getEnums()
-```
-
-### getClassDocuments
-#### woqlClient.getClassDocuments([dbId]) ⇒ <code>Promise</code>
-get all the Document Classes (no abstract or subdocument)
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type |
-| --- | --- |
-| [dbId] | <code>string</code> | 
-
-**Example**  
-```js
-client.getClassDocuments()
-```
-
-### getBranches
-#### woqlClient.getBranches([dbId]) ⇒ <code>Promise</code>
-get the database collections list
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [dbId] | <code>string</code> | the database id |
-
-**Example**  
-```js
-client.getBranches()
-```

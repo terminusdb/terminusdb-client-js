@@ -1,45 +1,63 @@
 ## Typedefs
 
-<dl>
-<dt><a href="#GraphRef">GraphRef</a> : <code>&quot;schema/main&quot;</code> | <code>&quot;schema/*&quot;</code> | <code>&quot;instance/main&quot;</code> | <code>&quot;instance/*&quot;</code> | <code>&quot;inference/main&quot;</code> | <code>&quot;inference/*&quot;</code> | <code>string</code></dt>
-<dd></dd>
-<dt><a href="#DataFormatObj">DataFormatObj</a> : <code>Object</code></dt>
-<dd><p>(export/import)</p>
-</dd>
-<dt><a href="#FuntionType">FuntionType</a> : <code>&quot;add_quad&quot;</code> | <code>&quot;delete_quad&quot;</code> | <code>&quot;add_triple&quot;</code> | <code>&quot;delete_triple&quot;</code> | <code>&quot;quad&quot;</code> | <code>&quot;triple&quot;</code></dt>
-<dd></dd>
-<dt><a href="#ClassObj">ClassObj</a> : <code>Object</code></dt>
-<dd><p>the class details object</p>
-</dd>
-<dt><a href="#PropertyObj">PropertyObj</a> : <code>Object</code></dt>
-<dd><p>an object that describe a property element</p>
-</dd>
-<dt><a href="#ResourceType">ResourceType</a> : <code>&quot;commits&quot;</code> | <code>&quot;meta&quot;</code> | <code>&quot;branch&quot;</code> | <code>&quot;ref&quot;</code> | <code>&quot;repo&quot;</code> | <code>&quot;db&quot;</code></dt>
-<dd></dd>
-<dt><a href="#GraphType">GraphType</a> : <code>&quot;inference&quot;</code> | <code>&quot;schema&quot;</code> | <code>&quot;instance&quot;</code></dt>
-<dd></dd>
-<dt><a href="#CredentialObj">CredentialObj</a> : <code>Object</code></dt>
-<dd></dd>
-<dt><a href="#ActionType">ActionType</a> : <code>&#x27;graph&#x27;</code> | <code>&#x27;db&#x27;</code> | <code>&#x27;clone&#x27;</code> | <code>&#x27;triples&#x27;</code> | <code>&#x27;woql&#x27;</code> | <code>&#x27;frame&#x27;</code> | <code>&#x27;fetch&#x27;</code> | <code>&#x27;pull&#x27;</code> | <code>&#x27;rebase&#x27;</code> | <code>&#x27;csv&#x27;</code> | <code>&#x27;branch&#x27;</code> | <code>&#x27;reset&#x27;</code> | <code>&#x27;push&#x27;</code> | <code>&#x27;squash&#x27;</code></dt>
-<dd></dd>
-<dt><a href="#ParamsObj">ParamsObj</a> : <code>Object</code></dt>
-<dd></dd>
-<dt><a href="#RolesObj">RolesObj</a> : <code>Object</code></dt>
-<dd></dd>
-<dt><a href="#RepoType">RepoType</a> : <code>&quot;local&quot;</code> | <code>&quot;remote&quot;</code></dt>
-<dd></dd>
-<dt><a href="#DbDetails">DbDetails</a> : <code>Object</code></dt>
-<dd></dd>
-<dt><a href="#RemoteRepoDetails">RemoteRepoDetails</a> : <code>Object</code></dt>
-<dd><p>{remote: &quot;origin&quot;, &quot;remote_branch&quot;: &quot;main&quot;, &quot;author&quot;: &quot;admin&quot;, &quot;message&quot;: &quot;message&quot;}</p>
-</dd>
-<dt><a href="#CloneSourceDetails">CloneSourceDetails</a> : <code>Object</code></dt>
-<dd></dd>
-</dl>
+## DocParamsGet
+#### DocParamsGet : <code>Object</code>
+the GET document interface query parameters
+
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [graph_type] | <code>string</code> | <code>&quot;instance&quot;</code> | instance|schema default value is instance. Used to switch between getting documents from the instance or the schema graph. |
+| [type] | <code>string</code> |  | only documents of the given type are returned. |
+| [id] | <code>string</code> |  | only the document with the given ID is returned. |
+| [prefixed] | <code>boolean</code> | <code>true</code> | return IRIs using a prefixed notation wherever possible. If false, full IRIs are used. |
+| [minimized] | <code>boolean</code> | <code>false</code> | return the documents with very little whitespace. Each json document will be on its own line. |
+| [unfold] | <code>boolean</code> | <code>true</code> | any subdocuments contained in the returned document are returned too. If false, these are referred to by their ID instead. |
+| [skip] | <code>number</code> | <code>0</code> | How many results to skip |
+| [count] | <code>number</code> |  | count	 - How many results to return. If this option is absent, all results are returned. |
+| [as_list] | <code>boolean</code> | <code>false</code> | If true, don't return a stream of json objects, but a json list. |
+| [graph_type] | <code>string</code> |  | instance|schema default value is instance |
+
+
+## DocParamsPost
+#### DocParamsPost : <code>Object</code>
+the POST document interface query parameters
+
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [graph_type] | <code>string</code> | <code>&quot;instance&quot;</code> | instance|schema Used to switch between getting documents from the instance or the schema graph. |
+| [full_replace] | <code>boolean</code> | <code>false</code> | If true, all existing documents are deleted before inserting the posted documents. This allows the full replacement of the contents of a database. This is especially useful for replacing the schema. |
+
+
+## DocParamsPut
+#### DocParamsPut : <code>Object</code>
+the PUT document interface query parameters
+
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [graph_type] | <code>string</code> | <code>&quot;instance&quot;</code> | instance|schema Used to switch between getting documents from the instance or the schema graph. |
+
+
+## DocParamsDelete
+#### DocParamsDelete : <code>Object</code>
+the DELETE document interface query parameters
+
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [graph_type] | <code>string</code> | <code>&quot;instance&quot;</code> | instance|schema Used to switch between getting documents from the instance or the schema graph. |
+| id | <code>string</code> \| <code>array</code> |  | a single id or a list of ids to delete. |
+| [nuke] | <code>booleam</code> | <code>false</code> | If true, delete everything at this resource location (dangerous!). |
 
 
 ## GraphRef
-#### GraphRef : <code>&quot;schema/main&quot;</code> \| <code>&quot;schema/\*&quot;</code> \| <code>&quot;instance/main&quot;</code> \| <code>&quot;instance/\*&quot;</code> \| <code>&quot;inference/main&quot;</code> \| <code>&quot;inference/\*&quot;</code> \| <code>string</code>
+#### GraphRef : <code>&quot;schema/main&quot;</code> \| <code>&quot;instance/main&quot;</code> \| <code>string</code>
 
 ## DataFormatObj
 #### DataFormatObj : <code>Object</code>
@@ -56,45 +74,11 @@
 ## FuntionType
 #### FuntionType : <code>&quot;add\_quad&quot;</code> \| <code>&quot;delete\_quad&quot;</code> \| <code>&quot;add\_triple&quot;</code> \| <code>&quot;delete\_triple&quot;</code> \| <code>&quot;quad&quot;</code> \| <code>&quot;triple&quot;</code>
 
-## ClassObj
-#### ClassObj : <code>Object</code>
-the class details object
-
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| id | <code>string</code> | IRI or variable containing IRI of the class to be inserted |
-| [label] | <code>string</code> |  |
-| [description] | <code>string</code> |  |
-| [abstract] | <code>boolean</code> |  |
-| [parent] | <code>array</code> \| <code>string</code> | if not parent the new class will be a class ObjectW |
-| [{k:string}] | <code>any</code> | properties |
-
-
-## PropertyObj
-#### PropertyObj : <code>Object</code>
-an object that describe a property element
-
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| id | <code>string</code> |  |
-| range | <code>string</code> | the type of property (class id or a native type xsd:number etc.. ) |
-| [label] | <code>string</code> |  |
-| [description] | <code>string</code> |  |
-| domain | <code>string</code> | the ID of the class to which the property belongs |
-| [max] | <code>string</code> | the max property's cardinality |
-| [min] | <code>string</code> | the min property's cardinality |
-| [cardinality] | <code>string</code> | the property cardinality (max and min value) |
-
-
 ## ResourceType
 #### ResourceType : <code>&quot;commits&quot;</code> \| <code>&quot;meta&quot;</code> \| <code>&quot;branch&quot;</code> \| <code>&quot;ref&quot;</code> \| <code>&quot;repo&quot;</code> \| <code>&quot;db&quot;</code>
 
 ## GraphType
-#### GraphType : <code>&quot;inference&quot;</code> \| <code>&quot;schema&quot;</code> \| <code>&quot;instance&quot;</code>
+#### GraphType :  <code>&quot;schema&quot;</code> \| <code>&quot;instance&quot;</code>
 
 ## CredentialObj
 #### CredentialObj : <code>Object</code>
@@ -108,7 +92,7 @@ an object that describe a property element
 
 
 ## ActionType
-#### ActionType : <code>&#x27;graph&#x27;</code> \| <code>&#x27;db&#x27;</code> \| <code>&#x27;clone&#x27;</code> \| <code>&#x27;triples&#x27;</code> \| <code>&#x27;woql&#x27;</code> \| <code>&#x27;frame&#x27;</code> \| <code>&#x27;fetch&#x27;</code> \| <code>&#x27;pull&#x27;</code> \| <code>&#x27;rebase&#x27;</code> \| <code>&#x27;csv&#x27;</code> \| <code>&#x27;branch&#x27;</code> \| <code>&#x27;reset&#x27;</code> \| <code>&#x27;push&#x27;</code> \| <code>&#x27;squash&#x27;</code>
+#### ActionType : <code>&#x27;graph&#x27;</code> \| <code>&#x27;db&#x27;</code> \| <code>&#x27;clone&#x27;</code> \| <code>&#x27;triples&#x27;</code> \| <code>&#x27;woql&#x27;</code> \| <code>&#x27;fetch&#x27;</code> \| <code>&#x27;pull&#x27;</code> \| <code>&#x27;rebase&#x27;</code> \| <code>&#x27;branch&#x27;</code> \| <code>&#x27;reset&#x27;</code> \| <code>&#x27;push&#x27;</code> \| <code>&#x27;squash&#x27;</code>
 
 ## ParamsObj
 #### ParamsObj : <code>Object</code>
@@ -123,8 +107,6 @@ an object that describe a property element
 | [repo] | [<code>RepoType</code>](#RepoType) \| <code>string</code> | set cursor to this repo |
 | [branch] | <code>string</code> | set branch to this id |
 | [ref] | <code>string</code> | set commit ref |
-| [jwt] | <code>string</code> | jwt token |
-| [jwt_user] | <code>string</code> | jwt user id |
 | [default_branch_id] | <code>string</code> | set the default branch id |
 
 
