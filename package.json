@@ -1,6 +1,6 @@
 {
   "name": "@terminusdb/terminusdb-client",
-  "version": "4.3.1",
+  "version": "10.0.0",
   "description": "TerminusDB client library",
   "main": "index.js",
   "types": "./dist/typescript/index.d.ts",
@@ -20,7 +20,7 @@
   "author": "kevin@terminusdb.com",
   "license": "Apache-2.0",
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": ">=0.21.4",
     "file-system": "^2.2.2",
     "path-parse": ">=1.0.7",
     "sockjs": ">=0.3.20",
