@@ -47,7 +47,7 @@ Download the terminusdb-client.min.js file from the /dist directory and save it 
 This example creates a simple dataProduct, starting to create a database model the schema
 and insert a simple document
 
-For the [full Documentation](https://terminusdb.com/docs/reference/js-client)
+For the [full Documentation](https://terminusdb.github.io/terminusdb-client-js/)
 
 ```javascript
 const TerminusClient = require("@terminusdb/terminusdb-client");
