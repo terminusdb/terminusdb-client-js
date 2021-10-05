@@ -1206,7 +1206,7 @@ json version of query for passing to api
 
 ### lib
 #### WOQL.lib() ⇒ <code>WOQLQuery</code>
-get the predefined library query
+get the predefined library query [WOQLLibrary](/api/woqlLibrary.js?id=WOQLLibrary)
 
 **Returns**: <code>WOQLQuery</code> - WOQLQuery object  
 **Example**  

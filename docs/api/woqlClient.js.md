@@ -815,14 +815,14 @@ client.addDocument(json,{"graph_type":"schema"},"mydb","add new schema")
 ```
 
 ### queryDocument
-#### woqlClient.queryDocument([query], [params], [dbId], [branch]) ⇒ <code>Promise</code>
+#### woqlClient.queryDocument(query, [params], [dbId], [branch]) ⇒ <code>Promise</code>
 Retrieves all documents that match a given document template
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [query] | <code>object</code> | the query template |
+| query | <code>object</code> | the query template |
 | [params] | <code>typedef.DocParamsGet</code> | the get parameters |
 | [dbId] | <code>string</code> | the database id |
 | [branch] | <code>string</code> | the database branch |
