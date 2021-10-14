@@ -1,49 +1,4 @@
 ## Typedefs
-
-<dl>
-<dt><a href="#DocParamsGet">DocParamsGet</a> : <code>Object</code></dt>
-<dd><p>the GET document interface query parameters</p>
-</dd>
-<dt><a href="#DocParamsPost">DocParamsPost</a> : <code>Object</code></dt>
-<dd><p>the POST document interface query parameters</p>
-</dd>
-<dt><a href="#DocParamsPut">DocParamsPut</a> : <code>Object</code></dt>
-<dd><p>the PUT document interface query parameters</p>
-</dd>
-<dt><a href="#DocParamsDelete">DocParamsDelete</a> : <code>Object</code></dt>
-<dd><p>the DELETE document interface query parameters</p>
-</dd>
-<dt><a href="#GraphRef">GraphRef</a> : <code>&quot;schema/main&quot;</code> | <code>&quot;instance/main&quot;</code> | <code>string</code></dt>
-<dd></dd>
-<dt><a href="#DataFormatObj">DataFormatObj</a> : <code>Object</code></dt>
-<dd><p>(export/import)</p>
-</dd>
-<dt><a href="#FuntionType">FuntionType</a> : <code>&quot;add_quad&quot;</code> | <code>&quot;delete_quad&quot;</code> | <code>&quot;add_triple&quot;</code> | <code>&quot;delete_triple&quot;</code> | <code>&quot;quad&quot;</code> | <code>&quot;triple&quot;</code></dt>
-<dd></dd>
-<dt><a href="#ResourceType">ResourceType</a> : <code>&quot;commits&quot;</code> | <code>&quot;meta&quot;</code> | <code>&quot;branch&quot;</code> | <code>&quot;ref&quot;</code> | <code>&quot;repo&quot;</code> | <code>&quot;db&quot;</code></dt>
-<dd></dd>
-<dt><a href="#GraphType">GraphType</a> : <code>&quot;instance&quot;</code> | <code>&quot;schema&quot;</code></dt>
-<dd></dd>
-<dt><a href="#CredentialObj">CredentialObj</a> : <code>Object</code></dt>
-<dd></dd>
-<dt><a href="#ActionType">ActionType</a> : <code>&#x27;graph&#x27;</code> | <code>&#x27;db&#x27;</code> | <code>&#x27;clone&#x27;</code> | <code>&#x27;triples&#x27;</code> | <code>&#x27;woql&#x27;</code> | <code>&#x27;fetch&#x27;</code> | <code>&#x27;pull&#x27;</code> | <code>&#x27;rebase&#x27;</code> | <code>&#x27;branch&#x27;</code> | <code>&#x27;reset&#x27;</code> | <code>&#x27;push&#x27;</code> | <code>&#x27;squash&#x27;</code></dt>
-<dd></dd>
-<dt><a href="#ParamsObj">ParamsObj</a> : <code>Object</code></dt>
-<dd></dd>
-<dt><a href="#RolesObj">RolesObj</a> : <code>Object</code></dt>
-<dd></dd>
-<dt><a href="#RepoType">RepoType</a> : <code>&quot;local&quot;</code> | <code>&quot;remote&quot;</code></dt>
-<dd></dd>
-<dt><a href="#DbDetails">DbDetails</a> : <code>Object</code></dt>
-<dd></dd>
-<dt><a href="#RemoteRepoDetails">RemoteRepoDetails</a> : <code>Object</code></dt>
-<dd><p>{remote: &quot;origin&quot;, &quot;remote_branch&quot;: &quot;main&quot;, &quot;author&quot;: &quot;admin&quot;, &quot;message&quot;: &quot;message&quot;}</p>
-</dd>
-<dt><a href="#CloneSourceDetails">CloneSourceDetails</a> : <code>Object</code></dt>
-<dd></dd>
-</dl>
-
-
 ## DocParamsGet
 #### DocParamsGet : <code>Object</code>
 the GET document interface query parameters
