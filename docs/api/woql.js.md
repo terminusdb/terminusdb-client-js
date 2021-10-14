@@ -92,6 +92,19 @@ WOQL.and(
      WOQL.triple("v:Start", "label", "v:Start_Label"))
 ```
 
+### read_object
+#### WOQL.read\_object(IRI, output, formatObj) ⇒ <code>object</code>
+Read a node identified by an IRI as a JSON-LD document
+
+**Returns**: <code>object</code> - WOQLQuery  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| IRI | <code>string</code> | The document id  or a variable |
+| output | <code>string</code> | variable name |
+| formatObj | <code>object</code> |  |
+
+
 ### or
 #### WOQL.or(...subqueries) ⇒ <code>WOQLQuery</code>
 Creates a logical OR of the arguments
@@ -964,7 +977,7 @@ Casts the value of Input to a new value of type Type and stores the result in Ca
 
 **Example**  
 ```js
-typecast("22/3/98", "xsd:dateTime", "v:time")
+cast("22/3/98", "xsd:dateTime", "v:time")
 ```
 
 ### order_by
