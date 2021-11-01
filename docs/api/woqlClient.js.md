@@ -455,7 +455,7 @@ Gets the string that will be written into the commit log for the current user
 
 **Example**  
 ```js
-client.author("my@myemail.com")
+client.author()
 ```
 
 ### set
