@@ -100,7 +100,8 @@ the DELETE document interface query parameters
 | Name | Type | Description |
 | --- | --- | --- |
 | [key] | <code>string</code> | api key for basic auth |
-| [user] | <code>string</code> | basic auth user id |
+| [jwt] | <code>string</code> | jwt token to connect with terminusX server |
+| [user] | <code>string</code> | the user id, we use this for basic authentication and for identify the commits author |
 | [organization] | <code>string</code> | set organization to this id |
 | [db] | <code>string</code> | set cursor to this db |
 | [repo] | [<code>RepoType</code>](#RepoType) \| <code>string</code> | set cursor to this repo |
