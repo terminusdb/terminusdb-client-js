@@ -444,10 +444,10 @@ client.remoteAuth({"key":"dhfmnmjglkrelgkptohkn","type":"jwt"})
 ```
 
 ### author
-#### woqlClient.author([aName]) ⇒ <code>string</code>
-Gets/Sets the string that will be written into the commit log for the current user
+#### woqlClient.author() ⇒ <code>string</code>
+Gets the string that will be written into the commit log for the current user
 
-**Returns**: <code>string</code> - the current author id in use for the current user  
+**Returns**: <code>string</code> - the current user
 
 | Param | Type | Description |
 | --- | --- | --- |
