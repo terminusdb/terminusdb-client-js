@@ -988,11 +988,11 @@ Orders the results of the contained subquery by a precedence list of variables
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ...varNames | <code>string</code> | A sequence of variables, by which to order the results, each optionally followed by either “asc” or “desc” to represent order |
+| ...varNames | <code>string</code> | A sequence of variables, by which to order the results, each optionally followed by either “asc” or “desc” to represent order as a list, by default it will sort the variable in ascending order |
 
 **Example**  
 ```js
-WOQL.order_by("v:A", "v:B asc", "v:C desc").triple("v:A", "v:B", "v:C");
+WOQL.order_by("v:A", ["v:B", "asc"], ["v:C", "desc"]).triple("v:A", "v:B", "v:C");
 ```
 
 ### group_by

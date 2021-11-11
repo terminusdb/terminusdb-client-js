@@ -4,5 +4,5 @@
 {{>heading-indent}}{{#if this.label}}{{label}}{{else}}{{makeAnchor (anchorName)}}{{/if}}
 {{/if}}
 {{#if (addSigName)}}
-#### {{>sig-name}}
+#### {{#if (ifKindTypeDef)}}{{this.name}}: {{{getSigType (options)}}}{{else}}{{>sig-name}}{{/if}}
 {{/if}}
