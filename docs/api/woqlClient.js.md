@@ -341,6 +341,21 @@ Retrieves a list of databases (id, organization, label, comment) that the curren
 const my_dbs = client.databases()
 ```
 
+### userOrganizations
+#### woqlClient.userOrganizations([orgList]) ⇒ <code>array</code>
+Retrieves a list of databases (id, organization, label, comment) that the current user has access to on the server. Note that this requires the client to call connect() first.
+
+**Returns**: <code>array</code> - the user databases list  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [orgList] | <code>array</code> | a list of databases the user has access to on the server, each having: |
+
+**Example**  
+```js
+const my_dbs = client.databases()
+```
+
 ### databaseInfo
 #### woqlClient.databaseInfo([dbId]) ⇒ <code>object</code>
 Gets the database's details
@@ -447,12 +462,7 @@ client.remoteAuth({"key":"dhfmnmjglkrelgkptohkn","type":"jwt"})
 #### woqlClient.author() ⇒ <code>string</code>
 Gets the string that will be written into the commit log for the current user
 
-**Returns**: <code>string</code> - the current user
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [aName] | <code>string</code> | the id to write into commit logs as the author string (normally an email address) |
-
+**Returns**: <code>string</code> - the current user  
 **Example**  
 ```js
 client.author()

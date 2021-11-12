@@ -1,6 +1,9 @@
 
 ## WOQLLibrary
-#### WOQLLibrary()
+#### WOQLLibrary
+**License**: Apache Version 2  
+
+#### new WOQLLibrary()
 Library Functions to manage the commits graph
 
 **Example**  

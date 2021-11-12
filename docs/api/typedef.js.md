@@ -1,65 +1,70 @@
-## Typedefs
-## DocParamsGet
-#### DocParamsGet : <code>Object</code>
+
+## TypeDef
+#### TypeDef
+Type definations
+
+
+### DocParamsGet
+#### DocParamsGet:  `  Object`
 the GET document interface query parameters
 
 **Properties**
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| [graph_type] | <code>string</code> | <code>&quot;instance&quot;</code> | instance|schema default value is instance. Used to switch between getting documents from the instance or the schema graph. |
-| [type] | <code>string</code> |  | only documents of the given type are returned. |
-| [id] | <code>string</code> |  | only the document with the given ID is returned. |
-| [prefixed] | <code>boolean</code> | <code>true</code> | return IRIs using a prefixed notation wherever possible. If false, full IRIs are used. |
-| [minimized] | <code>boolean</code> | <code>false</code> | return the documents with very little whitespace. Each json document will be on its own line. |
-| [unfold] | <code>boolean</code> | <code>true</code> | any subdocuments contained in the returned document are returned too. If false, these are referred to by their ID instead. |
-| [skip] | <code>number</code> | <code>0</code> | How many results to skip |
-| [count] | <code>number</code> |  | count	 - How many results to return. If this option is absent, all results are returned. |
-| [as_list] | <code>boolean</code> | <code>false</code> | If true, don't return a stream of json objects, but a json list. |
-| [graph_type] | <code>string</code> |  | instance|schema default value is instance |
+| Name | Type | Description |
+| --- | --- | --- |
+| [graph_type] | <code>GraphType</code> | instance|schema, default value is instance. Used to switch between getting documents from the instance or the schema graph. |
+| [type] | <code>string</code> | only documents of the given type are returned. |
+| [id] | <code>string</code> | only the document with the given ID is returned. |
+| [prefixed] | <code>boolean</code> | default is true, return IRIs using a prefixed notation wherever possible. If false, full IRIs are used. |
+| [minimized] | <code>boolean</code> | default is false, return the documents with very little whitespace. Each json document will be on its own line. |
+| [unfold] | <code>boolean</code> | default is false, any subdocuments contained in the returned document are returned too. If false, these are referred to by their ID instead. |
+| [skip] | <code>number</code> | default is 0, How many results to skip |
+| [count] | <code>number</code> | count	 - How many results to return. If this option is absent, all results are returned. |
+| [as_list] | <code>boolean</code> | default is false, If true, don't return a stream of json objects, but a json list. |
+| [graph_type] | <code>string</code> | instance|schema default value is instance |
 
 
-## DocParamsPost
-#### DocParamsPost : <code>Object</code>
+### DocParamsPost
+#### DocParamsPost:  `  Object`
 the POST document interface query parameters
 
 **Properties**
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| [graph_type] | <code>string</code> | <code>&quot;instance&quot;</code> | instance|schema Used to switch between getting documents from the instance or the schema graph. |
-| [full_replace] | <code>boolean</code> | <code>false</code> | If true, all existing documents are deleted before inserting the posted documents. This allows the full replacement of the contents of a database. This is especially useful for replacing the schema. |
+| Name | Type | Description |
+| --- | --- | --- |
+| [graph_type] | <code>GraphType</code> | default is instance  instance|schema Used to switch between getting documents from the instance or the schema graph. |
+| [full_replace] | <code>boolean</code> | default is false, If true, all existing documents are deleted before inserting the posted documents. This allows the full replacement of the contents of a database. This is especially useful for replacing the schema. |
 
 
-## DocParamsPut
-#### DocParamsPut : <code>Object</code>
+### DocParamsPut
+#### DocParamsPut:  `  Object`
 the PUT document interface query parameters
 
 **Properties**
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| [graph_type] | <code>string</code> | <code>&quot;instance&quot;</code> | instance|schema Used to switch between getting documents from the instance or the schema graph. |
+| Name | Type | Description |
+| --- | --- | --- |
+| [graph_type] | <code>GraphType</code> | default is instance, instance|schema Used to switch between getting documents from the instance or the schema graph. |
 
 
-## DocParamsDelete
-#### DocParamsDelete : <code>Object</code>
+### DocParamsDelete
+#### DocParamsDelete:  `  Object`
 the DELETE document interface query parameters
 
 **Properties**
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| [graph_type] | <code>string</code> | <code>&quot;instance&quot;</code> | instance|schema Used to switch between getting documents from the instance or the schema graph. |
-| id | <code>string</code> \| <code>array</code> |  | a single id or a list of ids to delete. |
-| [nuke] | <code>booleam</code> | <code>false</code> | If true, delete everything at this resource location (dangerous!). |
+| Name | Type | Description |
+| --- | --- | --- |
+| [graph_type] | <code>GraphType</code> | default is instance, instance|schema Used to switch between getting documents from the instance or the schema graph. |
+| id | <code>string</code> \| <code>array</code> | a single id or a list of ids to delete. |
+| [nuke] | <code>booleam</code> | default is false, If true, delete everything at this resource location (dangerous!). |
 
 
-## GraphRef
-#### GraphRef : <code>&quot;schema/main&quot;</code> \| <code>&quot;instance/main&quot;</code> \| <code>string</code>
+### GraphRef
+#### GraphRef:  `  "schema/main"` |  `  "instance/main" `  |  `  string ` 
 
-## DataFormatObj
-#### DataFormatObj : <code>Object</code>
+### DataFormatObj
+#### DataFormatObj:  `  Object`
 (export/import)
 
 **Properties**
@@ -70,17 +75,17 @@ the DELETE document interface query parameters
 | [format_header] | <code>string</code> | header format type |
 
 
-## FuntionType
-#### FuntionType : <code>&quot;add\_quad&quot;</code> \| <code>&quot;delete\_quad&quot;</code> \| <code>&quot;add\_triple&quot;</code> \| <code>&quot;delete\_triple&quot;</code> \| <code>&quot;quad&quot;</code> \| <code>&quot;triple&quot;</code>
+### FuntionType
+#### FuntionType:  `  "add_quad"` |  `  "delete_quad" `  |  `  "add_triple" `  |  `  "delete_triple" `  |  `  "quad" `  |  `  "triple" ` 
 
-## ResourceType
-#### ResourceType : <code>&quot;commits&quot;</code> \| <code>&quot;meta&quot;</code> \| <code>&quot;branch&quot;</code> \| <code>&quot;ref&quot;</code> \| <code>&quot;repo&quot;</code> \| <code>&quot;db&quot;</code>
+### ResourceType
+#### ResourceType:  `  "commits"` |  `  "meta" `  |  `  "branch" `  |  `  "ref" `  |  `  "repo" `  |  `  "db" ` 
 
-## GraphType
-#### GraphType : <code>&quot;instance&quot;</code> \| <code>&quot;schema&quot;</code>
+### GraphType
+#### GraphType:  `  "instance"` |  `  "schema" ` 
 
-## CredentialObj
-#### CredentialObj : <code>Object</code>
+### CredentialObj
+#### CredentialObj:  `  Object`
 **Properties**
 
 | Name | Type | Description |
@@ -90,11 +95,11 @@ the DELETE document interface query parameters
 | key | <code>string</code> | the connection key |
 
 
-## ActionType
-#### ActionType : <code>&#x27;graph&#x27;</code> \| <code>&#x27;db&#x27;</code> \| <code>&#x27;clone&#x27;</code> \| <code>&#x27;triples&#x27;</code> \| <code>&#x27;woql&#x27;</code> \| <code>&#x27;fetch&#x27;</code> \| <code>&#x27;pull&#x27;</code> \| <code>&#x27;rebase&#x27;</code> \| <code>&#x27;branch&#x27;</code> \| <code>&#x27;reset&#x27;</code> \| <code>&#x27;push&#x27;</code> \| <code>&#x27;squash&#x27;</code>
+### ActionType
+#### ActionType:  `  'graph'` |  `  'db' `  |  `  'clone' `  |  `  'triples' `  |  `  'woql' `  |  `  'fetch' `  |  `  'pull' `  |  `  'rebase' `  |  `  'branch' `  |  `  'reset' `  |  `  'push' `  |  `  'squash' ` 
 
-## ParamsObj
-#### ParamsObj : <code>Object</code>
+### ParamsObj
+#### ParamsObj:  `  Object`
 **Properties**
 
 | Name | Type | Description |
@@ -104,14 +109,14 @@ the DELETE document interface query parameters
 | [user] | <code>string</code> | the user id, we use this for basic authentication and for identify the commits author |
 | [organization] | <code>string</code> | set organization to this id |
 | [db] | <code>string</code> | set cursor to this db |
-| [repo] | [<code>RepoType</code>](#RepoType) \| <code>string</code> | set cursor to this repo |
+| [repo] | <code>RepoType</code> \| <code>string</code> | set cursor to this repo |
 | [branch] | <code>string</code> | set branch to this id |
 | [ref] | <code>string</code> | set commit ref |
 | [default_branch_id] | <code>string</code> | set the default branch id |
 
 
-## RolesObj
-#### RolesObj : <code>Object</code>
+### RolesObj
+#### RolesObj:  `  Object`
 **Properties**
 
 | Name | Type | Description |
@@ -123,11 +128,11 @@ the DELETE document interface query parameters
 | [invitation] | <code>string</code> | - |
 
 
-## RepoType
-#### RepoType : <code>&quot;local&quot;</code> \| <code>&quot;remote&quot;</code>
+### RepoType
+#### RepoType:  `  "local"` |  `  "remote" ` 
 
-## DbDetails
-#### DbDetails : <code>Object</code>
+### DbDetails
+#### DbDetails:  `  Object`
 **Properties**
 
 | Name | Type | Description |
@@ -142,8 +147,8 @@ the DELETE document interface query parameters
 | [schema] | <code>boolean</code> | if set to true, a schema graph will be created |
 
 
-## RemoteRepoDetails
-#### RemoteRepoDetails : <code>Object</code>
+### RemoteRepoDetails
+#### RemoteRepoDetails:  `  Object`
 {remote: "origin", "remote_branch": "main", "author": "admin", "message": "message"}
 
 **Properties**
@@ -156,8 +161,8 @@ the DELETE document interface query parameters
 | [message] | <code>string</code> | the update commit message |
 
 
-## CloneSourceDetails
-#### CloneSourceDetails : <code>Object</code>
+### CloneSourceDetails
+#### CloneSourceDetails:  `  Object`
 **Properties**
 
 | Name | Type | Description |

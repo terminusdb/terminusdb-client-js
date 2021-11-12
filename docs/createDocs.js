@@ -69,6 +69,10 @@ function createFile(filePath, options, outputDir) {
 }
 ////([\w-]+)(.js)/
 function getFileName(filePath) {
+
+    if(filePath === '_sidebar.js') {
+        return '_sidebar';
+    }
     const regEx = /[\w-]+\.js/;
     return filePath.match(regEx)[0]
 }
