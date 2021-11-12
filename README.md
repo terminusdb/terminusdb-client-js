@@ -13,7 +13,6 @@ TerminusDB Client Javascript
 **NPM Package status 📦**
 
 [![npm version shields.io](https://img.shields.io/npm/v/@terminusdb/terminusdb-client?logo=npm)](https://www.npmjs.com/package/@terminusdb/terminusdb-client)
-[![GitHub license](https://img.shields.io/github/license/terminusdb/terminusdb-client-js?color=white&logo=apache)](https://github.com/terminusdb/terminusdb-client-js/blob/main/LICENSE)
 [![PyPI download month](https://img.shields.io/npm/dw/@terminusdb/terminusdb-client?color=red&label=npm%20package&logo=npm&style=flat)](https://www.npmjs.com/package/@terminusdb/terminusdb-client)
 
 Promise based terminus client for the browser and node.js
