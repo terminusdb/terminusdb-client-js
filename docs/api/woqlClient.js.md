@@ -44,7 +44,7 @@ async function getSchema() {
 ### TerminusDB Client API
 
 ### Connect
-#### woqlClient.connect() ⇒ <code>Promise</code>
+#### woqlClient.connect([params]) ⇒ <code>Promise</code>
 Connect to a Terminus server at the given URI with an API key
 Stores the system:ServerCapability document returned
 in the connection register which stores, the url, key, capabilities,
@@ -53,6 +53,11 @@ this.connectionConfig.server will be used if present,
 or the promise will be rejected.
 
 **Returns**: <code>Promise</code> - the connection capabilities response object or an error object  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [params] | <code>typedef.ParamsObj</code> | TerminusDB Server connection parameters |
+
 **Example**  
 ```js
 client.connect()
@@ -294,16 +299,6 @@ Retrieve the URL of the server’s API base that we are currently connected to
 **Example**  
 ```js
 let api_url = client.api()
-```
-
-### apiInfo
-#### woqlClient.apiInfo() ⇒ <code>string</code>
-Retrieve the URL of the server’s Info API that we are currently connected to
-
-**Returns**: <code>string</code> - the URL of the TerminusDB server info api endpoint we are connected to (typically server() + “api/info”)  
-**Example**  
-```js
-let api_url = client.apiInfo()
 ```
 
 ### organization

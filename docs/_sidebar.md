@@ -18,7 +18,6 @@
     - [copy](api/woqlClient.js?id=copy)
     - [server](api/woqlClient.js?id=server)
     - [api](api/woqlClient.js?id=api)
-    - [apiInfo](api/woqlClient.js?id=apiInfo)
     - [organization](api/woqlClient.js?id=organization)
     - [user](api/woqlClient.js?id=user)
     - [userOrganization](api/woqlClient.js?id=userOrganization)
