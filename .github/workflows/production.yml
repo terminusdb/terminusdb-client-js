@@ -1,6 +1,6 @@
 name: Build and release on npm
 on:
-  create:
+  push:
     tags:
       - v*
 

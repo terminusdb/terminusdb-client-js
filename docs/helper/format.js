@@ -54,6 +54,26 @@ exports.addSigName = function(options) {
     return true
 }
 
+exports.getSigType = function() {
+    
+    let outputString =  ` \`  ${this.type.names[0]}\``
+    if(this.type.names.length===1) return outputString;
+
+    for (let index = 1; index < this.type.names.length; index++) {
+        const element = this.type.names[index];
+        outputString+= ` |  \`  ${element} \` `;
+    }
+    return outputString;
+}
+
+exports.ifKindTypeDef = function() {
+    
+    if(this.kind === 'typedef') {
+        return true;
+    }
+    return false
+}
+
 exports.makeAnchor = function(anchorName) {
     if (typeof anchorName === 'string') {
         const arr = anchorName.split(/\+|\./)
@@ -61,7 +81,14 @@ exports.makeAnchor = function(anchorName) {
             return arr[1]
         }
     }
-    return anchorName
+    // removing module_ from header
+    if(this.kind === 'module' && anchorName.includes('module_')) {
+        return anchorName.substr(7);
+    } else if (this.kind === 'typedef' && anchorName.includes('module_TypeDef..')) {
+        return anchorName.substr(16);
+    }
+
+    return anchorName;
 }
 
 exports.docsFilter = function(data, options) {

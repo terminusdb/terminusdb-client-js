@@ -1,7 +1,19 @@
-# TerminusDB-Client
+TerminusDB Client Javascript
+==========================
 
-[![build status](https://api.travis-ci.com/terminusdb/terminusdb-client.svg?branch=master)](https://travis-ci.com/terminusdb/terminusdb-client)
+[![Discord online](https://img.shields.io/discord/689805612053168129?color=7289da&logo=Discord&label=Discord%20chat)](https://discord.gg/yTJKAma)
+[![Discourse topics](https://img.shields.io/discourse/topics?color=yellow&logo=Discourse&server=https%3A%2F%2Fdiscuss.terminusdb.com%2F)](https://discuss.terminusdb.com/)
+[![Follow on Twitter](https://img.shields.io/twitter/follow/terminusdb?color=skyblue&label=Follow%20on%20Twitter&logo=twitter&style=flat)](https://twitter.com/TerminusDB)
+
+**Development status ⚙️**
+
+[![build status](https://api.travis-ci.com/terminusdb/terminusdb-client.svg?branch=main)](https://travis-ci.com/terminusdb/terminusdb-client)
 [![Coverage Status](https://coveralls.io/repos/github/terminusdb/terminusdb-client/badge.svg?branch=master)](https://coveralls.io/repos/github/terminusdb/terminusdb-client/badge.svg?branch=master)
+
+**NPM Package status 📦**
+
+[![npm version shields.io](https://img.shields.io/npm/v/@terminusdb/terminusdb-client?logo=npm)](https://www.npmjs.com/package/@terminusdb/terminusdb-client)
+[![PyPI download month](https://img.shields.io/npm/dw/@terminusdb/terminusdb-client?color=red&label=npm%20package&logo=npm&style=flat)](https://www.npmjs.com/package/@terminusdb/terminusdb-client)
 
 Promise based terminus client for the browser and node.js
 
@@ -132,7 +144,7 @@ const client = new TerminusClient.WOQLClient("http://127.0.0.1:6363/", {
 
 ## API
 
-The API of the most recent release is documented at: <https://docs.terminusdb.com/v4.2/#/reference/API>
+The API of the most recent release is documented at: <https://terminusdb.com/docs/v10.0/#/reference/reference-api>
 
 ## Report Issues
 
