@@ -60,7 +60,7 @@ or the promise will be rejected.
 
 **Example**  
 ```js
-client.connect({key:"mykey",user:"admin"})
+client.connect()
 ```
 
 ### Create Database
