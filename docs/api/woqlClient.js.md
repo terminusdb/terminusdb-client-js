@@ -341,6 +341,21 @@ Retrieves a list of databases (id, organization, label, comment) that the curren
 const my_dbs = client.databases()
 ```
 
+### userOrganizations
+#### woqlClient.userOrganizations([orgList]) ⇒ <code>array</code>
+Retrieves a list of databases (id, organization, label, comment) that the current user has access to on the server. Note that this requires the client to call connect() first.
+
+**Returns**: <code>array</code> - the user databases list  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [orgList] | <code>array</code> | a list of databases the user has access to on the server, each having: |
+
+**Example**  
+```js
+const my_dbs = client.databases()
+```
+
 ### databaseInfo
 #### woqlClient.databaseInfo([dbId]) ⇒ <code>object</code>
 Gets the database's details
@@ -444,18 +459,13 @@ client.remoteAuth({"key":"dhfmnmjglkrelgkptohkn","type":"jwt"})
 ```
 
 ### author
-#### woqlClient.author([aName]) ⇒ <code>string</code>
-Gets/Sets the string that will be written into the commit log for the current user
+#### woqlClient.author() ⇒ <code>string</code>
+Gets the string that will be written into the commit log for the current user
 
-**Returns**: <code>string</code> - the current author id in use for the current user  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [aName] | <code>string</code> | the id to write into commit logs as the author string (normally an email address) |
-
+**Returns**: <code>string</code> - the current user  
 **Example**  
 ```js
-client.author("my@myemail.com")
+client.author()
 ```
 
 ### set
@@ -648,141 +658,6 @@ update the database details
 | dbDoc | <code>object</code> | an object that describe the database details |
 
 
-### createUser
-#### woqlClient.createUser(userId, userDoc) ⇒ <code>Promise</code>
-For creating an user
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| userId | <code>string</code> | the userId |
-| userDoc | <code>object</code> | the user's object description |
-
-
-### getUser
-#### woqlClient.getUser(userId) ⇒ <code>Promise</code>
-Get the logged user details.
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type |
-| --- | --- |
-| userId | <code>string</code> | 
-
-
-### updateUser
-#### woqlClient.updateUser(userId, userDoc) ⇒ <code>Promise</code>
-Update an user from the database.
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| userId | <code>string</code> |  |
-| userDoc | <code>object</code> | User Object details |
-
-
-### deleteUser
-#### woqlClient.deleteUser(userId) ⇒ <code>Promise</code>
-Delete an user from the database Only a user with DBA authority can delete a user.
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type |
-| --- | --- |
-| userId | <code>string</code> | 
-
-
-### createOrganization
-#### woqlClient.createOrganization(orgId, orgDoc) ⇒ <code>Promise</code>
-Create a new organization for the registered user
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| orgId | <code>string</code> | the organization id |
-| orgDoc | <code>object</code> | An object that describe the organization's details |
-
-
-### setOrganizationRoles
-#### woqlClient.setOrganizationRoles(orgId, orgDoc) ⇒ <code>Promise</code>
-Create a new organization for the registered user
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| orgId | <code>string</code> | the organization id |
-| orgDoc | <code>object</code> | An object that describe the organization's details |
-
-
-### getOrganization
-#### woqlClient.getOrganization(orgId, [action]) ⇒ <code>Promise</code>
-Gets all the information about the given organization
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| orgId | <code>string</code> | the organization id |
-| [action] | <code>string</code> | set an action like recommendations | invitations | collaborators |
-
-
-### updateOrganization
-#### woqlClient.updateOrganization(orgId, orgDoc) ⇒ <code>Promise</code>
-only if you have the permission you can delete an organization
- Before you can delete the organization, you must first remove all accounts and databases
- from the organization
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| orgId | <code>string</code> | the organization id |
-| orgDoc | <code>object</code> | the organization details description |
-
-
-### deleteOrganization
-#### woqlClient.deleteOrganization(orgId) ⇒ <code>Promise</code>
-only if you have the permission you can delete an organization
- Before you can delete the organization, you must first remove all accounts and databases
- from the organization
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| orgId | <code>string</code> | the organization id |
-
-
-### getRoles
-#### woqlClient.getRoles([userId], [orgId], [dbId]) ⇒ <code>Promise</code>
-get all the user roles (for the current logged user)
-or the user roles for a specific database and user
-(the logged used need to have the permission to see the roles info for another user)
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [userId] | <code>string</code> | the user id |
-| [orgId] | <code>string</code> | the organization id |
-| [dbId] | <code>string</code> | the dbId |
-
-
-### updateRoles
-#### woqlClient.updateRoles(newRolesObj) ⇒ <code>Promise</code>
-Change the user role for existing users in your organization, including your own
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type |
-| --- | --- |
-| newRolesObj | <code>typedef.RolesObj</code> | 
-
-
 ### addDocument
 #### woqlClient.addDocument(json, [params], [dbId], [string]) ⇒ <code>Promise</code>
 to add a new document or a list of new documents into the instance or the schema graph.
@@ -815,14 +690,14 @@ client.addDocument(json,{"graph_type":"schema"},"mydb","add new schema")
 ```
 
 ### queryDocument
-#### woqlClient.queryDocument([query], [params], [dbId], [branch]) ⇒ <code>Promise</code>
+#### woqlClient.queryDocument(query, [params], [dbId], [branch]) ⇒ <code>Promise</code>
 Retrieves all documents that match a given document template
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [query] | <code>object</code> | the query template |
+| query | <code>object</code> | the query template |
 | [params] | <code>typedef.DocParamsGet</code> | the get parameters |
 | [dbId] | <code>string</code> | the database id |
 | [branch] | <code>string</code> | the database branch |

@@ -92,6 +92,19 @@ WOQL.and(
      WOQL.triple("v:Start", "label", "v:Start_Label"))
 ```
 
+### read_object
+#### WOQL.read\_object(IRI, output, formatObj) ⇒ <code>object</code>
+Read a node identified by an IRI as a JSON-LD document
+
+**Returns**: <code>object</code> - WOQLQuery  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| IRI | <code>string</code> | The document id  or a variable |
+| output | <code>string</code> | variable name |
+| formatObj | <code>object</code> |  |
+
+
 ### or
 #### WOQL.or(...subqueries) ⇒ <code>WOQLQuery</code>
 Creates a logical OR of the arguments
@@ -964,7 +977,7 @@ Casts the value of Input to a new value of type Type and stores the result in Ca
 
 **Example**  
 ```js
-typecast("22/3/98", "xsd:dateTime", "v:time")
+cast("22/3/98", "xsd:dateTime", "v:time")
 ```
 
 ### order_by
@@ -975,11 +988,11 @@ Orders the results of the contained subquery by a precedence list of variables
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ...varNames | <code>string</code> | A sequence of variables, by which to order the results, each optionally followed by either “asc” or “desc” to represent order |
+| ...varNames | <code>string</code> | A sequence of variables, by which to order the results, each optionally followed by either “asc” or “desc” to represent order as a list, by default it will sort the variable in ascending order |
 
 **Example**  
 ```js
-WOQL.order_by("v:A", "v:B asc", "v:C desc").triple("v:A", "v:B", "v:C");
+WOQL.order_by("v:A", ["v:B", "asc"], ["v:C", "desc"]).triple("v:A", "v:B", "v:C");
 ```
 
 ### group_by
@@ -1206,7 +1219,7 @@ json version of query for passing to api
 
 ### lib
 #### WOQL.lib() ⇒ <code>WOQLQuery</code>
-get the predefined library query
+get the predefined library query [WOQLLibrary](/api/woqlLibrary.js?id=WOQLLibrary)
 
 **Returns**: <code>WOQLQuery</code> - WOQLQuery object  
 **Example**  
@@ -1215,8 +1228,11 @@ get the predefined library query
 const query = WOQL.lib().previousCommits('m8vpxewh2aovfauebfkbzwmj4qwr5lb')
 
 //return the commits of a specific branch starting from the head
+//you can add the limit (how many results to return.) and the start point 
 //if a timestamp is given, gets the commits before the specified timestamp
-const query = WOQL.lib().commits('main',10,1630683082.9278786)
+//WOQL.lib().commits(branch='main',limit=0,start=0,timestamp=0)
+
+const query = WOQL.lib().commits('main',10,2,1630683082.9278786)
 
 //return the branches list with the timestamp and commits id
 const query = WOQL.lib().branches()
