@@ -93,7 +93,22 @@ WOQL.and(
 ```
 
 ### read_object
-#### WOQL.read\_object(IRI, output, formatObj) ⇒ <code>object</code>
+#### ~~WOQL.read\_object(IRI, output, formatObj) ⇒ <code>object</code>~~
+***Deprecated***
+
+[Instead use read_document] Read a node identified by an IRI as a JSON-LD document
+
+**Returns**: <code>object</code> - WOQLQuery  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| IRI | <code>string</code> | The document id  or a variable |
+| output | <code>string</code> | variable name |
+| formatObj | <code>object</code> |  |
+
+
+### read_document
+#### WOQL.read\_document(IRI, output, formatObj) ⇒ <code>object</code>
 Read a node identified by an IRI as a JSON-LD document
 
 **Returns**: <code>object</code> - WOQLQuery  
@@ -103,6 +118,41 @@ Read a node identified by an IRI as a JSON-LD document
 | IRI | <code>string</code> | The document id  or a variable |
 | output | <code>string</code> | variable name |
 | formatObj | <code>object</code> |  |
+
+
+### insert_document
+#### WOQL.insert\_document(docjson, [IRI]) ⇒ <code>object</code>
+Insert a document in the graph.
+
+**Returns**: <code>object</code> - WOQLQuery  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| docjson | <code>object</code> | The document to insert. Must either have an '@id' or have a class specified key. |
+| [IRI] | <code>string</code> | An optional returned identifier specifying the documentation location. |
+
+
+### update_document
+#### WOQL.update\_document(docjson, [IRI]) ⇒ <code>object</code>
+Update a document identified by an IRI
+
+**Returns**: <code>object</code> - WOQLQuery  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| docjson | <code>object</code> | The document to update. Must either have an '@id' or have a class specified key. |
+| [IRI] | <code>string</code> | An optional returned identifier specifying the documentation location. |
+
+
+### delete_document
+#### WOQL.delete\_document(IRI) ⇒ <code>object</code>
+Delete a document from the graph.
+
+**Returns**: <code>object</code> - WOQLQuery  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| IRI | <code>string</code> | The document id  or a variable |
 
 
 ### or
