@@ -393,4 +393,28 @@ describe('woql queries', function () {
     //console.log(JSON.stringify(woqlObject01.json(), null, 4));
   })
 
+  it('check the read_document method',function(){
+    const woqlObject=WOQL.read_document("A", "B", {});
+
+    expect(woqlObject.json()).to.eql(woqlJson.readDocJson);
+  })
+
+  it('check the insert_document method',function(){
+    const woqlObject=WOQL.insert_document("A", "B");
+
+    expect(woqlObject.json()).to.eql(woqlJson.insertDocJson);
+  })
+
+  it('check the update_document method',function(){
+    const woqlObject=WOQL.update_document("A", "B");
+
+    expect(woqlObject.json()).to.eql(woqlJson.updateDocJson);
+  })
+
+  it('check the delete_document method',function(){
+    const woqlObject=WOQL.delete_document("A");
+
+    expect(woqlObject.json()).to.eql(woqlJson.deleteDocJson);
+  })
+
 })

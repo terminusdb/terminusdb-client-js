@@ -1102,4 +1102,23 @@ module.exports = {
               },
         ],
     },
+    readDocJson: {
+        '@type': 'ReadDocument',
+        identifier: { '@type': 'NodeValue', node: 'A' },
+        document: { '@type': 'Value', node: 'B' }
+    },
+    insertDocJson: {
+        '@type': 'InsertDocument',
+        identifier: { '@type': 'NodeValue', node: 'B' },
+        document: { '@type': 'Value', node: 'A' }
+    },
+    updateDocJson: {
+        '@type': 'UpdateDocument',
+        identifier: { '@type': 'NodeValue', node: 'B' },
+        document: { '@type': 'Value', node: 'A' }
+    },
+    deleteDocJson: {
+        '@type': 'DeleteDocument',
+        identifier: { '@type': 'NodeValue', node: 'A' },
+    },
 }
