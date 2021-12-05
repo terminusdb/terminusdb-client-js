@@ -129,7 +129,7 @@ Insert a document in the graph.
 | Param | Type | Description |
 | --- | --- | --- |
 | docjson | <code>object</code> | The document to insert. Must either have an '@id' or have a class specified key. |
-| [IRI] | <code>string</code> | An optional returned identifier specifying the documentation location. |
+| [IRI] | <code>string</code> | An optional identifier specifying the document location. |
 
 
 ### update_document
@@ -141,7 +141,7 @@ Update a document identified by an IRI
 | Param | Type | Description |
 | --- | --- | --- |
 | docjson | <code>object</code> | The document to update. Must either have an '@id' or have a class specified key. |
-| [IRI] | <code>string</code> | An optional returned identifier specifying the documentation location. |
+| [IRI] | <code>string</code> | An optional identifier specifying the document location. |
 
 
 ### delete_document
