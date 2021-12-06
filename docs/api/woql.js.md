@@ -96,7 +96,7 @@ WOQL.and(
 #### ~~WOQL.read\_object()~~
 ***Deprecated***
 
-Use [#read_document](#read_document) instead.
+Use [read_document](#read_document) instead.
 
 
 ### read_document
