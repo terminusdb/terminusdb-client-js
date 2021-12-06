@@ -93,18 +93,10 @@ WOQL.and(
 ```
 
 ### read_object
-#### ~~WOQL.read\_object(IRI, output, formatObj) ⇒ <code>object</code>~~
+#### ~~WOQL.read\_object()~~
 ***Deprecated***
 
-[Instead use read_document] Read a node identified by an IRI as a JSON-LD document
-
-**Returns**: <code>object</code> - WOQLQuery  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| IRI | <code>string</code> | The document id  or a variable |
-| output | <code>string</code> | variable name |
-| formatObj | <code>object</code> |  |
+Use [#read_document](#read_document) instead.
 
 
 ### read_document
