@@ -1417,3 +1417,16 @@ Creates a pattern matching rule for a quad [Subject, Predicate, Object, Graph] o
 | object | <code>string</code> | The IRI of a node or a variable, or a literal |
 | [graphRef] | <code>typedef.GraphRef</code> | specify a graph type, default is instance schema|instance |
 
+
+### dot
+#### WOQL.dot(document, field, value) ⇒ <code>WOQLQuery</code>
+Extract the value of a key in a bound document.
+
+**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the a dot Statement  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| document | <code>string</code> | Document which is being accessed. |
+| field | <code>string</code> | The field from which the document which is being accessed. |
+| value | <code>string</code> | The value for the document and field. |
+

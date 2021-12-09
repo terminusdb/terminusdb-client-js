@@ -151,6 +151,7 @@
   - [update_quad](api/woql.js?id=update_quad)
   - [value](api/woql.js?id=value)
   - [link](api/woql.js?id=link)
+  - [dot](api/woql.js?id=dot)
 - [WOQLLibrary](api/woqlLibrary.js?id=WOQLLibrary)
   - [branches](api/woqlLibrary.js?id=branches)
   - [commits](api/woqlLibrary.js?id=commits)
