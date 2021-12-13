@@ -1,3 +1,47 @@
+# TerminusDB Client v10.0.2
+
+## new 🚀
+
+* Added support for multi organizations
+* Add client.getUserOrganizations 
+* Add client.userOrganizations (Retrieves a list of databases)
+* Added *read_document, insert_document, update_document, delete_document* functions for modification of documents using WOQL 
+* Add dot() in WOQL query
+
+## fixes 🛠
+
+* fixed order_by in WOQL ([#35](/../../issues/35))
+* fixed auto generation of docs ([#62](/../../issues/35))
+* removed unused dependencies
+
+## deprecated ☠️
+
+* removed read_object
+
+--- 
+
+# TerminusDB Client v10.0.1
+
+## new
+
+* Add read_object 
+* Add utf-8 support
+
+## fixes
+
+* fixed woql query for commits
+
+--- 
+
+# TerminusDB Client v10.0.0
+
+## new
+
+* Added functionalties to support new document interface
+* Added new functions to support TerminusX
+
+--- 
+
 # TerminusDB Client v4.1.0
 
 ## new
