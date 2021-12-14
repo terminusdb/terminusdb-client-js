@@ -1,6 +1,7 @@
 const expect = require('chai').expect;
 
 var WOQL = require('../lib/woql');
+var {Var} = require('../lib/query/woqlDoc');
 
 const idGenJson = require('./woqlJson/woqlIdgenJson');
 const woqlStarJson = require('./woqlJson/woqlStarJson');
@@ -417,4 +418,10 @@ describe('woql queries', function () {
     expect(woqlObject.json()).to.eql(woqlJson.deleteDocJson);
   })
 
+
+  it('check the vars method',function(){
+    const varsArr=WOQL.vars("A","B","C");
+
+    expect(varsArr[0]).to.be.instanceof(Var);
+  })
 })
