@@ -66,7 +66,7 @@ describe('connectionConfig tests', function() {
     })
 
     it('check set branch', function() {
-        const optimizeUrl = 'http://localhost:6363/api/optimize/admin/testDBlocal/branch/%23%23branch01'
+        const optimizeUrl = 'http://localhost:6363/api/optimize/admin/testDB/local/branch/%23%23branch01'
         /*
          * the dbURL dosen't change
          */
