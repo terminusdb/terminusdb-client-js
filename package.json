@@ -77,5 +77,13 @@
   "bugs": {
     "url": "https://github.com/terminusdb/terminusdb-client/issues"
   },
-  "homepage": "https://github.com/terminusdb/terminusdb-client#readme"
+  "homepage": "https://github.com/terminusdb/terminusdb-client#readme",
+  "browser": {
+    "http": false,
+    "https":false,
+    "net": false,
+    "path": false,
+    "stream": false,
+    "tls": false
+  }
 }
