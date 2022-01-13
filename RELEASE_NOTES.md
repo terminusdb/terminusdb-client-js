@@ -1,3 +1,15 @@
+# TerminusDB Client v10.0.3
+
+## Fixes 🛠
+
+* Fixed optimizeBranch() ([#92](/../../issues/92))
+* Fixed encoding URL in client 
+* Added custom User-Agent header
+* Fixed https package not found ([#97](/../../issues/97)) by adding browser setting in package.json
+* Fixed replaceAll is not a function error ([#95](/../../issues/95))
+
+--- 
+
 # TerminusDB Client v10.0.2
 
 ## new 🚀
