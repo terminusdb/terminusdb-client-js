@@ -1,26 +1,26 @@
-const expect = require('chai').expect;
-var WOQLChartConfig = require('../lib/viewer/chartConfig');
+const { expect } = require('chai');
+const WOQLChartConfig = require('../lib/viewer/chartConfig');
 
-describe('woqlChart config', function () {
+describe('woqlChart config', () => {
+  let woqlChart;
 
-	let woqlChart;
+  beforeEach(() => {
+	   	woqlChart = new WOQLChartConfig();
+  });
 
-	beforeEach(function() {
-	   	woqlChart = new WOQLChartConfig()
-	});
+  it('config type chart', () => {
+    expect(woqlChart.type).to.equal('chart');
 
-	it("config type chart",function(){
-		expect(woqlChart.type).to.equal('chart');
+    woqlChart.xAxis('timestamp').label('Day').type('number');
 
-		woqlChart.xAxis("timestamp").label("Day").type("number");
+    const json = {
+      chart: {},
+      rules: [{
+        pattern: { scope: 'XAxis', variables: ['v:timestamp'] },
+        rule: { label: 'Day', type: 'number' },
+      }],
+    };
 
-		const json={"chart":{},"rules":[{"pattern":{"scope":"XAxis","variables":["v:timestamp"]}
-										,"rule":{"label":"Day","type":"number"}}]}
-
-
-
-		//console.log(JSON.stringify(woqlChart.json()));
-
-	})
-
-})
+    // console.log(JSON.stringify(woqlChart.json()));
+  });
+});
