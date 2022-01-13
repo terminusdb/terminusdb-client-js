@@ -1,5 +1,9 @@
 # TerminusDB Client v10.0.3
 
+## new 🚀
+
+* Added support for new API authentication with TerminusX
+
 ## Fixes 🛠
 
 * Fixed optimizeBranch() ([#92](/../../issues/92))
