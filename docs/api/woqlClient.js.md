@@ -850,3 +850,43 @@ get the database collections list
 ```js
 client.getBranches()
 ```
+
+### getDiff
+#### woqlClient.getDiff(before, after) ⇒ <code>Promise</code>
+Get the patch of difference between two documents.
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| before | <code>object</code> | The current state of JSON document |
+| after | <code>object</code> | The updated state of JSON document |
+
+**Example**  
+```js
+const diff = await client.getDiff(
+     { "@id": "Person/Jane", "@type": "Person", name: "Jane" },
+     { "@id": "Person/Jane", "@type": "Person", name: "Janine" }
+ );
+```
+
+### patch
+#### woqlClient.patch(before, patch) ⇒ <code>Promise</code>
+Patch the difference between two documents.
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| before | <code>object</code> | The current state of JSON document |
+| patch | <code>object</code> | The patch object |
+
+**Example**  
+```js
+let diffPatch = await client.getDiff(
+     { "@id": "Person/Jane", "@type": "Person", name: "Jane" },
+     { "@id": "Person/Jane", "@type": "Person", name: "Janine" }
+ );
+
+let patch = await client.patch( { "@id": "Person/Jane", "@type": "Person", name: "Jane" }, diffPatch);
+```
