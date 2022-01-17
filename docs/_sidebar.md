@@ -59,6 +59,8 @@
     - [getEnums](api/woqlClient.js?id=getEnums)
     - [getClassDocuments](api/woqlClient.js?id=getClassDocuments)
     - [getBranches](api/woqlClient.js?id=getBranches)
+    - [getDiff](api/woqlClient.js?id=getDiff)
+    - [patch](api/woqlClient.js?id=patch)
 - [WOQL](api/woql.js?id=WOQL)
   - [eval](api/woql.js?id=eval)
   - [using](api/woql.js?id=using)
