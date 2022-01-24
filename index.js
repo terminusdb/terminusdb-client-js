@@ -31,4 +31,8 @@ module.exports = {
      * @type {typeof import('./lib/axiosInstance')}
      */
     axiosInstance: require('./lib/axiosInstance'),
+    /**
+     * @type {typeof import('./lib/accessControl')}
+     */
+    AccessControl: require('./lib/accessControl'),
 }

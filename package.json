@@ -1,6 +1,6 @@
 {
   "name": "@terminusdb/terminusdb-client",
-  "version": "10.0.2",
+  "version": "10.0.3",
   "description": "TerminusDB client library",
   "main": "index.js",
   "types": "./dist/typescript/index.d.ts",
@@ -79,5 +79,13 @@
   "bugs": {
     "url": "https://github.com/terminusdb/terminusdb-client/issues"
   },
-  "homepage": "https://github.com/terminusdb/terminusdb-client#readme"
+  "homepage": "https://github.com/terminusdb/terminusdb-client#readme",
+  "browser": {
+    "http": false,
+    "https":false,
+    "net": false,
+    "path": false,
+    "stream": false,
+    "tls": false
+  }
 }
