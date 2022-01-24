@@ -20,7 +20,9 @@
   "author": "kevin@terminusdb.com",
   "license": "Apache-2.0",
   "dependencies": {
-    "axios": ">=0.21.4"
+    "axios": ">=0.25.0",
+    "node-forge": ">=1.0.0",
+    "underscore":">1.13.2"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
