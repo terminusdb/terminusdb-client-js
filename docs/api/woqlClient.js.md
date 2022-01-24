@@ -165,7 +165,7 @@ client.clonedb({remote_url: "https://my.terminusdb.com/myorg/mydb", label "Clone
 ```
 
 ### Branch
-#### woqlClient.branch(newBranchId, [sourceFree]) ⇒ <code>Promise</code>
+#### woqlClient.branch(newBranchId, [isEmpty]) ⇒ <code>Promise</code>
 Creates a new branch with a TerminusDB database, starting from the current context of the client (branch / ref)
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -173,7 +173,7 @@ Creates a new branch with a TerminusDB database, starting from the current conte
 | Param | Type | Description |
 | --- | --- | --- |
 | newBranchId | <code>string</code> | local identifier of the new branch the ID of the new branch to be created |
-| [sourceFree] | <code>boolean</code> | if the query contains any updates, it should include a textual message describing the reason for the update |
+| [isEmpty] | <code>boolean</code> | if isEmpty is true it will create a empty branch. |
 
 **Example**  
 ```js
