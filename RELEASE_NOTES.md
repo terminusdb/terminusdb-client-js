@@ -1,6 +1,19 @@
+# TerminusDB Client v10.0.4
+
+## New 🚀
+
+* Added AccessControl class
+* Added diff and patch functions in WOQL.client
+
+## Fixes 🛠
+
+* Fixed create new branch documentation [#105](/../../issues/105)
+
+---
+
 # TerminusDB Client v10.0.3
 
-## new 🚀
+## New 🚀
 
 * Added support for new API authentication with TerminusX
 
