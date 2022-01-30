@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const test = [
   {
     id: 'WOQLClient',
@@ -58,6 +59,7 @@ exports.getSigType = function () {
   let outputString = ` \`  ${this.type.names[0]}\``;
   if (this.type.names.length === 1) return outputString;
 
+  // eslint-disable-next-line no-plusplus
   for (let index = 1; index < this.type.names.length; index++) {
     const element = this.type.names[index];
     outputString += ` |  \`  ${element} \` `;

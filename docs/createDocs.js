@@ -1,6 +1,8 @@
+/* eslint-disable no-use-before-define */
 // https://auth0.com/docs/api/management/v2#!/Clients/post_clients
 // https://terminusdb.eu.auth0.com/api/v2/
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 const jsdoc2md = require('jsdoc-to-markdown');
 const fs = require('fs');
 const path = require('path');
@@ -30,6 +32,7 @@ inputFile.forEach((filePath) => {
   options.files = filePath;
   /* get template data */
   const fileName = getFileName(filePath);
+  // eslint-disable-next-line no-console
   console.log(fileName);
   let templateData = jsdoc2md.getTemplateDataSync({ files: filePath });
   if (fileName === 'woqlClient.js') {
@@ -60,9 +63,11 @@ createFile(
   './docs',
 );
 
+// eslint-disable-next-line no-shadow
 function createFile(filePath, options, outputDir) {
   const fileName = getFileName(filePath);
   // const template = `{{#class name="${className}"}}{{>docs}}{{/class}}`
+  // eslint-disable-next-line no-console
   console.log(`rendering ${filePath}`);
   const output = jsdoc2md.renderSync(options);
   fs.writeFileSync(path.resolve(outputDir, `${fileName}.md`), output);

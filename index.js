@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 module.exports = {
   /**
      * @type {typeof import('./lib/woqlClient')}
