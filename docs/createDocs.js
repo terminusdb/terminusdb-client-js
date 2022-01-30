@@ -9,9 +9,8 @@ const path = require('path');
 const { woqlClientMenu } = require('./navigationModel');
 
 /* input and output paths */
-const inputFile = ['./lib/woqlClient.js', './lib/woql.js', './lib/query/woqlLibrary.js','./lib/accessControl.js','./lib/typedef.js']
-const outputDir = './docs/api'
-
+const inputFile = ['./lib/woqlClient.js', './lib/woql.js', './lib/query/woqlLibrary.js', './lib/accessControl.js', './lib/typedef.js'];
+const outputDir = './docs/api';
 
 /* create a documentation file for each class */
 let navigationArr = [];

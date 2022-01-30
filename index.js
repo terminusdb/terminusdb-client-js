@@ -36,4 +36,4 @@ module.exports = {
    * @type {typeof import('./lib/accessControl')}
    */
   AccessControl: require('./lib/accessControl'),
-}
+};
