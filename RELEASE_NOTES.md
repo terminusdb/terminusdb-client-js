@@ -1,3 +1,32 @@
+# TerminusDB Client v10.0.4
+
+## New 🚀
+
+* Added AccessControl class
+* Added diff and patch functions in WOQL.client
+
+## Fixes 🛠
+
+* Fixed create new branch documentation [#105](/../../issues/105)
+
+---
+
+# TerminusDB Client v10.0.3
+
+## New 🚀
+
+* Added support for new API authentication with TerminusX
+
+## Fixes 🛠
+
+* Fixed optimizeBranch() ([#92](/../../issues/92))
+* Fixed encoding URL in client 
+* Added custom User-Agent header
+* Fixed https package not found ([#97](/../../issues/97)) by adding browser setting in package.json
+* Fixed replaceAll is not a function error ([#95](/../../issues/95))
+
+--- 
+
 # TerminusDB Client v10.0.2
 
 ## new 🚀
