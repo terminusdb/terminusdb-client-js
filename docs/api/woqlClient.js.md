@@ -20,7 +20,6 @@ For situations where you want to communicate with a TerminusDB server API, the W
 //to connect with your local terminusDB
 const client = new TerminusClient.WOQLClient(SERVER_URL,{user:"admin",key:"myKey"})
 async function getSchema() {
-     await client.connect()
      client.db("test")
      client.checkout("dev")
      const schema = await client.getSchema()
@@ -34,7 +33,6 @@ const client = new TerminusClient.WOQLClient('SERVER_CLOUD_URL/mycloudTeam',
                                           
 client.setApiKey(MY_ACCESS_TOKEN)
 async function getSchema() {
-     await client.connect()
      client.db("test")
      client.checkout("dev")
      const schema = await client.getSchema()
@@ -44,7 +42,9 @@ async function getSchema() {
 ### TerminusDB Client API
 
 ### Connect
-#### woqlClient.connect([params]) ⇒ <code>Promise</code>
+#### ~~woqlClient.connect([params]) ⇒ <code>Promise</code>~~
+***Deprecated***
+
 Connect to a Terminus server at the given URI with an API key
 Stores the system:ServerCapability document returned
 in the connection register which stores, the url, key, capabilities,
@@ -328,7 +328,7 @@ user has fields: [id, name, notes, author]
 
 ### databases
 #### woqlClient.databases([dbList]) ⇒ <code>array</code>
-Retrieves a list of databases (id, organization, label, comment) that the current user has access to on the server. Note that this requires the client to call connect() first.
+Retrieves a list of databases (id, organization, label, comment) that the current user has access to on the server.
 
 **Returns**: <code>array</code> - the user databases list  
 
@@ -343,7 +343,7 @@ const my_dbs = client.databases()
 
 ### userOrganizations
 #### woqlClient.userOrganizations([orgList]) ⇒ <code>array</code>
-Retrieves a list of databases (id, organization, label, comment) that the current user has access to on the server. Note that this requires the client to call connect() first.
+Retrieves a list of databases (id, organization, label, comment) that the current user has access to on the server.
 
 **Returns**: <code>array</code> - the user databases list  
 
