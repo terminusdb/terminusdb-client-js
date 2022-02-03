@@ -20,7 +20,6 @@ For situations where you want to communicate with a TerminusDB server API, the W
 //to connect with your local terminusDB
 const client = new TerminusClient.WOQLClient(SERVER_URL,{user:"admin",key:"myKey"})
 async function getSchema() {
-     await client.connect()
      client.db("test")
      client.checkout("dev")
      const schema = await client.getSchema()
@@ -34,7 +33,6 @@ const client = new TerminusClient.WOQLClient('SERVER_CLOUD_URL/mycloudTeam',
                                           
 client.setApiKey(MY_ACCESS_TOKEN)
 async function getSchema() {
-     await client.connect()
      client.db("test")
      client.checkout("dev")
      const schema = await client.getSchema()
@@ -44,7 +42,9 @@ async function getSchema() {
 ### TerminusDB Client API
 
 ### Connect
-#### woqlClient.connect([params]) ⇒ <code>Promise</code>
+#### ~~woqlClient.connect([params]) ⇒ <code>Promise</code>~~
+***Deprecated***
+
 Connect to a Terminus server at the given URI with an API key
 Stores the system:ServerCapability document returned
 in the connection register which stores, the url, key, capabilities,
@@ -165,7 +165,7 @@ client.clonedb({remote_url: "https://my.terminusdb.com/myorg/mydb", label "Clone
 ```
 
 ### Branch
-#### woqlClient.branch(newBranchId, [sourceFree]) ⇒ <code>Promise</code>
+#### woqlClient.branch(newBranchId, [isEmpty]) ⇒ <code>Promise</code>
 Creates a new branch with a TerminusDB database, starting from the current context of the client (branch / ref)
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -173,7 +173,7 @@ Creates a new branch with a TerminusDB database, starting from the current conte
 | Param | Type | Description |
 | --- | --- | --- |
 | newBranchId | <code>string</code> | local identifier of the new branch the ID of the new branch to be created |
-| [sourceFree] | <code>boolean</code> | if the query contains any updates, it should include a textual message describing the reason for the update |
+| [isEmpty] | <code>boolean</code> | if isEmpty is true it will create a empty branch. |
 
 **Example**  
 ```js
@@ -328,7 +328,7 @@ user has fields: [id, name, notes, author]
 
 ### databases
 #### woqlClient.databases([dbList]) ⇒ <code>array</code>
-Retrieves a list of databases (id, organization, label, comment) that the current user has access to on the server. Note that this requires the client to call connect() first.
+Retrieves a list of databases (id, organization, label, comment) that the current user has access to on the server.
 
 **Returns**: <code>array</code> - the user databases list  
 
@@ -343,7 +343,7 @@ const my_dbs = client.databases()
 
 ### userOrganizations
 #### woqlClient.userOrganizations([orgList]) ⇒ <code>array</code>
-Retrieves a list of databases (id, organization, label, comment) that the current user has access to on the server. Note that this requires the client to call connect() first.
+Retrieves a list of databases (id, organization, label, comment) that the current user has access to on the server.
 
 **Returns**: <code>array</code> - the user databases list  
 
@@ -849,4 +849,44 @@ get the database collections list
 **Example**  
 ```js
 client.getBranches()
+```
+
+### getDiff
+#### woqlClient.getDiff(before, after) ⇒ <code>Promise</code>
+Get the patch of difference between two documents.
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| before | <code>object</code> | The current state of JSON document |
+| after | <code>object</code> | The updated state of JSON document |
+
+**Example**  
+```js
+const diff = await client.getDiff(
+     { "@id": "Person/Jane", "@type": "Person", name: "Jane" },
+     { "@id": "Person/Jane", "@type": "Person", name: "Janine" }
+ );
+```
+
+### patch
+#### woqlClient.patch(before, patch) ⇒ <code>Promise</code>
+Patch the difference between two documents.
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| before | <code>object</code> | The current state of JSON document |
+| patch | <code>object</code> | The patch object |
+
+**Example**  
+```js
+let diffPatch = await client.getDiff(
+     { "@id": "Person/Jane", "@type": "Person", name: "Jane" },
+     { "@id": "Person/Jane", "@type": "Person", name: "Janine" }
+ );
+
+let patch = await client.patch( { "@id": "Person/Jane", "@type": "Person", name: "Jane" }, diffPatch);
 ```

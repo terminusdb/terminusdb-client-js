@@ -1,7 +1,6 @@
 <!-- docs/_sidebar.md -->
 - [WOQLClient](api/woqlClient.js?id=WOQLClient)
   - [TerminusDB Client API](api/woqlClient.js?id=terminusdb-client-api)
-    - [Connect](api/woqlClient.js?id=connect)
     - [Create Database](api/woqlClient.js?id=create-database)
     - [Delete Database](api/woqlClient.js?id=delete-database)
     - [Get Triples](api/woqlClient.js?id=get-triples)
@@ -59,6 +58,8 @@
     - [getEnums](api/woqlClient.js?id=getEnums)
     - [getClassDocuments](api/woqlClient.js?id=getClassDocuments)
     - [getBranches](api/woqlClient.js?id=getBranches)
+    - [getDiff](api/woqlClient.js?id=getDiff)
+    - [patch](api/woqlClient.js?id=patch)
 - [WOQL](api/woql.js?id=WOQL)
   - [eval](api/woql.js?id=eval)
   - [using](api/woql.js?id=using)
