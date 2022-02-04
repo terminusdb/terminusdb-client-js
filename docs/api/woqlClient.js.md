@@ -32,6 +32,11 @@ const client = new TerminusClient.WOQLClient('SERVER_CLOUD_URL/mycloudTeam',
                      {user:"myemail@something.com", organization:'mycloudTeam'})
                                           
 client.setApiKey(MY_ACCESS_TOKEN)
+//to get the list of all organization's databases
+client.getDatabases(result=>{
+     console.log(result)
+
+})
 async function getSchema() {
      client.db("test")
      client.checkout("dev")
@@ -303,7 +308,8 @@ let api_url = client.api()
 
 ### organization
 #### woqlClient.organization([orgId]) ⇒ <code>string</code> \| <code>boolean</code>
-Gets/Sets the client’s internal organization context value
+Gets/Sets the client’s internal organization context value, if you change the organization name the 
+databases list will be set to empty
 
 
 | Param | Type | Description |
@@ -313,6 +319,15 @@ Gets/Sets the client’s internal organization context value
 **Example**  
 ```js
 client.organization("admin")
+```
+
+### getDatabases
+#### woqlClient.getDatabases() ⇒ <code>string</code> \| <code>boolean</code>
+Gets the organization's databases list
+
+**Example**  
+```js
+client.getDatabases()
 ```
 
 ### user
@@ -849,6 +864,18 @@ get the database collections list
 **Example**  
 ```js
 client.getBranches()
+```
+
+### getUserOrganizations
+#### woqlClient.getUserOrganizations() ⇒ <code>Promise</code>
+get the organizations and the database related
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+**Example**  
+```js
+client.getUserOrganizations().then(result=>{
+     console.log(result)
+})
 ```
 
 ### getDiff
