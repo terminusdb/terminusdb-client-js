@@ -32,11 +32,13 @@ const client = new TerminusClient.WOQLClient('SERVER_CLOUD_URL/mycloudTeam',
                      {user:"myemail@something.com", organization:'mycloudTeam'})
                                           
 client.setApiKey(MY_ACCESS_TOKEN)
-//to get the list of all organization's databases
-client.getDatabases(result=>{
-     console.log(result)
 
-})
+//to get the list of all organization's databases
+async function callGetDatabases(){
+     const dbList = await client.getDatabases()
+     console.log(dbList)
+}
+
 async function getSchema() {
      client.db("test")
      client.checkout("dev")
@@ -323,11 +325,35 @@ client.organization("admin")
 
 ### getDatabases
 #### woqlClient.getDatabases() ⇒ <code>string</code> \| <code>boolean</code>
-Gets the organization's databases list
+Gets the organization's databases list.
+
+If no organization has been set up, the function throws an exception
 
 **Example**  
 ```js
-client.getDatabases()
+async function callGetDatabases(){
+     const dbList = await client.getDatabases()
+     console.log(dbList)
+}
+```
+
+### databases
+#### woqlClient.databases([dbList]) ⇒ <code>array</code>
+Set/Get the organization's databases list (id, label, comment) that the current user has access to on the server.
+
+**Returns**: <code>array</code> - the organization's databases list  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [dbList] | <code>array</code> | a list of databases the user has access to on the server, each having: |
+
+**Example**  
+```js
+//to get the list of all organization's databases
+async function callGetDatabases(){
+     await client.getDatabases()
+     console.log(client.databases())
+}
 ```
 
 ### user
@@ -340,36 +366,6 @@ user has fields: [id, name, notes, author]
 #### woqlClient.userOrganization() ⇒ <code>string</code>
 **Returns**: <code>string</code> - the user organization name  
 **Desription**: Gets the user's organization id  
-
-### databases
-#### woqlClient.databases([dbList]) ⇒ <code>array</code>
-Retrieves a list of databases (id, organization, label, comment) that the current user has access to on the server.
-
-**Returns**: <code>array</code> - the user databases list  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [dbList] | <code>array</code> | a list of databases the user has access to on the server, each having: |
-
-**Example**  
-```js
-const my_dbs = client.databases()
-```
-
-### userOrganizations
-#### woqlClient.userOrganizations([orgList]) ⇒ <code>array</code>
-Retrieves a list of databases (id, organization, label, comment) that the current user has access to on the server.
-
-**Returns**: <code>array</code> - the user databases list  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [orgList] | <code>array</code> | a list of databases the user has access to on the server, each having: |
-
-**Example**  
-```js
-const my_dbs = client.databases()
-```
 
 ### databaseInfo
 #### woqlClient.databaseInfo([dbId]) ⇒ <code>object</code>
@@ -868,14 +864,33 @@ client.getBranches()
 
 ### getUserOrganizations
 #### woqlClient.getUserOrganizations() ⇒ <code>Promise</code>
-get the organizations and the database related
+Get the list of the user's organizations and the database related
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 **Example**  
 ```js
-client.getUserOrganizations().then(result=>{
-     console.log(result)
-})
+async funtion callGetUserOrganizations(){
+     await getUserOrganizations()
+     console.log(client.userOrganizations())
+}
+```
+
+### userOrganizations
+#### woqlClient.userOrganizations([orgList]) ⇒ <code>array</code>
+Get/Set the list of the user's organizations (id, organization, label, comment).
+
+**Returns**: <code>array</code> - the user Organizations list  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [orgList] | <code>array</code> | a list of user's Organization |
+
+**Example**  
+```js
+async funtion callGetUserOrganizations(){
+     await client.getUserOrganizations()
+     console.log(client.userOrganizations())
+}
 ```
 
 ### getDiff
