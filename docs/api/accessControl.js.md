@@ -70,6 +70,7 @@ Get all the system database roles types.
 ### createOrganization
 #### accessControl.createOrganization(orgName) ⇒ <code>Promise</code>
 Any user can create their own organization.
+IMPORTANT This does not work with the API-TOKEN.
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
@@ -87,6 +88,7 @@ accessControl.createOrganization("my_org_name").then(result=>{
 ### ifOrganizationExists
 #### accessControl.ifOrganizationExists(orgName) ⇒ <code>Promise</code>
 Check if the organization exists. it is a Head call .
+IMPORTANT This does not work with the API-TOKEN.
 
 **Returns**: <code>Promise</code> - A promise that returns the call status object,  200: if the organization exists and 404: if the organization does not exist  
 
