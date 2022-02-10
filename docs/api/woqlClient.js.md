@@ -138,7 +138,7 @@ client.updateTriples("schema", "alt", turtle_string, "dumping triples to graph a
 ```
 
 ### Query
-#### woqlClient.query(woql, [commitMsg], [allWitnesses]) ⇒ <code>Promise</code>
+#### woqlClient.query(woql, [commitMsg], [allWitnesses], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
 Executes a WOQL query on the specified database and returns the results
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -148,6 +148,8 @@ Executes a WOQL query on the specified database and returns the results
 | woql | <code>WOQLQuery</code> | an instance of the WOQLQuery class |
 | [commitMsg] | <code>string</code> | a message describing the reason for the change that will be written into the commit log (only relevant if the query contains an update) |
 | [allWitnesses] | <code>boolean</code> |  |
+| [lastDataVersion] | <code>string</code> | If passed it will be used for data version tracking |
+| [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion |
 
 **Example**  
 ```js
@@ -625,6 +627,7 @@ Common request dispatch function
 | action | <code>string</code> | the action name |
 | apiUrl | <code>string</code> | the server call endpoint |
 | [payload] | <code>object</code> | the post body |
+| [getDataVersion] | <code>boolean</code> | If true return response with data version |
 
 
 ### generateCommitInfo
@@ -670,7 +673,7 @@ update the database details
 
 
 ### addDocument
-#### woqlClient.addDocument(json, [params], [dbId], [string]) ⇒ <code>Promise</code>
+#### woqlClient.addDocument(json, [params], [dbId], [string], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
 to add a new document or a list of new documents into the instance or the schema graph.
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -681,6 +684,8 @@ to add a new document or a list of new documents into the instance or the schema
 | [params] | <code>typedef.DocParamsPost</code> | the post parameters |
 | [dbId] | <code>string</code> | the dbid |
 | [string] | <code>message</code> | the insert commit message |
+| [lastDataVersion] | <code>string</code> | If passed it will be used for data version tracking. |
+| [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion. |
 
 **Example**  
 ```js
@@ -701,7 +706,7 @@ client.addDocument(json,{"graph_type":"schema"},"mydb","add new schema")
 ```
 
 ### queryDocument
-#### woqlClient.queryDocument(query, [params], [dbId], [branch]) ⇒ <code>Promise</code>
+#### woqlClient.queryDocument(query, [params], [dbId], [branch], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
 Retrieves all documents that match a given document template
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -712,6 +717,8 @@ Retrieves all documents that match a given document template
 | [params] | <code>typedef.DocParamsGet</code> | the get parameters |
 | [dbId] | <code>string</code> | the database id |
 | [branch] | <code>string</code> | the database branch |
+| [lastDataVersion] | <code>string</code> | If passed it will be used for data version tracking. |
+| [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion. |
 
 **Example**  
 ```js
@@ -723,7 +730,7 @@ client.queryDocument(query,{"as_list":true})
 ```
 
 ### getDocument
-#### woqlClient.getDocument([params], [dbId], [branch]) ⇒ <code>Promise</code>
+#### woqlClient.getDocument([params], [dbId], [branch], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
@@ -731,6 +738,8 @@ client.queryDocument(query,{"as_list":true})
 | [params] | <code>typedef.DocParamsGet</code> | the get parameters |
 | [dbId] | <code>string</code> | the database id |
 | [branch] | <code>string</code> | the database branch |
+| [lastDataVersion] | <code>string</code> | If passed it will be used for data version tracking. |
+| [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion. |
 
 **Example**  
 ```js
@@ -742,7 +751,7 @@ client.getDocument({"graph_type":"schema","as_list":true,"id":"Country"})
 ```
 
 ### updateDocument
-#### woqlClient.updateDocument(json, [params], [dbId], [message]) ⇒ <code>Promise</code>
+#### woqlClient.updateDocument(json, [params], [dbId], [message], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
@@ -751,10 +760,12 @@ client.getDocument({"graph_type":"schema","as_list":true,"id":"Country"})
 | [params] | <code>typedef.DocParamsPut</code> | the Put parameters |
 | [dbId] | <code>\*</code> | the database id |
 | [message] | <code>\*</code> | the update commit message |
+| [lastDataVersion] | <code>string</code> | If passed it will be used for data version tracking. |
+| [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion. |
 
 
 ### deleteDocument
-#### woqlClient.deleteDocument([params], [dbId], [message]) ⇒ <code>Promise</code>
+#### woqlClient.deleteDocument([params], [dbId], [message], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
 to delete the document
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -764,6 +775,8 @@ to delete the document
 | [params] | <code>typedef.DocParamsDelete</code> |  |
 | [dbId] | <code>string</code> | the database id |
 | [message] | <code>string</code> | the delete message |
+| [lastDataVersion] | <code>string</code> | If passed it will be used for data version tracking |
+| [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion |
 
 **Example**  
 ```js
