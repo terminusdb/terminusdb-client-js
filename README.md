@@ -110,7 +110,7 @@ const bankerSchema = [
  
 async function createDataProduct(){
     try{
-        await client.connect()
+
         await client.createDatabase("banker", {label: "Banker Account", 
                                               comment: "Testing", schema: true})
         //add the schema documents

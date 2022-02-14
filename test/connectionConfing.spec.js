@@ -92,200 +92,208 @@ describe('connectionConfig tests', () => {
   /* it('check copy', function() {
         let copy = connectionConfig.copy()
         expect(connectionConfig).to.eql(copy)
-    }) */
+    })*/
 
-  it('check update', () => {
-    connectionConfig.update({ key: 'hello' });
-    const res = { type: 'basic', user: 'admin', key: 'hello' };
-    expect(connectionConfig.local_auth).to.eql(res);
-  });
+    it('check update', function() {
+        connectionConfig.update({key:"hello"})   
+        let res = {type: 'basic', user: "admin", key: "hello" }     
+        expect(connectionConfig.local_auth).to.eql(res)
+    })
 
-  it('check local basic auth', () => {
-    connectionConfig.setLocalBasicAuth('hello', 'john');
-    const res = { type: 'basic', user: 'john', key: 'hello' };
-    expect(connectionConfig.local_auth).to.eql(res);
-  });
+    it('check local basic auth', function() {
+        connectionConfig.setLocalBasicAuth("hello", "john")   
+        let res = {type: 'basic', user: "john", key: "hello" }     
+        expect(connectionConfig.local_auth).to.eql(res)
+    })
 
-  it('check local auth', () => {
-    const res = { type: 'basic', user: 'john', key: 'hello' };
-    connectionConfig.setLocalAuth(res);
-    expect(connectionConfig.local_auth).to.eql(res);
-  });
+    it('check local auth', function() {
+        let res = {type: 'basic', user: "john", key: "hello" }     
+        connectionConfig.setLocalAuth(res)   
+        expect(connectionConfig.local_auth).to.eql(res)
+    })
 
-  it('check remote auth', () => {
-    const res = { type: 'basic', user: 'john', key: 'hello' };
-    connectionConfig.setRemoteAuth(res);
-    expect(connectionConfig.remoteAuth()).to.eql(res);
-  });
+    it('check remote auth', function() {
+        let res = {type: 'basic', user: "john", key: "hello" }     
+        connectionConfig.setRemoteAuth(res)   
+        expect(connectionConfig.remoteAuth()).to.eql(res)
+    })
 
-  it('check user URL', () => {
-    const u = connectionConfig.userURL('john');
-    const construct = `${startServerUrl}api/user/john`;
-    expect(u).to.equal(construct);
-  });
+    it('check user URL', function() {
+        let u = connectionConfig.userURL("john")
+        let construct = `${startServerUrl}api/user/john`
+        expect(u).to.equal(construct)
+    })
 
-  it('check organization URL', () => {
-    const o = connectionConfig.organizationURL('us');
-    const construct = `${startServerUrl}api/organization/us`;
-    expect(o).to.equal(construct);
-  });
+    it('check organization URL', function() {
+        let o = connectionConfig.organizationURL("us")
+        let construct = `${startServerUrl}api/organization/us`
+        expect(o).to.equal(construct)
+    })
 
-  it('check roles URL', () => {
-    const o = connectionConfig.rolesURL();
-    const construct = `${startServerUrl}api/role`;
-    expect(o).to.equal(construct);
-  });
+   it('check roles URL', function() {
+        let o = connectionConfig.rolesURL()
+        let construct = `${startServerUrl}api/role`
+        expect(o).to.equal(construct)
+    })
 
-  it('check update roles URL', () => {
-    const o = connectionConfig.updateRolesURL();
-    const construct = `${startServerUrl}api/update_role`;
-    expect(o).to.equal(construct);
-  });
+    it('check update roles URL', function() {
+        let o = connectionConfig.updateRolesURL()
+        let construct = `${startServerUrl}api/update_role`
+        expect(o).to.equal(construct)
+    })
 
-  it('check clone URL', () => {
-    const o = connectionConfig.cloneURL('frank');
-    const construct = `${startServerUrl}api/clone/${organization}/frank`;
-    expect(o).to.equal(construct);
-  });
+    it('check clone URL', function() {
+        let o = connectionConfig.cloneURL("frank")
+        let construct = `${startServerUrl}api/clone/${organization}/frank`
+        expect(o).to.equal(construct)
+    })
 
-  it('check cloneable URL', () => {
-    const o = connectionConfig.cloneableURL();
-    const construct = `${startServerUrl}${organization}/${startDBid}`;
-    expect(o).to.equal(construct);
-  });
+    it('check cloneable URL', function() {
+        let o = connectionConfig.cloneableURL()
+        let construct = `${startServerUrl}${organization}/${startDBid}`
+        expect(o).to.equal(construct)
+    })
 
-  it('check pull URL', () => {
-    const o = connectionConfig.pullURL();
-    const construct = `${startServerUrl}api/pull/${organization}/${startDBid}/local/branch/main`;
-    expect(o).to.equal(construct);
-  });
+    it('check pull URL', function() {
+        let o = connectionConfig.pullURL()
+        let construct = `${startServerUrl}api/pull/${organization}/${startDBid}/local/branch/main`
+        expect(o).to.equal(construct)
+    })
 
-  it('check fetch URL', () => {
-    const o = connectionConfig.fetchURL('origin');
-    const construct = `${startServerUrl}api/fetch/${organization}/${startDBid}/origin/_commits`;
-    expect(o).to.equal(construct);
-  });
+    it('check fetch URL', function() {
+        let o = connectionConfig.fetchURL("origin")
+        let construct = `${startServerUrl}api/fetch/${organization}/${startDBid}/origin/_commits`
+        expect(o).to.equal(construct)
+    })
 
-  it('check rebase URL', () => {
-    const o = connectionConfig.rebaseURL();
-    const construct = `${startServerUrl}api/rebase/${organization}/${startDBid}/local/branch/main`;
-    expect(o).to.equal(construct);
-  });
+    it('check rebase URL', function() {
+        let o = connectionConfig.rebaseURL()
+        let construct = `${startServerUrl}api/rebase/${organization}/${startDBid}/local/branch/main`
+        expect(o).to.equal(construct)
+    })
 
-  it('check reset URL', () => {
-    const o = connectionConfig.resetURL();
-    const construct = `${startServerUrl}api/reset/${organization}/${startDBid}/local/branch/main`;
-    expect(o).to.equal(construct);
-  });
+    it('check reset URL', function() {
+        let o = connectionConfig.resetURL()
+        let construct = `${startServerUrl}api/reset/${organization}/${startDBid}/local/branch/main`
+        expect(o).to.equal(construct)
+    })
 
-  it('check push URL', () => {
-    const o = connectionConfig.pushURL();
-    const construct = `${startServerUrl}api/push/${organization}/${startDBid}/local/branch/main`;
-    expect(o).to.equal(construct);
-  });
+    it('check push URL', function() {
+        let o = connectionConfig.pushURL()
+        let construct = `${startServerUrl}api/push/${organization}/${startDBid}/local/branch/main`
+        expect(o).to.equal(construct)
+    })
 
-  it('check branch URL', () => {
-    const o = connectionConfig.branchURL('dev');
-    const construct = `${startServerUrl}api/branch/${organization}/${startDBid}/local/branch/dev`;
-    expect(o).to.equal(construct);
-  });
+    it('check branch URL', function() {
+        let o = connectionConfig.branchURL("dev")
+        let construct = `${startServerUrl}api/branch/${organization}/${startDBid}/local/branch/dev`
+        expect(o).to.equal(construct)
+    })
 
-  it('check api URL', () => {
-    const o = connectionConfig.apiURL();
-    const construct = `${startServerUrl}api/`;
-    expect(o).to.equal(construct);
-  });
+    it('check api URL', function() {
+        let o = connectionConfig.apiURL()
+        let construct = `${startServerUrl}api/`
+        expect(o).to.equal(construct)
+    })
 
-  it('check db', () => {
-    const o = connectionConfig.db();
-    expect(o).to.equal(startDBid);
-  });
+    it('check db', function() {
+        let o = connectionConfig.db()
+        expect(o).to.equal(startDBid)
+    })
 
-  it('check branch', () => {
-    const o = connectionConfig.branch();
-    expect(o).to.equal(connectionConfig.default_branch_id);
-  });
+    it('check branch', function() {
+        let o = connectionConfig.branch()
+        expect(o).to.equal(connectionConfig.default_branch_id)
+    })
 
-  it('check ref', () => {
-    const o = connectionConfig.ref();
-    expect(o).to.equal(false);
-  });
+    it('check ref', function() {
+        let o = connectionConfig.ref()
+        expect(o).to.equal(false)
+    })
 
-  it('check organization', () => {
-    const o = connectionConfig.organization();
-    expect(o).to.equal('admin');
-  });
+    it('check organization', function() {
+        let o = connectionConfig.organization()
+        expect(o).to.equal("admin")
+    })
 
-  it('check repo', () => {
-    const o = connectionConfig.repo();
-    expect(o).to.equal('local');
-  });
+    it('check repo', function() {
+        let o = connectionConfig.repo()
+        expect(o).to.equal("local")
+    })
 
-  it('check local user', () => {
-    const o = connectionConfig.localUser();
-    expect(o).to.equal('john');
-  });
+    it('check local user', function() {
+        let o = connectionConfig.localUser()
+        expect(o).to.equal("john")
+    })
 
-  it('check user', () => {
-    const o = connectionConfig.user();
-    expect(o).to.equal('john');
-  });
+    it('check user', function() {
+        let o = connectionConfig.user()
+        expect(o).to.equal("john")
+    })
 
-  it('check parseServerURL', () => {
-    const str = 'https:/adf.com/';
-    expect(() => {
-      connectionConfig.parseServerURL(str);
-    }).to.throw(`Invalid Server URL: ${str}`);
-  });
+    it('check parseServerURL', function() {
+        const str = "https:/adf.com/"
+        expect(function(){
+            connectionConfig.parseServerURL(str)
+        }).to.throw(`Invalid Server URL: ${str}`);
+    })
 
-  it('check clearCursor', () => {
-    connectionConfig.clearCursor();
-    expect(() => {
-      connectionConfig.db();
-    }).to.throw('Invalid database name');
-  });
+    it('check clearCursor', function() {
+        connectionConfig.clearCursor()
+        expect(function(){
+            connectionConfig.db()
+        }).to.throw('Invalid database name');
+    })
 
-  it('check setError', () => {
-    connectionConfig.setError('error 123');
-    expect(connectionConfig.connection_error).to.equal('error 123');
-  });
 
-  it('check setDB', () => {
-    connectionConfig.setDB('123');
-    expect(connectionConfig.db()).to.equal('123');
-  });
+    it('check setError', function() {
+        connectionConfig.setError("error 123")
+        expect(connectionConfig.connection_error).to.equal("error 123")
+    })
 
-  it('check setOrganization', () => {
-    connectionConfig.setOrganization('123');
-    expect(connectionConfig.organization()).to.equal('123');
-  });
+    it('check setDB', function() {
+        connectionConfig.setDB("123")
+        expect(connectionConfig.db()).to.equal("123")
+    })
 
-  it('check setRepo', () => {
-    connectionConfig.setRepo('origin');
-    expect(connectionConfig.repo()).to.equal('origin');
-  });
+    it('check setOrganization', function() {
+        connectionConfig.setOrganization("123")
+        expect(connectionConfig.organization()).to.equal("123")
+    })
 
-  it('check baseUrlEncode', () => {
-    const db = '%6277&ˆˆˆ@ˆˆWˆTWTET#Y@&&GHHSHHS';
-    connectionConfig.setDB(db);
-    const dbBase = 'http://localhost:6363/api/woql/123/%256277%26%CB%86%CB%86%CB%86%40%CB%86%CB%86W%CB%86TWTET%23Y%40%26%26GHHSHHS';
-    expect(connectionConfig.dbBase('woql')).to.equal(dbBase);
-    expect(connectionConfig.db()).to.equal(db);
-  });
+    it('check setRepo', function() {
+        connectionConfig.setRepo("origin")
+        expect(connectionConfig.repo()).to.equal("origin")
+    })
 
-  it('check serverUrlEncoding', () => {
-    const url = 'http://127.0.0.1:6363/##TEAM_NAME/';
-    expect(connectionConfig.serverUrlEncoding(url)).to.equal('http://127.0.0.1:6363/%23%23TEAM_NAME/');
-  });
+    it('check baseUrlEncode', function() {
+        const db = "%6277&ˆˆˆ@ˆˆWˆTWTET#Y@&&GHHSHHS"
+        connectionConfig.setDB(db)
+        const dbBase = 'http://localhost:6363/api/woql/123/%256277%26%CB%86%CB%86%CB%86%40%CB%86%CB%86W%CB%86TWTET%23Y%40%26%26GHHSHHS'
+        //expect(connectionConfig.dbBase('woql')).to.equal(dbBase)
+        //expect(connectionConfig.db()).to.equal(db)
 
-  it('check cloud url encoding', () => {
-    const tmpClient = new ConnectionConfig('http://127.0.0.1:6363/##TEAM_NAME/');
-    expect(tmpClient.serverURL()).to.equal('http://127.0.0.1:6363/%23%23TEAM_NAME/');
-  });
+    })
 
-  // serverUrlEncoding
+    it('check serverUrlEncoding', function() {
+        const url = "http://127.0.0.1:6363/##TEAM_NAME/"
+        console.log('serverUrlEncoding',connectionConfig.serverUrlEncoding(url))
+        expect(connectionConfig.serverUrlEncoding(url)).to.equal('http://127.0.0.1:6363/%23%23TEAM_NAME/')
 
-  // const startServerUrl = 'http://localhost:6363/'
-  // const startDBid = 'testDB'
-  // const organization = 'admin'
-});
+    })
+
+    it('check cloud url encoding', function() {
+        const tmpClient = new ConnectionConfig("http://127.0.0.1:6363/##TEAM_NAME/")
+        expect(tmpClient.serverURL()).to.equal('http://127.0.0.1:6363/%23%23TEAM_NAME/')
+        console.log('serverUrlEncoding',tmpClient.serverURL())
+
+    })
+
+    //serverUrlEncoding
+
+    //const startServerUrl = 'http://localhost:6363/'
+    //const startDBid = 'testDB'
+    //const organization = 'admin'
+
+
+})
