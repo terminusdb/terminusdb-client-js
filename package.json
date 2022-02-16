@@ -20,6 +20,9 @@
   "author": "kevin@terminusdb.com",
   "license": "Apache-2.0",
   "dependencies": {
+    "pathval":">=1.1.1",
+    "ajv":">=6.12.3",
+    "follow-redirects":">=1.14.8",
     "axios": ">=0.25.0",
     "babel-polyfill": "^6.26.0",
     "node-forge": ">=1.0.0",
