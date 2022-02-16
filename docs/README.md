@@ -11,8 +11,8 @@
 [![npm version](https://img.shields.io/npm/v/@terminusdb/terminusdb-client?logo=npm)](https://www.npmjs.com/package/@terminusdb/terminusdb-client)
 [![npm downloads](https://img.shields.io/npm/dw/@terminusdb/terminusdb-client?color=red&label=npm%20package&logo=npm&style=flat)](https://www.npmjs.com/package/@terminusdb/terminusdb-client)
 
-> This repository is for the JavaScript client for TerminusDB and TerminusX. The
-> JavaScript client runs in the browser and on Node.js.
+> This repository is for the JavaScript package for TerminusDB and TerminusX. The
+> JavaScript package runs in the browser and on Node.js.
 
 [**TerminusDB**][terminusdb] is an [open-source][terminusdb-repo] graph database
 and document store. It allows you to link JSON documents in a powerful knowledge
@@ -34,7 +34,7 @@ TerminusX is in public beta and you can [sign up now][dashboard].
 
 ## Installation
 
-TerminusDB Client can be used as either a Node.js module available through the npm registry, or directly included in web-sites by including the script tag below.
+TerminusDB Client JS package can be used as either a Node.js module available through the npm registry, or directly included in web-sites by including the script tag below.
 
 ### NPM Module
 
@@ -43,11 +43,21 @@ NodeJS version 10.X or higher is required. NodeJS version 14.X is recommended.
 
 Installation is done using the npm install command:
 
-Using npm:
+Using npm we can install the package in a new NodeJs project or existing one using following commands:
+
+Go to a NodeJs project folder: 
+
+```bash
+$ cd ../projectfolder/
+```
+
+Install the package 
 
 ```bash
 $ npm install --save @terminusdb/terminusdb-client
 ```
+
+This command will add `@terminusdb/terminusdb-client` as a dependency to a package.json
 
 ### Minified Script
 
