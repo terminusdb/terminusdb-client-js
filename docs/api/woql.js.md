@@ -394,7 +394,7 @@ file("/path/to/file", {type: 'turtle'} )
 ```
 
 ### post
-#### WOQL.post(url, [formatObj]) ⇒ <code>WOQLQuery</code>
+#### WOQL.post(url, [formatObj], [source]) ⇒ <code>WOQLQuery</code>
 Identifies a resource as a local path on the client, to be sent to the server through a
 HTTP POST request, with the format defined through the options
 
@@ -404,6 +404,7 @@ HTTP POST request, with the format defined through the options
 | --- | --- | --- |
 | url | <code>string</code> | The Path on the server at which the file resource can be accessed |
 | [formatObj] | <code>typedef.DataFormatObj</code> | imput options, optional |
+| [source] | <code>string</code> | It defines the source of the file, it can be 'url','post' |
 
 **Example**  
 ```js
