@@ -70,7 +70,7 @@ function createFile(filePath, options, outputDir) {
   // eslint-disable-next-line no-console
   console.log(`rendering ${filePath}`);
   const output = jsdoc2md.renderSync(options);
-  fs.writeFileSync(path.resolve(outputDir, `${fileName}.md`), output);
+  fs.writeFileSync(path.resolve(outputDir, `${fileName}.md`), setHeadings(fileName, output));
 }
 /// /([\w-]+)(.js)/
 function getFileName(filePath) {
@@ -128,6 +128,51 @@ function formatDataOrder(dataProvider, orderMenu) {
   const tt = newData.concat(dataProvider);
   // console.log(tt)
   return tt;
+}
+
+function setHeadings(sFileNm, sMD) {
+  /**
+     * Adjust MD heading levels to create a clean
+     * table of contents in GitBook. This method
+     * replaces the docsify _sidebar.md file.
+     *
+     * Notes:
+     *
+     * 1. This is a quick-fix for basic compliance with the GitBook framework.
+     * 2. Expression "~~" renders text as strikethrough for highlighting deprecations.
+     * 3. Inconsistent use of constants requires a fix.
+     */
+
+  const cHdrLv = '##### ';
+  const cWOQL = 'WOQL.';
+  const cWOQLClient = 'woqlClient.';
+  const cWOQLLib = 'woqlLibrary.';
+  const cAccessCtrl = 'accessControl.';
+
+  // No action for sidebar (code to create sidebar can be deprecated.)
+
+  if (sFileNm.match('sidebar')) return sMD;
+
+  // Simplified pattern for type definitions.
+
+  if (sFileNm.match('typedef.js')) {
+    return sMD
+      .replace(/## /g, '# ')
+      .replace(/### /g, cHdrLv);
+  }
+
+  // All other patterns.
+
+  return sMD
+    .replace(/##/g, '#')
+    .replace(/## ~~WOQL\./g, `${cHdrLv}~~${cWOQL}`)
+    .replace(/## ~~woqlClient\./g, `${cHdrLv}~~${cWOQLClient}`)
+    .replace(/## ~~woqlLibrary\./g, `${cHdrLv}~~${cWOQLLib}`)
+    .replace(/## ~~accessControl\./g, `${cHdrLv}~~${cAccessCtrl}`)
+    .replace(/## WOQL\./g, `${cHdrLv}${cWOQL}`)
+    .replace(/## woqlClient\./g, `${cHdrLv}${cWOQLClient}`)
+    .replace(/## woqlLibrary\./g, `${cHdrLv}${cWOQLLib}`)
+    .replace(/## accessControl\./g, `${cHdrLv}${cAccessCtrl}`);
 }
 
 /*
