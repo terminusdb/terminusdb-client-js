@@ -20,7 +20,6 @@ For situations where you want to communicate with a TerminusDB server API, the W
 //to connect with your local terminusDB
 const client = new TerminusClient.WOQLClient(SERVER_URL,{user:"admin",key:"myKey"})
 async function getSchema() {
-     await client.connect()
      client.db("test")
      client.checkout("dev")
      const schema = await client.getSchema()
@@ -33,8 +32,14 @@ const client = new TerminusClient.WOQLClient('SERVER_CLOUD_URL/mycloudTeam',
                      {user:"myemail@something.com", organization:'mycloudTeam'})
                                           
 client.setApiKey(MY_ACCESS_TOKEN)
+
+//to get the list of all organization's databases
+async function callGetDatabases(){
+     const dbList = await client.getDatabases()
+     console.log(dbList)
+}
+
 async function getSchema() {
-     await client.connect()
      client.db("test")
      client.checkout("dev")
      const schema = await client.getSchema()
@@ -44,7 +49,9 @@ async function getSchema() {
 ### TerminusDB Client API
 
 ### Connect
-#### woqlClient.connect([params]) ⇒ <code>Promise</code>
+#### ~~woqlClient.connect([params]) ⇒ <code>Promise</code>~~
+***Deprecated***
+
 Connect to a Terminus server at the given URI with an API key
 Stores the system:ServerCapability document returned
 in the connection register which stores, the url, key, capabilities,
@@ -131,7 +138,7 @@ client.updateTriples("schema", "alt", turtle_string, "dumping triples to graph a
 ```
 
 ### Query
-#### woqlClient.query(woql, [commitMsg], [allWitnesses]) ⇒ <code>Promise</code>
+#### woqlClient.query(woql, [commitMsg], [allWitnesses], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
 Executes a WOQL query on the specified database and returns the results
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -141,6 +148,8 @@ Executes a WOQL query on the specified database and returns the results
 | woql | <code>WOQLQuery</code> | an instance of the WOQLQuery class |
 | [commitMsg] | <code>string</code> | a message describing the reason for the change that will be written into the commit log (only relevant if the query contains an update) |
 | [allWitnesses] | <code>boolean</code> |  |
+| [lastDataVersion] | <code>string</code> | If passed it will be used for data version tracking |
+| [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion |
 
 **Example**  
 ```js
@@ -303,7 +312,8 @@ let api_url = client.api()
 
 ### organization
 #### woqlClient.organization([orgId]) ⇒ <code>string</code> \| <code>boolean</code>
-Gets/Sets the client’s internal organization context value
+Gets/Sets the client’s internal organization context value, if you change the organization name the 
+databases list will be set to empty
 
 
 | Param | Type | Description |
@@ -313,6 +323,39 @@ Gets/Sets the client’s internal organization context value
 **Example**  
 ```js
 client.organization("admin")
+```
+
+### getDatabases
+#### woqlClient.getDatabases() ⇒ <code>string</code> \| <code>boolean</code>
+Gets the organization's databases list.
+
+If no organization has been set up, the function throws an exception
+
+**Example**  
+```js
+async function callGetDatabases(){
+     const dbList = await client.getDatabases()
+     console.log(dbList)
+}
+```
+
+### databases
+#### woqlClient.databases([dbList]) ⇒ <code>array</code>
+Set/Get the organization's databases list (id, label, comment) that the current user has access to on the server.
+
+**Returns**: <code>array</code> - the organization's databases list  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [dbList] | <code>array</code> | a list of databases the user has access to on the server, each having: |
+
+**Example**  
+```js
+//to get the list of all organization's databases
+async function callGetDatabases(){
+     await client.getDatabases()
+     console.log(client.databases())
+}
 ```
 
 ### user
@@ -325,36 +368,6 @@ user has fields: [id, name, notes, author]
 #### woqlClient.userOrganization() ⇒ <code>string</code>
 **Returns**: <code>string</code> - the user organization name  
 **Desription**: Gets the user's organization id  
-
-### databases
-#### woqlClient.databases([dbList]) ⇒ <code>array</code>
-Retrieves a list of databases (id, organization, label, comment) that the current user has access to on the server. Note that this requires the client to call connect() first.
-
-**Returns**: <code>array</code> - the user databases list  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [dbList] | <code>array</code> | a list of databases the user has access to on the server, each having: |
-
-**Example**  
-```js
-const my_dbs = client.databases()
-```
-
-### userOrganizations
-#### woqlClient.userOrganizations([orgList]) ⇒ <code>array</code>
-Retrieves a list of databases (id, organization, label, comment) that the current user has access to on the server. Note that this requires the client to call connect() first.
-
-**Returns**: <code>array</code> - the user databases list  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [orgList] | <code>array</code> | a list of databases the user has access to on the server, each having: |
-
-**Example**  
-```js
-const my_dbs = client.databases()
-```
 
 ### databaseInfo
 #### woqlClient.databaseInfo([dbId]) ⇒ <code>object</code>
@@ -614,6 +627,7 @@ Common request dispatch function
 | action | <code>string</code> | the action name |
 | apiUrl | <code>string</code> | the server call endpoint |
 | [payload] | <code>object</code> | the post body |
+| [getDataVersion] | <code>boolean</code> | If true return response with data version |
 
 
 ### generateCommitInfo
@@ -659,7 +673,7 @@ update the database details
 
 
 ### addDocument
-#### woqlClient.addDocument(json, [params], [dbId], [string]) ⇒ <code>Promise</code>
+#### woqlClient.addDocument(json, [params], [dbId], [string], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
 to add a new document or a list of new documents into the instance or the schema graph.
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -670,6 +684,8 @@ to add a new document or a list of new documents into the instance or the schema
 | [params] | <code>typedef.DocParamsPost</code> | the post parameters |
 | [dbId] | <code>string</code> | the dbid |
 | [string] | <code>message</code> | the insert commit message |
+| [lastDataVersion] | <code>string</code> | If passed it will be used for data version tracking. |
+| [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion. |
 
 **Example**  
 ```js
@@ -690,7 +706,7 @@ client.addDocument(json,{"graph_type":"schema"},"mydb","add new schema")
 ```
 
 ### queryDocument
-#### woqlClient.queryDocument(query, [params], [dbId], [branch]) ⇒ <code>Promise</code>
+#### woqlClient.queryDocument(query, [params], [dbId], [branch], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
 Retrieves all documents that match a given document template
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -701,6 +717,8 @@ Retrieves all documents that match a given document template
 | [params] | <code>typedef.DocParamsGet</code> | the get parameters |
 | [dbId] | <code>string</code> | the database id |
 | [branch] | <code>string</code> | the database branch |
+| [lastDataVersion] | <code>string</code> | If passed it will be used for data version tracking. |
+| [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion. |
 
 **Example**  
 ```js
@@ -712,7 +730,7 @@ client.queryDocument(query,{"as_list":true})
 ```
 
 ### getDocument
-#### woqlClient.getDocument([params], [dbId], [branch]) ⇒ <code>Promise</code>
+#### woqlClient.getDocument([params], [dbId], [branch], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
@@ -720,6 +738,8 @@ client.queryDocument(query,{"as_list":true})
 | [params] | <code>typedef.DocParamsGet</code> | the get parameters |
 | [dbId] | <code>string</code> | the database id |
 | [branch] | <code>string</code> | the database branch |
+| [lastDataVersion] | <code>string</code> | If passed it will be used for data version tracking. |
+| [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion. |
 
 **Example**  
 ```js
@@ -731,7 +751,7 @@ client.getDocument({"graph_type":"schema","as_list":true,"id":"Country"})
 ```
 
 ### updateDocument
-#### woqlClient.updateDocument(json, [params], [dbId], [message]) ⇒ <code>Promise</code>
+#### woqlClient.updateDocument(json, [params], [dbId], [message], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
@@ -740,10 +760,12 @@ client.getDocument({"graph_type":"schema","as_list":true,"id":"Country"})
 | [params] | <code>typedef.DocParamsPut</code> | the Put parameters |
 | [dbId] | <code>\*</code> | the database id |
 | [message] | <code>\*</code> | the update commit message |
+| [lastDataVersion] | <code>string</code> | If passed it will be used for data version tracking. |
+| [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion. |
 
 
 ### deleteDocument
-#### woqlClient.deleteDocument([params], [dbId], [message]) ⇒ <code>Promise</code>
+#### woqlClient.deleteDocument([params], [dbId], [message], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
 to delete the document
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -753,6 +775,8 @@ to delete the document
 | [params] | <code>typedef.DocParamsDelete</code> |  |
 | [dbId] | <code>string</code> | the database id |
 | [message] | <code>string</code> | the delete message |
+| [lastDataVersion] | <code>string</code> | If passed it will be used for data version tracking |
+| [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion |
 
 **Example**  
 ```js
@@ -849,6 +873,37 @@ get the database collections list
 **Example**  
 ```js
 client.getBranches()
+```
+
+### getUserOrganizations
+#### woqlClient.getUserOrganizations() ⇒ <code>Promise</code>
+Get the list of the user's organizations and the database related
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+**Example**  
+```js
+async funtion callGetUserOrganizations(){
+     await getUserOrganizations()
+     console.log(client.userOrganizations())
+}
+```
+
+### userOrganizations
+#### woqlClient.userOrganizations([orgList]) ⇒ <code>array</code>
+Get/Set the list of the user's organizations (id, organization, label, comment).
+
+**Returns**: <code>array</code> - the user Organizations list  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [orgList] | <code>array</code> | a list of user's Organization |
+
+**Example**  
+```js
+async funtion callGetUserOrganizations(){
+     await client.getUserOrganizations()
+     console.log(client.userOrganizations())
+}
 ```
 
 ### getDiff

@@ -274,7 +274,7 @@ describe('connectionConfig tests', function() {
     it('check baseUrlEncode', function() {
         const db = "%6277&ˆˆˆ@ˆˆWˆTWTET#Y@&&GHHSHHS"
         connectionConfig.setDB(db)
-        const dbBase = 'http://localhost:6363/api/woql/123/%256277%26%CB%86%CB%86%CB%86%40%CB%86%CB%86W%CB%86TWTET%23Y%40%26%26GHHSHHS'
+        const dbBase = 'http://localhost:6363/api/woql/123/%256277%26%CB%86%CB%86%CB%86@%CB%86%CB%86W%CB%86TWTET%23Y@%26%26GHHSHHS'
         expect(connectionConfig.dbBase('woql')).to.equal(dbBase)
         expect(connectionConfig.db()).to.equal(db)
 
@@ -282,6 +282,7 @@ describe('connectionConfig tests', function() {
 
     it('check serverUrlEncoding', function() {
         const url = "http://127.0.0.1:6363/##TEAM_NAME/"
+        console.log('serverUrlEncoding',connectionConfig.serverUrlEncoding(url))
         expect(connectionConfig.serverUrlEncoding(url)).to.equal('http://127.0.0.1:6363/%23%23TEAM_NAME/')
 
     })
@@ -289,6 +290,7 @@ describe('connectionConfig tests', function() {
     it('check cloud url encoding', function() {
         const tmpClient = new ConnectionConfig("http://127.0.0.1:6363/##TEAM_NAME/")
         expect(tmpClient.serverURL()).to.equal('http://127.0.0.1:6363/%23%23TEAM_NAME/')
+        console.log('serverUrlEncoding',tmpClient.serverURL())
 
     })
 

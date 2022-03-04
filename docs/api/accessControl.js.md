@@ -5,17 +5,30 @@
 
 #### new AccessControl()
 The AccessControl object has various methods to control the access for users.
+for the credential you can use the JWT token or the API token
 
 **Example**  
 ```js
+//connect with the API token 
+//(to request a token create an account in  https://terminusdb.com/)
+const accessContol = new AccessControl("https://servername.com",
+{organization:"my_team_name",
+token:"dGVybWludXNkYjovLy9kYXRhL2tleXNfYXB........"})
+accessControl.getOrgUsers().then(result=>{
+     console.log(result)
+})
+
+//connect with the jwt token this type of connection is only for the dashboard 
+//or for application integrate with our login workflow
 const accessContol = new AccessControl("https://servername.com",
 {organization:"my_team_name",
 jwt:"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkpXUjBIOXYyeTFORUd........"})
 accessControl.getOrgUsers().then(result=>{
      console.log(result)
 })
+
 //if the jwt is expired you can change it with
- accessControl.setJwtToken("eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkpXUjBIOXYyeTFORUd.......")
+accessControl.setJwtToken("eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkpXUjBIOXYyeTFORUd.......")
 ```
 
 ### getDefaultOrganization
@@ -29,25 +42,24 @@ Get a organization from parameters.
 | params | <code>object</code> | The parameters |
 
 
-### getJwtToken
-#### accessControl.getJwtToken(params) ⇒ <code>string</code>
-Get a API token from parameters.
-
-**Returns**: <code>string</code> - jwt api token  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | The parameters |
-
-
 ### setJwtToken
 #### accessControl.setJwtToken(jwt)
-Sets the API token for the object
+Sets the Jwt token for the object
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | jwt | <code>string</code> | The jwt api token to use |
+
+
+### setApiToken
+#### accessControl.setApiToken(atokenpi)
+Sets the API token for the object, to request a token create an account in  https://terminusdb.com/
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| atokenpi | <code>string</code> | The API token to use to connect with TerminusX |
 
 
 ### getAPIUrl
@@ -70,6 +82,7 @@ Get all the system database roles types.
 ### createOrganization
 #### accessControl.createOrganization(orgName) ⇒ <code>Promise</code>
 Any user can create their own organization.
+IMPORTANT This does not work with the API-TOKEN.
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
@@ -87,6 +100,7 @@ accessControl.createOrganization("my_org_name").then(result=>{
 ### ifOrganizationExists
 #### accessControl.ifOrganizationExists(orgName) ⇒ <code>Promise</code>
 Check if the organization exists. it is a Head call .
+IMPORTANT This does not work with the API-TOKEN.
 
 **Returns**: <code>Promise</code> - A promise that returns the call status object,  200: if the organization exists and 404: if the organization does not exist  
 
