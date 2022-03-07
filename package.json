@@ -20,13 +20,13 @@
   "author": "kevin@terminusdb.com",
   "license": "Apache-2.0",
   "dependencies": {
-    "pathval":">=1.1.1",
-    "ajv":">=6.12.3",
-    "follow-redirects":">=1.14.8",
+    "ajv": ">=6.12.3",
     "axios": ">=0.25.0",
-    "form-data": "^4.0.0",
     "babel-polyfill": "^6.26.0",
+    "follow-redirects": ">=1.14.8",
+    "form-data": "^4.0.0",
     "node-forge": ">=1.0.0",
+    "pathval": ">=1.1.1",
     "underscore": ">=1.13.2"
   },
   "devDependencies": {
@@ -40,6 +40,7 @@
     "chai": "^4.3.4",
     "coveralls": "^3.1.1",
     "docsify-cli": "^4.4.2",
+    "eol": "^0.9.1",
     "eslint": "^8.6.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "6.11.0",
