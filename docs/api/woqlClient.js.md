@@ -4,10 +4,13 @@
 **License**: Apache Version 2  
 
 #### new WOQLClient(serverUrl, [params])
-The core functionality of the TerminusDB javascript client is defined in the WOQLClient class - in the woqlClient.js file.
-This class provides methods which allow you to directly get and set all of the configuration and API endpoints of the client.
-The other parts of the WOQL core - connectionConfig.js and connectionCapabilities.js - are used by the client to store internal state - they should never have to be accessed directly.
-For situations where you want to communicate with a TerminusDB server API, the WOQLClient class is all you will need.
+The core functionality of the TerminusDB javascript client is
+defined in the WOQLClient class - in the woqlClient.js file. This class provides
+methods which allow you to directly get and set all of the configuration and API
+endpoints of the client. The other parts of the WOQL core - connectionConfig.js
+and connectionCapabilities.js - are used by the client to store internal state - they
+should never have to be accessed directly. For situations where you want to communicate
+with a TerminusDB server API, the WOQLClient class is all you will need.
 
 
 | Param | Type | Description |
@@ -30,7 +33,7 @@ async function getSchema() {
 //to connect with your TerminusDB Cloud Instance
 const client = new TerminusClient.WOQLClient('SERVER_CLOUD_URL/mycloudTeam',
                      {user:"myemail@something.com", organization:'mycloudTeam'})
-                                          
+
 client.setApiKey(MY_ACCESS_TOKEN)
 
 //to get the list of all organization's databases
@@ -288,7 +291,8 @@ creates a copy of the client with identical internal state and context
 useful if we want to change context for a particular API call without changing
 the current client context
 
-**Returns**: [<code>WOQLClient</code>](#WOQLClient) - new client object with identical state to original but which can be manipulated independently  
+**Returns**: [<code>WOQLClient</code>](#WOQLClient) - new client object with identical state to original but
+which can be manipulated independently  
 **Example**  
 ```js
 let newClient = client.copy()
@@ -304,7 +308,8 @@ it can only be set creating a new WOQLCLient instance
 #### woqlClient.api() ⇒ <code>string</code>
 Retrieve the URL of the server’s API base that we are currently connected to
 
-**Returns**: <code>string</code> - the URL of the TerminusDB server api endpoint we are connected to (typically server() + “api/”)  
+**Returns**: <code>string</code> - the URL of the TerminusDB server api endpoint we are connected
+to (typically server() + “api/”)  
 **Example**  
 ```js
 let api_url = client.api()
@@ -504,7 +509,7 @@ of the current context for "commits" "meta" "branch" and "ref" special resources
 | Param | Type | Description |
 | --- | --- | --- |
 | resourceType | <code>typedef.ResourceType</code> | the type of resource string that is required - one of “db”, “meta”, “repo”, “commits”, “branch”, “ref” |
-| [resourceId] | <code>string</code> | can be used to specify a specific branch / ref - if not supplied the current context will be used |
+| [resourceId] | <code>string</code> | can be used to specify a specific branch / ref - if  not supplied the current context will be used |
 
 **Example**  
 ```js
@@ -661,6 +666,19 @@ Adds an author string (from the user object returned by connect) to the commit m
 | [rc_args] | <code>object</code> | 
 
 
+### getDatabase
+#### woqlClient.getDatabase() ⇒ <code>Promise</code>
+Server Version API
+Note: the below endpoints are not part of the terminusdb desktop package
+they belong to the server package version of the DB which is under construction.
+Until that package is released all of the below endpoints should be considered
+as unreliable and subject to change - they are provided complete with the desktop
+version to show users what is coming and to allow people to use them at their own risk
+Any use of them should be considered unsupported and at your own risk
+ get all the database information from the remote server
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
 ### updateDatabase
 #### woqlClient.updateDatabase(dbDoc) ⇒ <code>Promise</code>
 update the database details
@@ -689,18 +707,18 @@ to add a new document or a list of new documents into the instance or the schema
 
 **Example**  
 ```js
-const json = [{ "@type" : "Class",   
+const json = [{ "@type" : "Class",
              "@id" : "Coordinate",
-             "@key" : { '@type' : 'Hash', 
-             '@fields' : ['x','y'] }, 
+             "@key" : { '@type' : 'Hash',
+             '@fields' : ['x','y'] },
              "x" : "xsd:decimal",
              "y" : "xsd:decimal" },
              { "@type" : "Class",
              "@id" : "Country",
-             "@key" : { '@type' : 'Lexical', 
-                         '@fields' : [name] }, 
+             "@key" : { '@type' : 'Lexical',
+                         '@fields' : [name] },
              "name" : "xsd:string",
-             "perimeter" : { "@type" : "List", 
+             "perimeter" : { "@type" : "List",
                              "@class" : "Coordinate" } }]
 client.addDocument(json,{"graph_type":"schema"},"mydb","add new schema")
 ```

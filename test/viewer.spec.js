@@ -1,8 +1,8 @@
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
-var View = require('../lib/viewer/woqlView');
+const View = require('../lib/viewer/woqlView');
 
-/*describe('Viewer rules', function () { 
+/* describe('Viewer rules', function () {
     it('check the View Rule',function(){
         const woqlRule=View.rule();
         woqlRule.literal(true).type("xdd:coordinatePolygon").scope("cell")
@@ -78,7 +78,7 @@ var View = require('../lib/viewer/woqlView');
         const config=View.table();
         var rend = function(){alert("r")};
         config.column("a").literal(true).type("xdd:coordinatePolygon").value(32).size(43).icon({}).color([0,0,0]).text("hello").border({}).renderer("world").render(rend).click(rend).hover(rend).args({}).hidden(true);
-        const jsonObj= {table: {}, rules: [{pattern: {literal : true, scope: "column", type: ["xdd:coordinatePolygon"], value: [32], variables: ["v:a"]}, 
+        const jsonObj= {table: {}, rules: [{pattern: {literal : true, scope: "column", type: ["xdd:coordinatePolygon"], value: [32], variables: ["v:a"]},
             rule: {
                 args: {},
                 border: {},
@@ -103,7 +103,7 @@ var View = require('../lib/viewer/woqlView');
         var rend = function(){alert("r")};
         config.row().literal(true).type("xdd:coordinatePolygon").value(32).size(43).icon({}).color([0,0,0]).text("hello").border({}).renderer("world").render(rend).click(rend).hover(rend).args({}).hidden(true).header("fra");
 
-        const jsonObj= {table: {}, rules: [{pattern: {literal : true, scope: "row", type: ["xdd:coordinatePolygon"], value: [32]}, 
+        const jsonObj= {table: {}, rules: [{pattern: {literal : true, scope: "row", type: ["xdd:coordinatePolygon"], value: [32]},
             rule: {
                 args: {},
                 border: {},
@@ -130,7 +130,7 @@ var View = require('../lib/viewer/woqlView');
         config.node().literal(true).type("xdd:coordinatePolygon").value(32).size(43).icon({}).color([0,0,0]).text("hello").border({}).renderer("world").render(rend).click(rend).hover(rend).args({}).hidden(true).
         charge(24).collisionRadius(21).arrow({}).distance(34).symmetric(false).weight(100);
 
-        const jsonObj= {graph: {}, rules: [{pattern: {literal : true, scope: "row", type: ["xdd:coordinatePolygon"], value: [32]}, 
+        const jsonObj= {graph: {}, rules: [{pattern: {literal : true, scope: "row", type: ["xdd:coordinatePolygon"], value: [32]},
             rule: {
                 args: {},
                 arrow: {},
@@ -162,7 +162,7 @@ var View = require('../lib/viewer/woqlView');
         config.edge("a", "b").literal(true).type("xdd:coordinatePolygon").value(32).size(43).icon({}).color([0,0,0]).text("hello").border({}).renderer("world").render(rend).click(rend).hover(rend).args({}).hidden(true).
         charge(24).collisionRadius(21).arrow({}).distance(34).symmetric(false).weight(100);
 
-        const jsonObj= {graph: {}, rules: [{pattern: {literal : true, scope: "edge", source: "v:a", target: "v:b", type: ["xdd:coordinatePolygon"], value: [32], variables: ['v:a']}, 
+        const jsonObj= {graph: {}, rules: [{pattern: {literal : true, scope: "edge", source: "v:a", target: "v:b", type: ["xdd:coordinatePolygon"], value: [32], variables: ['v:a']},
             rule: {
                 args: {},
                 arrow: {},
@@ -191,7 +191,7 @@ var View = require('../lib/viewer/woqlView');
     it('check the View Chart Rules',function(){
         const config=View.chart();
         var rend = function(){alert("r")};
-        
+
         config.title("MY CHART TEST").layout("vertical");
         config.bar("a").legendType('square').label('my bar').fill("#00ff00").stroke("#ff0000").strokeWidth(34);
 
@@ -249,7 +249,7 @@ var View = require('../lib/viewer/woqlView');
         config.rule("b").literal(true).type("xdd:coordinatePolygon").value(32).size(43).icon({}).color([0,0,0]).text("hello").border({}).renderer("world").render(rend).click(rend).hover(rend).args({}).hidden(true).
         label("arse").values("hole").title("fub").selected(true);
 
-        const jsonObj= {chooser: {}, rules: [{pattern: {literal : true, scope: "row", type: ["xdd:coordinatePolygon"], value: [32], variables: ["v:b"]}, 
+        const jsonObj= {chooser: {}, rules: [{pattern: {literal : true, scope: "row", type: ["xdd:coordinatePolygon"], value: [32], variables: ["v:b"]},
             rule: {
                 args: {},
                 border: {},
@@ -280,7 +280,7 @@ var View = require('../lib/viewer/woqlView');
         config.row().literal(true).type("xdd:coordinatePolygon").value(32).size(43).icon({}).color([0,0,0]).text("hello").border({}).renderer("world").render(rend).click(rend).hover(rend).args({}).hidden(true).
         template("arse");
 
-        const jsonObj= {stream: {}, rules: [{pattern: {literal : true, scope: "row", type: ["xdd:coordinatePolygon"], value: [32]}, 
+        const jsonObj= {stream: {}, rules: [{pattern: {literal : true, scope: "row", type: ["xdd:coordinatePolygon"], value: [32]},
             rule: {
                 args: {},
                 border: {},
@@ -308,14 +308,14 @@ var View = require('../lib/viewer/woqlView');
         config.all().literal(true).type("xdd:coordinatePolygon").value(32).renderer("abc").compare(rend).collapse(true).view("x").mode("edit").showDisabledButtons(false)
         .header("urp").headerStyle("aaa").showEmpty(true).dataviewer("y").render(rend).style("y").hidden(true).args({}).renderer("x").features([]).headerFeatures([]) ;
 
-        const jsonObj= {frame: {}, rules: [{pattern: {literal : true, scope: "*", type: ["xdd:coordinatePolygon"], value: [32]}, 
+        const jsonObj= {frame: {}, rules: [{pattern: {literal : true, scope: "*", type: ["xdd:coordinatePolygon"], value: [32]},
             rule: {
                 args: {},
                 collapse: true,
                 compare: rend,
                 dataviewer: "y",
                 features: [[]],
-                header: "urp", 
+                header: "urp",
                 header_features: [[]],
                 headerStyle: "aaa",
                 hidden: true,
@@ -335,7 +335,4 @@ var View = require('../lib/viewer/woqlView');
         expect(nt.json()).to.eql(serial);
     })
 
-
-
-})*/
-    
+}) */

@@ -1,10 +1,7 @@
-const path = require('path')
-const HtmlWebPackPlugin = require('html-webpack-plugin')
+const path = require('path');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 
-var PACKAGE = require('./package.json')
-var version = `v${PACKAGE.version}`
-
-require('@babel/register')
+require('@babel/register');
 // Webpack Configuration
 const config = {
   // Entry
@@ -32,14 +29,14 @@ const config = {
   // Plugins
   resolve: {
     fallback: {
-      "https": false,
-    }
-  }
-}
+      https: false,
+    },
+  },
+};
 
-module.exports = function(env, argv) {
+module.exports = function (env, argv) {
   if (argv.mode === 'development') {
-    config.watch = true
+    config.watch = true;
   }
 
   if (argv.mode === 'production') {
@@ -48,11 +45,11 @@ module.exports = function(env, argv) {
         template: './index.html',
         filename: 'index.html',
       }),
-    ]
+    ];
   }
 
-  return config
-}
+  return config;
+};
 
 // Exports
-//module.exports = config;
+// module.exports = config;

@@ -46,6 +46,7 @@
     - [generateCommitInfo](api/woqlClient.js?id=generateCommitInfo)
     - [generateCommitDescriptor](api/woqlClient.js?id=generateCommitDescriptor)
     - [prepareRevisionControlArgs](api/woqlClient.js?id=prepareRevisionControlArgs)
+    - [getDatabase](api/woqlClient.js?id=getDatabase)
     - [updateDatabase](api/woqlClient.js?id=updateDatabase)
     - [addDocument](api/woqlClient.js?id=addDocument)
     - [queryDocument](api/woqlClient.js?id=queryDocument)
