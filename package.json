@@ -24,6 +24,7 @@
     "ajv":">=6.12.3",
     "follow-redirects":">=1.14.8",
     "axios": ">=0.25.0",
+    "form-data": "^4.0.0",
     "babel-polyfill": "^6.26.0",
     "node-forge": ">=1.0.0",
     "underscore": ">=1.13.2"
@@ -96,6 +97,7 @@
     "net": false,
     "path": false,
     "stream": false,
-    "tls": false
+    "tls": false,
+    "fs": false
   }
 }
