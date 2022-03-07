@@ -1,11 +1,16 @@
 /* eslint-disable no-use-before-define */
+
+// This file is used only for development, so we disable the following check.
+/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
+
 // https://auth0.com/docs/api/management/v2#!/Clients/post_clients
 // https://terminusdb.eu.auth0.com/api/v2/
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 const jsdoc2md = require('jsdoc-to-markdown');
 const fs = require('fs');
 const path = require('path');
+const eol = require('eol');
+
 const { woqlClientMenu } = require('./navigationModel');
 
 /* input and output paths */
@@ -69,7 +74,10 @@ function createFile(filePath, options, outputDir) {
   // const template = `{{#class name="${className}"}}{{>docs}}{{/class}}`
   // eslint-disable-next-line no-console
   console.log(`rendering ${filePath}`);
-  const output = jsdoc2md.renderSync(options);
+  // Use `eol.lf` to guarantee the string always has Unix (LF) line endings,
+  // `jsdoc-to-markdown` may use different line endings depending on the OS, and
+  // this can cause problems with rendering the Markdown.
+  const output = eol.lf(jsdoc2md.renderSync(options));
   fs.writeFileSync(path.resolve(outputDir, `${fileName}.md`), setHeadings(fileName, output));
 }
 /// /([\w-]+)(.js)/
