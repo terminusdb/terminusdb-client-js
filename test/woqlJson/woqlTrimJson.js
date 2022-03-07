@@ -1,17 +1,17 @@
-module.exports={
-    "@type": "Trim",
-    "untrimmed": {
-        "@type": "DataValue",
-        "data": {
-            "@type": "xsd:string",
-            "@value": "a"
-        }
+module.exports = {
+  '@type': 'Trim',
+  untrimmed: {
+    '@type': 'DataValue',
+    data: {
+      '@type': 'xsd:string',
+      '@value': 'a',
     },
-    "trimmed": {
-        "@type": "DataValue",
-        "data": {
-            "@type": "xsd:string",
-            "@value": "b"
-        }
-    }
-}
+  },
+  trimmed: {
+    '@type': 'DataValue',
+    data: {
+      '@type': 'xsd:string',
+      '@value': 'b',
+    },
+  },
+};

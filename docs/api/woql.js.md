@@ -1271,7 +1271,7 @@ get the predefined library query [WOQLLibrary](/api/woqlLibrary.js?id=WOQLLibrar
 const query = WOQL.lib().previousCommits('m8vpxewh2aovfauebfkbzwmj4qwr5lb')
 
 //return the commits of a specific branch starting from the head
-//you can add the limit (how many results to return.) and the start point 
+//you can add the limit (how many results to return.) and the start point
 //if a timestamp is given, gets the commits before the specified timestamp
 //WOQL.lib().commits(branch='main',limit=0,start=0,timestamp=0)
 
