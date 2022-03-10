@@ -100,17 +100,24 @@ Use [read_document](#read_document) instead.
 
 
 ## read_document
-##### WOQL.read\_document(IRI, output, formatObj) ⇒ <code>object</code>
+##### WOQL.read\_document(IRI, output) ⇒ <code>object</code>
 Read a node identified by an IRI as a JSON-LD document
 
 **Returns**: <code>object</code> - WOQLQuery  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| IRI | <code>string</code> | The document id  or a variable |
-| output | <code>string</code> | variable name |
-| formatObj | <code>object</code> |  |
+| IRI | <code>string</code> | The document id  or a variable to read |
+| output | <code>string</code> | Variable which will be bound to the document. |
 
+**Example**  
+```js
+const query = WOQL.read_document(
+     "Person/0b4feda109d9d13c9da809090b342ad9e4d8185545ce05f7cd20b97fe458f547",
+     "v:Person"
+);
+const res =  await client.query(query);
+```
 
 ## insert_document
 ##### WOQL.insert\_document(docjson, [IRI]) ⇒ <code>object</code>
@@ -123,6 +130,12 @@ Insert a document in the graph.
 | docjson | <code>object</code> | The document to insert. Must either have an '@id' or have a class specified key. |
 | [IRI] | <code>string</code> | An optional identifier specifying the document location. |
 
+**Example**  
+```js
+const res = await client.query(
+WOQL.insert_document(WOQL.doc({ "@type" : "Person", "label": "John" }))
+)
+```
 
 ## update_document
 ##### WOQL.update\_document(docjson, [IRI]) ⇒ <code>object</code>
@@ -1365,6 +1378,21 @@ array destructuring operation
 ```js
 const [a, b, c] = WOQL.vars("a", "b", "c")
 //a, b, c are javascript variables which can be used as WOQL variables in subsequent queries
+```
+
+## doc
+##### WOQL.doc(object) ⇒ <code>object</code>
+Creates a Document which can be used in WOQL within a query
+
+**Returns**: <code>object</code> - a object with encoded document  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| object | <code>object</code> | The document which needs to be created |
+
+**Example**  
+```js
+const doc = WOQL.doc({ "@type": "Person", name: "Newperson" })
 ```
 
 ## client
