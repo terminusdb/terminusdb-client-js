@@ -133,7 +133,7 @@ Insert a document in the graph.
 **Example**  
 ```js
 const res = await client.query(
-WOQL.insert_document(WOQL.doc({ "@type" : "Person", "label": "John" }))
+   WOQL.insert_document(WOQL.doc({ "@type" : "Person", "label": "John" }))
 )
 ```
 
@@ -1382,13 +1382,14 @@ const [a, b, c] = WOQL.vars("a", "b", "c")
 
 ## doc
 ##### WOQL.doc(object) ⇒ <code>object</code>
-Creates a Document which can be used in WOQL within a query
+Produces an encoded form of a document that can be used by a WOQL operation
+such as `WOQL.insert_document`.
 
-**Returns**: <code>object</code> - a object with encoded document  
+**Returns**: <code>object</code> - The encoded document  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| object | <code>object</code> | The document which needs to be created |
+| object | <code>object</code> | Document to encode |
 
 **Example**  
 ```js
