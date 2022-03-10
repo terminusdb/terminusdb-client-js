@@ -1,3 +1,22 @@
+# TerminusDB Client v10.0.5
+
+## New 🚀
+
+* Add new [getDatabases](https://terminusdb.github.io/terminusdb-client-js/#/api/woqlClient.js?id=getdatabases) method [#121](/../../pull/121)
+* Add track version id [#116](/../../pull/116)
+
+## Fixes 🛠
+
+* Fixed tests [#123](/../../pull/123)
+* Modified AccessControl documentations, added api token [#124](/../../pull/124)
+* UPDATED packages [#126](/../../pull/126)
+
+## Deprecated ☠️
+
+* Deprecated connect function [#114](/../../pull/114)
+
+---
+
 # TerminusDB Client v10.0.4
 
 ## New 🚀

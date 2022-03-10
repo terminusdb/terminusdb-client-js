@@ -1,11 +1,11 @@
 
-## TypeDef
-#### TypeDef
+# TypeDef
+##### TypeDef
 Type definations
 
 
-### DocParamsGet
-#### DocParamsGet:  `  Object`
+## DocParamsGet
+##### DocParamsGet:  `  Object`
 the GET document interface query parameters
 
 **Properties**
@@ -16,55 +16,55 @@ the GET document interface query parameters
 | [type] | <code>string</code> | only documents of the given type are returned. |
 | [id] | <code>string</code> | only the document with the given ID is returned. |
 | [prefixed] | <code>boolean</code> | default is true, return IRIs using a prefixed notation wherever possible. If false, full IRIs are used. |
-| [minimized] | <code>boolean</code> | default is false, return the documents with very little whitespace. Each json document will be on its own line. |
-| [unfold] | <code>boolean</code> | default is false, any subdocuments contained in the returned document are returned too. If false, these are referred to by their ID instead. |
+| [minimized] | <code>boolean</code> | default is false, return the documents with very  little whitespace. Each json document will be on its own line. |
+| [unfold] | <code>boolean</code> | default is false, any subdocuments contained in the returned  document are returned too. If false, these are referred to by their ID instead. |
 | [skip] | <code>number</code> | default is 0, How many results to skip |
-| [count] | <code>number</code> | count	 - How many results to return. If this option is absent, all results are returned. |
-| [as_list] | <code>boolean</code> | default is false, If true, don't return a stream of json objects, but a json list. |
+| [count] | <code>number</code> | count - How many results to return. If this option is absent, all  results are returned. |
+| [as_list] | <code>boolean</code> | default is false, If true, don't return a stream of json objects,  but a json list. |
 | [graph_type] | <code>string</code> | instance|schema default value is instance |
 
 
-### DocParamsPost
-#### DocParamsPost:  `  Object`
+## DocParamsPost
+##### DocParamsPost:  `  Object`
 the POST document interface query parameters
 
 **Properties**
 
 | Name | Type | Description |
 | --- | --- | --- |
-| [graph_type] | <code>GraphType</code> | default is instance  instance|schema Used to switch between getting documents from the instance or the schema graph. |
-| [full_replace] | <code>boolean</code> | default is false, If true, all existing documents are deleted before inserting the posted documents. This allows the full replacement of the contents of a database. This is especially useful for replacing the schema. |
+| [graph_type] | <code>GraphType</code> | default is instance  instance|schema Used to switch between  getting documents from the instance or the schema graph. |
+| [full_replace] | <code>boolean</code> | default is false, If true, all existing documents are deleted  before inserting the posted documents. This allows the full replacement of the contents of a  database. This is especially useful for replacing the schema. |
 
 
-### DocParamsPut
-#### DocParamsPut:  `  Object`
+## DocParamsPut
+##### DocParamsPut:  `  Object`
 the PUT document interface query parameters
 
 **Properties**
 
 | Name | Type | Description |
 | --- | --- | --- |
-| [graph_type] | <code>GraphType</code> | default is instance, instance|schema Used to switch between getting documents from the instance or the schema graph. |
+| [graph_type] | <code>GraphType</code> | default is instance, instance|schema Used to switch between  getting documents from the instance or the schema graph. |
 
 
-### DocParamsDelete
-#### DocParamsDelete:  `  Object`
+## DocParamsDelete
+##### DocParamsDelete:  `  Object`
 the DELETE document interface query parameters
 
 **Properties**
 
 | Name | Type | Description |
 | --- | --- | --- |
-| [graph_type] | <code>GraphType</code> | default is instance, instance|schema Used to switch between getting documents from the instance or the schema graph. |
+| [graph_type] | <code>GraphType</code> | default is instance, instance|schema Used to switch between  getting documents from the instance or the schema graph. |
 | id | <code>string</code> \| <code>array</code> | a single id or a list of ids to delete. |
-| [nuke] | <code>booleam</code> | default is false, If true, delete everything at this resource location (dangerous!). |
+| [nuke] | <code>booleam</code> | default is false, If true, delete everything at this resource  location (dangerous!). |
 
 
-### GraphRef
-#### GraphRef:  `  "schema/main"` |  `  "instance/main" `  |  `  string ` 
+## GraphRef
+##### GraphRef:  `  "schema/main"` |  `  "instance/main" `  |  `  string ` 
 
-### DataFormatObj
-#### DataFormatObj:  `  Object`
+## DataFormatObj
+##### DataFormatObj:  `  Object`
 (export/import)
 
 **Properties**
@@ -75,17 +75,17 @@ the DELETE document interface query parameters
 | [format_header] | <code>string</code> | header format type |
 
 
-### FuntionType
-#### FuntionType:  `  "add_quad"` |  `  "delete_quad" `  |  `  "add_triple" `  |  `  "delete_triple" `  |  `  "quad" `  |  `  "triple" ` 
+## FuntionType
+##### FuntionType:  `  "add_quad"` |  `  "delete_quad" `  |  `  "add_triple" `  |  `  "delete_triple" `  |  `  "quad" `  |  `  "triple" ` 
 
-### ResourceType
-#### ResourceType:  `  "commits"` |  `  "meta" `  |  `  "branch" `  |  `  "ref" `  |  `  "repo" `  |  `  "db" ` 
+## ResourceType
+##### ResourceType:  `  "commits"` |  `  "meta" `  |  `  "branch" `  |  `  "ref" `  |  `  "repo" `  |  `  "db" ` 
 
-### GraphType
-#### GraphType:  `  "instance"` |  `  "schema" ` 
+## GraphType
+##### GraphType:  `  "instance"` |  `  "schema" ` 
 
-### CredentialObj
-#### CredentialObj:  `  Object`
+## CredentialObj
+##### CredentialObj:  `  Object`
 **Properties**
 
 | Name | Type | Description |
@@ -95,11 +95,11 @@ the DELETE document interface query parameters
 | key | <code>string</code> | the connection key |
 
 
-### ActionType
-#### ActionType:  `  'graph'` |  `  'db' `  |  `  'clone' `  |  `  'triples' `  |  `  'woql' `  |  `  'fetch' `  |  `  'pull' `  |  `  'rebase' `  |  `  'branch' `  |  `  'reset' `  |  `  'push' `  |  `  'squash' ` 
+## ActionType
+##### ActionType:  `  'graph'` |  `  'db' `  |  `  'clone' `  |  `  'triples' `  |  `  'woql' `  |  `  'fetch' `  |  `  'pull' `  |  `  'rebase' `  |  `  'branch' `  |  `  'reset' `  |  `  'push' `  |  `  'squash' ` 
 
-### ParamsObj
-#### ParamsObj:  `  Object`
+## ParamsObj
+##### ParamsObj:  `  Object`
 **Properties**
 
 | Name | Type | Description |
@@ -115,8 +115,8 @@ the DELETE document interface query parameters
 | [default_branch_id] | <code>string</code> | set the default branch id |
 
 
-### RolesObj
-#### RolesObj:  `  Object`
+## RolesObj
+##### RolesObj:  `  Object`
 **Properties**
 
 | Name | Type | Description |
@@ -128,11 +128,11 @@ the DELETE document interface query parameters
 | [invitation] | <code>string</code> | - |
 
 
-### RepoType
-#### RepoType:  `  "local"` |  `  "remote" ` 
+## RepoType
+##### RepoType:  `  "local"` |  `  "remote" ` 
 
-### DbDetails
-#### DbDetails:  `  Object`
+## DbDetails
+##### DbDetails:  `  Object`
 **Properties**
 
 | Name | Type | Description |
@@ -147,9 +147,10 @@ the DELETE document interface query parameters
 | [schema] | <code>boolean</code> | if set to true, a schema graph will be created |
 
 
-### RemoteRepoDetails
-#### RemoteRepoDetails:  `  Object`
-{remote: "origin", "remote_branch": "main", "author": "admin", "message": "message"}
+## RemoteRepoDetails
+##### RemoteRepoDetails:  `  Object`
+{remote: "origin", "remote_branch": "main", "author":
+ "admin","message": "message"}
 
 **Properties**
 
@@ -161,8 +162,8 @@ the DELETE document interface query parameters
 | [message] | <code>string</code> | the update commit message |
 
 
-### CloneSourceDetails
-#### CloneSourceDetails:  `  Object`
+## CloneSourceDetails
+##### CloneSourceDetails:  `  Object`
 **Properties**
 
 | Name | Type | Description |

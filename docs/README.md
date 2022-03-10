@@ -1,65 +1,77 @@
-TerminusDB Client Javascript
-==========================
+[![TerminusDB JavaScript Client](https://assets.terminusdb.com/readmes/terminusdb-client-js/header.gif)][terminusdb-client-js-docs]
 
-[![Discord online](https://img.shields.io/discord/689805612053168129?color=7289da&logo=Discord&label=Discord%20chat)](https://discord.gg/yTJKAma)
-[![Discourse topics](https://img.shields.io/discourse/topics?color=yellow&logo=Discourse&server=https%3A%2F%2Fdiscuss.terminusdb.com%2F)](https://discuss.terminusdb.com/)
-[![Follow on Twitter](https://img.shields.io/twitter/follow/terminusdb?color=skyblue&label=Follow%20on%20Twitter&logo=twitter&style=flat)](https://twitter.com/TerminusDB)
+[terminusdb-client-js-docs]: https://terminusdb.github.io/terminusdb-client-js/
 
-**Development status ⚙️**
+---
 
-[![build status](https://api.travis-ci.com/terminusdb/terminusdb-client.svg?branch=main)](https://travis-ci.com/terminusdb/terminusdb-client)
-[![Coverage Status](https://coveralls.io/repos/github/terminusdb/terminusdb-client/badge.svg?branch=master)](https://coveralls.io/repos/github/terminusdb/terminusdb-client/badge.svg?branch=master)
+[![Discord](https://img.shields.io/discord/689805612053168129?label=Discord&logo=Discord&style=plastic)](https://discord.gg/yTJKAma)
+[![Discourse](https://img.shields.io/discourse/topics?color=yellow&logo=Discourse&server=https%3A%2F%2Fdiscuss.terminusdb.com%2F&style=plastic)](https://discuss.terminusdb.com/)
+[![Twitter](https://img.shields.io/twitter/follow/terminusdb?color=skyblue&label=Follow%20on%20Twitter&logo=twitter&style=flat)](https://twitter.com/TerminusDB)
 
-**NPM Package status 📦**
+[![npm version](https://img.shields.io/npm/v/@terminusdb/terminusdb-client?logo=npm)](https://www.npmjs.com/package/@terminusdb/terminusdb-client)
+[![npm downloads](https://img.shields.io/npm/dw/@terminusdb/terminusdb-client?color=red&label=npm%20package&logo=npm&style=flat)](https://www.npmjs.com/package/@terminusdb/terminusdb-client)
 
-[![npm version shields.io](https://img.shields.io/npm/v/@terminusdb/terminusdb-client?logo=npm)](https://www.npmjs.com/package/@terminusdb/terminusdb-client)
-[![PyPI download month](https://img.shields.io/npm/dw/@terminusdb/terminusdb-client?color=red&label=npm%20package&logo=npm&style=flat)](https://www.npmjs.com/package/@terminusdb/terminusdb-client)
+> This repository is for the JavaScript client library for TerminusDB and
+> TerminusX.
 
-Promise based terminus client for the browser and node.js
+[**TerminusDB**][terminusdb] is an [open-source][terminusdb-repo] graph database
+and document store. It allows you to link JSON documents in a powerful knowledge
+graph all through a simple document API.
+
+[terminusdb]: https://terminusdb.com/
+[terminusdb-docs]: https://terminusdb.com/docs/
+[terminusdb-repo]: https://github.com/terminusdb/terminusdb
+
+**TerminusX** is a self-service data platform that allows you to build, deploy,
+execute, monitor, and share versioned data products. It is built on TerminusDB.
+TerminusX is in public beta and you can [sign up now][dashboard].
+
+[dashboard]: https://dashboard.terminusdb.com/
 
 ## Requirements
 
-- [NodeJS 10+](https://nodejs.org/en/)
+- Node.js version 10+ if using the TerminusDB client library as a Node.js package
 
 ## Installation
 
-TerminusDB Client can be used as either a Node.js module available through the npm registry, or directly included in web-sites by including the script tag below.
+The TerminusDB JavaScript client library can be used either as a Node.js package
+or as a script that runs in the browser.
 
-### NPM Module
+### NPM Package
 
-Before installing, download and install Node.js.<br> 
-NodeJS version 10.X or higher is required. NodeJS version 14.X is recommended.
+> :memo: If you don't already have Node.js installed, [install it][node-install] first.
 
-Installation is done using the npm install command:
+[node-install]: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
 
-Using npm:
+To install the `terminusdb-client` package as a dependency in an existing
+package, run:
 
-```bash
+```sh
 $ npm install --save @terminusdb/terminusdb-client
 ```
 
-### Minified Script
+This command update your `package.json`.
 
-Using cdn:
+### Script
+
+To use the `terminusdb-client` script on a webpage sourced from a CDN, add this
+to your HTML:
 
 ```html
 <script src="https://unpkg.com/@terminusdb/terminusdb-client/dist/terminusdb-client.min.js"></script>
 ```
 
-Downloading:
+Alternatively, you can download the latest [`terminusdb-client.min.js`][js], add
+it to your sources, and use that in the `<script>` instead.
 
-Download the terminusdb-client.min.js file from the /dist directory and save it to your location of choice, then:
-
-```html
-<script src="http://my.saved.location/terminusdb-client.min.js"></script>
-```
+[js]: https://unpkg.com/@terminusdb/terminusdb-client/dist/terminusdb-client.min.js
 
 ## Usage
 
 This example creates a simple dataProduct, starting to create a database model the schema
 and insert a simple document
 
-For the [full Documentation](https://terminusdb.github.io/terminusdb-client-js/)
+For the [full Documentation][terminusdb-client-js-docs]
 
 ```javascript
 const TerminusClient = require("@terminusdb/terminusdb-client");
@@ -99,7 +111,7 @@ const bankerSchema = [
  
 async function createDataProduct(){
     try{
-        await client.connect()
+
         await client.createDatabase("banker", {label: "Banker Account", 
                                               comment: "Testing", schema: true})
         //add the schema documents
@@ -144,7 +156,7 @@ const client = new TerminusClient.WOQLClient("http://127.0.0.1:6363/", {
 
 ## API
 
-The API of the most recent release is documented at: <https://terminusdb.com/docs/v10.0/#/reference/reference-api>
+The TerminusDB API can be found at the [TerminusDB Documentation][terminusdb-docs].
 
 ## Report Issues
 

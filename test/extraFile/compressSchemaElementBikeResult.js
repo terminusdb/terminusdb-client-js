@@ -1,138 +1,138 @@
-module.exports=[
-   {
-      "v:Abstract":"unknown",
-      "v:Comment":{
-         "@language":"en",
-         "@value":"http://195.201.12.87:6365/pybike/schema ontology for http://195.201.12.87:6365/pybike"
-      },
-      "v:Domain":"unknown",
-      "v:Element":"http://195.201.12.87:6365/pybike",
-      "v:Label":{
-         "@language":"en",
-         "@value":"http://195.201.12.87:6365/pybike"
-      },
-      "v:Parent":"unknown",
-      "v:Range":"unknown",
-      "v:Type":"owl:Ontology"
-   },
-   {
-      "v:Abstract":"unknown",
-      "v:Comment":"unknown",
-      "v:Domain":"unknown",
-      "v:Element":"http://195.201.12.87:6365/pybike/schema#Bicycle",
-      "v:Label":{
-         "@language":"en",
-         "@value":"Bicycle"
-      },
-      "v:Parent":"tcs:Entity",
-      "v:Range":"unknown",
-      "v:Type":"owl:Class"
-   },
-   {
-      "v:Abstract":"unknown",
-      "v:Comment":"unknown",
-      "v:Domain":"unknown",
-      "v:Element":"http://195.201.12.87:6365/pybike/schema#Journey",
-      "v:Label":{
-         "@language":"en",
-         "@value":"Journey"
-      },
-      "v:Parent":"tcs:Entity",
-      "v:Range":"unknown",
-      "v:Type":"owl:Class"
-   },
-   {
-      "v:Abstract":"unknown",
-      "v:Comment":{
-         "@language":"en",
-         "@value":"A station where municipal bicycles are deposited"
-      },
-      "v:Domain":"unknown",
-      "v:Element":"http://195.201.12.87:6365/pybike/schema#Station",
-      "v:Label":{
-         "@language":"en",
-         "@value":"Bike Station"
-      },
-      "v:Parent":"tcs:Entity",
-      "v:Range":"unknown",
-      "v:Type":"owl:Class"
-   },
-   {
-      "v:Abstract":"unknown",
-      "v:Comment":"unknown",
-      "v:Domain":"http://195.201.12.87:6365/pybike/schema#Journey",
-      "v:Element":"http://195.201.12.87:6365/pybike/schema#duration",
-      "v:Label":{
-         "@language":"en",
-         "@value":"Journey Duration"
-      },
-      "v:Parent":"unknown",
-      "v:Range":"xsd:integer",
-      "v:Type":"owl:DatatypeProperty"
-   },
-   {
-      "v:Abstract":"unknown",
-      "v:Comment":"unknown",
-      "v:Domain":"http://195.201.12.87:6365/pybike/schema#Journey",
-      "v:Element":"http://195.201.12.87:6365/pybike/schema#end_station",
-      "v:Label":{
-         "@language":"en",
-         "@value":"End Station"
-      },
-      "v:Parent":"unknown",
-      "v:Range":"http://195.201.12.87:6365/pybike/schema#Station",
-      "v:Type":"owl:ObjectProperty"
-   },
-   {
-      "v:Abstract":"unknown",
-      "v:Comment":"unknown",
-      "v:Domain":"http://195.201.12.87:6365/pybike/schema#Journey",
-      "v:Element":"http://195.201.12.87:6365/pybike/schema#end_time",
-      "v:Label":{
-         "@language":"en",
-         "@value":"Time Ended"
-      },
-      "v:Parent":"unknown",
-      "v:Range":"xsd:dateTime",
-      "v:Type":"owl:DatatypeProperty"
-   },
-   {
-      "v:Abstract":"unknown",
-      "v:Comment":"unknown",
-      "v:Domain":"http://195.201.12.87:6365/pybike/schema#Journey",
-      "v:Element":"http://195.201.12.87:6365/pybike/schema#journey_bicycle",
-      "v:Label":{
-         "@language":"en",
-         "@value":"Bicycle Used"
-      },
-      "v:Parent":"unknown",
-      "v:Range":"http://195.201.12.87:6365/pybike/schema#Bicycle",
-      "v:Type":"owl:ObjectProperty"
-   },
-   {
-      "v:Abstract":"unknown",
-      "v:Comment":"unknown",
-      "v:Domain":"http://195.201.12.87:6365/pybike/schema#Journey",
-      "v:Element":"http://195.201.12.87:6365/pybike/schema#start_station",
-      "v:Label":{
-         "@language":"en",
-         "@value":"Start Station"
-      },
-      "v:Parent":"unknown",
-      "v:Range":"http://195.201.12.87:6365/pybike/schema#Station",
-      "v:Type":"owl:ObjectProperty"
-   },
-   {
-      "v:Abstract":"unknown",
-      "v:Comment":"unknown",
-      "v:Domain":"http://195.201.12.87:6365/pybike/schema#Journey",
-      "v:Element":"http://195.201.12.87:6365/pybike/schema#start_time",
-      "v:Label":{
-         "@language":"en",
-         "@value":"Time Started"
-      },
-      "v:Parent":"unknown",
-      "v:Range":"xsd:dateTime",
-      "v:Type":"owl:DatatypeProperty"
-   }
-]
+module.exports = [
+  {
+    'v:Abstract': 'unknown',
+    'v:Comment': {
+      '@language': 'en',
+      '@value': 'http://195.201.12.87:6365/pybike/schema ontology for http://195.201.12.87:6365/pybike',
+    },
+    'v:Domain': 'unknown',
+    'v:Element': 'http://195.201.12.87:6365/pybike',
+    'v:Label': {
+      '@language': 'en',
+      '@value': 'http://195.201.12.87:6365/pybike',
+    },
+    'v:Parent': 'unknown',
+    'v:Range': 'unknown',
+    'v:Type': 'owl:Ontology',
+  },
+  {
+    'v:Abstract': 'unknown',
+    'v:Comment': 'unknown',
+    'v:Domain': 'unknown',
+    'v:Element': 'http://195.201.12.87:6365/pybike/schema#Bicycle',
+    'v:Label': {
+      '@language': 'en',
+      '@value': 'Bicycle',
+    },
+    'v:Parent': 'tcs:Entity',
+    'v:Range': 'unknown',
+    'v:Type': 'owl:Class',
+  },
+  {
+    'v:Abstract': 'unknown',
+    'v:Comment': 'unknown',
+    'v:Domain': 'unknown',
+    'v:Element': 'http://195.201.12.87:6365/pybike/schema#Journey',
+    'v:Label': {
+      '@language': 'en',
+      '@value': 'Journey',
+    },
+    'v:Parent': 'tcs:Entity',
+    'v:Range': 'unknown',
+    'v:Type': 'owl:Class',
+  },
+  {
+    'v:Abstract': 'unknown',
+    'v:Comment': {
+      '@language': 'en',
+      '@value': 'A station where municipal bicycles are deposited',
+    },
+    'v:Domain': 'unknown',
+    'v:Element': 'http://195.201.12.87:6365/pybike/schema#Station',
+    'v:Label': {
+      '@language': 'en',
+      '@value': 'Bike Station',
+    },
+    'v:Parent': 'tcs:Entity',
+    'v:Range': 'unknown',
+    'v:Type': 'owl:Class',
+  },
+  {
+    'v:Abstract': 'unknown',
+    'v:Comment': 'unknown',
+    'v:Domain': 'http://195.201.12.87:6365/pybike/schema#Journey',
+    'v:Element': 'http://195.201.12.87:6365/pybike/schema#duration',
+    'v:Label': {
+      '@language': 'en',
+      '@value': 'Journey Duration',
+    },
+    'v:Parent': 'unknown',
+    'v:Range': 'xsd:integer',
+    'v:Type': 'owl:DatatypeProperty',
+  },
+  {
+    'v:Abstract': 'unknown',
+    'v:Comment': 'unknown',
+    'v:Domain': 'http://195.201.12.87:6365/pybike/schema#Journey',
+    'v:Element': 'http://195.201.12.87:6365/pybike/schema#end_station',
+    'v:Label': {
+      '@language': 'en',
+      '@value': 'End Station',
+    },
+    'v:Parent': 'unknown',
+    'v:Range': 'http://195.201.12.87:6365/pybike/schema#Station',
+    'v:Type': 'owl:ObjectProperty',
+  },
+  {
+    'v:Abstract': 'unknown',
+    'v:Comment': 'unknown',
+    'v:Domain': 'http://195.201.12.87:6365/pybike/schema#Journey',
+    'v:Element': 'http://195.201.12.87:6365/pybike/schema#end_time',
+    'v:Label': {
+      '@language': 'en',
+      '@value': 'Time Ended',
+    },
+    'v:Parent': 'unknown',
+    'v:Range': 'xsd:dateTime',
+    'v:Type': 'owl:DatatypeProperty',
+  },
+  {
+    'v:Abstract': 'unknown',
+    'v:Comment': 'unknown',
+    'v:Domain': 'http://195.201.12.87:6365/pybike/schema#Journey',
+    'v:Element': 'http://195.201.12.87:6365/pybike/schema#journey_bicycle',
+    'v:Label': {
+      '@language': 'en',
+      '@value': 'Bicycle Used',
+    },
+    'v:Parent': 'unknown',
+    'v:Range': 'http://195.201.12.87:6365/pybike/schema#Bicycle',
+    'v:Type': 'owl:ObjectProperty',
+  },
+  {
+    'v:Abstract': 'unknown',
+    'v:Comment': 'unknown',
+    'v:Domain': 'http://195.201.12.87:6365/pybike/schema#Journey',
+    'v:Element': 'http://195.201.12.87:6365/pybike/schema#start_station',
+    'v:Label': {
+      '@language': 'en',
+      '@value': 'Start Station',
+    },
+    'v:Parent': 'unknown',
+    'v:Range': 'http://195.201.12.87:6365/pybike/schema#Station',
+    'v:Type': 'owl:ObjectProperty',
+  },
+  {
+    'v:Abstract': 'unknown',
+    'v:Comment': 'unknown',
+    'v:Domain': 'http://195.201.12.87:6365/pybike/schema#Journey',
+    'v:Element': 'http://195.201.12.87:6365/pybike/schema#start_time',
+    'v:Label': {
+      '@language': 'en',
+      '@value': 'Time Started',
+    },
+    'v:Parent': 'unknown',
+    'v:Range': 'xsd:dateTime',
+    'v:Type': 'owl:DatatypeProperty',
+  },
+];

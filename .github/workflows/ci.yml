@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+
+  skip_if_running:
+    name: Skip job if already running
+    runs-on: ubuntu-latest
+
+    outputs:
+      skip: ${{ steps.check_skip.outputs.should_skip }}
+
+    steps:
+      - uses: fkirc/skip-duplicate-actions@master
+        id: check_skip
+        with:
+          concurrent_skipping: same_content_newer
+          do_not_skip: '["push", "workflow_dispatch"]'
+
+  all_checks:
+    name: All checks
+    runs-on: ubuntu-latest
+
+    needs: skip_if_running
+    if: needs.skip_if_running.outputs.skip != 'true'
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 14
+    - name: Install and test
+      run: npm install-ci-test
+    - name: Build
+      run: npm run build
+    - name: Lint
+      run: npm run lint:check
+    - name: Check for changes to docs
+      run: |
+        npm run mkdocs
+        git diff --exit-code
