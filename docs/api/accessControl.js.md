@@ -8,7 +8,7 @@ The AccessControl object has various methods to control the access for users.
 for the credential you can use the JWT token or the API token
 
 **Example**  
-```js
+```javascript
 //connect with the API token
 //(to request a token create an account in  https://terminusdb.com/)
 const accessContol = new AccessControl("https://servername.com",
@@ -92,7 +92,7 @@ IMPORTANT This does not work with the API-TOKEN.
 | orgName | <code>string</code> | The organization name to create |
 
 **Example**  
-```js
+```javascript
 accessControl.createOrganization("my_org_name").then(result=>{
      console.log(result)
 })
@@ -122,7 +122,7 @@ Get the pending invitations list.
 | [orgName] | <code>string</code> | The organization name. |
 
 **Example**  
-```js
+```javascript
 const invitationList = accessControl.getPendingOrgInvites().then(result=>{
    console.log(invitationList)
 
@@ -152,7 +152,7 @@ Send a new invitation
 | [orgName] | <code>string</code> | The organization name. |
 
 **Example**  
-```js
+```javascript
 accessControl.sendOrgInvite("new_user@terminusdb.com","Role/admin",
 "please join myteam").then(result=>{
    console.log(result)
@@ -171,7 +171,7 @@ Get the invitation info
 | [orgName] | <code>string</code> | The organization name. |
 
 **Example**  
-```js
+```javascript
 const fullInviteId="Organization/my_team_name/invitations/Invitation/7ad0c9eb82b6175bcda9c0dfc
 2ac51161ef5ba7cb0988d992c4bce82b3fa5d25"
 accessControl.getOrgInvite(fullInviteId).then(result=>{
@@ -191,7 +191,7 @@ Delete an invitation
 | [orgName] | <code>string</code> | The organization name. |
 
 **Example**  
-```js
+```javascript
 const fullInviteId="Organization/my_team_name/invitations/Invitation/7ad0c9eb82b6175bcda9
 c0dfc2ac51161ef5ba7cb0988d992c4bce82b3fa5d25"
 accessControl.deleteOrgInvite(fullInviteId).then(result=>{
@@ -216,7 +216,7 @@ we indentify the user with the jwt token
 | [orgName] | <code>string</code> | The organization name. |
 
 **Example**  
-```js
+```javascript
 const fullInviteId="Organization/my_team_name/invitations/Invitation/7ad0c9eb82b6175bcda9
 c0dfc2ac51161ef5ba7cb0988d992c4bce82b3fa5d25"
 accessControl.updateOrgInviteStatus(fullInviteId,true).then(result=>{
@@ -235,7 +235,7 @@ Get all the organization's users and roles
 | [orgName] | <code>string</code> | The organization name. |
 
 **Example**  
-```js
+```javascript
 accessControl.getOrgUsers().then(result=>{
  console.log(result)
 })
@@ -261,7 +261,7 @@ Remove an user from an organization, only an admin user can remove an user from 
 | [orgName] | <code>string</code> | The organization name in which the user is to be removed. |
 
 **Example**  
-```js
+```javascript
 accessControl.removeUserFromOrg("User/auth0%7C613f5dnndjdjkTTT","my_org_name").then(result=>{
  console.log(result)
 })
@@ -279,7 +279,7 @@ Get the user's role for every databases under the organization
 | [orgName] | <code>string</code> | The organization name. |
 
 **Example**  
-```js
+```javascript
 accessControl.getDatabaseRolesOfUser('User/auth0%7C61790e366377Yu6596a').then(result=>{
      console.log(result)
 })
@@ -315,7 +315,7 @@ Create a user's a role for a resource (organization/database)
 | [orgName] | <code>string</code> | The organization name. |
 
 **Example**  
-```js
+```javascript
 const dbId = "UserDatabase/acfcc2db02b83792sssb15239ccdf586fc5b176846ffe4878b1aea6a36c8f"
 accessControl.assignUserRole('User/auth0%7C61790e11a3966d006906596a',dbId,
 "Role/collaborator").then(result=>{
@@ -339,7 +339,7 @@ Update user's a role for a resource (organization/database)
 | [orgName] | <code>string</code> | The organization name. |
 
 **Example**  
-```js
+```javascript
 const dbId = "UserDatabase/acfcc2db02b83792sssb15239ccdf586fc5b176846ffe4878b1aea6a36c8f"
 const capId= "Capability/b395e8523d509dec6b33aefc9baed3b2e2bfadbd4c79d4ff9b20dce2b14e2edc"
 accessControl.updateUserRole('User/auth0%7C61790e11a3966d006906596a',capId,dbId,
@@ -360,7 +360,7 @@ Get all the access request list for a specify organization
 | [orgName] | <code>string</code> | The organization name. |
 
 **Example**  
-```js
+```javascript
 accessControl.accessRequestsList().then(result=>{
  console.log(result)
 })
@@ -380,7 +380,7 @@ Get all the access request list for a specify organization
 | [orgName] | <code>string</code> | The organization name. |
 
 **Example**  
-```js
+```javascript
 accessControl.sendAccessRequest("myemail@terminusdb.com",
  "my_company",
  "please add me to your team"
@@ -400,7 +400,7 @@ Delete an access request to join your team, only an admin user can delete it
 | [orgName] | <code>string</code> | The organization name. |
 
 **Example**  
-```js
+```javascript
 accessControl.deleteAccessRequest("djjdshhsuuwewueueuiHYHYYW.......").then(result=>{
  console.log(result)
 })
