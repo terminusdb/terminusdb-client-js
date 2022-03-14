@@ -7,7 +7,7 @@
 Library Functions to manage the commits graph
 
 **Example**  
-```js
+```javascript
 const woqlLib = WOQLLibrary()
  woqlLib.branches()
 

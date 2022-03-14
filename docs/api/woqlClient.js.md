@@ -19,7 +19,7 @@ with a TerminusDB server API, the WOQLClient class is all you will need.
 | [params] | <code>typedef.ParamsObj</code> | an object with the connection parameters |
 
 **Example**  
-```js
+```javascript
 //to connect with your local terminusDB
 const client = new TerminusClient.WOQLClient(SERVER_URL,{user:"admin",key:"myKey"})
 async function getSchema() {
@@ -69,7 +69,7 @@ or the promise will be rejected.
 | [params] | <code>typedef.ParamsObj</code> | TerminusDB Server connection parameters |
 
 **Example**  
-```js
+```javascript
 client.connect()
 ```
 
@@ -86,7 +86,7 @@ Creates a new database in TerminusDB server
 | [orgId] | <code>string</code> | optional organization id - if absent default local organization id is used |
 
 **Example**  
-```js
+```javascript
 //remember set schema:true if you need to add a schema graph
 client.createDatabase("mydb", {label: "My Database", comment: "Testing", schema: true})
 ```
@@ -104,7 +104,7 @@ Deletes a database from a TerminusDB server
 | [force] | <code>boolean</code> |  |
 
 **Example**  
-```js
+```javascript
 client.deleteDatabase("mydb")
 ```
 
@@ -122,7 +122,7 @@ or an Error if rejected.
 | graphType | <code>typedef.GraphType</code> | type of graph to get triples from, either “instance” or  “schema” |
 
 **Example**  
-```js
+```javascript
 const turtle = await client.getTriples("schema", "alt")
 ```
 
@@ -140,7 +140,7 @@ in the turtle (ttl) format
 | commitMsg | <code>string</code> | Textual message describing the reason for the update |
 
 **Example**  
-```js
+```javascript
 client.updateTriples("schema", "alt", turtle_string, "dumping triples to graph alt")
 ```
 
@@ -159,7 +159,7 @@ Executes a WOQL query on the specified database and returns the results
 | [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion |
 
 **Example**  
-```js
+```javascript
 const result = await client.query(WOQL.star())
 ```
 
@@ -176,7 +176,7 @@ Clones a remote repo and creates a local copy
 | [orgId] | <code>string</code> | id of the local organization that the new cloned database will be created in (in desktop mode this is always “admin”) |
 
 **Example**  
-```js
+```javascript
 client.clonedb({remote_url: "https://my.terminusdb.com/myorg/mydb", label "Cloned DB", comment: "Cloned from mydb"}, newid: "mydb")
 ```
 
@@ -193,7 +193,7 @@ the client (branch / ref)
 | [isEmpty] | <code>boolean</code> | if isEmpty is true it will create a empty branch. |
 
 **Example**  
-```js
+```javascript
 client.branch("dev")
 ```
 
@@ -208,7 +208,7 @@ Merges the passed branch into the current one using the rebase operation
 | rebaseSource | <code>object</code> | json describing the source branch to be used as a base |
 
 **Example**  
-```js
+```javascript
 //from the branch head
 client.rebase({rebase_from: "admin/db_name/local/branch/branch_name", message:
 "Merging from dev")
@@ -228,7 +228,7 @@ Pull changes from a branch on a remote database to a branch on a local database
 | remoteSourceRepo | <code>typedef.RemoteRepoDetails</code> | an object describing the source of the pull |
 
 **Example**  
-```js
+```javascript
 client.pull({remote: "origin", remote_branch: "main", message: "Pulling from remote"})
 ```
 
@@ -243,7 +243,7 @@ Push changes from a branch on a local database to a branch on a remote database
 | remoteTargetRepo | <code>typedef.RemoteRepoDetails</code> | an object describing the target of the push {remote: "origin", "remote_branch": "main", "author": "admin", "message": "message"} |
 
 **Example**  
-```js
+```javascript
 client.push({remote: "origin", remote_branch: "main", message: "Pulling from remote"})
 ```
 
@@ -301,7 +301,7 @@ the current client context
 **Returns**: [<code>WOQLClient</code>](#WOQLClient) - new client object with identical state to original but
 which can be manipulated independently  
 **Example**  
-```js
+```javascript
 let newClient = client.copy()
 ```
 
@@ -318,7 +318,7 @@ Retrieve the URL of the server’s API base that we are currently connected to
 **Returns**: <code>string</code> - the URL of the TerminusDB server api endpoint we are connected
 to (typically server() + “api/”)  
 **Example**  
-```js
+```javascript
 let api_url = client.api()
 ```
 
@@ -333,7 +333,7 @@ name the databases list will be set to empty
 | [orgId] | <code>string</code> \| <code>boolean</code> | the organization id to set the context to |
 
 **Example**  
-```js
+```javascript
 client.organization("admin")
 ```
 
@@ -344,7 +344,7 @@ Gets the organization's databases list.
 If no organization has been set up, the function throws an exception
 
 **Example**  
-```js
+```javascript
 async function callGetDatabases(){
      const dbList = await client.getDatabases()
      console.log(dbList)
@@ -363,7 +363,7 @@ user has access to on the server.
 | [dbList] | <code>array</code> | a list of databases the user has access to on the server, each having: |
 
 **Example**  
-```js
+```javascript
 //to get the list of all organization's databases
 async function callGetDatabases(){
      await client.getDatabases()
@@ -404,7 +404,7 @@ Sets / Gets the current database
 | [dbId] | <code>string</code> | the database id to set the context to |
 
 **Example**  
-```js
+```javascript
 client.db("mydb")
 ```
 
@@ -424,7 +424,7 @@ Gets / Sets the client’s internal repository context value (defaults to ‘loc
 | [repoId] | <code>typedef.RepoType</code> \| <code>string</code> | default value is local |
 
 **Example**  
-```js
+```javascript
 client.repo("origin")
 ```
 
@@ -451,7 +451,7 @@ Reference ID or Commit ID are unique hashes that are created whenever a new comm
 | [commitId] | <code>string</code> | the reference ID or commit ID |
 
 **Example**  
-```js
+```javascript
 client.ref("mkz98k2h3j8cqjwi3wxxzuyn7cr6cw7")
 ```
 
@@ -465,7 +465,7 @@ Sets/Gets set the database basic connection credential
 | [newCredential] | <code>typedef.CredentialObj</code> | 
 
 **Example**  
-```js
+```javascript
 client.localAuth({user:"admin","key":"mykey","type":"basic"})
 ```
 
@@ -480,7 +480,7 @@ we need this to connect 2 terminusdb server to each other for push, pull, clone 
 | [newCredential] | <code>typedef.CredentialObj</code> | 
 
 **Example**  
-```js
+```javascript
 client.remoteAuth({"key":"dhfmnmjglkrelgkptohkn","type":"jwt"})
 ```
 
@@ -490,7 +490,7 @@ Gets the string that will be written into the commit log for the current user
 
 **Returns**: <code>string</code> - the current user  
 **Example**  
-```js
+```javascript
 client.author()
 ```
 
@@ -502,7 +502,7 @@ client.author()
 | params | <code>typedef.ParamsObj</code> | a object with connection params |
 
 **Example**  
-```js
+```javascript
 sets several of the internal state values in a single call
 (similar to connect, but only sets internal client state, does not communicate with server)
 client.set({key: "mypass", branch: "dev", repo: "origin"})
@@ -521,7 +521,7 @@ of the current context for "commits" "meta" "branch" and "ref" special resources
 | [resourceId] | <code>string</code> | can be used to specify a specific branch / ref - if not supplied the current context will be used |
 
 **Example**  
-```js
+```javascript
 const branch_resource = client.resource("branch")
 ```
 
@@ -568,7 +568,7 @@ Gets TerminusDB Server Information
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 **Example**  
-```js
+```javascript
 client.info()
 ```
 
@@ -703,7 +703,7 @@ to add a new document or a list of new documents into the instance or the schema
 | [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion. |
 
 **Example**  
-```js
+```javascript
 const json = [{ "@type" : "Class",
              "@id" : "Coordinate",
              "@key" : { '@type' : 'Hash',
@@ -736,7 +736,7 @@ Retrieves all documents that match a given document template
 | [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion. |
 
 **Example**  
-```js
+```javascript
 const query = {
   "type": "Person",
   "query": { "age": 42 },
@@ -757,7 +757,7 @@ client.queryDocument(query,{"as_list":true})
 | [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion. |
 
 **Example**  
-```js
+```javascript
 //return the schema graph as a json array
 client.getDocument({"graph_type":"schema","as_list":true})
 
@@ -794,7 +794,7 @@ to delete the document
 | [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion |
 
 **Example**  
-```js
+```javascript
 client.deleteDocument({"graph_type":"schema",id:['Country','Coordinate'])
 ```
 
@@ -810,7 +810,7 @@ The purpose of this method is to quickly discover the supported fields of a part
 | [dbId] | <code>string</code> | the database id |
 
 **Example**  
-```js
+```javascript
 client.getSchemaFrame("Country")
 ```
 
@@ -826,7 +826,7 @@ get the database schema in json format
 | [branch] | <code>string</code> | specific a branch/collection |
 
 **Example**  
-```js
+```javascript
 client.getSchema()
 ```
 
@@ -841,7 +841,7 @@ get all the schema classes (documents,subdocuments,abstracts)
 | [dbId] | <code>string</code> | the database id |
 
 **Example**  
-```js
+```javascript
 client.getClasses()
 ```
 
@@ -856,7 +856,7 @@ get all the Enum Objects
 | [dbId] | <code>string</code> | 
 
 **Example**  
-```js
+```javascript
 client.getEnums()
 ```
 
@@ -871,7 +871,7 @@ get all the Document Classes (no abstract or subdocument)
 | [dbId] | <code>string</code> | 
 
 **Example**  
-```js
+```javascript
 client.getClassDocuments()
 ```
 
@@ -886,7 +886,7 @@ get the database collections list
 | [dbId] | <code>string</code> | the database id |
 
 **Example**  
-```js
+```javascript
 client.getBranches()
 ```
 
@@ -896,7 +896,7 @@ Get the list of the user's organizations and the database related
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 **Example**  
-```js
+```javascript
 async funtion callGetUserOrganizations(){
      await getUserOrganizations()
      console.log(client.userOrganizations())
@@ -914,7 +914,7 @@ Get/Set the list of the user's organizations (id, organization, label, comment).
 | [orgList] | <code>array</code> | a list of user's Organization |
 
 **Example**  
-```js
+```javascript
 async funtion callGetUserOrganizations(){
      await client.getUserOrganizations()
      console.log(client.userOrganizations())
@@ -933,7 +933,7 @@ Get the patch of difference between two documents.
 | after | <code>object</code> | The updated state of JSON document |
 
 **Example**  
-```js
+```javascript
 const diff = await client.getDiff(
      { "@id": "Person/Jane", "@type": "Person", name: "Jane" },
      { "@id": "Person/Jane", "@type": "Person", name: "Janine" }
@@ -952,7 +952,7 @@ Patch the difference between two documents.
 | patch | <code>object</code> | The patch object |
 
 **Example**  
-```js
+```javascript
 let diffPatch = await client.getDiff(
      { "@id": "Person/Jane", "@type": "Person", name: "Jane" },
      { "@id": "Person/Jane", "@type": "Person", name: "Janine" }

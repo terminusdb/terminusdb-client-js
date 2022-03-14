@@ -153,7 +153,7 @@ function setHeadings(sFileNm, sMD) {
  * 2. Expression "~~" renders text as strikethrough for highlighting deprecations.
  * 3. Inconsistent use of constants requires a fix.
  */
-  
+
   const cHdrLv = '##### ';
   const cWOQL = 'WOQL.';
   const cWOQLClient = 'woqlClient.';
@@ -162,13 +162,13 @@ function setHeadings(sFileNm, sMD) {
 
   // No action for sidebar (code to create sidebar can be deprecated.)
 
-  if (sFileNm.match('sidebar')) 
-    return sMD;
-  
+  if (sFileNm.match('sidebar')) { return sMD; }
+
   // Specify syntax ("js" not recognized by GitBook.)
 
-  sMD = sMD.replace(/```js/g, "```javascript")
-  
+  // eslint-disable-next-line no-param-reassign
+  sMD = sMD.replace(/```js/g, '```javascript');
+
   // Simplified pattern for type definitions.
 
   if (sFileNm.match('typedef.js')) {
