@@ -375,7 +375,7 @@ Imports the value identified by Source to a Target variable
 
 **Example**  
 ```javascript
-WOQL.as("first var", "v:First_Var",{} "string").as("second var", "v:Second_Var")
+WOQL.as("first var", "v:First_Var", "string").as("second var", "v:Second_Var")
  WOQL.as(["first var", "v:First_Var", "string"], ["second var", "v:Second_Var"])
 ```
 
@@ -1118,7 +1118,7 @@ Performs a path regular expression match on the graph
 **Example**  
 ```javascript
 let [person, grand_uncle, lineage] = vars("person", "grand uncle", "lineage")
-path(person, ((father|mother) {2,2}), brother), grand_uncle, lineage)
+path(person, "((father|mother) {2,2}), brother)", grand_uncle, lineage)
 ```
 
 ## size
