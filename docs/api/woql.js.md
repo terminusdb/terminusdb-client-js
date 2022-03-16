@@ -33,7 +33,8 @@ Query running against any specific commit Id
 
 **Example**  
 ```javascript
-WOQL.using("userName/dbName/local/commit|branch/commitID").triple("v:A", "v:B", "v:C")
+let [a,b,c] = vars("a", "b", "c");
+WOQL.using("userName/dbName/local/commit|branch/commitID").triple(a, b, c)
 ```
 
 ## comment
@@ -56,7 +57,8 @@ Adds a text comment to a query - can also be used to wrap any part of a query to
 
 **Example**  
 ```javascript
-WOQL.select("v:a",triple("v:a","v:b","v:c"))
+let [a,b,c] = vars("a", "b", "c");
+WOQL.select(a,triple(a, b, c))
 Filters the query so that only the variables included in [V1...Vn] are returned in the bindings
 ```
 
@@ -83,13 +85,12 @@ Logical conjunction of the contained queries - all queries must match or the ent
 **Example**  
 ```javascript
 //find triples that are of type scm:Journey, and have
-//a start_station v:Start, and that start_station is labeled
-//v:Start_Label
-
+//a start_station Start, and that start_station is labeled Start_Label
+let [Journey, Start, Start_Label] = vars("Journey", "Start", "Start_Label")
 WOQL.and(
-     WOQL.triple("v:Journey", "type", "scm:Journey"),
-     WOQL.triple("v:Journey", "start_station", "v:Start"),
-     WOQL.triple("v:Start", "label", "v:Start_Label"))
+     WOQL.triple(Journey, "type", "scm:Journey"),
+     WOQL.triple(Journey, "start_station", Start),
+     WOQL.triple(Start, "label", Start_Label))
 ```
 
 ## read_object
@@ -112,9 +113,10 @@ Read a node identified by an IRI as a JSON-LD document
 
 **Example**  
 ```javascript
+let [person] = vars("Person")
 const query = WOQL.read_document(
      "Person/0b4feda109d9d13c9da809090b342ad9e4d8185545ce05f7cd20b97fe458f547",
-     "v:Person"
+    person
 );
 const res =  await client.query(query);
 ```
@@ -172,9 +174,10 @@ Creates a logical OR of the arguments
 
 **Example**  
 ```javascript
+let [Subject] = vars("Subject")
 or(
-  triple("v:Subject", 'label', "A"),
-  triple("v:Subject", "label", "a")
+  triple(Subject, 'label', "A"),
+  triple(Subject, "label", "a")
  )
 ```
 
@@ -375,8 +378,9 @@ Imports the value identified by Source to a Target variable
 
 **Example**  
 ```javascript
-WOQL.as("first var", "v:First_Var",{} "string").as("second var", "v:Second_Var")
- WOQL.as(["first var", "v:First_Var", "string"], ["second var", "v:Second_Var"])
+let [First_Var, Second_Var] = vars('First_Var', 'Second_Var');
+ WOQL.as("first var", First_Var, "string").as("second var", Second_Var)
+ WOQL.as(["first var", First_Var, "string"], ["second var", Second_Var])
 ```
 
 ## remote
@@ -505,7 +509,8 @@ Remove whitespace from both sides of a string:
 
 **Example**  
 ```javascript
-trim("hello   ","v:trimmed")
+let [trimmed] = vars("trimmed");
+trim("hello   ",trimmed)
 //trimmed contains "hello"
 ```
 
@@ -522,7 +527,8 @@ Evaluates the passed arithmetic expression and generates or matches the result v
 
 **Example**  
 ```javascript
-evaluate(plus(2, minus(3, 1)), "v:result")
+let [result] = vars("result")
+evaluate(plus(2, minus(3, 1)), result)
 ```
 
 ## plus
@@ -537,7 +543,8 @@ Adds the numbers together
 
 **Example**  
 ```javascript
-evaluate(plus(2, plus(3, 1)), "v:result")
+let [result] = vars("result")
+evaluate(plus(2, plus(3, 1)), result)
 ```
 
 ## minus
@@ -552,7 +559,8 @@ Subtracts Numbers N1..Nn
 
 **Example**  
 ```javascript
-evaluate(minus(2.1, plus(0.2, 1)), "v:result")
+let [result] = vars("result")
+evaluate(minus(2.1, plus(0.2, 1)), result)
 ```
 
 ## times
@@ -567,7 +575,8 @@ Multiplies numbers N1...Nn together
 
 **Example**  
 ```javascript
-evaluate(times(10, minus(2.1, plus(0.2, 1))), "v:result")
+let [result] = vars("result")
+evaluate(times(10, minus(2.1, plus(0.2, 1))), result)
  //result contains 9.000000000000002y
 ```
 
@@ -576,7 +585,8 @@ evaluate(times(10, minus(2.1, plus(0.2, 1))), "v:result")
 Divides numbers N1...Nn by each other left, to right precedence
 
 **Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the division expression
-evaluate(divide(times(10, minus(2.1, plus(0.2, 1))), 10), "v:result")
+let [result] = vars("result")
+evaluate(divide(times(10, minus(2.1, plus(0.2, 1))), 10), result)
  //result contains 0.9000000000000001  
 
 | Param | Type | Description |
@@ -614,7 +624,8 @@ Exponent - raises varNum01 to the power of varNum02
 
 **Example**  
 ```javascript
-evaluate(exp(3, 2), "v:result")
+let [result] = vars("result")
+evaluate(exp(3, 2), result)
 //result contains 9
 ```
 
@@ -684,7 +695,8 @@ Compares the value of v1 against v2 and returns true if v1 is less than v2
 
 **Example**  
 ```javascript
-less(1, 1.1).eq("v:result", literal(true, "boolean"))
+let [result] = vars("result")
+less(1, 1.1).eq(result, literal(true, "boolean"))
 //result contains true
 ```
 
@@ -701,7 +713,8 @@ Compares the value of v1 against v2 and returns true if v1 is greater than v2
 
 **Example**  
 ```javascript
-greater(1.2, 1.1).eq("v:result", literal(true, "boolean"))
+let [result] = vars("result")
+greater(1.2, 1.1).eq(result, literal(true, "boolean"))
 //result contains true
 ```
 
@@ -738,7 +751,8 @@ given combination of variables
 
 **Example**  
 ```javascript
-unique("doc:Person", ["John", "Smith"], "v:newid")
+let [newid] = vars("newid")
+unique("doc:Person", ["John", "Smith"], newid)
 ```
 
 ## idgen
@@ -772,7 +786,8 @@ Changes a string to upper-case
 
 **Example**  
 ```javascript
-upper("aBCe", "v:allcaps")
+let [allcaps] = vars("allcaps")
+upper("aBCe", allcaps)
 //upper contains "ABCE"
 ```
 
@@ -829,7 +844,8 @@ Splits a string (Input) into a list strings (Output) by removing separator
 
 **Example**  
 ```javascript
-split("joe has a hat", " ", "v:words")
+let [words] = vars("words")
+split("joe has a hat", " ", words)
 ```
 
 ## member
@@ -862,7 +878,8 @@ takes a variable number of string arguments and concatenates them into a single 
 
 **Example**  
 ```javascript
-concat(["v:first_name", " ", "v:last_name"], "v:full_name")
+let [first_name, last_name] = vars("first_name", "last_name")
+concat([first_name, " ", last_name], full_name)
 WOQL.concat(["first_name", " ", "last_name"], "full_name")
 //both versions work
 ```
@@ -882,7 +899,8 @@ together with Glue
 
 **Example**  
 ```javascript
-join(["joe", "has", "a", "hat", " ", "v:sentence")
+let [sentence] = vars("sentence")
+join(["joe", "has", "a", "hat", " ", sentence)
 ```
 
 ## sum
@@ -899,7 +917,8 @@ sum self-evaluates - it does not have to be passed to evaluate()
 
 **Example**  
 ```javascript
-sum([2, 3, 4, 5], "v:total")
+let [total] = vars("total")
+sum([2, 3, 4, 5], total)
 ```
 
 ## start
@@ -956,7 +975,8 @@ matching expression
 
 **Example**  
 ```javascript
-WOQL.re("h(.).*", "hello", ["v:All", "v:Sub"])
+let [All, Sub] = vars("All", "Sub")
+WOQL.re("h(.).*", "hello", [All, Sub])
 //e contains 'e', llo contains 'llo'
 //p is a regex pattern (.*) using normal regular expression syntax, the only unusual
 thing is that special characters have to be escaped twice, s is the string to be matched
@@ -1032,7 +1052,8 @@ Creates a count of the results of the query
 
 **Example**  
 ```javascript
-WOQL.count("v:count").triple("v:Person","type","scm:Person")
+let [count, Person] = vars("count", "Person")
+WOQL.count(count).triple(Person,"type","scm:Person")
 ```
 
 ## typecast
@@ -1049,7 +1070,8 @@ Casts the value of Input to a new value of type Type and stores the result in Ca
 
 **Example**  
 ```javascript
-cast("22/3/98", "xsd:dateTime", "v:time")
+let [time] = vars("time")
+cast("22/3/98", "xsd:dateTime", time)
 ```
 
 ## order_by
@@ -1064,7 +1086,8 @@ Orders the results of the contained subquery by a precedence list of variables
 
 **Example**  
 ```javascript
-WOQL.order_by("v:A", ["v:B", "asc"], ["v:C", "desc"]).triple("v:A", "v:B", "v:C");
+let [A, B, C] = vars("A", "B", "C")
+WOQL.order_by(A, [B, "asc"], [C, "desc"]).triple(A, B, C);
 ```
 
 ## group_by
@@ -1118,7 +1141,7 @@ Performs a path regular expression match on the graph
 **Example**  
 ```javascript
 let [person, grand_uncle, lineage] = vars("person", "grand uncle", "lineage")
-path(person, ((father|mother) {2,2}), brother), grand_uncle, lineage)
+path(person, "((father|mother) {2,2}), brother)", grand_uncle, lineage)
 ```
 
 ## size
@@ -1133,7 +1156,8 @@ Calculates the size in bytes of the contents of the resource identified in Resou
 
 **Example**  
 ```javascript
-size("admin/minecraft/local/branch/main/instance/main", "v:varSize")
+let [varSize] = vars("varSize")
+size("admin/minecraft/local/branch/main/instance/main", varSize)
 //returns the number of bytes in the main instance graph on the main branch
 ```
 
@@ -1150,7 +1174,8 @@ Calculates the number of triples of the contents of the resource identified in R
 
 **Example**  
 ```javascript
-triple_count("admin/minecraft/local/_commits", "v:count")
+let [count] = vars("count")
+triple_count("admin/minecraft/local/_commits", count)
 //returns the number of bytes in the local commit graph
 ```
 
