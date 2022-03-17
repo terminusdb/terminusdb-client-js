@@ -378,7 +378,7 @@ Imports the value identified by Source to a Target variable
 
 **Example**  
 ```javascript
-let [First_Var, Second_Var] = vars('First_Var', 'Second_Var');
+let [First_Var, Second_Var] = vars('First_Var', 'Second_Var')
  WOQL.as("first var", First_Var, "string").as("second var", Second_Var)
  WOQL.as(["first var", First_Var, "string"], ["second var", Second_Var])
 ```
@@ -509,7 +509,7 @@ Remove whitespace from both sides of a string:
 
 **Example**  
 ```javascript
-let [trimmed] = vars("trimmed");
+let [trimmed] = vars("trimmed")
 trim("hello   ",trimmed)
 //trimmed contains "hello"
 ```
@@ -878,7 +878,7 @@ takes a variable number of string arguments and concatenates them into a single 
 
 **Example**  
 ```javascript
-let [first_name, last_name] = vars("first_name", "last_name")
+let [first_name, last_name, full_name] = vars("first_name", "last_name", "full_name")
 concat([first_name, " ", last_name], full_name)
 WOQL.concat(["first_name", " ", "last_name"], "full_name")
 //both versions work
@@ -1053,7 +1053,7 @@ Creates a count of the results of the query
 **Example**  
 ```javascript
 let [count, Person] = vars("count", "Person")
-WOQL.count(count).triple(Person,"type","scm:Person")
+WOQL.count(count).triple(Person, "type", "scm:Person")
 ```
 
 ## typecast
