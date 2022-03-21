@@ -880,8 +880,6 @@ takes a variable number of string arguments and concatenates them into a single 
 ```javascript
 let [first_name, last_name, full_name] = vars("first_name", "last_name", "full_name")
 concat([first_name, " ", last_name], full_name)
-WOQL.concat(["first_name", " ", "last_name"], "full_name")
-//both versions work
 ```
 
 ## join
