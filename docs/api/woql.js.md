@@ -33,7 +33,7 @@ Query running against any specific commit Id
 
 **Example**  
 ```javascript
-let [a,b,c] = vars("a", "b", "c");
+let [a, b, c] = vars("a", "b", "c")
 WOQL.using("userName/dbName/local/commit|branch/commitID").triple(a, b, c)
 ```
 
@@ -57,8 +57,8 @@ Adds a text comment to a query - can also be used to wrap any part of a query to
 
 **Example**  
 ```javascript
-let [a,b,c] = vars("a", "b", "c");
-WOQL.select(a,triple(a, b, c))
+let [a, b, c] = vars("a", "b", "c")
+WOQL.select(a, triple(a, b, c))
 Filters the query so that only the variables included in [V1...Vn] are returned in the bindings
 ```
 
@@ -379,8 +379,8 @@ Imports the value identified by Source to a Target variable
 **Example**  
 ```javascript
 let [First_Var, Second_Var] = vars('First_Var', 'Second_Var')
- WOQL.as("first var", First_Var, "string").as("second var", Second_Var)
- WOQL.as(["first var", First_Var, "string"], ["second var", Second_Var])
+WOQL.as("first var", First_Var, "string").as("second var", Second_Var)
+WOQL.as(["first var", First_Var, "string"], ["second var", Second_Var])
 ```
 
 ## remote
@@ -510,7 +510,7 @@ Remove whitespace from both sides of a string:
 **Example**  
 ```javascript
 let [trimmed] = vars("trimmed")
-trim("hello   ",trimmed)
+trim("hello   ", trimmed)
 //trimmed contains "hello"
 ```
 
