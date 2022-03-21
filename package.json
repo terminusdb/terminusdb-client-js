@@ -25,6 +25,7 @@
     "babel-polyfill": "^6.26.0",
     "follow-redirects": ">=1.14.8",
     "form-data": "^4.0.0",
+    "istanbul": "^0.4.5",
     "node-forge": ">=1.0.0",
     "pathval": ">=1.1.1",
     "underscore": ">=1.13.2"
@@ -67,7 +68,7 @@
     "test:only": "mocha --require @babel/register --require @babel/preset-env --recursive  ",
     "test:watch": "mocha --watch --require @babel/register --require @babel/preset-env --recursive",
     "test:examples": "node examples/",
-    "cover": "nyc --check-coverage --lines 30 npm run test:only ",
+    "cover": "node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec test/*",
     "lint:check": "eslint .",
     "lint": "eslint --fix .",
     "build": "webpack --mode production",
@@ -75,7 +76,8 @@
     "npm:publish": "npm publish --access public",
     "test-single": "mocha $1",
     "woql-test": "mocha test/woqlTripleBuilder.spec.js  test/woql.spec.js test/woqlTripleBuilder01.spec.js test/woqlExtra.spec.js",
-    "git-tag": "git tag $npm_package_version"
+    "git-tag": "git tag $npm_package_version",
+    "afterscript": "cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
     "type": "git",
