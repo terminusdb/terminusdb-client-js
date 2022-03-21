@@ -1,3 +1,20 @@
+# TerminusDB Client v10.0.6
+
+## New 🚀
+
+* Allow infinite size of body and content by @rrooij in https://github.com/terminusdb/terminusdb-client-js/pull/129
+* Improving installation steps for the js package by @Neelterminusdb in https://github.com/terminusdb/terminusdb-client-js/pull/125
+* Update createDocs.js by @mark-terminusdb in https://github.com/terminusdb/terminusdb-client-js/pull/130
+* Use eol.lf with jsdoc-to-markdown, improve CI workflow by @spl in https://github.com/terminusdb/terminusdb-client-js/pull/133
+
+## Fixes 🛠
+
+* Fixed WOQL.post function by @Neelterminusdb in https://github.com/terminusdb/terminusdb-client-js/pull/118
+* Fix linting by @Neelterminusdb in https://github.com/terminusdb/terminusdb-client-js/pull/112
+* Fixes update_triple variable name bug by @Neelterminusdb in https://github.com/terminusdb/terminusdb-client-js/pull/131
+
+---
+
 # TerminusDB Client v10.0.5
 
 ## New 🚀

@@ -148,6 +148,7 @@
   - [literal](api/woql.js?id=literal)
   - [iri](api/woql.js?id=iri)
   - [vars](api/woql.js?id=vars)
+  - [doc](api/woql.js?id=doc)
   - [client](api/woql.js?id=client)
   - [emerge](api/woql.js?id=emerge)
   - [update_triple](api/woql.js?id=update_triple)

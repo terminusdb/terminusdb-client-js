@@ -139,17 +139,20 @@ function formatDataOrder(dataProvider, orderMenu) {
 }
 
 function setHeadings(sFileNm, sMD) {
-  /**
-     * Adjust MD heading levels to create a clean
-     * table of contents in GitBook. This method
-     * replaces the docsify _sidebar.md file.
-     *
-     * Notes:
-     *
-     * 1. This is a quick-fix for basic compliance with the GitBook framework.
-     * 2. Expression "~~" renders text as strikethrough for highlighting deprecations.
-     * 3. Inconsistent use of constants requires a fix.
-     */
+/**
+ * Adjust MD heading levels to create a clean
+ * table of contents in GitBook. This method
+ * replaces the docsify _sidebar.md file.
+ *
+ * @param {string} sFileNm - File name.
+ * @param {string} sMD - File contents in MD format.
+ *
+ * Notes:
+ *
+ * 1. This is a quick-fix for basic compliance with the GitBook framework.
+ * 2. Expression "~~" renders text as strikethrough for highlighting deprecations.
+ * 3. Inconsistent use of constants requires a fix.
+ */
 
   const cHdrLv = '##### ';
   const cWOQL = 'WOQL.';
@@ -159,7 +162,12 @@ function setHeadings(sFileNm, sMD) {
 
   // No action for sidebar (code to create sidebar can be deprecated.)
 
-  if (sFileNm.match('sidebar')) return sMD;
+  if (sFileNm.match('sidebar')) { return sMD; }
+
+  // Specify syntax ("js" not recognized by GitBook.)
+
+  // eslint-disable-next-line no-param-reassign
+  sMD = sMD.replace(/```js/g, '```javascript');
 
   // Simplified pattern for type definitions.
 

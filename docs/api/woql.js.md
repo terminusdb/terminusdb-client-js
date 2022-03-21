@@ -32,7 +32,7 @@ Query running against any specific commit Id
 | subquery | <code>WOQLQuery</code> | subquery for the specific commit point |
 
 **Example**  
-```js
+```javascript
 WOQL.using("userName/dbName/local/commit|branch/commitID").triple("v:A", "v:B", "v:C")
 ```
 
@@ -55,7 +55,7 @@ Adds a text comment to a query - can also be used to wrap any part of a query to
 | ...varNames | <code>string</code> | only these variables are returned |
 
 **Example**  
-```js
+```javascript
 WOQL.select("v:a",triple("v:a","v:b","v:c"))
 Filters the query so that only the variables included in [V1...Vn] are returned in the bindings
 ```
@@ -81,7 +81,7 @@ Logical conjunction of the contained queries - all queries must match or the ent
 | ...subqueries | <code>WOQLQuery</code> | A list of one or more woql queries to execute as a conjunction |
 
 **Example**  
-```js
+```javascript
 //find triples that are of type scm:Journey, and have
 //a start_station v:Start, and that start_station is labeled
 //v:Start_Label
@@ -100,17 +100,24 @@ Use [read_document](#read_document) instead.
 
 
 ## read_document
-##### WOQL.read\_document(IRI, output, formatObj) ⇒ <code>object</code>
+##### WOQL.read\_document(IRI, output) ⇒ <code>object</code>
 Read a node identified by an IRI as a JSON-LD document
 
 **Returns**: <code>object</code> - WOQLQuery  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| IRI | <code>string</code> | The document id  or a variable |
-| output | <code>string</code> | variable name |
-| formatObj | <code>object</code> |  |
+| IRI | <code>string</code> | The document id  or a variable to read |
+| output | <code>string</code> | Variable which will be bound to the document. |
 
+**Example**  
+```javascript
+const query = WOQL.read_document(
+     "Person/0b4feda109d9d13c9da809090b342ad9e4d8185545ce05f7cd20b97fe458f547",
+     "v:Person"
+);
+const res =  await client.query(query);
+```
 
 ## insert_document
 ##### WOQL.insert\_document(docjson, [IRI]) ⇒ <code>object</code>
@@ -123,6 +130,12 @@ Insert a document in the graph.
 | docjson | <code>object</code> | The document to insert. Must either have an '@id' or have a class specified key. |
 | [IRI] | <code>string</code> | An optional identifier specifying the document location. |
 
+**Example**  
+```javascript
+const res = await client.query(
+   WOQL.insert_document(WOQL.doc({ "@type" : "Person", "label": "John" }))
+)
+```
 
 ## update_document
 ##### WOQL.update\_document(docjson, [IRI]) ⇒ <code>object</code>
@@ -158,7 +171,7 @@ Creates a logical OR of the arguments
 | ...subqueries | <code>WOQLQuery</code> | A list of one or more woql queries to execute as alternatives |
 
 **Example**  
-```js
+```javascript
 or(
   triple("v:Subject", 'label', "A"),
   triple("v:Subject", "label", "a")
@@ -189,7 +202,7 @@ Specifies the graph resource to write the contained query into
 | subquery | <code>WOQLQuery</code> | The query which will be written into the graph |
 
 **Example**  
-```js
+```javascript
 //Subq is an argument or a chained query
 using("admin/minecraft").into("instance/main").add_triple("a", "type", "scm:X")
 //writes a single tripe (doc:a, rdf:type, scm:X) into the main instance graph
@@ -324,7 +337,7 @@ from it into variables defined in AsVars
 | queryResource | <code>WOQLQuery</code> | an external resource (remote, file, post) to query |
 
 **Example**  
-```js
+```javascript
 let [a, b] = vars("a", "b")
 get(as("a", a).as("b", b)).remote("http://my.url.com/x.csv")
 //copies the values from column headed "a" into a variable a and from column
@@ -343,7 +356,7 @@ get(as("a", a).as("b", b)).remote("http://my.url.com/x.csv")
 | fileResource | <code>string</code> | an file resource local to the server |
 
 **Example**  
-```js
+```javascript
 let [s, p, o] = vars("Subject", "Predicate", "Object")
 WOQL.put(WOQL.as("s", s).as("p", p).as("o", o), WOQL.all())
 .file({file:"/app/local_files/dump.csv"})
@@ -361,8 +374,8 @@ Imports the value identified by Source to a Target variable
 | [type] | <code>string</code> | type to cast value to string|number etc... |
 
 **Example**  
-```js
-WOQL.as("first var", "v:First_Var",{} "string").as("second var", "v:Second_Var")
+```javascript
+WOQL.as("first var", "v:First_Var", "string").as("second var", "v:Second_Var")
  WOQL.as(["first var", "v:First_Var", "string"], ["second var", "v:Second_Var"])
 ```
 
@@ -378,7 +391,7 @@ Identifies a remote resource by URL and specifies the format of the resource thr
 | [formatObj] | <code>typedef.DataFormatObj</code> | The format of the resource data {} |
 
 **Example**  
-```js
+```javascript
 remote({url:"http://url.of.resource"}, {type: "csv"})
 ```
 
@@ -394,7 +407,7 @@ Identifies a file resource as a path on the server and specifies the format thro
 | [formatObj] | <code>typedef.DataFormatObj</code> | imput options |
 
 **Example**  
-```js
+```javascript
 file("/path/to/file", {type: 'turtle'} )
 ```
 
@@ -412,7 +425,7 @@ HTTP POST request, with the format defined through the options
 | [source] | <code>string</code> | It defines the source of the file, it can be 'url','post' |
 
 **Example**  
-```js
+```javascript
 post("/.../.../", {type:'csv'})
 ```
 
@@ -429,7 +442,7 @@ Deletes a single triple from the default graph of the database
 | object | <code>string</code> | The IRI of a node or a variable, or a literal |
 
 **Example**  
-```js
+```javascript
 delete_triple("john", "age", 42)
 ```
 
@@ -447,7 +460,7 @@ Deletes a single triple from the graph [Subject, Predicate, Object, Graph]
 | graphRef | <code>typedef.GraphRef</code> | A valid graph resource identifier string |
 
 **Example**  
-```js
+```javascript
 remove the class Person from the schema/main graph
 WOQL.delete_quad("Person", "type", "owl:Class", "schema/main")
 ```
@@ -491,7 +504,7 @@ Remove whitespace from both sides of a string:
 | resultVarName | <code>string</code> | A string or variable containing the trimmed version of the string |
 
 **Example**  
-```js
+```javascript
 trim("hello   ","v:trimmed")
 //trimmed contains "hello"
 ```
@@ -508,7 +521,7 @@ Evaluates the passed arithmetic expression and generates or matches the result v
 | resultVarName | <code>string</code> \| <code>number</code> | Either a variable, in which the result of the expression will be stored, or a numeric literal which will be used as a test of result of the evaluated expression |
 
 **Example**  
-```js
+```javascript
 evaluate(plus(2, minus(3, 1)), "v:result")
 ```
 
@@ -523,7 +536,7 @@ Adds the numbers together
 | ...args | <code>string</code> \| <code>number</code> | a variable or numeric containing the values to add |
 
 **Example**  
-```js
+```javascript
 evaluate(plus(2, plus(3, 1)), "v:result")
 ```
 
@@ -538,7 +551,7 @@ Subtracts Numbers N1..Nn
 | ...args | <code>string</code> \| <code>number</code> | variable or numeric containing the value that will be subtracted from |
 
 **Example**  
-```js
+```javascript
 evaluate(minus(2.1, plus(0.2, 1)), "v:result")
 ```
 
@@ -553,7 +566,7 @@ Multiplies numbers N1...Nn together
 | ...args | <code>string</code> \| <code>number</code> | a variable or numeric containing the value |
 
 **Example**  
-```js
+```javascript
 evaluate(times(10, minus(2.1, plus(0.2, 1))), "v:result")
  //result contains 9.000000000000002y
 ```
@@ -582,7 +595,7 @@ Division - integer division - args are divided left to right
 | ...args | <code>string</code> \| <code>number</code> | numbers for division |
 
 **Example**  
-```js
+```javascript
 let [result] = vars("result")
 evaluate(div(10, 3), result)
 //result contains 3
@@ -600,7 +613,7 @@ Exponent - raises varNum01 to the power of varNum02
 | expNum | <code>number</code> | a variable or numeric containing the exponent |
 
 **Example**  
-```js
+```javascript
 evaluate(exp(3, 2), "v:result")
 //result contains 9
 ```
@@ -616,7 +629,7 @@ Generates the nearest lower integer to the passed number
 | varNum | <code>string</code> \| <code>number</code> | Variable or numeric containing the number to be floored |
 
 **Example**  
-```js
+```javascript
 let [result] = vars("result")
 evaluate(divide(floor(times(10, minus(2.1, plus(0.2, 1)))), 10), result)
 //result contains 0.9 - floating point error removed
@@ -634,7 +647,7 @@ Tests whether a given instance IRI has type Class, according to the current stat
 | classId | <code>string</code> | A Class IRI or a variable |
 
 **Example**  
-```js
+```javascript
 let [subject] = vars("subject")
 isa(subject, "Person")
 ```
@@ -652,7 +665,7 @@ Generates a string Leverstein distance measure between stringA and stringB
 | distance | <code>number</code> \| <code>string</code> | variable representing the distance between the variables |
 
 **Example**  
-```js
+```javascript
 let [dist] = vars('dist')
 like("hello", "hallo", dist)
 //dist contains 0.7265420560747664
@@ -670,7 +683,7 @@ Compares the value of v1 against v2 and returns true if v1 is less than v2
 | varNum02 | <code>string</code> \| <code>number</code> | a variable or numeric containing the second comporator |
 
 **Example**  
-```js
+```javascript
 less(1, 1.1).eq("v:result", literal(true, "boolean"))
 //result contains true
 ```
@@ -687,7 +700,7 @@ Compares the value of v1 against v2 and returns true if v1 is greater than v2
 | varNum02 | <code>string</code> \| <code>number</code> | a variable or numeric containing the second comporator |
 
 **Example**  
-```js
+```javascript
 greater(1.2, 1.1).eq("v:result", literal(true, "boolean"))
 //result contains true
 ```
@@ -703,7 +716,7 @@ Specifies that the Subquery is optional - if it does not match the query will no
 | [subquery] | <code>WOQLQuery</code> | A subquery which will be optionally matched |
 
 **Example**  
-```js
+```javascript
 let [subject] = vars("subject")
 opt(triple(subject, 'label', "A"))
 //Subq is an argument or a chained query
@@ -724,7 +737,7 @@ given combination of variables
 | resultVarName | <code>string</code> | Variable in which the unique ID is stored |
 
 **Example**  
-```js
+```javascript
 unique("doc:Person", ["John", "Smith"], "v:newid")
 ```
 
@@ -741,7 +754,7 @@ Generate a new IRI from the prefix and concatention of the variables
 | resultVarName | <code>string</code> | Variable in which the unique ID is stored |
 
 **Example**  
-```js
+```javascript
 let [newid] = vars("newid")
 idgen("doc:Person", ["John", "Smith"], newid)
 ```
@@ -758,7 +771,7 @@ Changes a string to upper-case
 | resultVarName | <code>string</code> | variable that stores the capitalized string output |
 
 **Example**  
-```js
+```javascript
 upper("aBCe", "v:allcaps")
 //upper contains "ABCE"
 ```
@@ -775,7 +788,7 @@ Changes a string to lower-case
 | resultVarName | <code>string</code> | variable that stores the lowercased string output |
 
 **Example**  
-```js
+```javascript
 let [lower] = var("l")
 lower("aBCe", lower)
 //lower contains "abce"
@@ -796,7 +809,7 @@ form output
 | resultVarName | <code>string</code> | stores output |
 
 **Example**  
-```js
+```javascript
 let [fixed] = vars("fixed length")
 pad("joe", " ", 8, fixed)
 //fixed contains "joe     "
@@ -815,7 +828,7 @@ Splits a string (Input) into a list strings (Output) by removing separator
 | resultVarName | <code>string</code> | variable that stores output list |
 
 **Example**  
-```js
+```javascript
 split("joe has a hat", " ", "v:words")
 ```
 
@@ -831,7 +844,7 @@ Matches if List includes Element
 | list | <code>string</code> | List ([string, literal] or string*) Either a variable representing a list or a list of variables or literals |
 
 **Example**  
-```js
+```javascript
 let [name] = vars("name")
 member("name", ["john", "joe", "frank"])
 ```
@@ -848,7 +861,7 @@ takes a variable number of string arguments and concatenates them into a single 
 | resultVarName | <code>string</code> | A variable or string containing the output string |
 
 **Example**  
-```js
+```javascript
 concat(["v:first_name", " ", "v:last_name"], "v:full_name")
 WOQL.concat(["first_name", " ", "last_name"], "full_name")
 //both versions work
@@ -868,7 +881,7 @@ together with Glue
 | resultVarName | <code>string</code> | A variable or string containing the output string |
 
 **Example**  
-```js
+```javascript
 join(["joe", "has", "a", "hat", " ", "v:sentence")
 ```
 
@@ -885,7 +898,7 @@ sum self-evaluates - it does not have to be passed to evaluate()
 | total | <code>number</code> | the variable name with the sum result of the values in List |
 
 **Example**  
-```js
+```javascript
 sum([2, 3, 4, 5], "v:total")
 ```
 
@@ -902,7 +915,7 @@ the specified offset
 | [subquery] | <code>WOQLQuery</code> | WOQL Query object, you can pass a subquery as an argument or a chained query |
 
 **Example**  
-```js
+```javascript
 let [a, b, c] = vars("a", "b", "c")
 start(100).triple(a, b, c)
 ```
@@ -920,7 +933,7 @@ the specified offset
 | [subquery] | <code>WOQLQuery</code> | A subquery whose results will be limited |
 
 **Example**  
-```js
+```javascript
 let [a, b, c] = vars("a", "b", "c")
 limit(100).triple(a, b, c)
 //subquery is an argument or a chained query
@@ -942,7 +955,7 @@ matching expression
 | resultVarList | <code>string</code> \| <code>array</code> \| <code>object</code> | variable representing the list of matches or a list of strings or variables |
 
 **Example**  
-```js
+```javascript
 WOQL.re("h(.).*", "hello", ["v:All", "v:Sub"])
 //e contains 'e', llo contains 'llo'
 //p is a regex pattern (.*) using normal regular expression syntax, the only unusual
@@ -962,7 +975,7 @@ Calculates the length of the list in va and stores it in vb
 | resultVarName | <code>string</code> | A variable in which the length of the list is stored or the length of the list as a non-negative integer |
 
 **Example**  
-```js
+```javascript
 let [count] = vars("count")
 length(["john", "joe", "frank"], count)
 ```
@@ -979,7 +992,7 @@ will fail to match
 | [subquery] | <code>string</code> \| <code>WOQLQuery</code> | A subquery which will be negated |
 
 **Example**  
-```js
+```javascript
 let [subject, label] = vars("subject", "label")
 not().triple(subject, 'label', label)
 ```
@@ -1018,7 +1031,7 @@ Creates a count of the results of the query
 | [subquery] | <code>WOQLQuery</code> |  |
 
 **Example**  
-```js
+```javascript
 WOQL.count("v:count").triple("v:Person","type","scm:Person")
 ```
 
@@ -1035,7 +1048,7 @@ Casts the value of Input to a new value of type Type and stores the result in Ca
 | resultVarName | <code>string</code> | save the return variable |
 
 **Example**  
-```js
+```javascript
 cast("22/3/98", "xsd:dateTime", "v:time")
 ```
 
@@ -1050,7 +1063,7 @@ Orders the results of the contained subquery by a precedence list of variables
 | ...varNames | <code>string</code> | A sequence of variables, by which to order the results, each optionally followed by either “asc” or “desc” to represent order as a list, by default it will sort the variable in ascending order |
 
 **Example**  
-```js
+```javascript
 WOQL.order_by("v:A", ["v:B", "asc"], ["v:C", "desc"]).triple("v:A", "v:B", "v:C");
 ```
 
@@ -1069,7 +1082,7 @@ extracts the patterns defined in PatternVars and stores the results in GroupedVa
 | [subquery] | <code>WOQLQuery</code> | The query whose results will be grouped |
 
 **Example**  
-```js
+```javascript
 //subquery is an argument or a chained query
 let [age, last_name, first_name, age_group, person] = vars("age", "last name", "first name",
 "age group", "person")
@@ -1085,7 +1098,7 @@ A function that always matches, always returns true
 
 **Returns**: <code>WOQLQuery</code> - A WOQLQuery object containing the true value that will match any pattern  
 **Example**  
-```js
+```javascript
 when(true()).triple("a", "b", "c")
 ```
 
@@ -1103,9 +1116,9 @@ Performs a path regular expression match on the graph
 | [resultVarName] | <code>string</code> | A variable in which the actual paths traversed will be stored |
 
 **Example**  
-```js
+```javascript
 let [person, grand_uncle, lineage] = vars("person", "grand uncle", "lineage")
-path(person, ((father|mother) {2,2}), brother), grand_uncle, lineage)
+path(person, "((father|mother) {2,2}), brother)", grand_uncle, lineage)
 ```
 
 ## size
@@ -1119,7 +1132,7 @@ Calculates the size in bytes of the contents of the resource identified in Resou
 | resultVarName | <code>string</code> | The variable name |
 
 **Example**  
-```js
+```javascript
 size("admin/minecraft/local/branch/main/instance/main", "v:varSize")
 //returns the number of bytes in the main instance graph on the main branch
 ```
@@ -1136,7 +1149,7 @@ Calculates the number of triples of the contents of the resource identified in R
 | tripleCount | <code>string</code> \| <code>number</code> | An integer literal with the size in bytes or a variable containing that integer |
 
 **Example**  
-```js
+```javascript
 triple_count("admin/minecraft/local/_commits", "v:count")
 //returns the number of bytes in the local commit graph
 ```
@@ -1168,7 +1181,7 @@ or in all the current terminusDB's graph
 | [object] | <code>string</code> | The IRI of a node or a variable, or a literal,default value "v:Object" |
 
 **Example**  
-```js
+```javascript
 star("schema/main")
 //will return every triple in schema/main graph
 ```
@@ -1204,7 +1217,7 @@ that it produces - by itself it only generates the subject.
 | [chainType] | <code>typedef.FuntionType</code> | Optional type of builder function to build (default is triple) |
 
 **Example**  
-```js
+```javascript
 node("mydoc").label("my label")
 //equivalent to triple("mydoc", "label", "my label")
 ```
@@ -1223,7 +1236,7 @@ optionally into the specified graph
 | [graphRef] | <code>typedef.GraphRef</code> | Optional Graph resource identifier |
 
 **Example**  
-```js
+```javascript
 insert("mydoc", "MyType")
 //equivalent to add_triple("mydoc", "type", "MyType")
 ```
@@ -1239,7 +1252,7 @@ Sets the graph resource ID that will be used for subsequent chained function cal
 | [graphRef] | <code>typedef.GraphRef</code> | Resource String identifying the graph which will be used for subsequent chained schema calls |
 
 **Example**  
-```js
+```javascript
 WOQL.graph("schema")
 //equivalent to add_quad("MyClass", "label", "My Class Label", "schema/main")
 ```
@@ -1255,7 +1268,7 @@ Deletes all triples in the passed graph (defaults to instance/main)
 | [graphRef] | <code>typedef.GraphRef</code> | Resource String identifying the graph from which all triples will be removed |
 
 **Example**  
-```js
+```javascript
 nuke("schema/main")
 //will delete everything from the schema/main graph
 ```
@@ -1265,7 +1278,7 @@ nuke("schema/main")
 Generates an empty WOQLQuery object
 
 **Example**  
-```js
+```javascript
 let q = query()
 //then q.triple(1, 1) ...
 ```
@@ -1291,7 +1304,7 @@ get the predefined library query [WOQLLibrary](/api/woqlLibrary.js?id=WOQLLibrar
 
 **Returns**: <code>WOQLQuery</code> - WOQLQuery object  
 **Example**  
-```js
+```javascript
 //get commits older than the specified commit id
 const query = WOQL.lib().previousCommits('m8vpxewh2aovfauebfkbzwmj4qwr5lb')
 
@@ -1317,7 +1330,7 @@ Generates explicitly a JSON-LD string literal from the input
 | val | <code>string</code> \| <code>boolean</code> \| <code>number</code> | any primitive literal type |
 
 **Example**  
-```js
+```javascript
 string(1)
 //returns { "@type": "xsd:string", "@value": "1" }
 ```
@@ -1334,7 +1347,7 @@ Generates explicitly a JSON-LD string literal from the input
 | type | <code>string</code> | an xsd or xdd type |
 
 **Example**  
-```js
+```javascript
 literal(1, "nonNegativeInteger")
 //returns { "@type": "xsd:nonNegativeInteger", "@value": 1 }
 ```
@@ -1362,9 +1375,25 @@ array destructuring operation
 | ...varNames | <code>string</code> | 
 
 **Example**  
-```js
+```javascript
 const [a, b, c] = WOQL.vars("a", "b", "c")
 //a, b, c are javascript variables which can be used as WOQL variables in subsequent queries
+```
+
+## doc
+##### WOQL.doc(object) ⇒ <code>object</code>
+Produces an encoded form of a document that can be used by a WOQL operation
+such as `WOQL.insert_document`.
+
+**Returns**: <code>object</code> - The encoded document  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| object | <code>object</code> | Document to encode |
+
+**Example**  
+```javascript
+const doc = WOQL.doc({ "@type": "Person", name: "Newperson" })
 ```
 
 ## client
