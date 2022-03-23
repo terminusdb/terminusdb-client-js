@@ -34,6 +34,10 @@ jobs:
         node-version: 14
     - name: Install and test
       run: npm install-ci-test
+    - name: Coveralls
+    uses: coverallsapp/github-action@master
+    with:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Build
       run: npm run build
     - name: Lint
