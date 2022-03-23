@@ -148,15 +148,16 @@ client.updateTriples("schema", "alt", turtle_string, "dumping triples to graph a
 ##### woqlClient.query(woql, [commitMsg], [allWitnesses], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
 Executes a WOQL query on the specified database and returns the results
 
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object or object having *result*
+and *dataVersion* object if ***getDataVersion*** parameter is true, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | woql | <code>WOQLQuery</code> | an instance of the WOQLQuery class |
 | [commitMsg] | <code>string</code> | a message describing the reason for the change that will be written into the commit log (only relevant if the query contains an update) |
 | [allWitnesses] | <code>boolean</code> |  |
-| [lastDataVersion] | <code>string</code> | If passed it will be used for data version tracking |
-| [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion |
+| [lastDataVersion] | <code>string</code> | the last data version tracking id. |
+| [getDataVersion] | <code>boolean</code> | If true the function will return object having result and dataVersion. |
 
 **Example**  
 ```javascript
@@ -691,7 +692,8 @@ update the database details
 ##### woqlClient.addDocument(json, [params], [dbId], [string], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
 to add a new document or a list of new documents into the instance or the schema graph.
 
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object or object having *result*
+and *dataVersion* object if ***getDataVersion*** parameter is true, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -699,8 +701,8 @@ to add a new document or a list of new documents into the instance or the schema
 | [params] | <code>typedef.DocParamsPost</code> | the post parameters |
 | [dbId] | <code>string</code> | the dbid |
 | [string] | <code>message</code> | the insert commit message |
-| [lastDataVersion] | <code>string</code> | If passed it will be used for data version tracking. |
-| [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion. |
+| [lastDataVersion] | <code>string</code> | the last data version tracking id. |
+| [getDataVersion] | <code>boolean</code> | If true the function will return object having result and dataVersion. |
 
 **Example**  
 ```javascript
@@ -718,13 +720,38 @@ const json = [{ "@type" : "Class",
              "perimeter" : { "@type" : "List",
                              "@class" : "Coordinate" } }]
 client.addDocument(json,{"graph_type":"schema"},"mydb","add new schema")
+
+
+// Here we will pass true to show how to get dataVersion
+
+const response = await client.addDocument(json, {"graph_type": "schema"},
+  "mydb",
+  "add new schema", '',
+  true
+)
+console.log(response);
+
+ // This will output:
+ // {
+ //   result: [ ...... ],
+ //   dataVersion: 'branch:5fs681tlycnn6jh0ceiqcq4qs89pdfs'
+ // }
+
+ // Now we can use the data version we recieved as a response in previous
+ // function call and used it is next function call as lastDataVersion
+
+const response1 = await client.addDocument(json, {"graph_type": "schema"},
+  "mydb",
+  "add new schema", response.dataVersion,
+)
 ```
 
 ## queryDocument
 ##### woqlClient.queryDocument(query, [params], [dbId], [branch], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
 Retrieves all documents that match a given document template
 
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object or object having *result*
+and *dataVersion* object if ***getDataVersion*** parameter is true, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -732,8 +759,8 @@ Retrieves all documents that match a given document template
 | [params] | <code>typedef.DocParamsGet</code> | the get parameters |
 | [dbId] | <code>string</code> | the database id |
 | [branch] | <code>string</code> | the database branch |
-| [lastDataVersion] | <code>string</code> | If passed it will be used for data version tracking. |
-| [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion. |
+| [lastDataVersion] | <code>string</code> | the last data version tracking id. |
+| [getDataVersion] | <code>boolean</code> | If true the function will return object having result and dataVersion. |
 
 **Example**  
 ```javascript
@@ -741,20 +768,56 @@ const query = {
   "type": "Person",
   "query": { "age": 42 },
  }
-client.queryDocument(query,{"as_list":true})
+client.queryDocument(query, {"as_list":true})
+
+
+// Here we will pass true to show how to get dataVersion
+const query = {
+  "type": "Person",
+  "query": { "age": 42 },
+ }
+
+const response = await client.queryDocument(query, {"as_list": true}, '', '','',true);
+console.log(response);
+
+ // This will output:
+ // {
+ //   result: [
+ //     {
+ //       '@id': 'Person/052d60ffbd114bf5e7331b03f07fcb7',
+ //       '@type': 'Person',
+ //       age: 42,
+ //       name: 'John',
+ //     },
+ //   ],
+ //   dataVersion: 'branch:5fs681tlycnn6jh0ceiqcq4qs89pdfs'
+ // }
+
+ // Now we can use the data version we recieved as a response in previous
+ // query and used it is next query as lastDataVersion
+ const query = {
+  "type": "Person",
+  "query": { "age": 18 },
+ }
+
+ const response1 = await client.queryDocument(query, {"as_list": true}, '',
+   '',
+   response.dataVersion
+ );
 ```
 
 ## getDocument
 ##### woqlClient.getDocument([params], [dbId], [branch], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object or object having *result*
+and *dataVersion* object if ***getDataVersion*** parameter is true, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | [params] | <code>typedef.DocParamsGet</code> | the get parameters |
 | [dbId] | <code>string</code> | the database id |
 | [branch] | <code>string</code> | the database branch |
-| [lastDataVersion] | <code>string</code> | If passed it will be used for data version tracking. |
-| [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion. |
+| [lastDataVersion] | <code>string</code> | the last data version tracking id. |
+| [getDataVersion] | <code>boolean</code> | If true the function will return object having result and dataVersion. |
 
 **Example**  
 ```javascript
@@ -763,11 +826,38 @@ client.getDocument({"graph_type":"schema","as_list":true})
 
 //retutn the Country class document from the schema graph
 client.getDocument({"graph_type":"schema","as_list":true,"id":"Country"})
+
+
+// Here we will pass true to show how to get dataVersion
+
+const response = await client.getDocument({"graph_type":"schema","as_list":true},
+  "",
+  "",
+  "",
+  true
+)
+console.log(response);
+
+ // This will output:
+ // {
+ //   result: [ ...... ],
+ //   dataVersion: 'branch:5fs681tlycnn6jh0ceiqcq4qs89pdfs'
+ // }
+
+ // Now we can use the data version we recieved as a response in previous
+ // function call and used it is next function call as lastDataVersion
+
+const response1 = await client.getDocument({"graph_type":"schema","as_list":true},
+  "",
+  "",
+  response.dataVersion,
+)
 ```
 
 ## updateDocument
 ##### woqlClient.updateDocument(json, [params], [dbId], [message], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object or object having *result*
+and *dataVersion* object if ***getDataVersion*** parameter is true, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -775,27 +865,113 @@ client.getDocument({"graph_type":"schema","as_list":true,"id":"Country"})
 | [params] | <code>typedef.DocParamsPut</code> | the Put parameters |
 | [dbId] | <code>\*</code> | the database id |
 | [message] | <code>\*</code> | the update commit message |
-| [lastDataVersion] | <code>string</code> | If passed it will be used for data version tracking. |
-| [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion. |
+| [lastDataVersion] | <code>string</code> | the last data version tracking id. |
+| [getDataVersion] | <code>boolean</code> | If true the function will return object having result and dataVersion. |
 
+**Example**  
+```javascript
+client.updateDocument(
+{
+ "@id": "Person",
+   "@key": {
+     "@type": "Random",
+   },
+   "@type": "Class",
+   label: "xsd:string",
+ },
+{ graph_type: "schema" }
+);
+
+
+// Here we will pass true to show how to get dataVersion
+
+    const response = await client.updateDocument(
+      {
+        "@id": "Person",
+        "@key": {
+          "@type": "Random",
+        },
+        "@type": "Class",
+        label: "xsd:string",
+      },
+      { graph_type: "schema" },
+      "",
+      "",
+      "",
+      true
+    );
+console.log(response);
+
+ // This will output:
+ // {
+ //   result: [ ...... ],
+ //   dataVersion: 'branch:5fs681tlycnn6jh0ceiqcq4qs89pdfs'
+ // }
+
+ // Now we can use the data version we recieved as a response in previous
+ // function call and used it is next function call as lastDataVersion
+
+const response1 = await client.updateDocument(
+      {
+        "@id": "Person",
+        "@key": {
+          "@type": "Random",
+        },
+        "@type": "Class",
+        label: "xsd:string",
+      },
+      { graph_type: "schema" },
+      "",
+      "",
+      response.dataVersion
+    );
+```
 
 ## deleteDocument
 ##### woqlClient.deleteDocument([params], [dbId], [message], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
 to delete the document
 
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+**Returns**: <code>Promise</code> - A promise that returns the call response object or object having *result*
+and *dataVersion* object if ***getDataVersion*** parameter is true, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | [params] | <code>typedef.DocParamsDelete</code> |  |
 | [dbId] | <code>string</code> | the database id |
 | [message] | <code>string</code> | the delete message |
-| [lastDataVersion] | <code>string</code> | If passed it will be used for data version tracking |
-| [getDataVersion] | <code>string</code> | If true it the function will return object having result and dataVersion |
+| [lastDataVersion] | <code>string</code> | the last data version tracking id. |
+| [getDataVersion] | <code>boolean</code> | If true the function will return object having result and dataVersion. |
 
 **Example**  
 ```javascript
-client.deleteDocument({"graph_type":"schema",id:['Country','Coordinate'])
+client.deleteDocument({"graph_type":"schema",id:['Country','Coordinate']})
+
+
+// Here we will pass true to show how to get dataVersion
+
+const response = await client.deleteDocument({"graph_type":"schema",id:['Country','Coordinate']},
+  "",
+  "",
+  "",
+  true
+)
+console.log(response);
+
+ // This will output:
+ // {
+ //   result: [ ...... ],
+ //   dataVersion: 'branch:5fs681tlycnn6jh0ceiqcq4qs89pdfs'
+ // }
+
+ // Now we can use the data version we recieved as a response in previous
+ // function call and used it is next function call as lastDataVersion
+
+const response1 = await client.deleteDocument({"graph_type":"schema",
+  id:['Country','Coordinate']},
+  "",
+  "",
+  response.dataVersion,
+)
 ```
 
 ## getSchemaFrame
