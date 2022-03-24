@@ -890,6 +890,21 @@ get the database collections list
 client.getBranches()
 ```
 
+## getPrefixes
+##### woqlClient.getPrefixes([dbId]) ⇒ <code>Promise</code>
+get the database collections list
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [dbId] | <code>string</code> | the database id |
+
+**Example**  
+```javascript
+client.getBranches()
+```
+
 ## getUserOrganizations
 ##### woqlClient.getUserOrganizations() ⇒ <code>Promise</code>
 Get the list of the user's organizations and the database related

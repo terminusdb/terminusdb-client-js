@@ -58,6 +58,7 @@
     - [getEnums](api/woqlClient.js?id=getEnums)
     - [getClassDocuments](api/woqlClient.js?id=getClassDocuments)
     - [getBranches](api/woqlClient.js?id=getBranches)
+    - [getPrefixes](api/woqlClient.js?id=getPrefixes)
     - [getUserOrganizations](api/woqlClient.js?id=getUserOrganizations)
     - [userOrganizations](api/woqlClient.js?id=userOrganizations)
     - [getDiff](api/woqlClient.js?id=getDiff)
