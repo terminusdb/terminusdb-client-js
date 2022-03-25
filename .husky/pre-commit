@@ -1,0 +1,15 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Lint
+npm run lint:check; 
+
+# Test
+npm test; 
+
+# Build
+npm run build
+
+# Check changes in docs 
+npm run mkdocs; 
+git diff --exit-code
