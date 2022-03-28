@@ -241,12 +241,34 @@ accessControl.getOrgUsers().then(result=>{
 })
 
 //this function will return an array of capabilities with users and roles
+//response array example
 //[{capability: "Capability/3ea26e1d698821c570afe9cb4fe81a3......"
 //     email: {@type: "xsd:string", @value: "user@terminusdb.com"}
 //     picture: {@type: "xsd:string",…}
 //     role: "Role/dataReader"
 //     scope: "Organization/my_org_name"
 //     user: "User/auth0%7C613f5dnndjdjkTTT"}]
+```
+
+## getTeamUserRole
+##### accessControl.getTeamUserRole([orgName]) ⇒ <code>Promise</code>
+Get the user role for a given organization or the default organization,
+The user is identified by the jwt or the access token
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [orgName] | <code>string</code> | The organization name. |
+
+**Example**  
+```javascript
+accessControl.getTeamUserRole().then(result=>{
+ console.log(result)
+})
+
+//response object example
+{"userRole":"Role/admin"}
 ```
 
 ## removeUserFromOrg

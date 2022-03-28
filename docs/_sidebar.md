@@ -176,6 +176,7 @@
   - [deleteOrgInvite](api/accessControl.js?id=deleteOrgInvite)
   - [updateOrgInviteStatus](api/accessControl.js?id=updateOrgInviteStatus)
   - [getOrgUsers](api/accessControl.js?id=getOrgUsers)
+  - [getTeamUserRole](api/accessControl.js?id=getTeamUserRole)
   - [removeUserFromOrg](api/accessControl.js?id=removeUserFromOrg)
   - [getDatabaseRolesOfUser](api/accessControl.js?id=getDatabaseRolesOfUser)
   - [createUserRole](api/accessControl.js?id=createUserRole)
