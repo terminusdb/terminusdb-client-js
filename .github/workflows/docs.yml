@@ -23,4 +23,4 @@ jobs:
         destination_head_branch: 'js-reference-updates'
         user_email: 'neel@terminusdb.com'
         user_name: 'Neelterminusdb'
-        pull_request_reviewers: 'mark-terminusdb, Neelterminusdb'
+        pull_request_reviewers: 'mark-terminusdb'
