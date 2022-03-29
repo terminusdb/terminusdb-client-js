@@ -1,0 +1,26 @@
+name: Create PR on Docs repo
+on:
+  push:
+    paths:
+    - 'docs/api/**'
+
+jobs:
+  pull-request:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Create pull request
+      uses: paygoc6/action-pull-request-another-repo@v1.0.1
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      with:
+        source_folder: 'docs/api'
+        destination_repo: 'terminusdb/terminusdb-docs'
+        destination_folder: 'index/terminusx-db/reference-guides/javascript-client-reference'
+        destination_base_branch: 'main'
+        destination_head_branch: 'main'
+        user_email: 'neel@terminusdb.com'
+        user_name: 'Neelterminusdb'
+        pull_request_reviewers: 'mark-terminusdb, Neelterminusdb'
