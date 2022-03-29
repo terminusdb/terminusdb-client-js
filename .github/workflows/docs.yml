@@ -20,7 +20,7 @@ jobs:
         destination_repo: 'terminusdb/terminusdb-docs'
         destination_folder: 'index/terminusx-db/reference-guides/javascript-client-reference'
         destination_base_branch: 'main'
-        destination_head_branch: 'main'
+        destination_head_branch: 'js-reference-updates'
         user_email: 'neel@terminusdb.com'
         user_name: 'Neelterminusdb'
         pull_request_reviewers: 'mark-terminusdb, Neelterminusdb'
