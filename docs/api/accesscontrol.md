@@ -5,7 +5,7 @@
 
 ## new AccessControl new new()
 The AccessControl object has various methods to control the access for users. new
-for the credential you can use the JWT token or the API token
+for the credential you can use the JWT token or the API token new
 
 **Example**  
 ```javascript
