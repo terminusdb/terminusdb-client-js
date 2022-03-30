@@ -70,7 +70,11 @@ createFile(
 
 // eslint-disable-next-line no-shadow
 function createFile(filePath, options, outputDir) {
-  const fileName = getFileName(filePath);
+  let fileName = getFileName(filePath);
+  // eslint-disable-next-line prefer-destructuring
+  fileName = fileName.split('.js')[0];
+  fileName = fileName.toLowerCase();
+
   // const template = `{{#class name="${className}"}}{{>docs}}{{/class}}`
   // eslint-disable-next-line no-console
   console.log(`rendering ${filePath}`);
