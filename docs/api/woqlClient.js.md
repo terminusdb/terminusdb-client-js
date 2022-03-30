@@ -644,6 +644,7 @@ Common request dispatch function
 | apiUrl | <code>string</code> | the server call endpoint |
 | [payload] | <code>object</code> | the post body |
 | [getDataVersion] | <code>boolean</code> | If true return response with data version |
+| [compress] | <code>boolean</code> | If true, compress the data if it is bigger than 1024 bytes |
 
 
 ## generateCommitInfo
