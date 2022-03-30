@@ -1,3 +1,10 @@
+# TerminusDB Client v10.0.8
+
+## New 🚀
+
+* Add gzip compression by @rrooij in https://github.com/terminusdb/terminusdb-client-js/pull/167
+
+
 # TerminusDB Client v10.0.7
 
 ## New 🚀
