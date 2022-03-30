@@ -1,11 +1,11 @@
 
 # TypeDef
-##### TypeDef
+## TypeDef
 Type definations
 
 
 ## DocParamsGet
-##### DocParamsGet:  `  Object`
+## DocParamsGet:  `  Object`
 the GET document interface query parameters
 
 **Properties**
@@ -25,7 +25,7 @@ the GET document interface query parameters
 
 
 ## DocParamsPost
-##### DocParamsPost:  `  Object`
+## DocParamsPost:  `  Object`
 the POST document interface query parameters
 
 **Properties**
@@ -37,7 +37,7 @@ the POST document interface query parameters
 
 
 ## DocParamsPut
-##### DocParamsPut:  `  Object`
+## DocParamsPut:  `  Object`
 the PUT document interface query parameters
 
 **Properties**
@@ -48,7 +48,7 @@ the PUT document interface query parameters
 
 
 ## DocParamsDelete
-##### DocParamsDelete:  `  Object`
+## DocParamsDelete:  `  Object`
 the DELETE document interface query parameters
 
 **Properties**
@@ -61,10 +61,10 @@ the DELETE document interface query parameters
 
 
 ## GraphRef
-##### GraphRef:  `  "schema/main"` |  `  "instance/main" `  |  `  string ` 
+## GraphRef:  `  "schema/main"` |  `  "instance/main" `  |  `  string ` 
 
 ## DataFormatObj
-##### DataFormatObj:  `  Object`
+## DataFormatObj:  `  Object`
 (export/import)
 
 **Properties**
@@ -76,16 +76,16 @@ the DELETE document interface query parameters
 
 
 ## FuntionType
-##### FuntionType:  `  "add_quad"` |  `  "delete_quad" `  |  `  "add_triple" `  |  `  "delete_triple" `  |  `  "quad" `  |  `  "triple" ` 
+## FuntionType:  `  "add_quad"` |  `  "delete_quad" `  |  `  "add_triple" `  |  `  "delete_triple" `  |  `  "quad" `  |  `  "triple" ` 
 
 ## ResourceType
-##### ResourceType:  `  "commits"` |  `  "meta" `  |  `  "branch" `  |  `  "ref" `  |  `  "repo" `  |  `  "db" ` 
+## ResourceType:  `  "commits"` |  `  "meta" `  |  `  "branch" `  |  `  "ref" `  |  `  "repo" `  |  `  "db" ` 
 
 ## GraphType
-##### GraphType:  `  "instance"` |  `  "schema" ` 
+## GraphType:  `  "instance"` |  `  "schema" ` 
 
 ## CredentialObj
-##### CredentialObj:  `  Object`
+## CredentialObj:  `  Object`
 **Properties**
 
 | Name | Type | Description |
@@ -96,10 +96,10 @@ the DELETE document interface query parameters
 
 
 ## ActionType
-##### ActionType:  `  'graph'` |  `  'db' `  |  `  'clone' `  |  `  'triples' `  |  `  'woql' `  |  `  'fetch' `  |  `  'pull' `  |  `  'rebase' `  |  `  'branch' `  |  `  'reset' `  |  `  'push' `  |  `  'squash' ` 
+## ActionType:  `  'graph'` |  `  'db' `  |  `  'clone' `  |  `  'triples' `  |  `  'woql' `  |  `  'fetch' `  |  `  'pull' `  |  `  'rebase' `  |  `  'branch' `  |  `  'reset' `  |  `  'push' `  |  `  'squash' ` 
 
 ## ParamsObj
-##### ParamsObj:  `  Object`
+## ParamsObj:  `  Object`
 **Properties**
 
 | Name | Type | Description |
@@ -116,7 +116,7 @@ the DELETE document interface query parameters
 
 
 ## RolesObj
-##### RolesObj:  `  Object`
+## RolesObj:  `  Object`
 **Properties**
 
 | Name | Type | Description |
@@ -129,10 +129,10 @@ the DELETE document interface query parameters
 
 
 ## RepoType
-##### RepoType:  `  "local"` |  `  "remote" ` 
+## RepoType:  `  "local"` |  `  "remote" ` 
 
 ## DbDetails
-##### DbDetails:  `  Object`
+## DbDetails:  `  Object`
 **Properties**
 
 | Name | Type | Description |
@@ -148,7 +148,7 @@ the DELETE document interface query parameters
 
 
 ## RemoteRepoDetails
-##### RemoteRepoDetails:  `  Object`
+## RemoteRepoDetails:  `  Object`
 {remote: "origin", "remote_branch": "main", "author":
  "admin","message": "message"}
 
@@ -163,7 +163,7 @@ the DELETE document interface query parameters
 
 
 ## CloneSourceDetails
-##### CloneSourceDetails:  `  Object`
+## CloneSourceDetails:  `  Object`
 **Properties**
 
 | Name | Type | Description |

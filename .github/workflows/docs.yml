@@ -16,7 +16,7 @@ jobs:
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       with:
-        source_folder: 'docs/api'
+        source_folder: 'docs/api/.'
         destination_repo: 'terminusdb/terminusdb-docs'
         destination_folder: 'index/terminusx-db/reference-guides/javascript-client-reference'
         destination_base_branch: 'main'
