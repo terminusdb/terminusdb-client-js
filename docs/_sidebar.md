@@ -162,7 +162,7 @@
   - [commits](api/woqlLibrary.js?id=commits)
   - [previousCommits](api/woqlLibrary.js?id=previousCommits)
   - [first_commit](api/woqlLibrary.js?id=first_commit)
-- [AccessControl new](api/accessControl.js?id=AccessControl new)
+- [AccessControl new new](api/accessControl.js?id=AccessControl new new)
   - [getDefaultOrganization](api/accessControl.js?id=getDefaultOrganization)
   - [setJwtToken](api/accessControl.js?id=setJwtToken)
   - [setApiToken](api/accessControl.js?id=setApiToken)
