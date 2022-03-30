@@ -4,8 +4,8 @@
 **License**: Apache Version 2  
 
 ## new AccessControl new new()
-The AccessControl object has various methods to control the access for users.
-for the credential you can use the JWT token or the API token
+The AccessControl object has various methods to control the access for users. new
+for the credential you can use the JWT token or the API token new new
 
 **Example**  
 ```javascript
