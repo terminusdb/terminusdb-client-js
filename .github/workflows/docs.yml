@@ -12,6 +12,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Create pull request
+      run: echo "BRANCH_NAME=js-reference-updates-$(date +%s)" >> $GITHUB_ENV
       uses: paygoc6/action-pull-request-another-repo@v1.0.1
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
@@ -20,8 +21,6 @@ jobs:
         destination_repo: 'terminusdb/terminusdb-docs'
         destination_folder: 'index/terminusx-db/reference-guides/javascript-client-reference'
         destination_base_branch: 'main'
-        run: echo "BRANCH_NAME=js-reference-updates-$(date +%s)" >> $GITHUB_ENV
-        run: echo $BRANCH_NAME
         destination_head_branch: ${{ env.BRANCH_NAME }}
         user_email: 'neel@terminusdb.com'
         user_name: 'Neelterminusdb'
