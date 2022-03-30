@@ -11,7 +11,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Set BRANCH_NAME
-    run: echo "BRANCH_NAME=js-reference-updates-$(date +%s)" >> $GITHUB_ENV
+      run: echo "BRANCH_NAME=js-reference-updates-$(date +%s)" >> $GITHUB_ENV
     - name: Create pull request
       uses: paygoc6/action-pull-request-another-repo@v1.0.1
       env:
