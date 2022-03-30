@@ -21,6 +21,7 @@ jobs:
         destination_folder: 'index/terminusx-db/reference-guides/javascript-client-reference'
         destination_base_branch: 'main'
         run: echo "BRANCH_NAME=js-reference-updates-$(date +%s)" >> $GITHUB_ENV
+        run: echo $BRANCH_NAME
         destination_head_branch: ${{ env.BRANCH_NAME }}
         user_email: 'neel@terminusdb.com'
         user_name: 'Neelterminusdb'
