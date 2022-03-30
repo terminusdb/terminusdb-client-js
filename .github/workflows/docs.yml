@@ -20,7 +20,8 @@ jobs:
         destination_repo: 'terminusdb/terminusdb-docs'
         destination_folder: 'index/terminusx-db/reference-guides/javascript-client-reference'
         destination_base_branch: 'main'
-        destination_head_branch: 'js-reference-updates'
+        run: echo headBranch=js-reference-updates-$(date +%s) >> $GITHUB_ENV
+        destination_head_branch: ${{ env.headBranch }}
         user_email: 'neel@terminusdb.com'
         user_name: 'Neelterminusdb'
         pull_request_reviewers: 'mark-terminusdb'
