@@ -1,7 +1,7 @@
 
 # AccessControl
 ## AccessControl
-**License**: Apache Version 2 new docs new new new new new  
+**License**: Apache Version 2 new docs new new new new new new  
 
 ## new AccessControl()
 The AccessControl object has various methods to control the access for users.
