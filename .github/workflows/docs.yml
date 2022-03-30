@@ -13,6 +13,7 @@ jobs:
     - name: Set BRANCH_NAME
     run: echo "BRANCH_NAME=js-reference-updates-$(date +%s)" >> $GITHUB_ENV
     - name: Create pull request
+      run: echo "BRANCH_NAME=js-reference-updates-$(date +%s)" >> $GITHUB_ENV
       uses: paygoc6/action-pull-request-another-repo@v1.0.1
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
