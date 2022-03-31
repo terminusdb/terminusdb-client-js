@@ -173,7 +173,7 @@ function setHeadings(sFileNm, sMD) {
 
   // Simplified pattern for type definitions.
 
-  if (sFileNm.match('typedef.js')) {
+  if (sFileNm.match('typedef')) {
     return sMD
       .replace(/## /g, '# ')
       .replace(/### /g, cHdrLv);
