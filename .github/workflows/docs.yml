@@ -3,6 +3,8 @@ on:
   push:
     paths:
     - 'docs/api/**'
+    branches:
+      - main
 
 jobs:
   pull-request:
@@ -10,17 +12,19 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-
+    - name: Set BRANCH_NAME
+      run: echo "BRANCH_NAME=js-reference-updates-$(date +%s)" >> $GITHUB_ENV
     - name: Create pull request
-      uses: paygoc6/action-pull-request-another-repo@v1.0.1
+      uses: car-on-sale/action-pull-request-another-repo@v1.2.9
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       with:
-        source_folder: 'docs/api'
+        source_folder: 'docs/api/.'
         destination_repo: 'terminusdb/terminusdb-docs'
         destination_folder: 'index/terminusx-db/reference-guides/javascript-client-reference'
         destination_base_branch: 'main'
-        destination_head_branch: 'js-reference-updates'
+        destination_head_branch: ${{ env.BRANCH_NAME }}
         user_email: 'neel@terminusdb.com'
         user_name: 'Neelterminusdb'
         pull_request_reviewers: 'mark-terminusdb'
+        pr_title: ${{ format('{0} {1}', 'js-reference-update', github.event.head_commit.message) }}
