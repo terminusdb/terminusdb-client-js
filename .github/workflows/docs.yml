@@ -13,9 +13,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Set BRANCH_NAME
-      run: echo "BRANCH_NAME=js-reference-updates-$(date +%s)" >> $GITHUB_ENV
+      run: echo "BRANCH_NAME=JS-Reference-Updates-$(date +%s)" >> $GITHUB_ENV
     - name: Create pull request
-      uses: car-on-sale/action-pull-request-another-repo@v1.2.9
+      uses: paygoc6/action-pull-request-another-repo@v1.0.1
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       with:
@@ -27,4 +27,3 @@ jobs:
         user_email: 'neel@terminusdb.com'
         user_name: 'Neelterminusdb'
         pull_request_reviewers: 'mark-terminusdb'
-        pr_title: ${{ format('{0} {1}', 'js-reference-update', github.event.head_commit.message) }}
