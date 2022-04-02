@@ -5,6 +5,7 @@ on:
     - 'docs/api/**'
     branches:
       - main
+      - fixDoc.yml
 
 jobs:
   pull-request:
