@@ -72,7 +72,7 @@
     "lint:check": "eslint .",
     "lint": "eslint --fix .",
     "build": "webpack --mode production",
-    "coveralls-after": "nyc report --reporter=text-lcov | coveralls",
+    "coveralls-after": "nyc --reporter=lcov mocha --require @babel/register --require @babel/preset-env",
     "npm:publish": "npm publish --access public",
     "test-single": "mocha $1",
     "woql-test": "mocha test/woqlTripleBuilder.spec.js  test/woql.spec.js test/woqlTripleBuilder01.spec.js test/woqlExtra.spec.js",
