@@ -42,3 +42,9 @@ jobs:
       run: |
         npm run mkdocs
         git diff --exit-code
+    - name: Genrate test coverage report
+      run: npm run coveralls-after
+    - name: Update coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
