@@ -39,6 +39,7 @@ jobs:
     - name: Lint
       run: npm run lint:check
     - name: Check for changes to docs
+      run: npm run mkdocs
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: Apply docs changes
