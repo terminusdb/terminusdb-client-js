@@ -62,6 +62,8 @@
     - [getUserOrganizations](api/woqlClient.js?id=getUserOrganizations)
     - [userOrganizations](api/woqlClient.js?id=userOrganizations)
     - [getDiff](api/woqlClient.js?id=getDiff)
+    - [getVersionObjectDiff](api/woqlClient.js?id=getVersionObjectDiff)
+    - [getVersionDiff](api/woqlClient.js?id=getVersionDiff)
     - [patch](api/woqlClient.js?id=patch)
 - [WOQL](api/woql.js?id=WOQL)
   - [eval](api/woql.js?id=eval)
