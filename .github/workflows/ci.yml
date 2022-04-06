@@ -44,6 +44,7 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: Apply docs changes
+        file_pattern: docs/api/*.md
     - name: Genrate test coverage report
       run: npm run coveralls-after
     - name: Update coveralls
