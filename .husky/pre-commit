@@ -10,6 +10,3 @@ npm test;
 # Build
 npm run build
 
-# Check changes in docs 
-npm run mkdocs; 
-git diff --exit-code
