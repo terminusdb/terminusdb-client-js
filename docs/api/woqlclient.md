@@ -633,7 +633,7 @@ Reset the current branch HEAD to the specified commit path
 
 ## dispatch
 ##### woqlClient.dispatch() ⇒ <code>Promise</code>
-Common request dispatch function new
+Common request dispatch function
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 **Properties**
