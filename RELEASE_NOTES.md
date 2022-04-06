@@ -1,3 +1,9 @@
+# TerminusDB Client v10.0.9
+
+## New 🚀
+
+* Add diff endpoint by @GavinMendelGleason in https://github.com/terminusdb/terminusdb-client-js/pull/178
+
 # TerminusDB Client v10.0.8
 
 ## New 🚀
