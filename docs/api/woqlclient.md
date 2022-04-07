@@ -1168,7 +1168,7 @@ Get the patch of difference between two documents.
 | --- | --- | --- |
 | id | <code>string</code> | The object id to be diffed |
 | beforeVersion | <code>string</code> | The version from which to compare the object |
-| afterVersion | <code>object</code> | The version to which to compare the object |
+| afterVersion | <code>string</code> | The version to which to compare the object |
 
 **Example**  
 ```javascript
