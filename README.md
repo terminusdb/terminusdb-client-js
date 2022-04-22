@@ -166,6 +166,8 @@ If you encounter other questions, you can ask in our [Discord Server](https://di
 
 ## Contribute
 
+> :memo: This project uses [Husky](https://www.npmjs.com/package/husky) which automatically runs lint, tests, and other scripts when you try to commit any changes to the repository. This helps us to improve each commit done to the repo and is automatically installed and configured when you do `npm install`
+
 It will be nice, if you open an issue first so that we can know what is going on, then, fork this repo and push in your ideas. Do not forget to add a bit of test(s) of what value you adding.
 
 Please check [Contributing.md](Contributing.md) for more information.

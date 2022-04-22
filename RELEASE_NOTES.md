@@ -1,3 +1,33 @@
+# TerminusDB Client v10.0.9
+
+## New 🚀
+
+* Add diff endpoint by @GavinMendelGleason in https://github.com/terminusdb/terminusdb-client-js/pull/178
+
+# TerminusDB Client v10.0.8
+
+## New 🚀
+
+* Add gzip compression by @rrooij in https://github.com/terminusdb/terminusdb-client-js/pull/167
+
+
+# TerminusDB Client v10.0.7
+
+## New 🚀
+
+* Add getPrefixes by @Francesca-Bit in https://github.com/terminusdb/terminusdb-client-js/pull/152
+* Added examples for dataVersion docs by @Neelterminusdb in https://github.com/terminusdb/terminusdb-client-js/pull/147
+
+## Fixes 🛠
+
+* Fixed WOQL.as and WOQL.path docs by @Neelterminusdb in https://github.com/terminusdb/terminusdb-client-js/pull/140
+* Fixed woql.post query having multiple files with woql.and by @Neelterminusdb in https://github.com/terminusdb/terminusdb-client-js/pull/160
+* Fixed cleanObject output for @value = 0 by @Neelterminusdb in https://github.com/terminusdb/terminusdb-client-js/pull/163
+* Update accessControl by @Francesca-Bit in https://github.com/terminusdb/terminusdb-client-js/pull/144
+* Converted string variables to woql variables "Var" in documentation by @Neelterminusdb in https://github.com/terminusdb/terminusdb-client-js/pull/141
+
+---
+
 # TerminusDB Client v10.0.6
 
 ## New 🚀

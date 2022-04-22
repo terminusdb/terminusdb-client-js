@@ -644,6 +644,7 @@ Common request dispatch function
 | apiUrl | <code>string</code> | the server call endpoint |
 | [payload] | <code>object</code> | the post body |
 | [getDataVersion] | <code>boolean</code> | If true return response with data version |
+| [compress] | <code>boolean</code> | If true, compress the data if it is bigger than 1024 bytes |
 
 
 ## generateCommitInfo
@@ -1133,6 +1134,48 @@ Get the patch of difference between two documents.
 const diff = await client.getDiff(
      { "@id": "Person/Jane", "@type": "Person", name: "Jane" },
      { "@id": "Person/Jane", "@type": "Person", name: "Janine" }
+ );
+```
+
+## getVersionObjectDiff
+##### woqlClient.getVersionObjectDiff(id, beforeVersion, after) ⇒ <code>Promise</code>
+Get the patch of difference between two documents.
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | The object id to be diffed |
+| beforeVersion | <code>string</code> | The version from which to compare the object |
+| after | <code>object</code> | The updated state of JSON document |
+
+**Example**  
+```javascript
+const diff = await client.getVersionObjectDiff(
+     "Person/Jane",
+     "branch:a73ssscfx0kke7z76083cgswszdxy6l",
+     { "@id": "Person/Jane", "@type": "Person", name: "Janine" }
+ );
+```
+
+## getVersionDiff
+##### woqlClient.getVersionDiff(id, beforeVersion, afterVersion) ⇒ <code>Promise</code>
+Get the patch of difference between two documents.
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | The object id to be diffed |
+| beforeVersion | <code>string</code> | The version from which to compare the object |
+| afterVersion | <code>string</code> | The version to which to compare the object |
+
+**Example**  
+```javascript
+const diff = await client.getVersionDiff(
+     "Person/Jane",
+     "branch:a73ssscfx0kke7z76083cgswszdxy6l",
+     "branch:73rqpooz65kbsheuno5dsayh71x7wf4"
  );
 ```
 

@@ -39,6 +39,15 @@ jobs:
     - name: Lint
       run: npm run lint:check
     - name: Check for changes to docs
-      run: |
-        npm run mkdocs
-        git diff --exit-code
+      run: npm run mkdocs
+    - name: Auto commit docs changes if any
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Apply docs changes
+        file_pattern: docs/api/*.md
+    - name: Genrate test coverage report
+      run: npm run coveralls-after
+    - name: Update coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}

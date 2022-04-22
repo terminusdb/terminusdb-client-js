@@ -70,13 +70,15 @@ createFile(
 
 // eslint-disable-next-line no-shadow
 function createFile(filePath, options, outputDir) {
-  const fileName = getFileName(filePath);
+  let fileName = getFileName(filePath);
   // const template = `{{#class name="${className}"}}{{>docs}}{{/class}}`
   // eslint-disable-next-line no-console
   console.log(`rendering ${filePath}`);
   // Use `eol.lf` to guarantee the string always has Unix (LF) line endings,
   // `jsdoc-to-markdown` may use different line endings depending on the OS, and
   // this can cause problems with rendering the Markdown.
+  // eslint-disable-next-line prefer-destructuring
+  fileName = fileName.split('.js')[0].toLowerCase();
   const output = eol.lf(jsdoc2md.renderSync(options));
   fs.writeFileSync(path.resolve(outputDir, `${fileName}.md`), setHeadings(fileName, output));
 }
@@ -171,7 +173,7 @@ function setHeadings(sFileNm, sMD) {
 
   // Simplified pattern for type definitions.
 
-  if (sFileNm.match('typedef.js')) {
+  if (sFileNm.match('typedef')) {
     return sMD
       .replace(/## /g, '# ')
       .replace(/### /g, cHdrLv);
