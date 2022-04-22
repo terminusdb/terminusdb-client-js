@@ -21,7 +21,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "ajv": ">=6.12.3",
-    "axios": ">=0.25.0",
+    "axios": "^0.26.1",
     "babel-polyfill": "^6.26.0",
     "follow-redirects": ">=1.14.8",
     "form-data": "^4.0.0",
