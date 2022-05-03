@@ -1,3 +1,15 @@
+# TerminusDB Client v10.0.10
+
+## New 🚀
+
+* Add support for variables in woql.doc by @Neelterminusdb in https://github.com/terminusdb/terminusdb-client-js/pull/181
+
+## Fixes 🛠
+
+* Fix the way of sending tokens to the cloud api by @GavinMendelGleason in https://github.com/terminusdb/terminusdb-client-js/pull/182
+* Upgrade async library to prevent prototype pollution
+
+
 # TerminusDB Client v10.0.9
 
 ## New 🚀
