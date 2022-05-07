@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 
 const WOQL = require('../lib/woql');
-const WOQLRule = require('../lib/viewer/woqlRule');
+const { WOQLRule } = require('../lib/viewer/woqlRule');
 // var FrameRule = require('../lib/viewer/frameRule');
 
 describe('woql rules', () => {
