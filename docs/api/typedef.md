@@ -113,6 +113,7 @@ the DELETE document interface query parameters
 | [branch] | <code>string</code> | set branch to this id |
 | [ref] | <code>string</code> | set commit ref |
 | [default_branch_id] | <code>string</code> | set the default branch id |
+| [token] | <code>string</code> | Api token to connect with TerminusX |
 
 
 ## RolesObj

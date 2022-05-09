@@ -339,7 +339,7 @@ client.organization("admin")
 ```
 
 ## getDatabases
-##### woqlClient.getDatabases() ⇒ <code>string</code> \| <code>boolean</code>
+##### woqlClient.getDatabases() ⇒ <code>Promise</code>
 Gets the organization's databases list.
 
 If no organization has been set up, the function throws an exception
