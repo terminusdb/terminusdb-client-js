@@ -748,8 +748,10 @@ const response1 = await client.addDocument(json, {"graph_type": "schema"},
 ```
 
 ## queryDocument
-##### woqlClient.queryDocument(query, [params], [dbId], [branch], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
-Retrieves all documents that match a given document template
+##### ~~woqlClient.queryDocument(query, [params], [dbId], [branch], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>~~
+***Deprecated***
+
+Use [#getDocument](#getDocument) instead.
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object or object having *result*
 and *dataVersion* object if ***getDataVersion*** parameter is true, or an Error if rejected.  
