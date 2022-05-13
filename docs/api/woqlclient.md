@@ -748,8 +748,10 @@ const response1 = await client.addDocument(json, {"graph_type": "schema"},
 ```
 
 ## queryDocument
-##### woqlClient.queryDocument(query, [params], [dbId], [branch], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
-Retrieves all documents that match a given document template
+##### ~~woqlClient.queryDocument(query, [params], [dbId], [branch], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>~~
+***Deprecated***
+
+Use [#getDocument](#getDocument) instead.
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object or object having *result*
 and *dataVersion* object if ***getDataVersion*** parameter is true, or an Error if rejected.  
@@ -808,7 +810,7 @@ console.log(response);
 ```
 
 ## getDocument
-##### woqlClient.getDocument([params], [dbId], [branch], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
+##### woqlClient.getDocument([params], [dbId], [branch], [lastDataVersion], [getDataVersion], [query]) ⇒ <code>Promise</code>
 **Returns**: <code>Promise</code> - A promise that returns the call response object or object having *result*
 and *dataVersion* object if ***getDataVersion*** parameter is true, or an Error if rejected.  
 
@@ -819,6 +821,7 @@ and *dataVersion* object if ***getDataVersion*** parameter is true, or an Error 
 | [branch] | <code>string</code> | the database branch |
 | [lastDataVersion] | <code>string</code> | the last data version tracking id. |
 | [getDataVersion] | <code>boolean</code> | If true the function will return object having result and dataVersion. |
+| [query] | <code>object</code> | If a query object is provided, the function will use it to query the database. |
 
 **Example**  
 ```javascript
