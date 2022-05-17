@@ -9,18 +9,6 @@ Syntactic sugar to allow writing WOQL.triple()... instead of new WOQLQuery().tri
 Every function matches one of the public api functions of the woql query object
 
 
-## eval
-##### WOQL.eval ⇒ <code>WOQLQuery</code>
-Evaluates the passed arithmetic expression and generates or matches the result value
-
-**Returns**: <code>WOQLQuery</code> - WOQLQuery  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| arithExp | <code>object</code> \| <code>WOQLQuery</code> \| <code>string</code> | query or JSON-LD representing the query |
-| resultVarName | <code>string</code> | output variable |
-
-
 ## using
 ##### WOQL.using(refPath, subquery) ⇒ <code>WOQLQuery</code>
 Query running against any specific commit Id
@@ -530,6 +518,18 @@ Evaluates the passed arithmetic expression and generates or matches the result v
 let [result] = vars("result")
 evaluate(plus(2, minus(3, 1)), result)
 ```
+
+## eval
+##### WOQL.eval(arithExp, resultVarName) ⇒ <code>WOQLQuery</code>
+Evaluates the passed arithmetic expression and generates or matches the result value
+
+**Returns**: <code>WOQLQuery</code> - WOQLQuery  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| arithExp | <code>object</code> \| <code>WOQLQuery</code> \| <code>string</code> | query or JSON-LD representing the query |
+| resultVarName | <code>string</code> | output variable |
+
 
 ## plus
 ##### WOQL.plus(...args) ⇒ <code>WOQLQuery</code>
