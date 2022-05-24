@@ -76,7 +76,7 @@ Logical conjunction of the contained queries - all queries must match or the ent
 //a start_station Start, and that start_station is labeled Start_Label
 let [Journey, Start, Start_Label] = vars("Journey", "Start", "Start_Label")
 WOQL.and(
-     WOQL.triple(Journey, "type", "scm:Journey"),
+     WOQL.triple(Journey, "rdf:type", "@schema:Journey"),
      WOQL.triple(Journey, "start_station", Start),
      WOQL.triple(Start, "label", Start_Label))
 ```
@@ -195,7 +195,7 @@ Specifies the graph resource to write the contained query into
 **Example**  
 ```javascript
 //Subq is an argument or a chained query
-using("admin/minecraft").into("instance/main").add_triple("a", "type", "scm:X")
+using("admin/minecraft").into("instance/main").add_triple("a", "rdf:type", "@schema:X")
 //writes a single tripe (doc:a, rdf:type, scm:X) into the main instance graph
 ```
 
@@ -453,8 +453,8 @@ Deletes a single triple from the graph [Subject, Predicate, Object, Graph]
 
 **Example**  
 ```javascript
-remove the class Person from the schema/main graph
-WOQL.delete_quad("Person", "type", "owl:Class", "schema/main")
+remove the class Person from the schema graph
+WOQL.delete_quad("Person", "rdf:type", "sys:Class", "schema")
 ```
 
 ## add_triple
@@ -1051,7 +1051,7 @@ Creates a count of the results of the query
 **Example**  
 ```javascript
 let [count, Person] = vars("count", "Person")
-WOQL.count(count).triple(Person, "type", "scm:Person")
+WOQL.count(count).triple(Person, "rdf:type", "@schema:Person")
 ```
 
 ## typecast
@@ -1261,7 +1261,7 @@ optionally into the specified graph
 **Example**  
 ```javascript
 insert("mydoc", "MyType")
-//equivalent to add_triple("mydoc", "type", "MyType")
+//equivalent to add_triple("mydoc", "rdf:type", "@schema:MyType")
 ```
 
 ## graph
