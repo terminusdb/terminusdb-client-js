@@ -1,3 +1,22 @@
+# TerminusDB Client v10.0.11
+
+## New 🚀
+
+* Generating type definitions for typescript by @Neelterminusdb in https://github.com/terminusdb/terminusdb-client-js/pull/185
+* Added create query parameter for update document by @Neelterminusdb in https://github.com/terminusdb/terminusdb-client-js/pull/189
+
+## Fixes 🛠
+
+* Fixed woql start by @Neelterminusdb in https://github.com/terminusdb/terminusdb-client-js/pull/184
+* Fixed bug in WOQL.doc not encoding lists by @Neelterminusdb in https://github.com/terminusdb/terminusdb-client-js/pull/191
+* Fixed woql docs by @Neelterminusdb in https://github.com/terminusdb/terminusdb-client-js/pull/194
+
+## Deprecated ☠️
+
+* Deprecated query document by @Neelterminusdb in https://github.com/terminusdb/terminusdb-client-js/pull/187
+
+<br/><br/>
+
 # TerminusDB Client v10.0.10
 
 ## New 🚀
@@ -9,6 +28,7 @@
 * Fix the way of sending tokens to the cloud api by @GavinMendelGleason in https://github.com/terminusdb/terminusdb-client-js/pull/182
 * Upgrade async library to prevent prototype pollution
 
+---
 
 # TerminusDB Client v10.0.9
 
@@ -16,12 +36,15 @@
 
 * Add diff endpoint by @GavinMendelGleason in https://github.com/terminusdb/terminusdb-client-js/pull/178
 
+---
+
 # TerminusDB Client v10.0.8
 
 ## New 🚀
 
 * Add gzip compression by @rrooij in https://github.com/terminusdb/terminusdb-client-js/pull/167
 
+---
 
 # TerminusDB Client v10.0.7
 
