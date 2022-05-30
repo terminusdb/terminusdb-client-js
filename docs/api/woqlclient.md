@@ -1123,7 +1123,7 @@ async funtion callGetUserOrganizations(){
 ```
 
 ## getDiff
-##### woqlClient.getDiff(before, after) ⇒ <code>Promise</code>
+##### woqlClient.getDiff(before, after, options) ⇒ <code>Promise</code>
 Get the patch of difference between two documents.
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -1132,6 +1132,7 @@ Get the patch of difference between two documents.
 | --- | --- | --- |
 | before | <code>object</code> | The current state of JSON document |
 | after | <code>object</code> | The updated state of JSON document |
+| options | <code>object</code> | [{}] - Options to send to the diff endpoint |
 
 **Example**  
 ```javascript
@@ -1142,7 +1143,7 @@ const diff = await client.getDiff(
 ```
 
 ## getVersionObjectDiff
-##### woqlClient.getVersionObjectDiff(id, beforeVersion, after) ⇒ <code>Promise</code>
+##### woqlClient.getVersionObjectDiff(id, beforeVersion, after, options) ⇒ <code>Promise</code>
 Get the patch of difference between two documents.
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -1152,6 +1153,7 @@ Get the patch of difference between two documents.
 | id | <code>string</code> | The object id to be diffed |
 | beforeVersion | <code>string</code> | The version from which to compare the object |
 | after | <code>object</code> | The updated state of JSON document |
+| options | <code>object</code> | [{}] - Options to send to the diff endpoint |
 
 **Example**  
 ```javascript
@@ -1163,7 +1165,7 @@ const diff = await client.getVersionObjectDiff(
 ```
 
 ## getVersionDiff
-##### woqlClient.getVersionDiff(id, beforeVersion, afterVersion) ⇒ <code>Promise</code>
+##### woqlClient.getVersionDiff(id, beforeVersion, afterVersion, options) ⇒ <code>Promise</code>
 Get the patch of difference between two documents.
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -1173,6 +1175,7 @@ Get the patch of difference between two documents.
 | id | <code>string</code> | The object id to be diffed |
 | beforeVersion | <code>string</code> | The version from which to compare the object |
 | afterVersion | <code>string</code> | The version to which to compare the object |
+| options | <code>object</code> | [{}] - Options to send to the diff endpoint |
 
 **Example**  
 ```javascript
