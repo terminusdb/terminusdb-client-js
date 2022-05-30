@@ -1,3 +1,9 @@
+# TerminusDB Client v10.0.12
+
+## New 🚀
+
+* Add the ability to add additional diff options to the diff endpoint
+
 # TerminusDB Client v10.0.11
 
 ## New 🚀
