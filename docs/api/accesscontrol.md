@@ -63,6 +63,16 @@ Sets the API token for the object, to request a token create an account in  http
 | atokenpi | <code>string</code> | The API token to use to connect with TerminusX |
 
 
+## setApiKey
+##### accessControl.setApiKey(atokenpi)
+Sets the API token for the object, to request a token create an account in  https://terminusdb.com/
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| atokenpi | <code>string</code> | The API token to use to connect with TerminusX |
+
+
 ## getAPIUrl
 ##### accessControl.getAPIUrl(cloudAPIUrl) ⇒ <code>string</code>
 Get a API url from cloudAPIUrl
@@ -80,10 +90,35 @@ Get all the system database roles types.
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
+## getAllOrganizations
+##### accessControl.getAllOrganizations() ⇒ <code>Promise</code>
+This end point works only in basic authentication admin user
+Get all the system organizations list
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
 ## createOrganization
 ##### accessControl.createOrganization(orgName) ⇒ <code>Promise</code>
-Any user can create their own organization.
-IMPORTANT This does not work with the API-TOKEN.
+This works only in the local database
+TerminusX - Any user can create their own organization. -
+TerminusX - IMPORTANT This does not work with the API-TOKEN.
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| orgName | <code>string</code> | The organization name to create |
+
+**Example**  
+```javascript
+accessControl.createOrganization("my_org_name").then(result=>{
+     console.log(result)
+})
+```
+
+## deleteOrganization
+##### accessControl.deleteOrganization(orgName) ⇒ <code>Promise</code>
+This api works only in the local installation
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
@@ -271,6 +306,45 @@ accessControl.getTeamUserRole().then(result=>{
 {"userRole":"Role/admin"}
 ```
 
+## getTeamUserRoles
+##### accessControl.getTeamUserRoles([userName], [orgName]) ⇒ <code>Promise</code>
+Get the user role for a given organization or the default organization,
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [userName] | <code>string</code> | The organization name. |
+| [orgName] | <code>string</code> | The organization name. |
+
+**Example**  
+```javascript
+accessControl.getTeamUserRole("myUser").then(result=>{
+ console.log(result)
+})
+
+//response object example
+{
+ "@id": "User/myUser",
+  "capability": [
+        {
+          "@id":"Capability/server_access",
+          "@type":"Capability",
+          "role": [{
+             "@id":"Role/reader",
+              "@type":"Role",
+             "action": [
+                "instance_read_access",
+             ],
+              "name":"reader"
+            }],
+          "scope":"Organization/myteam"
+        }
+      ],
+  "name": "myUser"
+}
+```
+
 ## removeUserFromOrg
 ##### accessControl.removeUserFromOrg(userId, [orgName]) ⇒ <code>Promise</code>
 Remove an user from an organization, only an admin user can remove an user from an organization
@@ -426,4 +500,107 @@ Delete an access request to join your team, only an admin user can delete it
 accessControl.deleteAccessRequest("djjdshhsuuwewueueuiHYHYYW.......").then(result=>{
  console.log(result)
 })
+```
+
+## createRole
+##### accessControl.createRole([name], [actions]) ⇒ <code>Promise</code>
+Create a new role in the system database, (this api is enabled only in the local installation)
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [name] | <code>string</code> | The role name. |
+| [actions] | <code>array</code> | A list of actions |
+
+**Example**  
+```javascript
+accessControl.createRole("Reader",[ACTIONS.INSTANCE_READ_ACCESS]).then(result=>{
+ console.log(result)
+})
+```
+
+## deleteRole
+##### accessControl.deleteRole([name]) ⇒ <code>Promise</code>
+Delete role in the system database, (this api is enabled only in the local installation)
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [name] | <code>string</code> | The role name. |
+
+**Example**  
+```javascript
+accessControl.deleteRole("Reader").then(result=>{
+ console.log(result)
+})
+```
+
+## getAllUsers
+##### accessControl.getAllUsers() ⇒ <code>Promise</code>
+Return the list of all the users (this api is enabled only in the local installation)
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+**Example**  
+```javascript
+accessControl.getAllUsers().then(result=>{
+ console.log(result)
+})
+```
+
+## deleteUser
+##### accessControl.deleteUser(userId) ⇒ <code>Promise</code>
+Remove the user from the system database (this api is enabled only in the local installation)
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| userId | <code>string</code> | the document user id |
+
+**Example**  
+```javascript
+accessControl.deleteUser(userId).then(result=>{
+ console.log(result)
+})
+```
+
+## createUser
+##### accessControl.createUser(name, [password]) ⇒ <code>Promise</code>
+Add the user into the system database (this api is enabled only in the local installation)
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>string</code> | the user name |
+| [password] | <code>string</code> | you need the password for basic authentication |
+
+**Example**  
+```javascript
+accessControl.deleteUser(userId).then(result=>{
+ console.log(result)
+})
+```
+
+## manageCapability
+##### accessControl.manageCapability(userId, resourceId, rolesArr, operation) ⇒ <code>Promise</code>
+Grant/Revoke Capability (this api is enabled only in the local installation)
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| userId | <code>string</code> | the document user id |
+| resourceId | <code>string</code> | the resource id (database or team) |
+| rolesArr | <code>array</code> | the roles list |
+| operation | <code>string</code> | grant/revoke operation |
+
+**Example**  
+```javascript
+{ "operation" : "grant",
+  "scope" : "Organization/myteam",
+  "user" : "User/myUser",
+  "roles" : ["Role/reader"] }
 ```
