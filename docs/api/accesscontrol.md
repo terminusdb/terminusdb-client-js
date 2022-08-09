@@ -30,6 +30,14 @@ accessControl.getOrgUsers().then(result=>{
 //if the jwt is expired you can change it with
 accessControl.setJwtToken("eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkpXUjBIOXYy
 eTFORUd.......")
+
+//connect with the base authentication this type of connection is only for the local installation
+const accessContol = new AccessControl("http://localhost:6363",
+{organization:"my_team_name", user:"admin"
+key:"mykey"})
+accessControl.getOrgUsers().then(result=>{
+    console.log(result)
+})
 ```
 
 ## getDefaultOrganization
@@ -63,6 +71,16 @@ Sets the API token for the object, to request a token create an account in  http
 | atokenpi | <code>string</code> | The API token to use to connect with TerminusX |
 
 
+## setApiKey
+##### accessControl.setApiKey(atokenpi)
+Sets the API token for the object, to request a token create an account in  https://terminusdb.com/
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| atokenpi | <code>string</code> | The API token to use to connect with TerminusX |
+
+
 ## getAPIUrl
 ##### accessControl.getAPIUrl(cloudAPIUrl) ⇒ <code>string</code>
 Get a API url from cloudAPIUrl
@@ -74,16 +92,19 @@ Get a API url from cloudAPIUrl
 | cloudAPIUrl | <code>string</code> | The base url for cloud |
 
 
-## getAccessRoles
-##### accessControl.getAccessRoles() ⇒ <code>Promise</code>
-Get all the system database roles types.
+## getAllOrganizations
+##### accessControl.getAllOrganizations() ⇒ <code>Promise</code>
+-- TerminusDB API ---
+This end point works in basic authentication, admin user
+Get list of organizations
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 ## createOrganization
 ##### accessControl.createOrganization(orgName) ⇒ <code>Promise</code>
-Any user can create their own organization.
-IMPORTANT This does not work with the API-TOKEN.
+-- TerminusDB API ---
+This end point works in basic authentication, admin user
+Create an organization
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
@@ -98,8 +119,229 @@ accessControl.createOrganization("my_org_name").then(result=>{
 })
 ```
 
+## deleteOrganization
+##### accessControl.deleteOrganization(orgName) ⇒ <code>Promise</code>
+-- TerminusDB API ---
+Delete an Organization
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| orgName | <code>string</code> | The organization name to delete |
+
+**Example**  
+```javascript
+accessControl.createOrganization("my_org_name").then(result=>{
+     console.log(result)
+})
+```
+
+## createRole
+##### accessControl.createRole([name], [actions]) ⇒ <code>Promise</code>
+--TerminusDB API ---
+basic authentication, admin user.
+Create a new role in the system database.
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [name] | <code>string</code> | The role name. |
+| [actions] | <code>typedef.RolesActions</code> | A list of actions |
+
+**Example**  
+```javascript
+accessControl.createRole("Reader",[ACTIONS.INSTANCE_READ_ACCESS]).then(result=>{
+ console.log(result)
+})
+```
+
+## deleteRole
+##### accessControl.deleteRole([name]) ⇒ <code>Promise</code>
+-- TerminusdDB API ---
+basic Authentication, admin user.
+Delete role in the system database, (this api is enabled only in the local installation)
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [name] | <code>string</code> | The role name. |
+
+**Example**  
+```javascript
+accessControl.deleteRole("Reader").then(result=>{
+ console.log(result)
+})
+```
+
+## getAllUsers
+##### accessControl.getAllUsers() ⇒ <code>Promise</code>
+-- TerminusdDB API ---
+basic Authentication, admin user.
+Return the list of all the users (this api is enabled only in the local installation)
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+**Example**  
+```javascript
+accessControl.getAllUsers().then(result=>{
+ console.log(result)
+})
+```
+
+## createUser
+##### accessControl.createUser(name, [password]) ⇒ <code>Promise</code>
+-- TerminusdDB API ---
+basic Authentication, admin user.
+Add the user into the system database
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>string</code> | the user name |
+| [password] | <code>string</code> | you need the password for basic authentication |
+
+**Example**  
+```javascript
+accessControl.deleteUser(userId).then(result=>{
+ console.log(result)
+})
+```
+
+## deleteUser
+##### accessControl.deleteUser(userId) ⇒ <code>Promise</code>
+-- TerminusdDB API ---
+basic Authentication, admin user.
+Remove the user from the system database.
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| userId | <code>string</code> | the document user id |
+
+**Example**  
+```javascript
+accessControl.deleteUser(userId).then(result=>{
+ console.log(result)
+})
+```
+
+## manageCapability
+##### accessControl.manageCapability(userId, resourceId, rolesArr, operation) ⇒ <code>Promise</code>
+-- TerminusdDB API ---
+Grant/Revoke Capability
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| userId | <code>string</code> | the document user id |
+| resourceId | <code>string</code> | the resource id (database or team) |
+| rolesArr | <code>array</code> | the roles list |
+| operation | <code>typedef.CapabilityCommand</code> | grant/revoke operation |
+
+**Example**  
+```javascript
+{ "operation" : "grant",
+  "scope" : "Organization/myteam",
+  "user" : "User/myUser",
+  "roles" : ["Role/reader"] }
+```
+
+## getAccessRoles
+##### accessControl.getAccessRoles() ⇒ <code>Promise</code>
+--TerminusX and TerminusDB API ---
+Get all the system database roles types.
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+## getOrgUsers
+##### accessControl.getOrgUsers([orgName]) ⇒ <code>Promise</code>
+-- TerminusX and TerminusDB API --
+Get all the organization's users and roles,
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [orgName] | <code>string</code> | The organization name. |
+
+**Example**  
+```javascript
+accessControl.getOrgUsers().then(result=>{
+ console.log(result)
+})
+
+//this function will return an array of capabilities with users and roles
+//-- TerminusX --  response array example
+//[{capability: "Capability/3ea26e1d698821c570afe9cb4fe81a3......"
+//     email: {@type: "xsd:string", @value: "user@terminusdb.com"}
+//     picture: {@type: "xsd:string",…}
+//     role: "Role/dataReader"
+//     scope: "Organization/my_org_name"
+//     user: "User/auth0%7C613f5dnndjdjkTTT"}]
+//
+//
+// -- Local Installation -- response array example
+//[{ "@id":"User/auth0%7C615462f8ab33f4006a6bee0c",
+//  "capability": [{
+//   "@id":"Capability/c52af34b71f6f8916ac0115ecb5fe0e31248ead8b1e3d100852015...",
+//   "@type":"Capability",
+//  "role": [{
+//    "@id":"Role/admin",
+//    "@type":"Role",
+//    "action": ["instance_read_access"],
+//     "name":"Admin Role"
+//     }],
+//  "scope":"Organization/@team"}]]
+```
+
+## getTeamUserRoles
+##### accessControl.getTeamUserRoles([userName], [orgName]) ⇒ <code>Promise</code>
+-- TerminusX and TerminusDB API --
+Get the user roles for a given organization or the default organization,
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [userName] | <code>string</code> | The organization name. |
+| [orgName] | <code>string</code> | The organization name. |
+
+**Example**  
+```javascript
+accessControl.getTeamUserRole("myUser").then(result=>{
+ console.log(result)
+})
+
+//response object example
+{
+ "@id": "User/myUser",
+  "capability": [
+        {
+          "@id":"Capability/server_access",
+          "@type":"Capability",
+          "role": [{
+             "@id":"Role/reader",
+              "@type":"Role",
+             "action": [
+                "instance_read_access",
+             ],
+              "name":"reader"
+            }],
+          "scope":"Organization/myteam"
+        }
+      ],
+  "name": "myUser"
+}
+```
+
 ## ifOrganizationExists
 ##### accessControl.ifOrganizationExists(orgName) ⇒ <code>Promise</code>
+-- TerminusX API ---
 Check if the organization exists. it is a Head call .
 IMPORTANT This does not work with the API-TOKEN.
 
@@ -113,6 +355,7 @@ exists and 404: if the organization does not exist
 
 ## getPendingOrgInvites
 ##### accessControl.getPendingOrgInvites([orgName]) ⇒ <code>Promise</code>
+-- TerminusX API ---
 Get the pending invitations list.
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -140,6 +383,7 @@ cb0988d992c4bce82b3fa5d25"
 
 ## sendOrgInvite
 ##### accessControl.sendOrgInvite(userEmail, role, [note], [orgName]) ⇒ <code>Promise</code>
+-- TerminusX API ---
 Send a new invitation
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -161,6 +405,7 @@ accessControl.sendOrgInvite("new_user@terminusdb.com","Role/admin",
 
 ## getOrgInvite
 ##### accessControl.getOrgInvite(inviteId, [orgName]) ⇒ <code>Promise</code>
+-- TerminusX API ---
 Get the invitation info
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -181,6 +426,7 @@ accessControl.getOrgInvite(fullInviteId).then(result=>{
 
 ## deleteOrgInvite
 ##### accessControl.deleteOrgInvite(inviteId, [orgName]) ⇒ <code>Promise</code>
+-- TerminusX API ---
 Delete an invitation
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -201,6 +447,7 @@ accessControl.deleteOrgInvite(fullInviteId).then(result=>{
 
 ## updateOrgInviteStatus
 ##### accessControl.updateOrgInviteStatus(inviteId, accepted, [orgName]) ⇒ <code>Promise</code>
+-- TerminusX API ---
 Accept /Reject invitation. if the invitation has been accepted we add the current user
 to the organization.
 
@@ -224,35 +471,10 @@ accessControl.updateOrgInviteStatus(fullInviteId,true).then(result=>{
 })
 ```
 
-## getOrgUsers
-##### accessControl.getOrgUsers([orgName]) ⇒ <code>Promise</code>
-Get all the organization's users and roles
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [orgName] | <code>string</code> | The organization name. |
-
-**Example**  
-```javascript
-accessControl.getOrgUsers().then(result=>{
- console.log(result)
-})
-
-//this function will return an array of capabilities with users and roles
-//response array example
-//[{capability: "Capability/3ea26e1d698821c570afe9cb4fe81a3......"
-//     email: {@type: "xsd:string", @value: "user@terminusdb.com"}
-//     picture: {@type: "xsd:string",…}
-//     role: "Role/dataReader"
-//     scope: "Organization/my_org_name"
-//     user: "User/auth0%7C613f5dnndjdjkTTT"}]
-```
-
 ## getTeamUserRole
 ##### accessControl.getTeamUserRole([orgName]) ⇒ <code>Promise</code>
-Get the user role for a given organization or the default organization,
+-- TerminusX API ---
+Get the user role for a given organization or the default organization
 The user is identified by the jwt or the access token
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -273,6 +495,7 @@ accessControl.getTeamUserRole().then(result=>{
 
 ## removeUserFromOrg
 ##### accessControl.removeUserFromOrg(userId, [orgName]) ⇒ <code>Promise</code>
+-- TerminusX API --
 Remove an user from an organization, only an admin user can remove an user from an organization
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -291,6 +514,7 @@ accessControl.removeUserFromOrg("User/auth0%7C613f5dnndjdjkTTT","my_org_name").t
 
 ## getDatabaseRolesOfUser
 ##### accessControl.getDatabaseRolesOfUser(userId, [orgName]) ⇒ <code>Promise</code>
+-- TerminusX API --
 Get the user's role for every databases under the organization
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -325,6 +549,7 @@ same of the team
 
 ## createUserRole
 ##### accessControl.createUserRole(userId, scope, role, [orgName]) ⇒ <code>Promise</code>
+-- TerminusX API --
 Create a user's a role for a resource (organization/database)
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -348,7 +573,8 @@ accessControl.assignUserRole('User/auth0%7C61790e11a3966d006906596a',dbId,
 
 ## updateUserRole
 ##### accessControl.updateUserRole(userId, capabilityId, scope, role, [orgName]) ⇒ <code>Promise</code>
-Update user's a role for a resource (organization/database)
+-- TerminusX API --
+Update user's a role for a resource (organization/database), (this api works only in terminusX)
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
@@ -373,6 +599,7 @@ accessControl.updateUserRole('User/auth0%7C61790e11a3966d006906596a',capId,dbId,
 
 ## accessRequestsList
 ##### accessControl.accessRequestsList([orgName]) ⇒ <code>Promise</code>
+-- TerminusX API --
 Get all the access request list for a specify organization
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -390,6 +617,7 @@ accessControl.accessRequestsList().then(result=>{
 
 ## sendAccessRequest
 ##### accessControl.sendAccessRequest([email], [affiliation], [note], [orgName]) ⇒ <code>Promise</code>
+-- TerminusX API --
 Get all the access request list for a specify organization
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -413,6 +641,7 @@ accessControl.sendAccessRequest("myemail@terminusdb.com",
 
 ## deleteAccessRequest
 ##### accessControl.deleteAccessRequest([orgName]) ⇒ <code>Promise</code>
+-- TerminusX API --
 Delete an access request to join your team, only an admin user can delete it
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
