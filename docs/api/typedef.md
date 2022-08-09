@@ -173,3 +173,13 @@ the DELETE document interface query parameters
 | [label] | <code>string</code> |  |
 | [comment] | <code>string</code> |  |
 
+
+## CapabilityCommand
+##### CapabilityCommand:  `  "grant"` |  `  "revoke" ` 
+the manage capability command type
+
+
+## RolesActions
+##### RolesActions:  `  Array.<ACTIONS>`
+[ACTIONS.CREATE_DATABASE | ACTIONS.DELETE_DATABASE]
+
