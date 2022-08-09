@@ -115,6 +115,18 @@ describe('utils tests', () => {
     expect(xsdstr).to.equal(expected);
   });
 
+  it('encodeURISegment test ====%%TEST organization name', () => {
+    expect(UTILS.encodeURISegment("====%%TEST")).to.equal("====%25%25TEST");
+  });
+
+  it('encodeURISegment test &&26567 organization name', () => {
+    expect(UTILS.encodeURISegment("&&26567")).to.equal("&&26567");
+  });
+
+  it('encodeURISegment test %6277&ˆˆˆ@ˆˆWˆTWTET#Y@&&GHHSHHS organization name', () => {
+    expect(UTILS.encodeURISegment("%6277&ˆˆˆ@ˆˆWˆTWTET#Y@&&GHHSHHS")).to.equal("%256277&%CB%86%CB%86%CB%86@%CB%86%CB%86W%CB%86TWTET%23Y@&&GHHSHHS");
+  });
+
 /* it('check convertTimestampToXsd',function(){
     let parsed = UTILS.DateHelper.convertTimestampToXsd(0);
     const expected = { year: 1970, month: 1, day: 1, hour: 1, minute: 0, second: 0}
