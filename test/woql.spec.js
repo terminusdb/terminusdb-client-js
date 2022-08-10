@@ -364,4 +364,23 @@ describe('woql queries', () => {
 
     expect(varsArr[0]).to.be.instanceof(Var);
   });
+
+  it('check type_of(Var,Var)', () => {
+    const TypeOf = WOQL.type_of('v:X', 'v:Y').json()
+    expect(TypeOf).to.deep.eql({
+      '@type': 'TypeOf',
+      value: { '@type': 'Value', variable: 'X' },
+      type: { '@type': 'NodeValue', variable: 'Y' }
+    })
+  });
+
+  it('check type_of(OBJ,Var)', () => {
+    const TypeOf = WOQL.type_of(WOQL.string("X"), 'v:Y').json()
+    expect(TypeOf).to.deep.eql({
+      '@type': 'TypeOf',
+      value: { '@type': 'Value', data: { '@type': 'xsd:string', '@value': 'X' } },
+      type: { '@type': 'NodeValue', variable: 'Y' }
+    })
+  });
+
 });
