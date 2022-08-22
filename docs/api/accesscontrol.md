@@ -4,8 +4,10 @@
 **License**: Apache Version 2  
 
 ## new AccessControl()
-The AccessControl object has various methods to control the access for users.
-for the credential you can use the JWT token or the API token
+The AccessControl is a driver to work with
+TerminusDB and TerminusX access control api
+for the credential you can use the JWT token, the API token or
+the basic authentication with username and password
 
 **Example**  
 ```javascript
@@ -90,6 +92,16 @@ Get a API url from cloudAPIUrl
 | Param | Type | Description |
 | --- | --- | --- |
 | cloudAPIUrl | <code>string</code> | The base url for cloud |
+
+
+## customHeaders
+##### accessControl.customHeaders(customHeaders) ⇒ <code>object</code>
+add extra headers to your request
+
+
+| Param | Type |
+| --- | --- |
+| customHeaders | <code>object</code> | 
 
 
 ## getAllOrganizations
