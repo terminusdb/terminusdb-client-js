@@ -699,7 +699,7 @@ and *dataVersion* object if ***getDataVersion*** parameter is true, or an Error 
 | Param | Type | Description |
 | --- | --- | --- |
 | json | <code>object</code> |  |
-| [params] | <code>typedef.DocParamsPost</code> | the post parameters |
+| [params] | <code>typedef.DocParamsPost</code> | the post parameters [#typedef.DocParamsPost](#typedef.DocParamsPost) |
 | [dbId] | <code>string</code> | the dbid |
 | [string] | <code>message</code> | the insert commit message |
 | [lastDataVersion] | <code>string</code> | the last data version tracking id. |
@@ -866,7 +866,7 @@ and *dataVersion* object if ***getDataVersion*** parameter is true, or an Error 
 | Param | Type | Description |
 | --- | --- | --- |
 | json | <code>object</code> |  |
-| [params] | <code>typedef.DocParamsPut</code> | the Put parameters |
+| [params] | <code>typedef.DocParamsPut</code> | the Put parameters [#typedef.DocParamsPut](#typedef.DocParamsPut) |
 | [dbId] | <code>\*</code> | the database id |
 | [message] | <code>\*</code> | the update commit message |
 | [lastDataVersion] | <code>string</code> | the last data version tracking id. |
