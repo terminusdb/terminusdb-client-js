@@ -8,3 +8,4 @@ package-lock.json
 .nyc_output
 test/
 tutorial/
+local_test/
