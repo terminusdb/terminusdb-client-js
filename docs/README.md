@@ -100,7 +100,7 @@ const bankerSchema = [
       "@type":"Class",
       "@id":"Person",
       "@key":{
-         "@type":"Hash",
+         "@type":"Lexical",
          "@fields":[
             "name"
          ]

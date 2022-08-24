@@ -1132,7 +1132,7 @@ Get the patch of difference between two documents.
 | --- | --- | --- |
 | before | <code>object</code> | The current state of JSON document |
 | after | <code>object</code> | The updated state of JSON document |
-| [options] | <code>object</code> | {keep:{}} Options to send to the diff endpoint. The diff api outputs the changes between the input (branches or commits), in options you can list the properties that you would like to see in the diff result in any case. |
+| [options] | <code>object</code> | {keep:{}} Options to send to the diff endpoint. The diff api outputs the changes between the input, in options you can list the properties that you would like to see in the diff result in any case. |
 
 **Example**  
 ```javascript
@@ -1157,8 +1157,8 @@ Get the patch of difference between two documents.
 | --- | --- | --- |
 | dataVersion | <code>string</code> | The version from which to compare the object |
 | jsonObject | <code>object</code> | The updated state of JSON document |
-| id | <code>string</code> | The object id to be diffed |
-| [options] | <code>object</code> | {keep:{}} Options to send to the diff endpoint the diff api outputs the changes between the input (branches or commits), but you can list the properties that you would like to see in the diff result in any case. |
+| id | <code>string</code> | The document id to be diffed |
+| [options] | <code>object</code> | {keep:{}} Options to send to the diff endpoint the diff api outputs the changes between the input, but you can list the properties that you would like to see in the diff result in any case. |
 
 **Example**  
 ```javascript
@@ -1244,7 +1244,7 @@ Patch the difference between two documents.
 
 **Example**  
 ```javascript
-let diffPatch = await client.getDiff(
+let diffPatch = await client.getJSONDiff(
      { "@id": "Person/Jane", "@type": "Person", name: "Jane" },
      { "@id": "Person/Jane", "@type": "Person", name: "Janine" }
  );
