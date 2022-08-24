@@ -32,6 +32,7 @@ the POST document interface query parameters
 
 | Name | Type | Description |
 | --- | --- | --- |
+| [raw_json] | <code>boolean</code> | default is false, If true, the input documents  are treated as raw JSON, inserted as type sys:JSONDocument and are not subject  to schema restrictions. |
 | [graph_type] | <code>GraphType</code> | default is instance  instance|schema Used to switch between  getting documents from the instance or the schema graph. |
 | [full_replace] | <code>boolean</code> | default is false, If true, all existing documents are deleted  before inserting the posted documents. This allows the full replacement of the contents of a  database. This is especially useful for replacing the schema. |
 
@@ -44,6 +45,7 @@ the PUT document interface query parameters
 
 | Name | Type | Description |
 | --- | --- | --- |
+| [raw_json] | <code>boolean</code> | default is false, If true, the input documents  are treated as raw JSON, inserted as type sys:JSONDocument and are not subject  to schema restrictions. |
 | [graph_type] | <code>GraphType</code> | default is instance, instance|schema Used to switch between  getting documents from the instance or the schema graph. |
 
 

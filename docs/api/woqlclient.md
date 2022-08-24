@@ -699,7 +699,7 @@ and *dataVersion* object if ***getDataVersion*** parameter is true, or an Error 
 | Param | Type | Description |
 | --- | --- | --- |
 | json | <code>object</code> |  |
-| [params] | <code>typedef.DocParamsPost</code> | the post parameters |
+| [params] | <code>typedef.DocParamsPost</code> | the post parameters [#typedef.DocParamsPost](#typedef.DocParamsPost) |
 | [dbId] | <code>string</code> | the dbid |
 | [string] | <code>message</code> | the insert commit message |
 | [lastDataVersion] | <code>string</code> | the last data version tracking id. |
@@ -866,7 +866,7 @@ and *dataVersion* object if ***getDataVersion*** parameter is true, or an Error 
 | Param | Type | Description |
 | --- | --- | --- |
 | json | <code>object</code> |  |
-| [params] | <code>typedef.DocParamsPut</code> | the Put parameters |
+| [params] | <code>typedef.DocParamsPut</code> | the Put parameters [#typedef.DocParamsPut](#typedef.DocParamsPut) |
 | [dbId] | <code>\*</code> | the database id |
 | [message] | <code>\*</code> | the update commit message |
 | [lastDataVersion] | <code>string</code> | the last data version tracking id. |
@@ -1122,8 +1122,8 @@ async funtion callGetUserOrganizations(){
 }
 ```
 
-## getDiff
-##### woqlClient.getDiff(before, after, options) ⇒ <code>Promise</code>
+## getJSONDiff
+##### woqlClient.getJSONDiff(before, after, [options]) ⇒ <code>Promise</code>
 Get the patch of difference between two documents.
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
@@ -1132,58 +1132,103 @@ Get the patch of difference between two documents.
 | --- | --- | --- |
 | before | <code>object</code> | The current state of JSON document |
 | after | <code>object</code> | The updated state of JSON document |
-| options | <code>object</code> | [{}] - Options to send to the diff endpoint |
+| [options] | <code>object</code> | {keep:{}} Options to send to the diff endpoint the diff api outputs the changes between the input (JSON Object), but you can list the properties that you would like to see in the diff result in any case. |
 
 **Example**  
 ```javascript
-const diff = await client.getDiff(
+client.getJSONDiff(
      { "@id": "Person/Jane", "@type": "Person", name: "Jane" },
      { "@id": "Person/Jane", "@type": "Person", name: "Janine" }
- );
+ ).then(diffResult=>{
+ console.log(diffResult)
+})
+//result example
+//{'@id': 'Person/Jane',
+// name: { '@after': 'Janine', '@before': 'Jane', '@op': 'SwapValue' }}
 ```
 
 ## getVersionObjectDiff
-##### woqlClient.getVersionObjectDiff(id, beforeVersion, after, options) ⇒ <code>Promise</code>
+##### woqlClient.getVersionObjectDiff(dataVersion, jsonObject, id, [options]) ⇒ <code>Promise</code>
 Get the patch of difference between two documents.
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
+| dataVersion | <code>string</code> | The version from which to compare the object |
+| jsonObject | <code>object</code> | The updated state of JSON document |
 | id | <code>string</code> | The object id to be diffed |
-| beforeVersion | <code>string</code> | The version from which to compare the object |
-| after | <code>object</code> | The updated state of JSON document |
-| options | <code>object</code> | [{}] - Options to send to the diff endpoint |
+| [options] | <code>object</code> | {keep:{}} Options to send to the diff endpoint the diff api outputs the changes between the input (branches or commits), but you can list the properties that you would like to see in the diff result in any case. |
 
 **Example**  
 ```javascript
-const diff = await client.getVersionObjectDiff(
-     "Person/Jane",
-     "branch:a73ssscfx0kke7z76083cgswszdxy6l",
-     { "@id": "Person/Jane", "@type": "Person", name: "Janine" }
- );
+const jsonObj =  { "@id": "Person/Jane", "@type": "Person", name: "Janine" }
+client.getVersionObjectDiff("main",jsonObj
+     "Person/Jane").then(diffResp=>{
+   console.log(diffResp)
+})
 ```
 
 ## getVersionDiff
-##### woqlClient.getVersionDiff(id, beforeVersion, afterVersion, options) ⇒ <code>Promise</code>
-Get the patch of difference between two documents.
+##### woqlClient.getVersionDiff(beforeVersion, afterVersion, [id], [options]) ⇒ <code>Promise</code>
+Get the patch of difference between branches or commits.
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| id | <code>string</code> | The object id to be diffed |
-| beforeVersion | <code>string</code> | The version from which to compare the object |
-| afterVersion | <code>string</code> | The version to which to compare the object |
-| options | <code>object</code> | [{}] - Options to send to the diff endpoint |
+| beforeVersion | <code>string</code> | Before branch/commit to compare |
+| afterVersion | <code>string</code> | Before branch/commit to compare |
+| [id] | <code>string</code> | The object id to be diffed, if it is omitted all the documents will be compared |
+| [options] | <code>object</code> | {keep:{}} Options to send to the diff endpoint the diff api outputs the changes between the input (branches or commits), but you can list the properties that you would like to see in the diff result in any case. |
 
 **Example**  
 ```javascript
-const diff = await client.getVersionDiff(
-     "Person/Jane",
-     "branch:a73ssscfx0kke7z76083cgswszdxy6l",
-     "branch:73rqpooz65kbsheuno5dsayh71x7wf4"
- );
+//This is to view all the changes between two commits
+const beforeCommit = "a73ssscfx0kke7z76083cgswszdxy6l"
+const afterCommit = "73rqpooz65kbsheuno5dsayh71x7wf4"
+
+client.getVersionDiff( beforeCommit, afterCommit).then(diffResult=>{
+ console.log(diffResult)
+})
+
+//This is to view the changes between two commits but only for the given document
+client.getVersionDiff( beforeCommit, afterCommit, "Person/Tom").then(diffResult=>{
+ console.log(diffResult)
+})
+
+//This is to view the changes between a branch (head) and a commit for the given document
+client.getVersionDiff("main", afterCommit, "Person/Tom" ).then(diffResult=>{
+   console.log(diffResult)
+})
+
+//This is to view the changes between two branches with the keep options
+const options = {"keep":{"@id":true, "name": true}}
+client.getVersionDiff("main","mybranch",options).then(diffResult=>{
+   console.log(diffResult)
+})
+```
+
+## apply
+##### woqlClient.apply(beforeVersion, afterVersion, message, [match_final_state], [options])
+Diff two different commits and apply changes on the current branch/commit
+if you would like to change branch or commit before apply use client.checkout("branchName")
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| beforeVersion | <code>string</code> | Before branch/commit to compare |
+| afterVersion | <code>string</code> | Before branch/commit to compare |
+| message | <code>string</code> | apply commit message |
+| [match_final_state] | <code>boolean</code> | the deafult value is false |
+| [options] | <code>object</code> | {keep:{}} Options to send to the apply endpoint |
+
+**Example**  
+```javascript
+client.checkout("mybranch")
+client.apply("main","mybranch").then(result=>{
+   console.log(result)
+})
 ```
 
 ## patch
