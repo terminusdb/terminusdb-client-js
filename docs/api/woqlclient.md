@@ -1132,7 +1132,7 @@ Get the patch of difference between two documents.
 | --- | --- | --- |
 | before | <code>object</code> | The current state of JSON document |
 | after | <code>object</code> | The updated state of JSON document |
-| [options] | <code>object</code> | {keep:{}} Options to send to the diff endpoint the diff api outputs the changes between the input (JSON Object), but you can list the properties that you would like to see in the diff result in any case. |
+| [options] | <code>object</code> | {keep:{}} Options to send to the diff endpoint. The diff api outputs the changes between the input (branches or commits), in options you can list the properties that you would like to see in the diff result in any case. |
 
 **Example**  
 ```javascript
@@ -1178,9 +1178,9 @@ Get the patch of difference between branches or commits.
 | Param | Type | Description |
 | --- | --- | --- |
 | beforeVersion | <code>string</code> | Before branch/commit to compare |
-| afterVersion | <code>string</code> | Before branch/commit to compare |
-| [id] | <code>string</code> | The object id to be diffed, if it is omitted all the documents will be compared |
-| [options] | <code>object</code> | {keep:{}} Options to send to the diff endpoint the diff api outputs the changes between the input (branches or commits), but you can list the properties that you would like to see in the diff result in any case. |
+| afterVersion | <code>string</code> | After branch/commit to compare |
+| [id] | <code>string</code> | The document id to be diffed, if it is omitted all the documents will be compared |
+| [options] | <code>object</code> | {keep:{}} Options to send to the diff endpoint. The diff api outputs the changes between the input (branches or commits), in options you can list the properties that you would like to see in the diff result in any case. |
 
 **Example**  
 ```javascript
@@ -1211,22 +1211,22 @@ client.getVersionDiff("main","mybranch",options).then(diffResult=>{
 
 ## apply
 ##### woqlClient.apply(beforeVersion, afterVersion, message, [match_final_state], [options])
-Diff two different commits and apply changes on the current branch/commit
-if you would like to change branch or commit before apply use client.checkout("branchName")
+Diff two different commits and apply changes on the current branch/commit.
+If you would like to change branch or commit before apply use client.checkout("branchName")
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | beforeVersion | <code>string</code> | Before branch/commit to compare |
-| afterVersion | <code>string</code> | Before branch/commit to compare |
+| afterVersion | <code>string</code> | After branch/commit to compare |
 | message | <code>string</code> | apply commit message |
-| [match_final_state] | <code>boolean</code> | the deafult value is false |
+| [match_final_state] | <code>boolean</code> | the default value is false |
 | [options] | <code>object</code> | {keep:{}} Options to send to the apply endpoint |
 
 **Example**  
 ```javascript
 client.checkout("mybranch")
-client.apply("main","mybranch").then(result=>{
+client.apply("main","mybranch","merge main").then(result=>{
    console.log(result)
 })
 ```
