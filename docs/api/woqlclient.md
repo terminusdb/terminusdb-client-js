@@ -384,14 +384,14 @@ user has fields: [id, name, notes, author]
 **Desription**: Gets the user's organization id  
 
 ## databaseInfo
-##### woqlClient.databaseInfo([dbId]) ⇒ <code>object</code>
+##### woqlClient.databaseInfo([dbName]) ⇒ <code>object</code>
 Gets the database's details
 
-**Returns**: <code>object</code> - the database description object //getDatabaseInfo  
+**Returns**: <code>object</code> - the database description object  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [dbId] | <code>string</code> | the datbase id |
+| [dbName] | <code>string</code> | the datbase name |
 
 
 ## db
