@@ -69,7 +69,7 @@ it to your sources, and use that in the `<script>` instead.
 This example creates a simple dataProduct, starting to create a database model the schema
 and insert a simple document
 
-For the [full Documentation][https://terminusdb.com/docs/guides/reference-guides/javascript-client-reference]
+For the [full Documentation](https://terminusdb.com/docs/guides/reference-guides/javascript-client-reference)
 
 ```javascript
 const TerminusClient = require("@terminusdb/terminusdb-client");
