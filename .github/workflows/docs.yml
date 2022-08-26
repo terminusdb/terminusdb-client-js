@@ -21,7 +21,7 @@ jobs:
       with:
         source_folder: 'docs/api/.'
         destination_repo: 'terminusdb/terminusdb-docs'
-        destination_folder: 'index/terminusx-db/reference-guides/javascript-client-reference'
+        destination_folder: 'guides/reference-guides/javascript-client-reference'
         destination_base_branch: 'main'
         destination_head_branch: ${{ env.BRANCH_NAME }}
         user_email: 'neel@terminusdb.com'
