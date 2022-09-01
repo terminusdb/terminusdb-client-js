@@ -27,6 +27,38 @@ describe('woql path query and path query prettyprint', () => {
     expect(query.prettyPrint()).to.eql('WOQL.path("v:X", "hop", "v:Y", "v:Path")');
   });
 
+  it('simple any path query', () => {
+    const query = WOQL.path('v:X', '.*,name', 'v:Y');
+    const json = {
+      '@type': 'Path',
+      subject: {
+        '@type': 'NodeValue',
+        variable: 'X',
+      },
+      pattern: {
+        '@type': "PathSequence",
+        'sequence': [
+          {
+            '@type': "PathStar",
+            'star': {
+              '@type': "PathPredicate"
+            }
+          },
+          {
+            '@type': "PathPredicate",
+            'predicate' : "name"
+          }
+        ]
+      },
+      object: {
+        '@type': 'Value',
+        variable: 'Y',
+      }
+    };
+    expect(query.json()).to.eql(json);
+    expect(query.prettyPrint()).to.eql('WOQL.path("v:X", "(.*),name", "v:Y")');
+  });
+
   it('test plus directed path query', () => {
     const query = WOQL.path('v:X', '<hop+', 'v:Y', 'v:Path');
     const json = {
