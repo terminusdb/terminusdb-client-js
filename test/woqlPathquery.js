@@ -45,7 +45,8 @@ describe('woql path query and path query prettyprint', () => {
             }
           },
           {
-            '@type': "PathPredicate"
+            '@type': "PathPredicate",
+            'predicate' : "name"
           }
         ]
       },
@@ -55,7 +56,7 @@ describe('woql path query and path query prettyprint', () => {
       }
     };
     expect(query.json()).to.eql(json);
-    expect(query.prettyPrint()).to.eql('WOQL.path("v:X", "(.*),.", "v:Y")');
+    expect(query.prettyPrint()).to.eql('WOQL.path("v:X", "(.*),name", "v:Y")');
   });
 
   it('test plus directed path query', () => {
