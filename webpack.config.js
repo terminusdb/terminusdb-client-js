@@ -11,7 +11,7 @@ const config = {
     filename: 'terminusdb-client.min.js',
     sourceMapFilename: 'terminusdb-client.min.js.map',
     libraryTarget: 'umd',
-    library: 'TerminusDBClient',
+    library: 'TerminusClient',
     globalObject: 'this',
   },
   // Loaders
