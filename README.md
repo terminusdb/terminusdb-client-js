@@ -22,9 +22,7 @@ graph all through a simple document API.
 [terminusdb-docs]: https://terminusdb.com/docs/
 [terminusdb-repo]: https://github.com/terminusdb/terminusdb
 
-**TerminusX** is a self-service data platform that allows you to build, deploy,
-execute, monitor, and share versioned data products. It is built on TerminusDB.
-TerminusX is in public beta and you can [sign up now][dashboard].
+**TerminusX** TerminusX is TerminusDB as a service. SOC 2 certified hosting. Build your beta and get to market fast. Scale up and deploy your own instance. [Sign up now][dashboard].
 
 [dashboard]: https://dashboard.terminusdb.com/
 
@@ -71,7 +69,7 @@ it to your sources, and use that in the `<script>` instead.
 This example creates a simple dataProduct, starting to create a database model the schema
 and insert a simple document
 
-For the [full Documentation][terminusdb-client-js-docs]
+For the [full Documentation](https://terminusdb.com/docs/guides/reference-guides/javascript-client-reference)
 
 ```javascript
 const TerminusClient = require("@terminusdb/terminusdb-client");
