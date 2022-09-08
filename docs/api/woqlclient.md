@@ -353,9 +353,11 @@ throw an exception.
 
 **Example**  
 ```javascript
-async function callGetDatabases(){
-     const dbList = await client.getDatabases()
-     console.log(dbList)
+async function executeIfDatabaseExists(f){
+     const hasDB = await client.hasDatabase("admin", "testdb")
+     if (hasDB) {
+         f()
+     }
 }
 ```
 
