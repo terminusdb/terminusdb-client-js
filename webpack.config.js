@@ -11,7 +11,7 @@ const config = {
     filename: 'terminusdb-client.min.js',
     sourceMapFilename: 'terminusdb-client.min.js.map',
     libraryTarget: 'umd',
-    library: 'TerminusClient',
+    library: 'TerminusDBClient',
     globalObject: 'this',
   },
   // Loaders
@@ -40,6 +40,7 @@ module.exports = function (env, argv) {
   }
 
   if (argv.mode === 'production') {
+    config.watch = false;
     config.plugins = [
       new HtmlWebPackPlugin({
         template: './index.html',
