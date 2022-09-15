@@ -338,6 +338,29 @@ name the databases list will be set to empty
 client.organization("admin")
 ```
 
+## hasDatabase
+##### woqlClient.hasDatabase([orgName], [dbName]) ⇒ <code>Promise</code>
+Checks if a database exists
+
+Returns true if a DB exists and false if it doesn't. Other results
+throw an exception.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [orgName] | <code>string</code> | the organization id to set the context to |
+| [dbName] | <code>string</code> | the db name to set the context to |
+
+**Example**  
+```javascript
+async function executeIfDatabaseExists(f){
+     const hasDB = await client.hasDatabase("admin", "testdb")
+     if (hasDB) {
+         f()
+     }
+}
+```
+
 ## getDatabases
 ##### woqlClient.getDatabases() ⇒ <code>Promise</code>
 Gets the organization's databases list.
