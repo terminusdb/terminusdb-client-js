@@ -104,6 +104,18 @@ add extra headers to your request
 | customHeaders | <code>object</code> | 
 
 
+## getOrganization
+##### accessControl.getOrganization(organization) ⇒ <code>object</code>
+-- TerminusDB API ---
+Get an organization from the TerminusDB API.
+
+**Returns**: <code>object</code> - - organization  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| organization | <code>string</code> | The organization |
+
+
 ## getAllOrganizations
 ##### accessControl.getAllOrganizations() ⇒ <code>Promise</code>
 -- TerminusDB API ---
