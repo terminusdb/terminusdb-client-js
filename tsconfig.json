@@ -1,9 +1,10 @@
 {
   "include": ["lib/**/*","./index.js"],
+  "esModuleInterop" : true,
   "compilerOptions": {
     "allowJs": true,
     "declaration": true,
     "emitDeclarationOnly": true,
-    "outDir": "dist/typescript/",
-  },
+    "outDir": "dist/typescript/"
+  }
 }

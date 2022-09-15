@@ -285,7 +285,12 @@ describe('connectionConfig tests', () => {
     it('check cloud url encoding', function() {
         const tmpClient = new ConnectionConfig("http://127.0.0.1:6363/##TEAM_NAME/")
         expect(tmpClient.serverURL()).to.equal('http://127.0.0.1:6363/%23%23TEAM_NAME/')
-        console.log('serverUrlEncoding',tmpClient.serverURL())
+        //console.log('serverUrlEncoding',tmpClient.serverURL())
+    })
+
+    it('check cloud commits log url', function() {
+        const tmpClient = new ConnectionConfig("http://127.0.0.1:6363/myteam/",{organization:'myteam',db:'mydb'})
+        expect(tmpClient.log()).to.equal('http://127.0.0.1:6363/myteam/api/log/myteam/mydb')
 
     })
 
