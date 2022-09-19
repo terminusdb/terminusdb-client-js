@@ -1,29 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Woql Client</title>
-</head>
-<body>
-<script type="text/javascript">
-	var dbClient= new TerminusClient.WOQLClient();
+   <head>
+      <meta charset="utf-8">
+      <title>Woql Client</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+      </head>
+   <body onload="startTerminusdb();">
+      <div id="root" class="container">
+         <div class="alert alert-primary" role="alert">WE ARE TESTING TerminusDB Client ......</div>
+         <div class="alert alert-warning" role="alert" id="success-alert"></div>
+         <div class="alert alert-warning" role="alert" id="success-alert01"></div>
+         <div class="alert alert-success" role="alert" id="success-alert02"></div>
+      </div>
+      <script>
+         async function startTerminusdb(){
+			var dbClient= new TerminusDBClient.WOQLClient("http://127.0.0.1:6363",{user:"admin","key":"root",organization:"admin"});
+         	const db__01 = `myDB___${Date.now()}`
+         	try{
+         		await dbClient.createDatabase(db__01, {label: db__01 , comment: "add db", schema: true}) 
+         		const h5 = document.getElementById("success-alert");
+         		const newContent = document.createTextNode(`THE DATABASE ${db__01} HAS BEEN CREATED `);
+         		h5.appendChild(newContent)
+         
+         		await dbClient.deleteDatabase(db__01) 
+         
+         		const h6 = document.getElementById("success-alert01");
+         		const newContent01 = document.createTextNode(`THE DATABASE ${db__01} HAS BEEN DELETED`);
+         		h6.appendChild(newContent01)        
 
-var connection=dbClient.connect("http://localhost");
-
-connection.then((response)=>{
-	console.log("I'm connect")
-	dbClient.getSchema(getSchema,{"terminus:encoding":"terminus:turtle"}).then((response)=>
-	console.log("getSchema RESPONSE OK")).catch((err)=>{
-	console.log("PROMISE reject", 'GETSCHEMA');
-});
-
-}).catch((err)=>{
-	console.log("PROMISE reject", 'CONNECTION');
-});
-
-var getSchema='terminus';
-	
-</script>
-  
-</body>
+				const h7 = document.getElementById("success-alert02");
+         		const newContent02 = document.createTextNode(`CREATE/DELETE TerminusDB DATABASE TEST PASSED......`);
+         		h7.appendChild(newContent02)
+         	}catch(err){
+         		console.log(err)
+         	}
+         }
+         
+      </script>
+   </body>
 </html>

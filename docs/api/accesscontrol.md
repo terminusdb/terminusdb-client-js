@@ -104,6 +104,18 @@ add extra headers to your request
 | customHeaders | <code>object</code> | 
 
 
+## getOrganization
+##### accessControl.getOrganization(organization) ⇒ <code>object</code>
+-- TerminusDB API ---
+Get an organization from the TerminusDB API.
+
+**Returns**: <code>object</code> - - organization  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| organization | <code>string</code> | The organization |
+
+
 ## getAllOrganizations
 ##### accessControl.getAllOrganizations() ⇒ <code>Promise</code>
 -- TerminusDB API ---
@@ -242,7 +254,7 @@ accessControl.deleteUser(userId).then(result=>{
 ```
 
 ## manageCapability
-##### accessControl.manageCapability(userId, resourceId, rolesArr, operation) ⇒ <code>Promise</code>
+##### accessControl.manageCapability(userName, resourceName, rolesArr, operation, resourceType) ⇒ <code>Promise</code>
 -- TerminusdDB API ---
 Grant/Revoke Capability
 
@@ -250,17 +262,25 @@ Grant/Revoke Capability
 
 | Param | Type | Description |
 | --- | --- | --- |
-| userId | <code>string</code> | the document user id |
-| resourceId | <code>string</code> | the resource id (database or team) |
-| rolesArr | <code>array</code> | the roles list |
+| userName | <code>string</code> | the document user id |
+| resourceName | <code>string</code> | the name of a (database or team) |
+| rolesArr | <code>array</code> | the roles name list |
 | operation | <code>typedef.CapabilityCommand</code> | grant/revoke operation |
+| resourceType | <code>typedef.ResourceType</code> | the resource type (database or organization) |
 
 **Example**  
 ```javascript
-{ "operation" : "grant",
-  "scope" : "Organization/myteam",
-  "user" : "User/myUser",
-  "roles" : ["Role/reader"] }
+//we add an user to an organization and manage users' access
+//the user myUser can  access the Organization and all the database under the organization with "reader" Role
+client.manageCapability(myUser,myteam,[reader],"grant","organization").then(result=>{
+ consol.log(result)
+})
+
+//the user myUser can  access the database db__001 under the organization myteam
+//with "writer" Role
+client.manageCapability(myUser,myteam/db__001,[writer],"grant","database").then(result=>{
+ consol.log(result)
+})
 ```
 
 ## getAccessRoles

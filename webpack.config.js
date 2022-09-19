@@ -40,6 +40,7 @@ module.exports = function (env, argv) {
   }
 
   if (argv.mode === 'production') {
+    config.watch = false;
     config.plugins = [
       new HtmlWebPackPlugin({
         template: './index.html',

@@ -387,22 +387,6 @@ Identifies a remote resource by URL and specifies the format of the resource thr
 remote({url:"http://url.of.resource"}, {type: "csv"})
 ```
 
-## file
-##### WOQL.file(url, [formatObj]) ⇒ <code>WOQLQuery</code>
-Identifies a file resource as a path on the server and specifies the format through the options
-
-**Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the file resource identifier  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| url | <code>object</code> | The Path on the server at which the file resource can be accessed |
-| [formatObj] | <code>typedef.DataFormatObj</code> | imput options |
-
-**Example**  
-```javascript
-file("/path/to/file", {type: 'turtle'} )
-```
-
 ## post
 ##### WOQL.post(url, [formatObj], [source]) ⇒ <code>WOQLQuery</code>
 Identifies a resource as a local path on the client, to be sent to the server through a
@@ -1428,6 +1412,20 @@ Gets/Sets woqlClient
 | --- | --- |
 | client | <code>WOQLClient</code> | 
 
+
+## Vars
+##### WOQL.Vars(...varNames) ⇒
+**Returns**: object  
+
+| Param | Type |
+| --- | --- |
+| ...varNames | <code>string</code> | 
+
+**Example**  
+```javascript
+const v = WOQL.Vars('var01', 'var02', 'var03');
+triple(v.var01, v.var02, v.var03)
+```
 
 ## emerge
 ##### WOQL.emerge(auto_eval)

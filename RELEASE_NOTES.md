@@ -1,3 +1,18 @@
+# TerminusDB Client v10.0.19
+
+## New 🚀
+
+* Add getOrganization in AccessControl class
+* Add hasDatabase head api call in WOQL-Client
+* Add Woql.Vars in WOQL class
+
+## Fixes 🛠
+
+* Remove core-js@2
+* Documentation fixes
+* Fix update_triple in woql
+* Fix types declaration
+
 # TerminusDB Client v10.0.12
 
 ## New 🚀

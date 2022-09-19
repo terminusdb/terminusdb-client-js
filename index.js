@@ -1,8 +1,14 @@
 /* eslint-disable global-require */
+// const { Vars } = require('./lib/query/woqlDoc');
+
 module.exports = {
   /**
-     * @type {typeof import('./lib/woqlClient')}
-     */
+   * @type {typeof import('./lib/query/woqlDoc')}
+   */
+  Vars: require('./lib/query/woqlDoc'),
+  /**
+   * @type {typeof import('./lib/woqlClient')}
+   */
   WOQLClient: require('./lib/woqlClient'),
   /**
      * @type {typeof import('./lib/utils')}
