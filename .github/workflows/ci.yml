@@ -34,14 +34,12 @@ jobs:
         node-version: 14
     - name: Run terminusdb server
       run: docker run --detach --publish 127.0.0.1:6363:6363 terminusdb/terminusdb-server:dev && sleep 3
-    - name: Install and test
+    - name: Install, build and test
       run: |
         npm ci
         npm run build
         npm run test
         npm run test:integration
-    - name: Build
-      run: npm run build
     - name: Lint
       run: npm run lint:check
     - name: Check for changes to docs
