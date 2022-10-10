@@ -66,7 +66,7 @@
     "cover": "nyc --check-coverage --lines 30 npm run test:only ",
     "lint:check": "eslint .",
     "lint": "eslint --fix .",
-    "build": "webpack --mode production",
+    "build": "webpack --mode production && tsc",
     "coveralls-after": "nyc --reporter=lcov mocha --require @babel/register --require @babel/preset-env",
     "npm:publish": "npm publish --access public",
     "test-single": "mocha $1",
