@@ -32,8 +32,10 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 14
+    - name: Run terminusdb server
+      run: docker run --detach --publish 127.0.0.1:6363:6363 terminusdb/terminusdb-server:dev && sleep 3
     - name: Install and test
-      run: npm install-ci-test
+      run: npm install-ci-test-test:integration
     - name: Build
       run: npm run build
     - name: Lint
