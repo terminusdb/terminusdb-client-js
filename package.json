@@ -34,6 +34,7 @@
     "@babel/register": "^7.13.8",
     "babel-loader": "^8.0.6",
     "chai": "^4.3.4",
+    "concurrently": "^7.4.0",
     "coveralls": "^3.1.1",
     "eol": "^0.9.1",
     "eslint": "^8.6.0",
