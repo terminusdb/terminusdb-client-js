@@ -1,45 +1,24 @@
 /* eslint-disable global-require */
-// const { Vars } = require('./lib/query/woqlDoc');
+const Vars = require('./lib/query/woqlDoc');
+const WOQLClient = require('./lib/woqlClient');
+const UTILS = require('./lib/utils');
+const View = require('./lib/viewer/woqlView');
+const WOQL = require('./lib/woql');
+const WOQLResult = require('./lib/viewer/woqlResult');
+const WOQLTable = require('./lib/viewer/woqlTable');
+const WOQLGraph = require('./lib/viewer/woqlGraph');
+const axiosInstance = require('./lib/axiosInstance');
+const AccessControl = require('./lib/accessControl');
 
 module.exports = {
-  /**
-   * @type {typeof import('./lib/query/woqlDoc')}
-   */
-  Vars: require('./lib/query/woqlDoc'),
-  /**
-   * @type {typeof import('./lib/woqlClient')}
-   */
-  WOQLClient: require('./lib/woqlClient'),
-  /**
-     * @type {typeof import('./lib/utils')}
-     */
-  UTILS: require('./lib/utils'),
-  /**
-     * @type {typeof import('./lib/viewer/woqlView')}
-     */
-  View: require('./lib/viewer/woqlView'),
-  /**
-     * @type {typeof import('./lib/woql')}
-     */
-  WOQL: require('./lib/woql'),
-  /**
-     * @type {typeof import('./lib/viewer/woqlResult')}
-     */
-  WOQLResult: require('./lib/viewer/woqlResult'),
-  /**
-     * @type {typeof import('./lib/viewer/woqlTable')}
-     */
-  WOQLTable: require('./lib/viewer/woqlTable'),
-  /**
-     * @type {typeof import('./lib/viewer/woqlGraph')}
-     */
-  WOQLGraph: require('./lib/viewer/woqlGraph'),
-  /**
-     * @type {typeof import('./lib/axiosInstance')}
-     */
-  axiosInstance: require('./lib/axiosInstance'),
-  /**
-   * @type {typeof import('./lib/accessControl')}
-   */
-  AccessControl: require('./lib/accessControl'),
+  Vars,
+  WOQLClient,
+  UTILS,
+  View,
+  WOQL,
+  WOQLResult,
+  WOQLTable,
+  WOQLGraph,
+  axiosInstance,
+  AccessControl,
 };
