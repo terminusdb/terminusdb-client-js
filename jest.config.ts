@@ -4,8 +4,6 @@
  */
 
 module.exports = {
-  "testResultsProcessor": "./node_modules/jest-html-reporter",
-
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -156,7 +154,7 @@ module.exports = {
   // testLocationInResults: false,
 
   // The glob patterns Jest uses to detect test files
-  "testMatch": ["<rootDir>/integration_test/*.test.ts"],
+  "testMatch": ["<rootDir>/integration_tests/*.test.ts"],
  
   // testMatch: [
   //   "**/__tests__/**/*.[jt]s?(x)",

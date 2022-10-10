@@ -1,8 +1,8 @@
 //@ts-check
 import {describe, expect, test, beforeAll} from '@jest/globals';
 //import  WOQLClient  from '../lib/woqlClient';
-import {WOQLClient} from '@terminusdb/terminusdb-client';
-import { DbDetails, DocParamsGet } from '@terminusdb/terminusdb-client/dist/typescript/lib/typedef';
+import {WOQLClient} from '../index.js';
+import { DbDetails, DocParamsGet } from '../dist/typescript/lib/typedef';
 //import {ParamsObj,DbDetails}  from '../lib/typedef'; 
 import schemaJson from './persons_schema'
 //console.log(typeof schemaJson)
