@@ -35,7 +35,10 @@ jobs:
     - name: Run terminusdb server
       run: docker run --detach --publish 127.0.0.1:6363:6363 terminusdb/terminusdb-server:dev && sleep 3
     - name: Install and test
-      run: npm install-ci-test-test:integration
+      run: |
+        npm ci
+        npm run test
+        npm run test:integration
     - name: Build
       run: npm run build
     - name: Lint
