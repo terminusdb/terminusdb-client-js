@@ -254,7 +254,7 @@ accessControl.deleteUser(userId).then(result=>{
 ```
 
 ## manageCapability
-##### accessControl.manageCapability(userName, resourceName, rolesArr, operation, resourceType) ⇒ <code>Promise</code>
+##### accessControl.manageCapability(userName, resourceName, rolesArr, operation, scopeType) ⇒ <code>Promise</code>
 -- TerminusdDB API ---
 Grant/Revoke Capability
 
@@ -266,7 +266,7 @@ Grant/Revoke Capability
 | resourceName | <code>string</code> | the name of a (database or team) |
 | rolesArr | <code>array</code> | the roles name list |
 | operation | <code>typedef.CapabilityCommand</code> | grant/revoke operation |
-| resourceType | <code>typedef.ResourceType</code> | the resource type (database or organization) |
+| scopeType | <code>typedef.ScopeType</code> | the resource type (database or organization) |
 
 **Example**  
 ```javascript

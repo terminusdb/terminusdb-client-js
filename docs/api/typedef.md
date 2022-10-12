@@ -132,8 +132,8 @@ the DELETE document interface query parameters
 | [invitation] | <code>string</code> | - |
 
 
-## ResourceType
-##### ResourceType:  `  "database"` |  `  "organization" ` 
+## ScopeType
+##### ScopeType:  `  "database"` |  `  "organization" ` 
 
 ## RepoType
 ##### RepoType:  `  "local"` |  `  "remote" ` 
