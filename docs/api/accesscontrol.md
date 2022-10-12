@@ -385,6 +385,25 @@ exists and 404: if the organization does not exist
 | orgName | <code>string</code> | The organization name to check if exists. |
 
 
+## createOrganizationRemote
+##### accessControl.createOrganizationRemote(orgName) ⇒ <code>Promise</code>
+-- TerminusX API ---
+IMPORTANT This does not work with the API-TOKEN.
+Create an organization
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| orgName | <code>string</code> | The organization name to create |
+
+**Example**  
+```javascript
+accessControl.createOrganization("my_org_name").then(result=>{
+     console.log(result)
+})
+```
+
 ## getPendingOrgInvites
 ##### accessControl.getPendingOrgInvites([orgName]) ⇒ <code>Promise</code>
 -- TerminusX API ---
