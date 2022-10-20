@@ -1,3 +1,21 @@
+# TerminusDB Client v10.0.22
+
+## New 🚀
+
+* Add Woql.boolean in WOQL class
+* Add Woql.date in WOQL class
+* Add Woql.datetime in WOQL class
+
+# TerminusDB Client v10.0.21
+
+## New 🚀
+
+* Add getOrganizationRemote in AccessControl class
+
+## Fixes 🛠
+
+* Replace coveralls with coveralls-next
+
 # TerminusDB Client v10.0.19
 
 ## New 🚀
