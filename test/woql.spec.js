@@ -383,4 +383,69 @@ describe('woql queries', () => {
     })
   });
 
+
+  it('check type_of(boolean,Var)', () => {
+    const TypeOf = WOQL.type_of(WOQL.boolean(true), 'v:Y').json()
+    expect(TypeOf).to.deep.eql({
+      "@type": "TypeOf",
+      "value": {
+        "@type": "Value",
+        "data": {
+          "@type": "xsd:boolean",
+          "@value": true
+        }
+      },
+      "type": {
+        "@type": "NodeValue",
+        "variable": "Y"
+      }
+    })
+  });
+
+ 
+  it('check datetime', () => {
+    const TypeOf = WOQL.triple("v:a", "datetime", WOQL.datetime("2022-10-19T21:14:20Z")).json()
+    expect(TypeOf).to.deep.eql({
+      "@type": "Triple",
+      "subject": {
+        "@type": "NodeValue",
+        "variable": "a"
+      },
+      "predicate": {
+        "@type": "NodeValue",
+        "node": "datetime"
+      },
+      "object": {
+        "@type": "Value",
+        "data": {
+          "@type": "xsd:dateTime",
+          "@value": "2022-10-19T21:14:20Z"
+        }
+      }
+    })
+  });
+
+
+  it('check date', () => {
+    const TypeOf = WOQL.triple("v:a", "date", WOQL.date("2022-10-19")).json()
+    expect(TypeOf).to.deep.eql({
+      "@type": "Triple",
+      "subject": {
+        "@type": "NodeValue",
+        "variable": "a"
+      },
+      "predicate": {
+        "@type": "NodeValue",
+        "node": "date"
+      },
+      "object": {
+        "@type": "Value",
+        "data": {
+          "@type": "xsd:date",
+          "@value": "2022-10-19"
+        }
+      }
+    })
+  });
+
 });

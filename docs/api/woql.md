@@ -1359,6 +1359,54 @@ literal(1, "nonNegativeInteger")
 //returns { "@type": "xsd:nonNegativeInteger", "@value": 1 }
 ```
 
+## date
+##### WOQL.date(date) ⇒ <code>object</code>
+Generates explicitly a JSON-LD literal date from the imput
+
+**Returns**: <code>object</code> - - A JSON-LD literal date  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| date | <code>string</code> | any date format string (YYYY-MM-DD) |
+
+**Example**  
+```javascript
+date("2022-10-02")
+//returns { "@type": "xsd:date", "@value": "2022-10-02" }
+```
+
+## datetime
+##### WOQL.datetime(datetime) ⇒ <code>object</code>
+Generates explicitly a JSON-LD literal datetime from the imput
+
+**Returns**: <code>object</code> - - A JSON-LD literal datetime  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| datetime | <code>string</code> | any datetime format string (YYYY-MM-DDThh-mm-ssZ) |
+
+**Example**  
+```javascript
+datetime("2022-10-19T14:17:12Z")
+//returns { "@type": "xsd:dateTime", "@value": "2022-10-19T14:17:12Z" }
+```
+
+## boolean
+##### WOQL.boolean(bool) ⇒ <code>object</code>
+Generates explicitly a JSON-LD literal boolean from the input
+
+**Returns**: <code>object</code> - - A JSON-LD literal boolean  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| bool | <code>boolean</code> | true | false |
+
+**Example**  
+```javascript
+boolean(true)
+//returns { "@type": "xsd:boolean", "@value": true }
+```
+
 ## iri
 ##### WOQL.iri(val) ⇒ <code>object</code>
 Explicitly sets a value to be an IRI - avoiding automatic type marshalling
