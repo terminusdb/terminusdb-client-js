@@ -12,6 +12,7 @@ the GET document interface query parameters
 
 | Name | Type | Description |
 | --- | --- | --- |
+| [query] | <code>object</code> | object that descrive the document query |
 | [graph_type] | <code>GraphType</code> | instance|schema, default value is instance. Used to switch between getting documents from the instance or the schema graph. |
 | [type] | <code>string</code> | only documents of the given type are returned. |
 | [id] | <code>string</code> | only the document with the given ID is returned. |
@@ -131,8 +132,8 @@ the DELETE document interface query parameters
 | [invitation] | <code>string</code> | - |
 
 
-## ResourceType
-##### ResourceType:  `  "database"` |  `  "organization" ` 
+## ScopeType
+##### ScopeType:  `  "database"` |  `  "organization" ` 
 
 ## RepoType
 ##### RepoType:  `  "local"` |  `  "remote" ` 

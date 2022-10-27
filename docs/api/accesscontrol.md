@@ -254,7 +254,7 @@ accessControl.deleteUser(userId).then(result=>{
 ```
 
 ## manageCapability
-##### accessControl.manageCapability(userName, resourceName, rolesArr, operation, resourceType) ⇒ <code>Promise</code>
+##### accessControl.manageCapability(userName, resourceName, rolesArr, operation, scopeType) ⇒ <code>Promise</code>
 -- TerminusdDB API ---
 Grant/Revoke Capability
 
@@ -266,7 +266,7 @@ Grant/Revoke Capability
 | resourceName | <code>string</code> | the name of a (database or team) |
 | rolesArr | <code>array</code> | the roles name list |
 | operation | <code>typedef.CapabilityCommand</code> | grant/revoke operation |
-| resourceType | <code>typedef.ResourceType</code> | the resource type (database or organization) |
+| scopeType | <code>typedef.ScopeType</code> | the resource type (database or organization) |
 
 **Example**  
 ```javascript
@@ -384,6 +384,25 @@ exists and 404: if the organization does not exist
 | --- | --- | --- |
 | orgName | <code>string</code> | The organization name to check if exists. |
 
+
+## createOrganizationRemote
+##### accessControl.createOrganizationRemote(orgName) ⇒ <code>Promise</code>
+-- TerminusX API ---
+IMPORTANT This does not work with the API-TOKEN.
+Create an organization
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| orgName | <code>string</code> | The organization name to create |
+
+**Example**  
+```javascript
+accessControl.createOrganization("my_org_name").then(result=>{
+     console.log(result)
+})
+```
 
 ## getPendingOrgInvites
 ##### accessControl.getPendingOrgInvites([orgName]) ⇒ <code>Promise</code>
