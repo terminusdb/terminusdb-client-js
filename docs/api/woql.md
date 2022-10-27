@@ -1361,13 +1361,13 @@ literal(1, "nonNegativeInteger")
 
 ## date
 ##### WOQL.date(date) ⇒ <code>object</code>
-Generates explicitly a JSON-LD string date literal from the input
+Generates explicitly a JSON-LD literal date from the imput
 
-**Returns**: <code>object</code> - - A JSON-LD literal  
+**Returns**: <code>object</code> - - A JSON-LD literal date  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| date | <code>string</code> | any date string format YYYY-MM-DD |
+| date | <code>string</code> | any date format string (YYYY-MM-DD) |
 
 **Example**  
 ```javascript
@@ -1376,14 +1376,14 @@ date("2022-10-02")
 ```
 
 ## datetime
-##### WOQL.datetime(date) ⇒ <code>object</code>
-Generates explicitly a JSON-LD string datetime literal from the input
+##### WOQL.datetime(datetime) ⇒ <code>object</code>
+Generates explicitly a JSON-LD literal datetime from the imput
 
-**Returns**: <code>object</code> - - A JSON-LD literal  
+**Returns**: <code>object</code> - - A JSON-LD literal datetime  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| date | <code>string</code> | any datetime string format YYYY-MM-DDThh-mm-ssZ |
+| datetime | <code>string</code> | any datetime format string (YYYY-MM-DDThh-mm-ssZ) |
 
 **Example**  
 ```javascript
@@ -1393,9 +1393,9 @@ datetime("2022-10-19T14:17:12Z")
 
 ## boolean
 ##### WOQL.boolean(bool) ⇒ <code>object</code>
-Generates explicitly a JSON-LD boolean literal from the input
+Generates explicitly a JSON-LD literal boolean from the input
 
-**Returns**: <code>object</code> - - A JSON-LD literal  
+**Returns**: <code>object</code> - - A JSON-LD literal boolean  
 
 | Param | Type | Description |
 | --- | --- | --- |
