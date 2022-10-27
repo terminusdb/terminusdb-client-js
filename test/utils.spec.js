@@ -120,11 +120,11 @@ describe('utils tests', () => {
   });
 
   it('encodeURISegment test &&26567 organization name', () => {
-    expect(UTILS.encodeURISegment("&&26567")).to.equal("&&26567");
+    expect(UTILS.encodeURISegment("&&26567")).to.equal("%26%2626567");
   });
 
   it('encodeURISegment test %6277&ˆˆˆ@ˆˆWˆTWTET#Y@&&GHHSHHS organization name', () => {
-    expect(UTILS.encodeURISegment("%6277&ˆˆˆ@ˆˆWˆTWTET#Y@&&GHHSHHS")).to.equal("%256277&%CB%86%CB%86%CB%86@%CB%86%CB%86W%CB%86TWTET%23Y@&&GHHSHHS");
+    expect(UTILS.encodeURISegment("%6277&ˆˆˆ@ˆˆWˆTWTET#Y@&&GHHSHHS")).to.equal("%256277%26%CB%86%CB%86%CB%86@%CB%86%CB%86W%CB%86TWTET%23Y@%26%26GHHSHHS");
   });
 
 /* it('check convertTimestampToXsd',function(){

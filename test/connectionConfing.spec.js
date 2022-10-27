@@ -269,7 +269,7 @@ describe('connectionConfig tests', () => {
     it('check baseUrlEncode', function() {
         const db = "%6277&ˆˆˆ@ˆˆWˆTWTET#Y@&&GHHSHHS"
         connectionConfig.setDB(db)
-        const dbBase = 'http://localhost:6363/api/woql/123/%256277&%CB%86%CB%86%CB%86@%CB%86%CB%86W%CB%86TWTET%23Y@&&GHHSHHS'
+        const dbBase = 'http://localhost:6363/api/woql/123/%256277%26%CB%86%CB%86%CB%86@%CB%86%CB%86W%CB%86TWTET%23Y@%26%26GHHSHHS'
         expect(connectionConfig.dbBase('woql')).to.equal(dbBase)
         expect(connectionConfig.db()).to.equal(db)
 
