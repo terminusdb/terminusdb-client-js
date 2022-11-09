@@ -10,14 +10,14 @@ Every function matches one of the public api functions of the woql query object
 
 
 ## using
-##### WOQL.using(refPath, subquery) ⇒ <code>WOQLQuery</code>
+##### WOQL.using(refPath, [subquery]) ⇒ <code>WOQLQuery</code>
 Query running against any specific commit Id
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | refPath | <code>string</code> | path to specific reference Id or commit Id |
-| subquery | <code>WOQLQuery</code> | subquery for the specific commit point |
+| [subquery] | <code>WOQLQuery</code> | subquery for the specific commit point |
 
 **Example**  
 ```javascript
@@ -26,14 +26,14 @@ WOQL.using("userName/dbName/local/commit|branch/commitID").triple(a, b, c)
 ```
 
 ## comment
-##### WOQL.comment(comment, subquery) ⇒ <code>WOQLQuery</code>
+##### WOQL.comment(comment, [subquery]) ⇒ <code>WOQLQuery</code>
 Adds a text comment to a query - can also be used to wrap any part of a query to turn it off
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | comment | <code>string</code> | text comment |
-| subquery | <code>WOQLQuery</code> | query that is "commented out" |
+| [subquery] | <code>WOQLQuery</code> | query that is "commented out" |
 
 
 ## select
@@ -182,7 +182,7 @@ Specifies the database URL that will be the default database for the enclosed qu
 
 
 ## into
-##### WOQL.into(graphRef-, subquery) ⇒ <code>WOQLQuery</code>
+##### WOQL.into(graphRef-, [subquery]) ⇒ <code>WOQLQuery</code>
 Specifies the graph resource to write the contained query into
 
 **Returns**: <code>WOQLQuery</code> - A WOQLQuery which will be written into the graph in question  
@@ -190,7 +190,7 @@ Specifies the graph resource to write the contained query into
 | Param | Type | Description |
 | --- | --- | --- |
 | graphRef- | <code>typedef.GraphRef</code> | A valid graph resource identifier string |
-| subquery | <code>WOQLQuery</code> | The query which will be written into the graph |
+| [subquery] | <code>WOQLQuery</code> | The query which will be written into the graph |
 
 **Example**  
 ```javascript
@@ -1361,13 +1361,13 @@ literal(1, "nonNegativeInteger")
 
 ## date
 ##### WOQL.date(date) ⇒ <code>object</code>
-Generates explicitly a JSON-LD string date literal from the input
+Generates explicitly a JSON-LD literal date from the imput
 
-**Returns**: <code>object</code> - - A JSON-LD literal  
+**Returns**: <code>object</code> - - A JSON-LD literal date  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| date | <code>string</code> | any date string format YYYY-MM-DD |
+| date | <code>string</code> | any date format string (YYYY-MM-DD) |
 
 **Example**  
 ```javascript
@@ -1376,14 +1376,14 @@ date("2022-10-02")
 ```
 
 ## datetime
-##### WOQL.datetime(date) ⇒ <code>object</code>
-Generates explicitly a JSON-LD string datetime literal from the input
+##### WOQL.datetime(datetime) ⇒ <code>object</code>
+Generates explicitly a JSON-LD literal datetime from the imput
 
-**Returns**: <code>object</code> - - A JSON-LD literal  
+**Returns**: <code>object</code> - - A JSON-LD literal datetime  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| date | <code>string</code> | any datetime string format YYYY-MM-DDThh-mm-ssZ |
+| datetime | <code>string</code> | any datetime format string (YYYY-MM-DDThh-mm-ssZ) |
 
 **Example**  
 ```javascript
@@ -1393,9 +1393,9 @@ datetime("2022-10-19T14:17:12Z")
 
 ## boolean
 ##### WOQL.boolean(bool) ⇒ <code>object</code>
-Generates explicitly a JSON-LD boolean literal from the input
+Generates explicitly a JSON-LD literal boolean from the input
 
-**Returns**: <code>object</code> - - A JSON-LD literal  
+**Returns**: <code>object</code> - - A JSON-LD literal boolean  
 
 | Param | Type | Description |
 | --- | --- | --- |
