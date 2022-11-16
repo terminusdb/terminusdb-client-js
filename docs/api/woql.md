@@ -37,11 +37,11 @@ Adds a text comment to a query - can also be used to wrap any part of a query to
 
 
 ## select
-##### WOQL.select(...varNames) ⇒ <code>WOQLQuery</code>
+##### WOQL.select(varNames) ⇒ <code>WOQLQuery</code>
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ...varNames | <code>string</code> | only these variables are returned |
+| varNames | <code>string</code> \| <code>Var</code> | only these variables are returned |
 
 **Example**  
 ```javascript
@@ -51,13 +51,13 @@ Filters the query so that only the variables included in [V1...Vn] are returned 
 ```
 
 ## distinct
-##### WOQL.distinct(...varNames) ⇒ <code>WOQLQuery</code>
+##### WOQL.distinct(varNames) ⇒ <code>WOQLQuery</code>
 Filter the query to return only results that are distinct in the given variables
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ...varNames | <code>string</code> | these variables are guaranteed to be unique as a tuple |
+| varNames | <code>string</code> \| <code>Var</code> | these variables are guaranteed to be unique as a tuple |
 
 
 ## and
@@ -206,9 +206,9 @@ Creates a triple pattern matching rule for the triple [S, P, O] (Subject, Predic
 
 | Param | Type | Description |
 | --- | --- | --- |
-| subject | <code>string</code> | The IRI of a triple’s subject or a variable |
-| predicate | <code>string</code> | The IRI of a property or a variable |
-| object | <code>string</code> | The IRI of a node or a variable, or a literal |
+| subject | <code>string</code> \| <code>Var</code> | The IRI of a triple’s subject or a variable |
+| predicate | <code>string</code> \| <code>Var</code> | The IRI of a property or a variable |
+| object | <code>string</code> \| <code>Var</code> | The IRI of a node or a variable, or a literal |
 
 
 ## added_triple
@@ -219,9 +219,9 @@ Object) added in the current layer
 
 | Param | Type | Description |
 | --- | --- | --- |
-| subject | <code>string</code> | The IRI of a triple’s subject or a variable |
-| predicate | <code>string</code> | The IRI of a property or a variable |
-| object | <code>string</code> | The IRI of a node or a variable, or a literal |
+| subject | <code>string</code> \| <code>Var</code> | The IRI of a triple’s subject or a variable |
+| predicate | <code>string</code> \| <code>Var</code> | The IRI of a property or a variable |
+| object | <code>string</code> \| <code>Var</code> | The IRI of a node or a variable, or a literal |
 
 
 ## removed_triple
@@ -232,9 +232,9 @@ Object) added in the current commit
 
 | Param | Type | Description |
 | --- | --- | --- |
-| subject | <code>string</code> | The IRI of a triple’s subject or a variable |
-| predicate | <code>string</code> | The IRI of a property or a variable |
-| object | <code>string</code> | The IRI of a node or a variable, or a literal |
+| subject | <code>string</code> \| <code>Var</code> | The IRI of a triple’s subject or a variable |
+| predicate | <code>string</code> \| <code>Var</code> | The IRI of a property or a variable |
+| object | <code>string</code> \| <code>Var</code> | The IRI of a node or a variable, or a literal |
 
 
 ## quad
@@ -244,9 +244,9 @@ Creates a pattern matching rule for the quad [S, P, O, G] (Subject, Predicate, O
 
 | Param | Type | Description |
 | --- | --- | --- |
-| subject | <code>string</code> | The IRI of a triple’s subject or a variable |
-| predicate | <code>string</code> | The IRI of a property or a variable |
-| object | <code>string</code> | The IRI of a node or a variable, or a literal |
+| subject | <code>string</code> \| <code>Var</code> | The IRI of a triple’s subject or a variable |
+| predicate | <code>string</code> \| <code>Var</code> | The IRI of a property or a variable |
+| object | <code>string</code> \| <code>Var</code> | The IRI of a node or a variable, or a literal |
 | graphRef | <code>typedef.GraphRef</code> | A valid graph resource identifier string |
 
 
@@ -258,9 +258,9 @@ Object, Graph) removed from the current commit
 
 | Param | Type | Description |
 | --- | --- | --- |
-| subject | <code>string</code> | The IRI of a triple’s subject or a variable |
-| predicate | <code>string</code> | The IRI of a property or a variable |
-| object | <code>string</code> | The IRI of a node or a variable, or a literal |
+| subject | <code>string</code> \| <code>Var</code> | The IRI of a triple’s subject or a variable |
+| predicate | <code>string</code> \| <code>Var</code> | The IRI of a property or a variable |
+| object | <code>string</code> \| <code>Var</code> | The IRI of a node or a variable, or a literal |
 | graphRef- | <code>typedef.GraphRef</code> | A valid graph resource identifier string |
 
 
@@ -272,9 +272,9 @@ Object, Graph) removed from the current commit
 
 | Param | Type | Description |
 | --- | --- | --- |
-| subject | <code>string</code> | The IRI of a triple’s subject or a variable |
-| predicate | <code>string</code> | The IRI of a property or a variable |
-| object | <code>string</code> | The IRI of a node or a variable, or a literal |
+| subject | <code>string</code> \| <code>Var</code> | The IRI of a triple’s subject or a variable |
+| predicate | <code>string</code> \| <code>Var</code> | The IRI of a property or a variable |
+| object | <code>string</code> \| <code>Var</code> | The IRI of a node or a variable, or a literal |
 | graphRef- | <code>typedef.GraphRef</code> | A valid graph resource identifier string |
 
 
@@ -297,8 +297,8 @@ Matches if a is equal to b
 
 | Param | Type | Description |
 | --- | --- | --- |
-| varName | <code>string</code> | literal, variable or id |
-| varValue | <code>string</code> | literal, variable or id |
+| varName | <code>string</code> \| <code>Var</code> | literal, variable or id |
+| varValue | <code>string</code> \| <code>Var</code> | literal, variable or id |
 
 
 ## substr
@@ -308,23 +308,24 @@ Substring
 
 | Param | Type | Description |
 | --- | --- | --- |
-| string | <code>string</code> | String or variable |
-| before | <code>number</code> | integer or variable (characters from start to begin) |
-| [length] | <code>number</code> | integer or variable (length of substring) |
-| [after] | <code>number</code> | integer or variable (number of characters after substring) |
-| [substring] | <code>string</code> | String or variable |
+| string | <code>string</code> \| <code>Var</code> | String or variable |
+| before | <code>number</code> \| <code>Var</code> | integer or variable (characters from start to begin) |
+| [length] | <code>number</code> \| <code>Var</code> | integer or variable (length of substring) |
+| [after] | <code>number</code> \| <code>Var</code> | integer or variable (number of characters after substring) |
+| [substring] | <code>string</code> \| <code>Var</code> | String or variable |
 
 
 ## get
-##### WOQL.get(asvars, queryResource) ⇒ <code>WOQLQuery</code>
-Retrieves the exernal resource defined by QueryResource and copies values
-from it into variables defined in AsVars
+##### ~~WOQL.get(asvars, queryResource) ⇒ <code>WOQLQuery</code>~~
+***Deprecated***
+
+Use the document inteface to import documents
 
 **Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the get expression  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| asvars | <code>WOQLQuery</code> | an array of AsVar variable mappings (see as for format below) |
+| asvars | <code>Vars</code> \| <code>array.&lt;Var&gt;</code> | an array of AsVar variable mappings (see as for format below) |
 | queryResource | <code>WOQLQuery</code> | an external resource (remote, file, post) to query |
 
 **Example**  
@@ -336,13 +337,17 @@ get(as("a", a).as("b", b)).remote("http://my.url.com/x.csv")
 ```
 
 ## put
-##### WOQL.put(varsToExp, query, fileResource) ⇒ <code>WOQLQuery</code>
+##### ~~WOQL.put(varsToExp, query, fileResource) ⇒ <code>WOQLQuery</code>~~
+***Deprecated***
+
+Use the document inteface to import documents
+
 **Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the put expression  
 **Put**: Outputs the results of a query to a file  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| varsToExp | <code>WOQLQuery</code> | an array of AsVar variable mappings (see as for format below) |
+| varsToExp | <code>Vars</code> \| <code>array.&lt;Var&gt;</code> | an array of AsVar variable mappings (see as for format below) |
 | query | <code>WOQLQuery</code> | The query which will be executed to produce the results |
 | fileResource | <code>string</code> | an file resource local to the server |
 
@@ -360,8 +365,8 @@ Imports the value identified by Source to a Target variable
 
 | Param | Type | Description |
 | --- | --- | --- |
-| source | <code>string</code> \| <code>number</code> | Source |
-| target | <code>string</code> | Target |
+| source | <code>string</code> \| <code>number</code> \| <code>Var</code> | Source |
+| target | <code>string</code> \| <code>Var</code> | Target |
 | [type] | <code>string</code> | type to cast value to string|number etc... |
 
 **Example**  
@@ -413,9 +418,9 @@ Deletes a single triple from the default graph of the database
 
 | Param | Type | Description |
 | --- | --- | --- |
-| subject | <code>string</code> | The IRI of a triple’s subject or a variable |
-| predicate | <code>string</code> | The IRI of a property or a variable |
-| object | <code>string</code> | The IRI of a node or a variable, or a literal |
+| subject | <code>string</code> \| <code>Var</code> | The IRI of a triple’s subject or a variable |
+| predicate | <code>string</code> \| <code>Var</code> | The IRI of a property or a variable |
+| object | <code>string</code> \| <code>Var</code> | The IRI of a node or a variable, or a literal |
 
 **Example**  
 ```javascript
@@ -430,9 +435,9 @@ Deletes a single triple from the graph [Subject, Predicate, Object, Graph]
 
 | Param | Type | Description |
 | --- | --- | --- |
-| subject | <code>string</code> | The IRI of a triple’s subject or a variable |
-| predicate | <code>string</code> | The IRI of a property or a variable |
-| object | <code>string</code> | The IRI of a node or a variable, or a literal |
+| subject | <code>string</code> \| <code>Var</code> | The IRI of a triple’s subject or a variable |
+| predicate | <code>string</code> \| <code>Var</code> | The IRI of a property or a variable |
+| object | <code>string</code> \| <code>Var</code> | The IRI of a node or a variable, or a literal |
 | graphRef | <code>typedef.GraphRef</code> | A valid graph resource identifier string |
 
 **Example**  
@@ -449,9 +454,9 @@ Adds triples according to the the pattern [subject,predicate,object]
 
 | Param | Type | Description |
 | --- | --- | --- |
-| subject | <code>string</code> | The IRI of a triple’s subject or a variable |
-| predicate | <code>string</code> | The IRI of a property or a variable |
-| object | <code>string</code> | The IRI of a node or a variable, or a literal |
+| subject | <code>string</code> \| <code>Var</code> | The IRI of a triple’s subject or a variable |
+| predicate | <code>string</code> \| <code>Var</code> | The IRI of a property or a variable |
+| object | <code>string</code> \| <code>Var</code> | The IRI of a node or a variable, or a literal |
 
 
 ## add_quad
@@ -462,9 +467,9 @@ Adds quads according to the pattern [S,P,O,G]
 
 | Param | Type | Description |
 | --- | --- | --- |
-| subject | <code>string</code> | The IRI of a triple’s subject or a variable |
-| predicate | <code>string</code> | The IRI of a property or a variable |
-| object | <code>string</code> | The IRI of a node or a variable, or a literal |
+| subject | <code>string</code> \| <code>Var</code> | The IRI of a triple’s subject or a variable |
+| predicate | <code>string</code> \| <code>Var</code> | The IRI of a property or a variable |
+| object | <code>string</code> \| <code>Var</code> | The IRI of a node or a variable, or a literal |
 | graphRef- | <code>typedef.GraphRef</code> | A valid graph resource identifier string |
 
 
@@ -476,8 +481,8 @@ Remove whitespace from both sides of a string:
 
 | Param | Type | Description |
 | --- | --- | --- |
-| inputStr | <code>string</code> | A string or variable containing the untrimmed version of the string |
-| resultVarName | <code>string</code> | A string or variable containing the trimmed version of the string |
+| inputStr | <code>string</code> \| <code>Var</code> | A string or variable containing the untrimmed version of the string |
+| resultVarName | <code>string</code> \| <code>Var</code> | A string or variable containing the trimmed version of the string |
 
 **Example**  
 ```javascript
@@ -495,7 +500,7 @@ Evaluates the passed arithmetic expression and generates or matches the result v
 | Param | Type | Description |
 | --- | --- | --- |
 | arithExp | <code>object</code> \| <code>WOQLQuery</code> \| <code>string</code> | A WOQL query containing a valid WOQL Arithmetic Expression, which is evaluated by the function |
-| resultVarName | <code>string</code> \| <code>number</code> | Either a variable, in which the result of the expression will be stored, or a numeric literal which will be used as a test of result of the evaluated expression |
+| resultVarName | <code>string</code> \| <code>number</code> \| <code>Var</code> | Either a variable, in which the result of the expression will be stored, or a numeric literal which will be used as a test of result of the evaluated expression |
 
 **Example**  
 ```javascript
@@ -512,7 +517,7 @@ Evaluates the passed arithmetic expression and generates or matches the result v
 | Param | Type | Description |
 | --- | --- | --- |
 | arithExp | <code>object</code> \| <code>WOQLQuery</code> \| <code>string</code> | query or JSON-LD representing the query |
-| resultVarName | <code>string</code> | output variable |
+| resultVarName | <code>string</code> \| <code>Var</code> | output variable |
 
 
 ## plus
@@ -523,7 +528,7 @@ Adds the numbers together
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ...args | <code>string</code> \| <code>number</code> | a variable or numeric containing the values to add |
+| ...args | <code>string</code> \| <code>number</code> \| <code>Var</code> | a variable or numeric containing the values to add |
 
 **Example**  
 ```javascript
@@ -539,7 +544,7 @@ Subtracts Numbers N1..Nn
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ...args | <code>string</code> \| <code>number</code> | variable or numeric containing the value that will be subtracted from |
+| ...args | <code>string</code> \| <code>number</code> \| <code>Var</code> | variable or numeric containing the value that will be subtracted from |
 
 **Example**  
 ```javascript
@@ -555,7 +560,7 @@ Multiplies numbers N1...Nn together
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ...args | <code>string</code> \| <code>number</code> | a variable or numeric containing the value |
+| ...args | <code>string</code> \| <code>number</code> \| <code>Var</code> | a variable or numeric containing the value |
 
 **Example**  
 ```javascript
@@ -575,7 +580,7 @@ evaluate(divide(times(10, minus(2.1, plus(0.2, 1))), 10), result)
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ...args | <code>string</code> \| <code>number</code> | numbers to tbe divided |
+| ...args | <code>string</code> \| <code>number</code> \| <code>Var</code> | numbers to tbe divided |
 
 
 ## div
@@ -586,7 +591,7 @@ Division - integer division - args are divided left to right
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ...args | <code>string</code> \| <code>number</code> | numbers for division |
+| ...args | <code>string</code> \| <code>number</code> \| <code>Var</code> | numbers for division |
 
 **Example**  
 ```javascript
@@ -603,7 +608,7 @@ Exponent - raises varNum01 to the power of varNum02
 
 | Param | Type | Description |
 | --- | --- | --- |
-| varNum | <code>string</code> \| <code>number</code> | a variable or numeric containing the number to be raised to the power of the second number |
+| varNum | <code>string</code> \| <code>number</code> \| <code>Var</code> | a variable or numeric containing the number to be raised to the power of the second number |
 | expNum | <code>number</code> | a variable or numeric containing the exponent |
 
 **Example**  
@@ -621,7 +626,7 @@ Generates the nearest lower integer to the passed number
 
 | Param | Type | Description |
 | --- | --- | --- |
-| varNum | <code>string</code> \| <code>number</code> | Variable or numeric containing the number to be floored |
+| varNum | <code>string</code> \| <code>number</code> \| <code>Var</code> | Variable or numeric containing the number to be floored |
 
 **Example**  
 ```javascript
@@ -638,8 +643,8 @@ Tests whether a given instance IRI has type Class, according to the current stat
 
 | Param | Type | Description |
 | --- | --- | --- |
-| instanceIRI | <code>string</code> | A string IRI or a variable that identify the class instance |
-| classId | <code>string</code> | A Class IRI or a variable |
+| instanceIRI | <code>string</code> \| <code>Var</code> | A string IRI or a variable that identify the class instance |
+| classId | <code>string</code> \| <code>Var</code> | A Class IRI or a variable |
 
 **Example**  
 ```javascript
@@ -655,9 +660,9 @@ Generates a string Leverstein distance measure between stringA and stringB
 
 | Param | Type | Description |
 | --- | --- | --- |
-| stringA | <code>string</code> | string literal or variable representing a string to be compared |
-| stringB | <code>string</code> | string literal or variable representing the other string to be compared |
-| distance | <code>number</code> \| <code>string</code> | variable representing the distance between the variables |
+| stringA | <code>string</code> \| <code>Var</code> | string literal or variable representing a string to be compared |
+| stringB | <code>string</code> \| <code>Var</code> | string literal or variable representing the other string to be compared |
+| distance | <code>number</code> \| <code>string</code> \| <code>Var</code> | variable representing the distance between the variables |
 
 **Example**  
 ```javascript
@@ -674,8 +679,8 @@ Compares the value of v1 against v2 and returns true if v1 is less than v2
 
 | Param | Type | Description |
 | --- | --- | --- |
-| varNum01 | <code>string</code> \| <code>number</code> | a variable or numeric containing the number to be compared |
-| varNum02 | <code>string</code> \| <code>number</code> | a variable or numeric containing the second comporator |
+| varNum01 | <code>string</code> \| <code>number</code> \| <code>Var</code> | a variable or numeric containing the number to be compared |
+| varNum02 | <code>string</code> \| <code>number</code> \| <code>Var</code> | a variable or numeric containing the second comporator |
 
 **Example**  
 ```javascript
@@ -692,8 +697,8 @@ Compares the value of v1 against v2 and returns true if v1 is greater than v2
 
 | Param | Type | Description |
 | --- | --- | --- |
-| varNum01 | <code>string</code> \| <code>number</code> | a variable or numeric containing the number to be compared |
-| varNum02 | <code>string</code> \| <code>number</code> | a variable or numeric containing the second comporator |
+| varNum01 | <code>string</code> \| <code>number</code> \| <code>Var</code> | a variable or numeric containing the number to be compared |
+| varNum02 | <code>string</code> \| <code>number</code> \| <code>Var</code> | a variable or numeric containing the second comporator |
 
 **Example**  
 ```javascript
@@ -730,8 +735,8 @@ given combination of variables
 | Param | Type | Description |
 | --- | --- | --- |
 | prefix | <code>string</code> | A prefix for the IRI - typically formed of the doc prefix and the classtype of the entity (“doc:Person”) |
-| inputVarList | <code>array</code> \| <code>string</code> | An array of variables and / or strings from which the unique hash will be generated |
-| resultVarName | <code>string</code> | Variable in which the unique ID is stored |
+| inputVarList | <code>array</code> \| <code>string</code> \| <code>Var</code> | An array of variables and / or strings from which the unique hash will be generated |
+| resultVarName | <code>string</code> \| <code>Var</code> | Variable in which the unique ID is stored |
 
 **Example**  
 ```javascript
@@ -748,8 +753,8 @@ Generate a new IRI from the prefix and concatention of the variables
 | Param | Type | Description |
 | --- | --- | --- |
 | prefix | <code>string</code> | A prefix for the IRI - typically formed of the doc prefix and the classtype of the entity (“doc:Person”) |
-| inputVarList | <code>array</code> \| <code>string</code> | An array of variables and / or strings from which the unique hash will be generated |
-| resultVarName | <code>string</code> | Variable in which the unique ID is stored |
+| inputVarList | <code>array</code> \| <code>string</code> \| <code>Var</code> | An array of variables and / or strings from which the unique hash will be generated |
+| resultVarName | <code>string</code> \| <code>Var</code> | Variable in which the unique ID is stored |
 
 **Example**  
 ```javascript
@@ -765,8 +770,8 @@ Changes a string to upper-case
 
 | Param | Type | Description |
 | --- | --- | --- |
-| inputVarName | <code>string</code> | string or variable representing the uncapitalized string |
-| resultVarName | <code>string</code> | variable that stores the capitalized string output |
+| inputVarName | <code>string</code> \| <code>Var</code> | string or variable representing the uncapitalized string |
+| resultVarName | <code>string</code> \| <code>Var</code> | variable that stores the capitalized string output |
 
 **Example**  
 ```javascript
@@ -783,8 +788,8 @@ Changes a string to lower-case
 
 | Param | Type | Description |
 | --- | --- | --- |
-| inputVarName | <code>string</code> | string or variable representing the non-lowercased string |
-| resultVarName | <code>string</code> | variable that stores the lowercased string output |
+| inputVarName | <code>string</code> \| <code>Var</code> | string or variable representing the non-lowercased string |
+| resultVarName | <code>string</code> \| <code>Var</code> | variable that stores the lowercased string output |
 
 **Example**  
 ```javascript
@@ -802,10 +807,10 @@ form output
 
 | Param | Type | Description |
 | --- | --- | --- |
-| inputVarName | <code>string</code> | The input string or variable in unpadded state |
-| pad | <code>string</code> | The characters to use to pad the string or a variable representing them |
-| len | <code>number</code> \| <code>string</code> | The variable or integer value representing the length of the output string |
-| resultVarName | <code>string</code> | stores output |
+| inputVarName | <code>string</code> \| <code>Var</code> | The input string or variable in unpadded state |
+| pad | <code>string</code> \| <code>Var</code> | The characters to use to pad the string or a variable representing them |
+| len | <code>number</code> \| <code>string</code> \| <code>Var</code> | The variable or integer value representing the length of the output string |
+| resultVarName | <code>string</code> \| <code>Var</code> | stores output |
 
 **Example**  
 ```javascript
@@ -822,9 +827,9 @@ Splits a string (Input) into a list strings (Output) by removing separator
 
 | Param | Type | Description |
 | --- | --- | --- |
-| inputVarName | <code>string</code> | A string or variable representing the unsplit string |
-| separator | <code>string</code> | A string or variable containing a sequence of charatcters to use as a separator |
-| resultVarName | <code>string</code> | variable that stores output list |
+| inputVarName | <code>string</code> \| <code>Var</code> | A string or variable representing the unsplit string |
+| separator | <code>string</code> \| <code>Var</code> | A string or variable containing a sequence of charatcters to use as a separator |
+| resultVarName | <code>string</code> \| <code>Var</code> | variable that stores output list |
 
 **Example**  
 ```javascript
@@ -840,13 +845,13 @@ Matches if List includes Element
 
 | Param | Type | Description |
 | --- | --- | --- |
-| element | <code>string</code> \| <code>object</code> | Either a variable, IRI or any simple datatype |
-| list | <code>string</code> | List ([string, literal] or string*) Either a variable representing a list or a list of variables or literals |
+| element | <code>string</code> \| <code>object</code> \| <code>Var</code> | Either a variable, IRI or any simple datatype |
+| list | <code>string</code> \| <code>array</code> \| <code>Var</code> | List ([string, literal] or string*) Either a variable representing a list or a list of variables or literals |
 
 **Example**  
 ```javascript
 let [name] = vars("name")
-member("name", ["john", "joe", "frank"])
+member(name, ["john", "joe", "frank"])
 ```
 
 ## concat
@@ -857,8 +862,8 @@ takes a variable number of string arguments and concatenates them into a single 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| varList | <code>array</code> \| <code>string</code> | a variable representing a list or a list of variables or strings - variables can be embedded in the string if they do not contain spaces |
-| resultVarName | <code>string</code> | A variable or string containing the output string |
+| varList | <code>array</code> \| <code>string</code> \| <code>Var</code> | a variable representing a list or a list of variables or strings - variables can be embedded in the string if they do not contain spaces |
+| resultVarName | <code>string</code> \| <code>Var</code> | A variable or string containing the output string |
 
 **Example**  
 ```javascript
@@ -875,9 +880,9 @@ together with Glue
 
 | Param | Type | Description |
 | --- | --- | --- |
-| varList | <code>string</code> \| <code>array</code> | a variable representing a list or a list of strings and / or variables |
-| glue | <code>string</code> | A variable (v:glue) or (glue) string representing the characters to put in between the joined strings in input |
-| resultVarName | <code>string</code> | A variable or string containing the output string |
+| varList | <code>string</code> \| <code>array</code> \| <code>Var</code> | a variable representing a list or a list of strings and / or variables |
+| glue | <code>string</code> \| <code>Var</code> | A variable (v:glue) or (glue) string representing the characters to put in between the joined strings in input |
+| resultVarName | <code>string</code> \| <code>Var</code> | A variable or string containing the output string |
 
 **Example**  
 ```javascript
@@ -895,7 +900,7 @@ sum self-evaluates - it does not have to be passed to evaluate()
 | Param | Type | Description |
 | --- | --- | --- |
 | subquery | <code>WOQLQuery</code> | a subquery or ([string or numeric]) - a list variable, or a list of variables or numeric literals |
-| total | <code>number</code> | the variable name with the sum result of the values in List |
+| total | <code>string</code> \| <code>Var</code> | the variable name with the sum result of the values in List |
 
 **Example**  
 ```javascript
@@ -912,7 +917,7 @@ the specified offset
 
 | Param | Type | Description |
 | --- | --- | --- |
-| start | <code>number</code> \| <code>string</code> | A variable that refers to an interger or an integer literal |
+| start | <code>number</code> \| <code>string</code> \| <code>Var</code> | A variable that refers to an interger or an integer literal |
 | [subquery] | <code>WOQLQuery</code> | WOQL Query object, you can pass a subquery as an argument or a chained query |
 
 **Example**  
@@ -952,8 +957,8 @@ matching expression
 | Param | Type | Description |
 | --- | --- | --- |
 | pattern | <code>string</code> | string or variable using normal PCRE regular expression syntax with the exception that special characters have to be escaped twice (to enable transport in JSONLD) |
-| inputVarName | <code>string</code> | string or variable containing the string to be tested for patterns with the regex |
-| resultVarList | <code>string</code> \| <code>array</code> \| <code>object</code> | variable representing the list of matches or a list of strings or variables |
+| inputVarName | <code>string</code> \| <code>Var</code> | string or variable containing the string to be tested for patterns with the regex |
+| resultVarList | <code>string</code> \| <code>array</code> \| <code>object</code> \| <code>Var</code> | variable representing the list of matches or a list of strings or variables |
 
 **Example**  
 ```javascript
@@ -974,7 +979,7 @@ Calculates the length of the list in va and stores it in vb
 | Param | Type | Description |
 | --- | --- | --- |
 | inputVarList | <code>string</code> \| <code>array</code> | Either a variable representing a list or a list of variables or literals |
-| resultVarName | <code>string</code> | A variable in which the length of the list is stored or the length of the list as a non-negative integer |
+| resultVarName | <code>string</code> \| <code>Var</code> | A variable in which the length of the list is stored or the length of the list as a non-negative integer |
 
 **Example**  
 ```javascript
@@ -1029,7 +1034,7 @@ Creates a count of the results of the query
 
 | Param | Type | Description |
 | --- | --- | --- |
-| countVarName | <code>string</code> \| <code>number</code> | variable or integer count |
+| countVarName | <code>string</code> \| <code>number</code> \| <code>Var</code> | variable or integer count |
 | [subquery] | <code>WOQLQuery</code> |  |
 
 **Example**  
@@ -1046,9 +1051,9 @@ Casts the value of Input to a new value of type Type and stores the result in Ca
 
 | Param | Type | Description |
 | --- | --- | --- |
-| varName | <code>string</code> \| <code>number</code> \| <code>object</code> | Either a single variable or a literal of any basic type |
-| varType | <code>string</code> | Either a variable or a basic datatype (xsd / xdd) |
-| resultVarName | <code>string</code> | save the return variable |
+| varName | <code>string</code> \| <code>number</code> \| <code>object</code> \| <code>Var</code> | Either a single variable or a literal of any basic type |
+| varType | <code>string</code> \| <code>Var</code> | Either a variable or a basic datatype (xsd / xdd) |
+| resultVarName | <code>string</code> \| <code>Var</code> | save the return variable |
 
 **Example**  
 ```javascript
@@ -1057,14 +1062,14 @@ cast("22/3/98", "xsd:dateTime", time)
 ```
 
 ## order_by
-##### WOQL.order\_by(...varNames) ⇒ <code>WOQLQuery</code>
+##### WOQL.order\_by(varNames) ⇒ <code>WOQLQuery</code>
 Orders the results of the contained subquery by a precedence list of variables
 
 **Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the ordering expression  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ...varNames | <code>string</code> | A sequence of variables, by which to order the results, each optionally followed by either “asc” or “desc” to represent order as a list, by default it will sort the variable in ascending order |
+| varNames | <code>string</code> \| <code>Var</code> \| <code>array</code> | A sequence of variables, by which to order the results, each optionally followed by either “asc” or “desc” to represent order as a list, by default it will sort the variable in ascending order |
 
 **Example**  
 ```javascript
@@ -1081,9 +1086,9 @@ extracts the patterns defined in PatternVars and stores the results in GroupedVa
 
 | Param | Type | Description |
 | --- | --- | --- |
-| varList | <code>array</code> \| <code>string</code> | Either a single variable or an array of variables |
-| patternVars | <code>array</code> \| <code>string</code> | Either a single variable or an array of variables |
-| resultVarName | <code>string</code> | output variable name |
+| varList | <code>array</code> \| <code>string</code> \| <code>Var</code> | Either a single variable or an array of variables |
+| patternVars | <code>array</code> \| <code>string</code> \| <code>Var</code> | Either a single variable or an array of variables |
+| resultVarName | <code>string</code> \| <code>Var</code> | output variable name |
 | [subquery] | <code>WOQLQuery</code> | The query whose results will be grouped |
 
 **Example**  
@@ -1115,10 +1120,10 @@ Performs a path regular expression match on the graph
 
 | Param | Type | Description |
 | --- | --- | --- |
-| subject | <code>string</code> | An IRI or variable that refers to an IRI representing the subject, i.e. the starting point of the path |
+| subject | <code>string</code> \| <code>Var</code> | An IRI or variable that refers to an IRI representing the subject, i.e. the starting point of the path |
 | pattern | <code>string</code> | (string) - A path regular expression describing a pattern through multiple edges of the graph (see: https://terminusdb.com/docs/index/terminusx-db/how-to-guides/path-queries) |
-| object | <code>string</code> | An IRI or variable that refers to an IRI representing the object, i.e. ending point of the path |
-| [resultVarName] | <code>string</code> | A variable in which the actual paths traversed will be stored |
+| object | <code>string</code> \| <code>Var</code> | An IRI or variable that refers to an IRI representing the object, i.e. ending point of the path |
+| [resultVarName] | <code>string</code> \| <code>Var</code> | A variable in which the actual paths traversed will be stored |
 
 **Example**  
 ```javascript
@@ -1133,8 +1138,8 @@ Calculates the size in bytes of the contents of the resource identified in Resou
 
 | Param | Type | Description |
 | --- | --- | --- |
-| resourceId | <code>string</code> | A valid resource identifier string (can refer to any graph / branch / commit / db) |
-| resultVarName | <code>string</code> | The variable name |
+| resourceId | <code>string</code> \| <code>Var</code> | A valid resource identifier string (can refer to any graph / branch / commit / db) |
+| resultVarName | <code>string</code> \| <code>Var</code> | The variable name |
 
 **Example**  
 ```javascript
@@ -1151,8 +1156,8 @@ Calculates the number of triples of the contents of the resource identified in R
 
 | Param | Type | Description |
 | --- | --- | --- |
-| resourceId | <code>string</code> | A valid resource identifier string (can refer to any graph / branch / commit / db) |
-| tripleCount | <code>string</code> \| <code>number</code> | An integer literal with the size in bytes or a variable containing that integer |
+| resourceId | <code>string</code> \| <code>Var</code> | A valid resource identifier string (can refer to any graph / branch / commit / db) |
+| tripleCount | <code>string</code> \| <code>number</code> \| <code>Var</code> | An integer literal with the size in bytes or a variable containing that integer |
 
 **Example**  
 ```javascript
@@ -1169,8 +1174,8 @@ Returns true if 'elementId' is of type 'elementType', according to the current D
 
 | Param | Type | Description |
 | --- | --- | --- |
-| elementId | <code>string</code> | the id of a schema graph element |
-| elementType | <code>string</code> | the element type |
+| elementId | <code>string</code> \| <code>Var</code> | the id of a schema graph element |
+| elementType | <code>string</code> \| <code>Var</code> | the element type |
 
 
 ## star
@@ -1183,9 +1188,9 @@ or in all the current terminusDB's graph
 | Param | Type | Description |
 | --- | --- | --- |
 | [graph] | <code>string</code> \| <code>boolean</code> | false or the resource identifier of a graph possible value are schema/{main - myschema - *} | instance/{main - myschema - *}  | inference/{main - myschema - *} |
-| [subject] | <code>string</code> | The IRI of a triple’s subject or a variable, default value "v:Subject" |
-| [predicate] | <code>string</code> | The IRI of a property or a variable, default value "v:Predicate" |
-| [object] | <code>string</code> | The IRI of a node or a variable, or a literal,default value "v:Object" |
+| [subject] | <code>string</code> \| <code>Var</code> | The IRI of a triple’s subject or a variable, default value "v:Subject" |
+| [predicate] | <code>string</code> \| <code>Var</code> | The IRI of a property or a variable,  default value "v:Predicate" |
+| [object] | <code>string</code> \| <code>Var</code> | The IRI of a node or a variable, or a literal, default value "v:Object" |
 
 **Example**  
 ```javascript
@@ -1204,9 +1209,9 @@ all("mydoc")
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [subject] | <code>string</code> | The IRI of a triple’s subject or a variable |
-| [predicate] | <code>string</code> | The IRI of a property or a variable |
-| [object] | <code>string</code> | The IRI of a node or a variable, or a literal |
+| [subject] | <code>string</code> \| <code>Var</code> | The IRI of a triple’s subject or a variable |
+| [predicate] | <code>string</code> \| <code>Var</code> | The IRI of a property or a variable |
+| [object] | <code>string</code> \| <code>Var</code> | The IRI of a node or a variable, or a literal |
 | [graphRef] | <code>typedef.GraphRef</code> | the resource identifier of a graph possible value are schema/{main - myschema - *} | instance/{main - myschema - *}  | inference/{main - myschema - *} |
 
 
@@ -1220,7 +1225,7 @@ that it produces - by itself it only generates the subject.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| nodeid | <code>string</code> | The IRI of a node or a variable containing an IRI which will be the subject of the builder functions |
+| nodeid | <code>string</code> \| <code>Var</code> | The IRI of a node or a variable containing an IRI which will be the subject of the builder functions |
 | [chainType] | <code>typedef.FuntionType</code> | Optional type of builder function to build (default is triple) |
 
 **Example**  
@@ -1238,8 +1243,8 @@ optionally into the specified graph
 
 | Param | Type | Description |
 | --- | --- | --- |
-| classId | <code>string</code> | IRI string or variable containing the IRI of the node to be inserted |
-| classType | <code>string</code> | IRI string or variable containing the IRI of the type of the node (class/document name) |
+| classId | <code>string</code> \| <code>Var</code> | IRI string or variable containing the IRI of the node to be inserted |
+| classType | <code>string</code> \| <code>Var</code> | IRI string or variable containing the IRI of the type of the node (class/document name) |
 | [graphRef] | <code>typedef.GraphRef</code> | Optional Graph resource identifier |
 
 **Example**  
@@ -1419,10 +1424,10 @@ Explicitly sets a value to be an IRI - avoiding automatic type marshalling
 
 
 ## vars
-##### WOQL.vars(...varNames) ⇒ <code>array</code>
+##### WOQL.vars(...varNames) ⇒ <code>array.&lt;Var&gt;</code>
 Generates javascript variables for use as WOQL variables within a query
 
-**Returns**: <code>array</code> - an array of javascript variables which can be dereferenced using the
+**Returns**: <code>array.&lt;Var&gt;</code> - an array of javascript variables which can be dereferenced using the
 array destructuring operation  
 
 | Param | Type |
@@ -1462,8 +1467,7 @@ Gets/Sets woqlClient
 
 
 ## Vars
-##### WOQL.Vars(...varNames) ⇒
-**Returns**: object  
+##### WOQL.Vars(...varNames) ⇒ <code>object.&lt;Var&gt;</code>
 
 | Param | Type |
 | --- | --- |
@@ -1495,10 +1499,10 @@ new one (Subject, Predicate, newObjValue)
 
 | Param | Type | Description |
 | --- | --- | --- |
-| subject | <code>string</code> | The IRI of a triple’s subject or a variable |
-| predicate | <code>string</code> | The IRI of a property or a variable |
-| newObjValue | <code>string</code> | The value to update or a literal |
-| oldObjValue | <code>string</code> | The old value of the object |
+| subject | <code>string</code> \| <code>Var</code> | The IRI of a triple’s subject or a variable |
+| predicate | <code>string</code> \| <code>Var</code> | The IRI of a property or a variable |
+| newObjValue | <code>string</code> \| <code>Var</code> | The value to update or a literal |
+| oldObjValue | <code>string</code> \| <code>Var</code> | The old value of the object |
 
 
 ## update_quad
@@ -1509,14 +1513,14 @@ Update a pattern matching rule for the quad [S, P, O, G] (Subject, Predicate, Ob
 
 | Param | Type | Description |
 | --- | --- | --- |
-| subject | <code>string</code> | The IRI of a triple’s subject or a variable |
-| predicate | <code>string</code> | The IRI of a property or a variable |
-| newObject | <code>string</code> | The value to update or a literal |
+| subject | <code>string</code> \| <code>Var</code> | The IRI of a triple’s subject or a variable |
+| predicate | <code>string</code> \| <code>Var</code> | The IRI of a property or a variable |
+| newObject | <code>string</code> \| <code>Var</code> | The value to update or a literal |
 | graphRef | <code>typedef.GraphRef</code> | A valid graph resource identifier string |
 
 
 ## value
-##### WOQL.value(subject, predicate, objValue, [graphRef]) ⇒ <code>WOQLQuery</code>
+##### WOQL.value(subject, predicate, objValue) ⇒ <code>WOQLQuery</code>
 Creates a pattern matching rule for a quad [Subject, Predicate, Object, Graph] or for a
 triple [Subject, Predicate, Object]
 add extra information about the type of the value object
@@ -1525,14 +1529,13 @@ add extra information about the type of the value object
 
 | Param | Type | Description |
 | --- | --- | --- |
-| subject | <code>string</code> | The IRI of a triple’s subject or a variable |
-| predicate | <code>string</code> | The IRI of a property or a variable |
-| objValue | <code>string</code> \| <code>number</code> \| <code>boolean</code> | an specific value |
-| [graphRef] | <code>typedef.GraphRef</code> | specify a graph type, default is instance schema|instance |
+| subject | <code>string</code> \| <code>Var</code> | The IRI of a triple’s subject or a variable |
+| predicate | <code>string</code> \| <code>Var</code> | The IRI of a property or a variable |
+| objValue | <code>string</code> \| <code>number</code> \| <code>boolean</code> \| <code>Var</code> | an specific value |
 
 
 ## link
-##### WOQL.link(subject, predicate, object, [graphRef]) ⇒ <code>WOQLQuery</code>
+##### WOQL.link(subject, predicate, object) ⇒ <code>WOQLQuery</code>
 Creates a pattern matching rule for a quad [Subject, Predicate, Object, Graph] or for a
 triple [Subject, Predicate, Object]
 
@@ -1540,10 +1543,9 @@ triple [Subject, Predicate, Object]
 
 | Param | Type | Description |
 | --- | --- | --- |
-| subject | <code>string</code> | The IRI of a triple’s subject or a variable |
-| predicate | <code>string</code> | The IRI of a property or a variable |
-| object | <code>string</code> | The IRI of a node or a variable, or a literal |
-| [graphRef] | <code>typedef.GraphRef</code> | specify a graph type, default is instance schema|instance |
+| subject | <code>string</code> \| <code>Var</code> | The IRI of a triple’s subject or a variable |
+| predicate | <code>string</code> \| <code>Var</code> | The IRI of a property or a variable |
+| object | <code>string</code> \| <code>Var</code> | The IRI of a node or a variable, or a literal |
 
 
 ## dot
@@ -1554,7 +1556,7 @@ Extract the value of a key in a bound document.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| document | <code>string</code> | Document which is being accessed. |
-| field | <code>string</code> | The field from which the document which is being accessed. |
-| value | <code>string</code> | The value for the document and field. |
+| document | <code>string</code> \| <code>Var</code> | Document which is being accessed. |
+| field | <code>string</code> \| <code>Var</code> | The field from which the document which is being accessed. |
+| value | <code>string</code> \| <code>Var</code> | The value for the document and field. |
 
