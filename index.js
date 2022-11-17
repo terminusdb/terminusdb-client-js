@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-const Vars = require('./lib/query/woqlDoc');
+const { Var, Vars, Doc } = require('./lib/query/woqlDoc');
 const WOQLClient = require('./lib/woqlClient');
 const UTILS = require('./lib/utils');
 const View = require('./lib/viewer/woqlView');
@@ -9,8 +9,11 @@ const WOQLTable = require('./lib/viewer/woqlTable');
 const WOQLGraph = require('./lib/viewer/woqlGraph');
 const axiosInstance = require('./lib/axiosInstance');
 const AccessControl = require('./lib/accessControl');
+const WOQLQuery = require('./lib/query/woqlBuilder');
 
 module.exports = {
+  Var,
+  Doc,
   Vars,
   WOQLClient,
   UTILS,
@@ -21,4 +24,5 @@ module.exports = {
   WOQLGraph,
   axiosInstance,
   AccessControl,
+  WOQLQuery,
 };
