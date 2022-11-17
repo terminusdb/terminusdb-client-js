@@ -1,3 +1,10 @@
+ 
+# TerminusDB Client v10.0.24
+
+## Fixes 🛠
+
+* Review WOQL typescript definitions
+
 # TerminusDB Client v10.0.22
 
 ## New 🚀
