@@ -550,6 +550,23 @@ of the current context for "commits" "meta" "branch" and "ref" special resources
 const branch_resource = client.resource("branch")
 ```
 
+## module_WOQLClient..WOQLClient+updateDatabase
+##### woqlClient.updateDatabase(dbId, dbDetails, [orgId]) ⇒ <code>Promise</code>
+Update a database in TerminusDB server
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| dbId | <code>string</code> | The id of the database to be updated |
+| dbDetails | <code>typedef.DbDetails</code> | object containing details about the database to be updated |
+| [orgId] | <code>string</code> | optional organization id - if absent default local organization id is used |
+
+**Example**  
+```javascript
+client.updateDatabase({id: "mydb", label: "My Database", comment: "Testing"})
+```
+
 ## module_WOQLClient..WOQLClient+insertTriples
 ##### woqlClient.insertTriples(graphType, turtle, commitMsg) ⇒ <code>Promise</code>
 Appends the passed turtle to the contents of a graph
@@ -700,17 +717,6 @@ Adds an author string (from the user object returned by connect) to the commit m
 | Param | Type |
 | --- | --- |
 | [rc_args] | <code>object</code> | 
-
-
-## module_WOQLClient..WOQLClient+updateDatabase
-##### woqlClient.updateDatabase(dbDoc) ⇒ <code>Promise</code>
-update the database details
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| dbDoc | <code>object</code> | an object that describe the database details |
 
 
 ## module_WOQLClient..WOQLClient+addDocument
