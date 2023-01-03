@@ -447,10 +447,9 @@ WOQL.delete_quad("Person", "rdf:type", "sys:Class", "schema")
 ```
 
 ## add_triple
-##### WOQL.add\_triple(subject, predicate, object) ⇒ <code>object</code>
+##### WOQL.add\_triple(subject, predicate, object) ⇒ <code>WOQLQuery</code>
 Adds triples according to the the pattern [subject,predicate,object]
 
-**Returns**: <code>object</code> - WOQLQuery  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -460,10 +459,9 @@ Adds triples according to the the pattern [subject,predicate,object]
 
 
 ## add_quad
-##### WOQL.add\_quad(subject, predicate, object, graphRef-) ⇒ <code>object</code>
+##### WOQL.add\_quad(subject, predicate, object, graphRef-) ⇒ <code>WOQLQuery</code>
 Adds quads according to the pattern [S,P,O,G]
 
-**Returns**: <code>object</code> - WOQLQuery  
 
 | Param | Type | Description |
 | --- | --- | --- |
