@@ -447,10 +447,9 @@ WOQL.delete_quad("Person", "rdf:type", "sys:Class", "schema")
 ```
 
 ## add_triple
-##### WOQL.add\_triple(subject, predicate, object) ⇒ <code>object</code>
+##### WOQL.add\_triple(subject, predicate, object) ⇒ <code>WOQLQuery</code>
 Adds triples according to the the pattern [subject,predicate,object]
 
-**Returns**: <code>object</code> - WOQLQuery  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -460,10 +459,9 @@ Adds triples according to the the pattern [subject,predicate,object]
 
 
 ## add_quad
-##### WOQL.add\_quad(subject, predicate, object, graphRef-) ⇒ <code>object</code>
+##### WOQL.add\_quad(subject, predicate, object, graphRef-) ⇒ <code>WOQLQuery</code>
 Adds quads according to the pattern [S,P,O,G]
 
-**Returns**: <code>object</code> - WOQLQuery  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1521,8 +1519,7 @@ Update a pattern matching rule for the quad [S, P, O, G] (Subject, Predicate, Ob
 
 ## value
 ##### WOQL.value(subject, predicate, objValue) ⇒ <code>WOQLQuery</code>
-Creates a pattern matching rule for a quad [Subject, Predicate, Object, Graph] or for a
-triple [Subject, Predicate, Object]
+Creates a pattern matching rule for a triple [Subject, Predicate, Object]
 add extra information about the type of the value object
 
 **Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the a quad or a triple Statement  
@@ -1536,8 +1533,7 @@ add extra information about the type of the value object
 
 ## link
 ##### WOQL.link(subject, predicate, object) ⇒ <code>WOQLQuery</code>
-Creates a pattern matching rule for a quad [Subject, Predicate, Object, Graph] or for a
-triple [Subject, Predicate, Object]
+Creates a pattern matching rule for a triple [Subject, Predicate, Object]
 
 **Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the a quad or a triple Statement  
 

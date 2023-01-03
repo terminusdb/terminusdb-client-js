@@ -146,7 +146,7 @@ the DELETE document interface query parameters
 | --- | --- | --- |
 | label | <code>string</code> | "Textual DB Name" |
 | [comment] | <code>string</code> | "Text description of DB" |
-| [public] | <code>boolean</code> |  |
+| [public] | <code>boolean</code> | - |
 | [schema] | <code>boolean</code> | if set to true, a schema graph will be created |
 
 
