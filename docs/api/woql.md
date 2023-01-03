@@ -1521,8 +1521,7 @@ Update a pattern matching rule for the quad [S, P, O, G] (Subject, Predicate, Ob
 
 ## value
 ##### WOQL.value(subject, predicate, objValue) ⇒ <code>WOQLQuery</code>
-Creates a pattern matching rule for a quad [Subject, Predicate, Object, Graph] or for a
-triple [Subject, Predicate, Object]
+Creates a pattern matching rule for a triple [Subject, Predicate, Object]
 add extra information about the type of the value object
 
 **Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the a quad or a triple Statement  
@@ -1536,8 +1535,7 @@ add extra information about the type of the value object
 
 ## link
 ##### WOQL.link(subject, predicate, object) ⇒ <code>WOQLQuery</code>
-Creates a pattern matching rule for a quad [Subject, Predicate, Object, Graph] or for a
-triple [Subject, Predicate, Object]
+Creates a pattern matching rule for a triple [Subject, Predicate, Object]
 
 **Returns**: <code>WOQLQuery</code> - A WOQLQuery which contains the a quad or a triple Statement  
 
