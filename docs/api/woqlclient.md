@@ -550,16 +550,14 @@ const branch_resource = client.resource("branch")
 ```
 
 ## updateDatabase
-##### woqlClient.updateDatabase(dbId, dbDetails, [orgId]) ⇒ <code>Promise</code>
+##### woqlClient.updateDatabase(dbDoc) ⇒ <code>Promise</code>
 Update a database in TerminusDB server
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| dbId | <code>string</code> | The id of the database to be updated |
-| dbDetails | <code>typedef.DbDetails</code> | object containing details about the database to be updated |
-| [orgId] | <code>string</code> | optional organization id - if absent default local organization id is used |
+| dbDoc | <code>typedef.DbDoc</code> | object containing details about the database to be updated |
 
 **Example**  
 ```javascript

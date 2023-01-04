@@ -1,7 +1,7 @@
 
 # TypeDef
 ##### TypeDef
-Type definations
+Type definitions
 
 
 ## DocParamsGet
@@ -146,6 +146,20 @@ the DELETE document interface query parameters
 | --- | --- | --- |
 | label | <code>string</code> | "Textual DB Name" |
 | [comment] | <code>string</code> | "Text description of DB" |
+| [public] | <code>boolean</code> | - |
+| [schema] | <code>boolean</code> | if set to true, a schema graph will be created |
+
+
+## DbDoc
+##### DbDoc:  `  Object`
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | "Database ID" |
+| [label] | <code>string</code> | "Textual DB Name" |
+| [comment] | <code>string</code> | "Text description of DB" |
+| [organization] | <code>string</code> | "Organization to which the db belongs" |
 | [public] | <code>boolean</code> | - |
 | [schema] | <code>boolean</code> | if set to true, a schema graph will be created |
 
