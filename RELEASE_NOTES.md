@@ -1,4 +1,10 @@
- 
+
+# TerminusDB Client v10.0.25
+
+## Fixes 🛠
+
+* Fix woqlPrinter
+
 # TerminusDB Client v10.0.24
 
 ## Fixes 🛠
