@@ -707,3 +707,21 @@ accessControl.deleteAccessRequest("djjdshhsuuwewueueuiHYHYYW.......").then(resul
  console.log(result)
 })
 ```
+
+## getUserInfo
+##### accessControl.getUserInfo([orgName]) ⇒ <code>Promise</code>
+-- TerminusX API --
+Get the userinfo teams ownership and subscription
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [orgName] | <code>string</code> | The organization name. |
+
+**Example**  
+```javascript
+accessControl.getUserInfo().then(result=>{
+   console.log(result)
+})
+```
