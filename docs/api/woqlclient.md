@@ -1109,18 +1109,19 @@ client.getBranches()
 ```
 
 ## getCommitsLog
-##### woqlClient.getCommitsLog([dbId]) ⇒ <code>Promise</code>
+##### woqlClient.getCommitsLog([start], [count]) ⇒ <code>Promise</code>
 get the database collections list
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| [dbId] | <code>string</code> | the database id |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [start] | <code>number</code> | <code>0</code> | where to start printing the commit    information in the log (starting from the head of the current branch) |
+| [count] | <code>number</code> | <code>1</code> | The number of total commit log records to return |
 
 **Example**  
 ```javascript
-client.getCommitsLog()
+client.getCommitsLog(count=10)
 ```
 
 ## getPrefixes
