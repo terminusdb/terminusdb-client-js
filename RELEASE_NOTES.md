@@ -1,4 +1,11 @@
+# TerminusDB Client v10.0.26
 
+## Fixes 🛠
+* Fix woqlPrinter
+* Fix woqlClient updateDatabase
+
+## New 🚀
+* add getCommitsLog in WOQLClient class
 # TerminusDB Client v10.0.25
 
 ## Fixes 🛠
