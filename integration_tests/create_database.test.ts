@@ -30,19 +30,19 @@ describe('Create a database, schema and insert data', () => {
   })
 
   test('Insert Document Child Tom', async () => {
-      const person = {"age":10,"name":"Tom","@type":"Child"}
+      const person = {"age":"10","name":"Tom","@type":"Child"}
       const result = await client.addDocument(person);
       expect(result).toStrictEqual(["terminusdb:///data/Child/Tom" ]);
   })
 
   test('Insert Document Child Anna', async () => {
-      const person = {"age":20,"name":"Anna","@type":"Child"}
+      const person = {"age":"20","name":"Anna","@type":"Child"}
       const result = await client.addDocument(person);
       expect(result).toStrictEqual(["terminusdb:///data/Child/Anna" ]);
   })
 
   test('Insert Document Parent Tom Senior', async () => {
-      const person = {"age":40,"name":"Tom Senior","@type":"Parent" , "has_child":"Child/Tom"}
+      const person = {"age":"40","name":"Tom Senior","@type":"Parent" , "has_child":"Child/Tom"}
       const result = await client.addDocument(person);
       expect(result).toStrictEqual(["terminusdb:///data/Parent/Tom%20Senior" ]);
   })
@@ -50,13 +50,13 @@ describe('Create a database, schema and insert data', () => {
   test('Query Person by name', async () => {
       const queryTemplate = {"name":"Tom", "@type":"Person" }
       const result = await client.getDocument({query:queryTemplate});
-      expect(result).toStrictEqual({ '@id': 'Child/Tom', '@type': 'Child', age: 10, name: 'Tom' });
+      expect(result).toStrictEqual({ '@id': 'Child/Tom', '@type': 'Child', age: "10", name: 'Tom' });
   })
 
   test('Query Person by ege', async () => {
-      const queryTemplate = {"age":40, "@type":"Person" }
+      const queryTemplate = {"age":"40", "@type":"Person" }
       const result = await client.getDocument({query:queryTemplate});
-      expect(result).toStrictEqual({"@id": "Parent/Tom%20Senior", "age":40,"name":"Tom Senior","@type":"Parent" , "has_child":"Child/Tom"});
+      expect(result).toStrictEqual({"@id": "Parent/Tom%20Senior", "age":"40","name":"Tom Senior","@type":"Parent" , "has_child":"Child/Tom"});
   })
 
   const change_request = "change_request02";
@@ -72,7 +72,7 @@ describe('Create a database, schema and insert data', () => {
   })
 
   test('Update Child Tom, link Parent', async () => {
-    const childTom = { '@id': 'Child/Tom', '@type': 'Child', age: 10, name: 'Tom' , has_parent:"Parent/Tom%20Senior"}
+    const childTom = { '@id': 'Child/Tom', '@type': 'Child', age: "10", name: 'Tom' , has_parent:"Parent/Tom%20Senior"}
     const result = await client.updateDocument(childTom);
     expect(result).toStrictEqual(["terminusdb:///data/Child/Tom" ]);
   })
@@ -108,7 +108,7 @@ describe('Create a database, schema and insert data', () => {
     expect(result).toStrictEqual({
       '@id': 'Child/Tom',
       '@type': 'Child',
-      age: 10,
+      age: "10",
       name: 'Tom',
       has_parent: 'Parent/Tom%20Senior'
     });
