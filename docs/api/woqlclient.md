@@ -55,11 +55,8 @@ async function getSchema() {
 ##### ~~woqlClient.connect([params]) ⇒ <code>Promise</code>~~
 ***Deprecated***
 
-Connect to a Terminus server at the given URI with an API key
-Stores the system:ServerCapability document returned
-in the connection register which stores, the url, key, capabilities,
-and database meta-data for the connected server
-this.connectionConfig.server will be used if present,
+You can call this to get the server info or override the start params
+configuration, this.connectionConfig.server will be used if present,
 or the promise will be rejected.
 
 **Returns**: <code>Promise</code> - the connection capabilities response object or an error object  
@@ -863,8 +860,8 @@ client.getDocument({"graph_type":"schema","as_list":true,"id":"Country"}).then(r
 })
 
 //pass a document query template to query the document interface
-const queryTemplate = { "name": "Ireland", "@type":"Country" }
-client.getDocument({"graph_type":"schema","as_list":true,
+const queryTemplate = { "name": "Ireland"}
+client.getDocument({"as_list":true, "@type":"Country"
            query:queryTemplate}).then(result=>{
    console.log(result)
 })
@@ -896,7 +893,7 @@ const response1 = await client.getDocument({"graph_type":"schema","as_list":true
 ```
 
 ## updateDocument
-##### woqlClient.updateDocument(json, [params], [dbId], [message], [lastDataVersion], [getDataVersion], [create]) ⇒ <code>Promise</code>
+##### woqlClient.updateDocument(json, [params], [dbId], [message], [lastDataVersion], [getDataVersion], [compress], [create]) ⇒ <code>Promise</code>
 **Returns**: <code>Promise</code> - A promise that returns the call response object or object having *result*
 and *dataVersion* object if ***getDataVersion*** parameter is true, or an Error if rejected.  
 
@@ -908,7 +905,8 @@ and *dataVersion* object if ***getDataVersion*** parameter is true, or an Error 
 | [message] | <code>\*</code> | the update commit message |
 | [lastDataVersion] | <code>string</code> | the last data version tracking id. |
 | [getDataVersion] | <code>boolean</code> | If true the function will return object having result and dataVersion. |
-| [create] | <code>boolean</code> | If true, the function will create a new document if it doesn't exist. |
+| [compress] | <code>boolean</code> | If true, the function will create a new document if it doesn't exist. |
+| [create] | <code>boolean</code> | Perform an *upsert* which inserts if the document is not present (also works on nested documents) |
 
 **Example**  
 ```javascript
@@ -967,6 +965,17 @@ const response1 = await client.updateDocument(
       "",
       response.dataVersion
     );
+
+ // update a document and create the linked document together
+ // we are update the document "Person/Person01"
+ // and create a new document {"@type": "Person","name": "child01"} at the same time
+ const response1 = await client.updateDocument(
+     {
+      "@id": "Person/Person01",
+      "@type": "Person",
+      "name": "Person01"
+      "children":[{"@type": "Person","name": "child01"}]
+    },{create:true})
 ```
 
 ## deleteDocument
