@@ -1455,8 +1455,10 @@ const doc = WOQL.doc({ "@type": "Person", name: "Newperson" })
 ```
 
 ## client
-##### WOQL.client(client) ⇒ <code>WOQLClient</code>
-Gets/Sets woqlClient
+##### ~~WOQL.client(client) ⇒ <code>WOQLClient</code>~~
+***Deprecated***
+
+Use instead to run your query woqlclient.query('myWOQLQuery')
 
 
 | Param | Type |
