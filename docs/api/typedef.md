@@ -47,6 +47,7 @@ the PUT document interface query parameters
 | Name | Type | Description |
 | --- | --- | --- |
 | [raw_json] | <code>boolean</code> | default is false, If true, the input documents  are treated as raw JSON, inserted as type sys:JSONDocument and are not subject  to schema restrictions. |
+| [create] | <code>boolean</code> | If true, the function will create  a new document if it doesn't exist. |
 | [graph_type] | <code>GraphType</code> | default is instance, instance|schema Used to switch between  getting documents from the instance or the schema graph. |
 
 
@@ -60,7 +61,7 @@ the DELETE document interface query parameters
 | --- | --- | --- |
 | [graph_type] | <code>GraphType</code> | default is instance, instance|schema Used to switch between  getting documents from the instance or the schema graph. |
 | id | <code>string</code> \| <code>array</code> | a single id or a list of ids to delete. |
-| [nuke] | <code>booleam</code> | default is false, If true, delete everything at this resource  location (dangerous!). |
+| [nuke] | <code>boolean</code> | default is false, If true, delete everything at this resource  location (dangerous!). |
 
 
 ## GraphRef
