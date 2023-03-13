@@ -313,6 +313,19 @@ describe('woql queries', () => {
     expect(woqlObject.json()).to.eql(woqlJson.memberJson);
   });
 
+  it('check the group_by with variables', () => {
+    let v = WOQL.Vars("person", "label", "eyes", "group");
+    const query = WOQL.group_by(
+      v.eyes,
+      v.label,
+      v.group,
+      WOQL.and(WOQL.triple(v.person, "rdf:type", "@schema:People"), 
+              WOQL.triple(v.person, "label", v.label),
+              WOQL.triple(v.person, "eye_color", v.eyes)))
+
+    expect(query.json()).to.eql(woqlJson.groupbyJsonWithVars);
+  })
+
   it('check the group_by method', () => {
     const woqlObject = WOQL.group_by(['v:A', 'v:B'], ['v:C'], 'v:New');
     const woqlObject01 = WOQL.group_by(['v:A', 'v:B'], ['v:C'], 'v:New').triple('v:A', 'v:B', 'v:C');
