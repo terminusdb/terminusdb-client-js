@@ -351,12 +351,6 @@ Use the document inteface to import documents
 | query | <code>WOQLQuery</code> | The query which will be executed to produce the results |
 | fileResource | <code>string</code> | an file resource local to the server |
 
-**Example**  
-```javascript
-let [s, p, o] = vars("Subject", "Predicate", "Object")
-WOQL.put(WOQL.as("s", s).as("p", p).as("o", o), WOQL.all())
-.file({file:"/app/local_files/dump.csv"})
-```
 
 ## as
 ##### WOQL.as(source, target, [type]) ⇒ <code>WOQLQuery</code>
