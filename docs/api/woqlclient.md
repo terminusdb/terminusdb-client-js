@@ -744,8 +744,28 @@ const json = [{ "@type" : "Class",
              "name" : "xsd:string",
              "perimeter" : { "@type" : "List",
                              "@class" : "Coordinate" } }]
-client.addDocument(json,{"graph_type":"schema"},"mydb","add new schema")
+client.addDocument(json,{"graph_type":"schema"},"mydb","add new schema documents")
 
+//if we would like to override the entire schema
+const json = [
+{"@base": "terminusdb:///data/",
+      "@schema": "terminusdb:///schema#",
+      "@type": "@context"
+  },
+  {
+      "@id": "Person",
+       "@key": {
+          "@type": "Random"
+      },
+      "@type": "Class",
+      "name": {
+          "@class": "xsd:string",
+          "@type": "Optional"
+      }
+  }]
+
+// client.addDocument(json,{"graph_type":"schema","full_replace:true"},
+      "mydb","update the all schema");
 
 // Here we will pass true to show how to get dataVersion
 
@@ -1184,6 +1204,81 @@ async funtion callGetUserOrganizations(){
 }
 ```
 
+## patch
+##### woqlClient.patch(before, patch) ⇒ <code>Promise</code>
+Apply a patch object to another object
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| before | <code>object</code> | The current state of JSON document |
+| patch | <code>object</code> | The patch object |
+
+**Example**  
+```javascript
+client.patch(
+     { "@id" : "Person/Jane", "@type" : "Person", "name" : "Jane"},
+     { "name" : { "@op" : "ValueSwap", "@before" : "Jane", "@after": "Janine" }}
+ ).then(patchResult=>{
+ console.log(patchResult)
+})
+//result example
+//{ "@id" : "Person/Jane", "@type" : "Person", "name" : "Jannet"}
+```
+
+## patchResource
+##### woqlClient.patchResource(patch, message) ⇒ <code>Promise</code>
+Apply a patch object to the current resource
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| patch | <code>array</code> | The patch object |
+| message | <code>string</code> | The commit message |
+
+**Example**  
+```javascript
+const patch = [
+  {
+   "@id": "Obj/id1",
+    "name": {
+     "@op": "SwapValue",
+      "@before": "foo",
+      "@after": "bar"
+    }
+  },
+ {
+   "@id": "Obj/id2",
+    "name": {
+      "@op": "SwapValue",
+      "@before": "foo",
+     "@after": "bar"
+    }
+ }
+]
+client.db("mydb")
+client.checkout("mybranch")
+client.patchResource(patch,"apply patch to mybranch").then(patchResult=>{
+ console.log(patchResult)
+})
+// result example
+// ["Obj/id1",
+// "Obj/id2"]
+// or conflict error 409
+// {
+// "@type": "api:PatchError",
+// "api:status": "api:conflict",
+// "api:witnesses": [
+//  {
+//   "@op": "InsertConflict",
+//    "@id_already_exists": "Person/Jane"
+//  }
+//]
+//}
+```
+
 ## getJSONDiff
 ##### woqlClient.getJSONDiff(before, after, [options]) ⇒ <code>Promise</code>
 Get the patch of difference between two documents.
@@ -1291,28 +1386,6 @@ client.checkout("mybranch")
 client.apply("main","mybranch","merge main").then(result=>{
    console.log(result)
 })
-```
-
-## patch
-##### woqlClient.patch(before, patch) ⇒ <code>Promise</code>
-Patch the difference between two documents.
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| before | <code>object</code> | The current state of JSON document |
-| patch | <code>object</code> | The patch object |
-
-**Example**  
-```javascript
-let diffPatch = await client.getJSONDiff(
-     { "@id": "Person/Jane", "@type": "Person", name: "Jane" },
-     { "@id": "Person/Jane", "@type": "Person", name: "Janine" }
- );
-
-let patch = await client.patch( { "@id": "Person/Jane", "@type": "Person", name: "Jane" },
-diffPatch);
 ```
 
 ## sendCustomRequest

@@ -56,6 +56,69 @@ module.exports = {
       variable: 'list_obj',
     },
   },
+  groupbyJsonWithVars:{
+    "@type": "GroupBy",
+    "group_by": [
+      "eyes"
+    ],
+    "template": [
+      "label"
+    ],
+    "grouped": {
+      "@type": "Value",
+      "variable": "group"
+    },
+    "query": {
+      "@type": "And",
+      "and": [
+        {
+          "@type": "Triple",
+          "subject": {
+            "@type": "NodeValue",
+            "variable": "person"
+          },
+          "predicate": {
+            "@type": "NodeValue",
+            "node": "rdf:type"
+          },
+          "object": {
+            "@type": "Value",
+            "node": "@schema:People"
+          }
+        },
+        {
+          "@type": "Triple",
+          "subject": {
+            "@type": "NodeValue",
+            "variable": "person"
+          },
+          "predicate": {
+            "@type": "NodeValue",
+            "node": "label"
+          },
+          "object": {
+            "@type": "Value",
+            "variable": "label"
+          }
+        },
+        {
+          "@type": "Triple",
+          "subject": {
+            "@type": "NodeValue",
+            "variable": "person"
+          },
+          "predicate": {
+            "@type": "NodeValue",
+            "node": "eye_color"
+          },
+          "object": {
+            "@type": "Value",
+            "variable": "eyes"
+          }
+        }
+      ]
+    }
+  },
   groupbyJson: {
     '@type': 'GroupBy',
     group_by: ['A', 'B'],
