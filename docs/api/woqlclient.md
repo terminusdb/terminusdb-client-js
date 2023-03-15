@@ -764,7 +764,7 @@ const json = [
       }
   }]
 
-// client.addDocument(json,{"graph_type":"schema","full_replace:tue"},
+// client.addDocument(json,{"graph_type":"schema","full_replace:true"},
       "mydb","update the all schema");
 
 // Here we will pass true to show how to get dataVersion
