@@ -1,3 +1,13 @@
+# TerminusDB Client v10.0.27
+
+## Fixes 🛠
+* Fix woql.group_by using variables
+* Fix woql.order_by using variables
+* Fix typescript types
+
+## New 🚀
+* add patchResource in WOQLClient class
+
 # TerminusDB Client v10.0.26
 
 ## Fixes 🛠
