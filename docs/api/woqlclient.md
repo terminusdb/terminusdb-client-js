@@ -746,7 +746,7 @@ const json = [{ "@type" : "Class",
                              "@class" : "Coordinate" } }]
 client.addDocument(json,{"graph_type":"schema"},"mydb","add new schema documents")
 
-//if we would like to override the intire schema
+//if we would like to override the entire schema
 const json = [
 {"@base": "terminusdb:///data/",
       "@schema": "terminusdb:///schema#",
