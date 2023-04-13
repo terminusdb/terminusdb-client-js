@@ -51,6 +51,234 @@ async function getSchema() {
 
 ## TerminusDB Client API
 
+## Get or Change the current Params
+
+## Get the current user
+##### woqlClient.user() ⇒ <code>Object</code>
+Gets the current user object as returned by the connect capabilities response
+user has fields: [id, name, notes, author]
+
+
+## __NO__MENU__
+##### woqlClient.userOrganization() ⇒ <code>string</code>
+**Returns**: <code>string</code> - the user organization name  
+**Desription**: Gets the user's organization id  
+
+## Get the Commit Author
+##### woqlClient.author() ⇒ <code>string</code>
+Gets the string that will be written into the commit log for the current user
+
+**Returns**: <code>string</code> - the current user  
+**Example**  
+```javascript
+client.author()
+```
+
+## Set the system databse
+##### woqlClient.setSystemDb()
+Sets the internal client context to allow it to talk to the server’s internal system database
+
+
+## Gets / Sets the client’s internal repository
+##### woqlClient.repo([repoId]) ⇒ <code>string</code>
+Gets / Sets the client’s internal repository context value (defaults to ‘local’)
+
+**Returns**: <code>string</code> - the current repository id within the client context  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [repoId] | <code>typedef.RepoType</code> \| <code>string</code> | default value is local |
+
+**Example**  
+```javascript
+client.repo("origin")
+```
+
+## Get the Server Url
+##### woqlClient.server() ⇒ <code>string</code>
+Gets the current connected server url
+it can only be set creating a new WOQLCLient instance
+
+
+## Get the Api Url
+##### woqlClient.api() ⇒ <code>string</code>
+Retrieve the URL of the server’s API base that we are currently connected to
+
+**Returns**: <code>string</code> - the URL of the TerminusDB server api endpoint we are connected
+to (typically server() + “api/”)  
+**Example**  
+```javascript
+let api_url = client.api()
+```
+
+## Change the client params
+##### woqlClient.set(params)
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>typedef.ParamsObj</code> | a object with connection params |
+
+**Example**  
+```javascript
+sets several of the internal state values in a single call
+(similar to connect, but only sets internal client state, does not communicate with server)
+client.set({key: "mypass", branch: "dev", repo: "origin"})
+```
+
+## Authorization
+
+## Set Api Key
+##### woqlClient.setApiKey(accessToken)
+set the api key to access the cloud resources
+
+
+| Param | Type |
+| --- | --- |
+| accessToken | <code>string</code> | 
+
+
+## customHeaders
+##### woqlClient.customHeaders(customHeaders) ⇒ <code>object</code>
+add extra headers to your request
+
+
+| Param | Type |
+| --- | --- |
+| customHeaders | <code>object</code> | 
+
+
+## Sets/Gets the local connection credential
+##### woqlClient.localAuth([newCredential]) ⇒ <code>typedef.CredentialObj</code> \| <code>boolean</code>
+Sets/Gets set the database basic connection credential
+
+
+| Param | Type |
+| --- | --- |
+| [newCredential] | <code>typedef.CredentialObj</code> | 
+
+**Example**  
+```javascript
+client.localAuth({user:"admin","key":"mykey","type":"basic"})
+```
+
+## Sets/Gets the remote connection credential
+##### woqlClient.remoteAuth([newCredential]) ⇒ <code>typedef.CredentialObj</code> \| <code>boolean</code>
+Sets/Gets the jwt token for authentication
+we need this to connect 2 terminusdb server to each other for push, pull, clone actions
+
+
+| Param | Type |
+| --- | --- |
+| [newCredential] | <code>typedef.CredentialObj</code> | 
+
+**Example**  
+```javascript
+client.remoteAuth({"key":"dhfmnmjglkrelgkptohkn","type":"jwt"})
+```
+
+## Manage Organization
+
+## Change Organization
+##### woqlClient.organization([orgId]) ⇒ <code>string</code> \| <code>boolean</code>
+Gets/Sets the client’s internal organization context value, if you change the organization
+name the databases list will be set to empty
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [orgId] | <code>string</code> \| <code>boolean</code> | the organization id to set the context to |
+
+**Example**  
+```javascript
+client.organization("admin")
+```
+
+## Get User Organizations
+##### woqlClient.getUserOrganizations() ⇒ <code>Promise</code>
+Get the list of the user's organizations and the database related
+
+**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
+**Example**  
+```javascript
+async funtion callGetUserOrganizations(){
+     await getUserOrganizations()
+     console.log(client.userOrganizations())
+}
+```
+
+## __NO__MENU__
+##### woqlClient.userOrganizations([orgList]) ⇒ <code>array</code>
+Get/Set the list of the user's organizations (id, organization, label, comment).
+
+**Returns**: <code>array</code> - the user Organizations list  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [orgList] | <code>array</code> | a list of user's Organization |
+
+**Example**  
+```javascript
+async funtion callGetUserOrganizations(){
+     await client.getUserOrganizations()
+     console.log(client.userOrganizations())
+}
+```
+
+## Get Organization database list
+##### woqlClient.getDatabases() ⇒ <code>Promise</code>
+Gets the organization's databases list.
+
+If no organization has been set up, the function throws an exception
+
+**Example**  
+```javascript
+async function callGetDatabases(){
+     const dbList = await client.getDatabases()
+     console.log(dbList)
+}
+```
+
+## __NO__MENU
+##### woqlClient.databases([dbList]) ⇒ <code>array</code>
+Set/Get the organization's databases list (id, label, comment) that the current
+user has access to on the server.
+
+**Returns**: <code>array</code> - the organization's databases list  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [dbList] | <code>array</code> | a list of databases the user has access to on the server, each having: |
+
+**Example**  
+```javascript
+//to get the list of all organization's databases
+async function callGetDatabases(){
+     await client.getDatabases()
+     console.log(client.databases())
+}
+```
+
+## __NO__MENU__
+##### woqlClient.databaseInfo([dbName]) ⇒ <code>object</code>
+Gets the database's details
+
+**Returns**: <code>object</code> - the database description object  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [dbName] | <code>string</code> | the database name |
+
+**Example**  
+```javascript
+// with this call you get the organization db list
+// this call stores all the databases information in the client
+async function callGetDatabases(){
+    await client.getDatabases()
+    console.log("the organization's databases", this.databases())
+    const mydbInfo = databaseInfo("mydbName")
+}
+```
+
 ## Manage Database
 
 ## Create Database
@@ -138,109 +366,6 @@ async function executeIfDatabaseExists(f){
      if (hasDB) {
          f()
      }
-}
-```
-
-## Manage Organization
-
-## Change Organization
-##### woqlClient.organization([orgId]) ⇒ <code>string</code> \| <code>boolean</code>
-Gets/Sets the client’s internal organization context value, if you change the organization
-name the databases list will be set to empty
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [orgId] | <code>string</code> \| <code>boolean</code> | the organization id to set the context to |
-
-**Example**  
-```javascript
-client.organization("admin")
-```
-
-## Get The User Organizations
-##### woqlClient.getUserOrganizations() ⇒ <code>Promise</code>
-Get the list of the user's organizations and the database related
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
-**Example**  
-```javascript
-async funtion callGetUserOrganizations(){
-     await getUserOrganizations()
-     console.log(client.userOrganizations())
-}
-```
-
-## User Organizaion identifier
-##### woqlClient.userOrganizations([orgList]) ⇒ <code>array</code>
-Get/Set the list of the user's organizations (id, organization, label, comment).
-
-**Returns**: <code>array</code> - the user Organizations list  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [orgList] | <code>array</code> | a list of user's Organization |
-
-**Example**  
-```javascript
-async funtion callGetUserOrganizations(){
-     await client.getUserOrganizations()
-     console.log(client.userOrganizations())
-}
-```
-
-## Get Organization database list
-##### woqlClient.getDatabases() ⇒ <code>Promise</code>
-Gets the organization's databases list.
-
-If no organization has been set up, the function throws an exception
-
-**Example**  
-```javascript
-async function callGetDatabases(){
-     const dbList = await client.getDatabases()
-     console.log(dbList)
-}
-```
-
-## Databases
-##### woqlClient.databases([dbList]) ⇒ <code>array</code>
-Set/Get the organization's databases list (id, label, comment) that the current
-user has access to on the server.
-
-**Returns**: <code>array</code> - the organization's databases list  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [dbList] | <code>array</code> | a list of databases the user has access to on the server, each having: |
-
-**Example**  
-```javascript
-//to get the list of all organization's databases
-async function callGetDatabases(){
-     await client.getDatabases()
-     console.log(client.databases())
-}
-```
-
-## Database Info
-##### woqlClient.databaseInfo([dbName]) ⇒ <code>object</code>
-Gets the database's details
-
-**Returns**: <code>object</code> - the database description object  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [dbName] | <code>string</code> | the database name |
-
-**Example**  
-```javascript
-// with this call you get the organization db list
-// this call stores all the databases information in the client
-async function callGetDatabases(){
-    await client.getDatabases()
-    console.log("the organization's databases", this.databases())
-    const mydbInfo = databaseInfo("mydbName")
 }
 ```
 
@@ -690,31 +815,9 @@ client.getPrefixes()
 '@type': 'Context'}
 ```
 
-## Query the database
-
-## Search by WOQL
-##### woqlClient.query(woql, [commitMsg], [allWitnesses], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
-Executes a WOQL query on the specified database and returns the results
-
-**Returns**: <code>Promise</code> - A promise that returns the call response object or object having *result*
-and *dataVersion* object if ***getDataVersion*** parameter is true, or an Error if rejected.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| woql | <code>WOQLQuery</code> | an instance of the WOQLQuery class |
-| [commitMsg] | <code>string</code> | a message describing the reason for the change that will be written into the commit log (only relevant if the query contains an update) |
-| [allWitnesses] | <code>boolean</code> |  |
-| [lastDataVersion] | <code>string</code> | the last data version tracking id. |
-| [getDataVersion] | <code>boolean</code> | If true the function will return object having result and dataVersion. |
-
-**Example**  
-```javascript
-const result = await client.query(WOQL.star())
-```
-
 ## Collaboration Api
 
-## Pull
+## pull
 ##### woqlClient.pull(remoteSourceRepo) ⇒ <code>Promise</code>
 Pull changes from a branch on a remote database to a branch on a local database
 
@@ -729,7 +832,7 @@ Pull changes from a branch on a remote database to a branch on a local database
 client.pull({remote: "origin", remote_branch: "main", message: "Pulling from remote"})
 ```
 
-## Fetch
+## fetch
 ##### woqlClient.fetch(remoteId) ⇒ <code>Promise</code>
 Fetch updates to a remote database to a remote repository with the local database
 
@@ -740,7 +843,7 @@ Fetch updates to a remote database to a remote repository with the local databas
 | remoteId | <code>string</code> | if of the remote to fetch (eg: 'origin') |
 
 
-## Push
+## push
 ##### woqlClient.push(remoteTargetRepo) ⇒ <code>Promise</code>
 Push changes from a branch on a local database to a branch on a remote database
 
@@ -755,7 +858,7 @@ Push changes from a branch on a local database to a branch on a remote database
 client.push({remote: "origin", remote_branch: "main", message: "Pulling from remote"})
 ```
 
-## Rebase 
+## rebase 
 ##### woqlClient.rebase(rebaseSource) ⇒ <code>Promise</code>
 Merges the passed branch into the current one using the rebase operation
 
@@ -775,7 +878,7 @@ client.rebase({rebase_from: "admin/db_name/local/commit/9w8hk3y6rb8tjdy961de3i53
 message: "Merging from dev")
 ```
 
-## Reset
+## reset
 ##### woqlClient.reset(commitPath) ⇒ <code>Promise</code>
 Reset the current branch HEAD to the specified commit path
 
@@ -786,25 +889,24 @@ Reset the current branch HEAD to the specified commit path
 | commitPath | <code>string</code> | The commit path to set the current branch to |
 
 
-## Clonedb
-##### woqlClient.clonedb(cloneDetails, newDbId, [orgId]) ⇒ <code>Promise</code>
+## clonedb
+##### woqlClient.clonedb(cloneSource, newDbId, [orgId]) ⇒ <code>Promise</code>
 Clones a remote repo and creates a local copy
 
 **Returns**: <code>Promise</code> - A promise that returns the call response object, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| cloneDetails | <code>typedef.CloneDetails</code> | object describing the clone details info |
+| cloneSource | <code>typedef.CloneSourceDetails</code> | object describing the source branch to be used as a base |
 | newDbId | <code>string</code> | id of the new cloned database on the local server |
-| [orgId] | <code>string</code> | id of the local organization where the database will be cloned will be created in (in desktop mode this is always “admin”) |
+| [orgId] | <code>string</code> | id of the local organization that the new cloned database will be created in (in desktop mode this is always “admin”) |
 
 **Example**  
 ```javascript
-client.clonedb({remote_url: "http://cloud.terminusdb.com/TerminatorsX/TerminatorsX/nuclear", label "Cloned DB",
-comment: "Cloned from nuclear"}, "new_nuclear")
+client.clonedb({remote_url: "https://my.terminusdb.com/myorg/mydb", label "Cloned DB", comment: "Cloned from mydb"}, newid: "mydb")
 ```
 
-## Patch
+## patch
 ##### woqlClient.patch(before, patch) ⇒ <code>Promise</code>
 Apply a patch object to another object
 
@@ -827,7 +929,7 @@ client.patch(
 //{ "@id" : "Person/Jane", "@type" : "Person", "name" : "Jannet"}
 ```
 
-## Patch Resource
+## patchResource
 ##### woqlClient.patchResource(patch, message) ⇒ <code>Promise</code>
 Apply a patch object to the current resource
 
@@ -879,7 +981,7 @@ client.patchResource(patch,"apply patch to mybranch").then(patchResult=>{
 //}
 ```
 
-## Get JSON Diff
+## getJSONDiff
 ##### woqlClient.getJSONDiff(before, after, [options]) ⇒ <code>Promise</code>
 Get the patch of difference between two documents.
 
@@ -904,7 +1006,7 @@ client.getJSONDiff(
 // name: { '@after': 'Janine', '@before': 'Jane', '@op': 'SwapValue' }}
 ```
 
-## Get Version Object Diff
+## getVersionObjectDiff
 ##### woqlClient.getVersionObjectDiff(dataVersion, jsonObject, id, [options]) ⇒ <code>Promise</code>
 Get the patch of difference between two documents.
 
@@ -912,7 +1014,7 @@ Get the patch of difference between two documents.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| dataVersion | <code>string</code> | The version (branch or commitid) from which to compare the object |
+| dataVersion | <code>string</code> | The version from which to compare the object |
 | jsonObject | <code>object</code> | The updated state of JSON document |
 | id | <code>string</code> | The document id to be diffed |
 | [options] | <code>object</code> | {keep:{}} Options to send to the diff endpoint the diff api outputs the changes between the input, but you can list the properties that you would like to see in the diff result in any case. |
@@ -926,7 +1028,7 @@ client.getVersionObjectDiff("main",jsonObj
 })
 ```
 
-## Get Version Diff
+## getVersionDiff
 ##### woqlClient.getVersionDiff(beforeVersion, afterVersion, [id], [options]) ⇒ <code>Promise</code>
 Get the patch of difference between branches or commits.
 
@@ -961,12 +1063,12 @@ client.getVersionDiff("main", afterCommit, "Person/Tom" ).then(diffResult=>{
 
 //This is to view the changes between two branches with the keep options
 const options = {"keep":{"@id":true, "name": true}}
-client.getVersionDiff("main","mybranch",null, options).then(diffResult=>{
+client.getVersionDiff("main","mybranch",options).then(diffResult=>{
    console.log(diffResult)
 })
 ```
 
-## Apply
+## apply
 ##### woqlClient.apply(beforeVersion, afterVersion, message, [matchFinalState], [options])
 Diff two different commits and apply changes on the current branch/commit.
 If you would like to change branch or commit before apply use client.checkout("branchName")
@@ -1039,124 +1141,26 @@ Appends the passed turtle to the contents of a graph
 | commitMsg | <code>string</code> | Textual message describing the reason for the update |
 
 
-## Get or Change the current Params
+## Query the database
 
-## Get the current user
-##### woqlClient.user() ⇒ <code>Object</code>
-Gets the current user object as returned by the connect capabilities response
-user has fields: [id, name, notes, author]
+## Search by WOQL
+##### woqlClient.query(woql, [commitMsg], [allWitnesses], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>
+Executes a WOQL query on the specified database and returns the results
 
-
-## Get the Commit Author
-##### woqlClient.author() ⇒ <code>string</code>
-Gets the string that will be written into the commit log for the current user
-
-**Returns**: <code>string</code> - the current user  
-**Example**  
-```javascript
-client.author()
-```
-
-## Set the system databse
-##### woqlClient.setSystemDb()
-Sets the internal client context to allow it to talk to the server’s internal system database
-
-
-## Gets / Sets the client’s internal repository
-##### woqlClient.repo([repoId]) ⇒ <code>string</code>
-Gets / Sets the client’s internal repository context value (defaults to ‘local’)
-
-**Returns**: <code>string</code> - the current repository id within the client context  
+**Returns**: <code>Promise</code> - A promise that returns the call response object or object having *result*
+and *dataVersion* object if ***getDataVersion*** parameter is true, or an Error if rejected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [repoId] | <code>typedef.RepoType</code> \| <code>string</code> | default value is local |
+| woql | <code>WOQLQuery</code> | an instance of the WOQLQuery class |
+| [commitMsg] | <code>string</code> | a message describing the reason for the change that will be written into the commit log (only relevant if the query contains an update) |
+| [allWitnesses] | <code>boolean</code> |  |
+| [lastDataVersion] | <code>string</code> | the last data version tracking id. |
+| [getDataVersion] | <code>boolean</code> | If true the function will return object having result and dataVersion. |
 
 **Example**  
 ```javascript
-client.repo("origin")
-```
-
-## Get the Server Url
-##### woqlClient.server() ⇒ <code>string</code>
-Gets the current connected server url
-it can only be set creating a new WOQLCLient instance
-
-
-## Get the Api Url
-##### woqlClient.api() ⇒ <code>string</code>
-Retrieve the URL of the server’s API base that we are currently connected to
-
-**Returns**: <code>string</code> - the URL of the TerminusDB server api endpoint we are connected
-to (typically server() + “api/”)  
-**Example**  
-```javascript
-let api_url = client.api()
-```
-
-## Change the client params
-##### woqlClient.set(params)
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>typedef.ParamsObj</code> | a object with connection params |
-
-**Example**  
-```javascript
-sets several of the internal state values in a single call
-(similar to connect, but only sets internal client state, does not communicate with server)
-client.set({key: "mypass", branch: "dev", repo: "origin"})
-```
-
-## Authorization
-
-## Set Api Key
-##### woqlClient.setApiKey(accessToken)
-set the api key to access the cloud resources
-
-
-| Param | Type |
-| --- | --- |
-| accessToken | <code>string</code> | 
-
-
-## customHeaders
-##### woqlClient.customHeaders(customHeaders) ⇒ <code>object</code>
-add extra headers to your request
-
-
-| Param | Type |
-| --- | --- |
-| customHeaders | <code>object</code> | 
-
-
-## Sets/Gets the local connection credential
-##### woqlClient.localAuth([newCredential]) ⇒ <code>typedef.CredentialObj</code> \| <code>boolean</code>
-Sets/Gets set the database basic connection credential
-
-
-| Param | Type |
-| --- | --- |
-| [newCredential] | <code>typedef.CredentialObj</code> | 
-
-**Example**  
-```javascript
-client.localAuth({user:"admin","key":"mykey","type":"basic"})
-```
-
-## Sets/Gets the remote connection credential
-##### woqlClient.remoteAuth([newCredential]) ⇒ <code>typedef.CredentialObj</code> \| <code>boolean</code>
-Sets/Gets the jwt token for authentication
-we need this to connect 2 terminusdb server to each other for push, pull, clone actions
-
-
-| Param | Type |
-| --- | --- |
-| [newCredential] | <code>typedef.CredentialObj</code> | 
-
-**Example**  
-```javascript
-client.remoteAuth({"key":"dhfmnmjglkrelgkptohkn","type":"jwt"})
+const result = await client.query(WOQL.star())
 ```
 
 ## Utility
@@ -1244,7 +1248,7 @@ client.sendCustomRequest("GET", "http://localhost:3030/changes/").then(result=>{
 })
 ```
 
-## Dispatch
+## __NO__MENU__
 ##### woqlClient.dispatch() ⇒ <code>Promise</code>
 Common request dispatch function
 
@@ -1260,7 +1264,7 @@ Common request dispatch function
 | [compress] | <code>boolean</code> | If true, compress the data if it is bigger than 1024 bytes |
 
 
-## Generate Commit Info
+## __NO__MENU__
 ##### woqlClient.generateCommitInfo(msg, [author]) ⇒ <code>object</code>
 Generates the json structure for commit messages
 
@@ -1271,7 +1275,7 @@ Generates the json structure for commit messages
 | [author] | <code>string</code> | optional author id string - if absent current user id will be used |
 
 
-## Generate Commit Descriptor
+## __NO__MENU__
 ##### woqlClient.generateCommitDescriptor(commitId)
 Generates the json structure for commit descriptor
 
@@ -1281,7 +1285,7 @@ Generates the json structure for commit descriptor
 | commitId | <code>string</code> | a valid commit id o |
 
 
-## Prepare Revision Control Args
+## __NO__MENU__
 ##### woqlClient.prepareRevisionControlArgs([rc_args]) ⇒ <code>object</code> \| <code>boolean</code>
 Adds an author string (from the user object returned by connect) to the commit message.
 
@@ -1387,11 +1391,6 @@ Use [#localAuth](#localAuth) instead.
 
 Use [#remoteAuth](#remoteAuth) instead.
 
-
-## userOrganization
-##### woqlClient.userOrganization() ⇒ <code>string</code>
-**Returns**: <code>string</code> - the user organization name  
-**Desription**: Gets the user's organization id  
 
 ## deleteDocument
 ##### woqlClient.deleteDocument([params], [dbId], [message], [lastDataVersion], [getDataVersion]) ⇒ <code>Promise</code>

@@ -180,15 +180,15 @@ the DELETE document interface query parameters
 | [message] | <code>string</code> | the update commit message |
 
 
-## CloneSourceDetails
-##### CloneSourceDetails:  `  Object`
+## CloneDetails
+##### CloneDetails:  `  Object`
 **Properties**
 
 | Name | Type | Description |
 | --- | --- | --- |
-| remote_url | <code>string</code> | the remote db source url |
-| [label] | <code>string</code> |  |
-| [comment] | <code>string</code> |  |
+| remote_url | <code>string</code> | The URL of the database to clone |
+| [label] | <code>string</code> | The label to use for the cloned database |
+| [comment] | <code>string</code> | The comment to use in the cloned database |
 
 
 ## CapabilityCommand

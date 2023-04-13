@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-use-before-define */
 
 // This file is used only for development, so we disable the following check.
@@ -38,7 +39,6 @@ inputFile.forEach((filePath) => {
   /* get template data */
   const fileName = getFileName(filePath);
   // eslint-disable-next-line no-console
-  console.log(fileName);
   let templateData = jsdoc2md.getTemplateDataSync({ files: filePath });
   if (fileName === 'woqlClient.js') {
     templateData = formatDataOrder(templateData, woqlClientMenu);
@@ -117,27 +117,70 @@ function formatDataOrder(dataProvider, orderMenu) {
     },
     order: 3,
   });
+  let count = 3;
 
-  orderMenu.subMenu.forEach((item) => {
-    const index = dataProvider.findIndex((element) => element.name === item.id);
+  formatSubMenu(orderMenu, newData, dataProvider, count);
 
-    if (index !== -1) {
-      /**
-             * @type {array}
-             */
-      const found = dataProvider.splice(index, 1);
-      // console.log('found', found.length)
-      if (found.length > 0) {
-        found[0].label = item.label;
-        newData.push(found[0]);
-      }
-    }
+  dataProvider.forEach((element) => {
+    count += 1;
+    // eslint-disable-next-line no-param-reassign
+    element.order = count;
   });
+
   // console.log(newData)
   // console.log
   const tt = newData.concat(dataProvider);
   // console.log(tt)
   return tt;
+}
+
+function createGroupMenu(item) {
+  const groupTemplate = {
+    id: item.label,
+    label: item.label,
+    longname: item.label.replace(' ', ''),
+    description: '',
+    name: item.label.replace(' ', '').toLowerCase(),
+    kind: 'group',
+    scope: 'global',
+    memberof: 'WOQLClient',
+    meta: {
+      lineno: 38,
+      filename: 'woqlClient.js',
+      path: '/var/www/html/terminusdb-client/lib',
+    },
+    order: 3,
+  };
+  return groupTemplate;
+}
+
+function formatSubMenu(orderMenu, newData, dataProvider, count) {
+  orderMenu.subMenu.forEach((item) => {
+    if (item.subMenu) {
+      const groupMenu = createGroupMenu(item);
+      count += 1;
+      groupMenu.order = count;
+      newData.push(groupMenu);
+      formatSubMenu(item, newData, dataProvider, count);
+    } else {
+      const index = dataProvider.findIndex((element) => element.name === item.id);
+
+      if (index !== -1) {
+      /**
+        * @type {array}
+        */
+        const found = dataProvider.splice(index, 1);
+        // console.log('found', found.length)
+        if (found.length > 0) {
+          found[0].label = item.label;
+          // eslint-disable-next-line no-param-reassign
+          count += 1;
+          found[0].order = count;
+          newData.push(found[0]);
+        }
+      }
+    }
+  });
 }
 
 function setHeadings(sFileNm, sMD) {
