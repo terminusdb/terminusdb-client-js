@@ -1383,7 +1383,30 @@ If you would like to change branch or commit before apply use client.checkout("b
 **Example**  
 ```javascript
 client.checkout("mybranch")
-client.apply("main","mybranch","merge main").then(result=>{
+client.apply("mybranch","mybranch_new","merge main").then(result=>{
+   console.log(result)
+})
+```
+
+## docHistory
+##### woqlClient.docHistory(id, [historyParams])
+Get the document's history for a specific database or branch
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | id of document to report history of |
+| [historyParams] | <code>typedef.DocHistoryParams</code> |  |
+
+**Example**  
+```javascript
+//this will return the last 5 commits for the Person/Anna document
+client.checkout("mybranch")
+client.docHistory("Person/Anna",{start:0,count:5}).then(result=>{
+   console.log(result)
+})
+//this will return the last and the first commit for the Person/Anna document
+client.docHistory("Person/Anna",{updated:true,created:true}).then(result=>{
    console.log(result)
 })
 ```

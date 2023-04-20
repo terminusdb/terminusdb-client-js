@@ -200,3 +200,15 @@ the manage capability command type
 ##### RolesActions:  `  Array.<ACTIONS>`
 [ACTIONS.CREATE_DATABASE | ACTIONS.DELETE_DATABASE]
 
+
+## DocHistoryParams
+##### DocHistoryParams:  `  Object`
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| [start] | <code>number</code> | Index to start from, 0 is the default |
+| [count] | <code>number</code> | Amount of commits to show, 10 is the default |
+| [updated] | <code>boolean</code> | Last updated time (excludes history) false is the default |
+| [created] | <code>boolean</code> | Created date of object (excludes history) false is the default |
+
