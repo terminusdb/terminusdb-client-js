@@ -22,7 +22,7 @@ graph all through a simple document API.
 [terminusdb-docs]: https://terminusdb.com/docs/
 [terminusdb-repo]: https://github.com/terminusdb/terminusdb
 
-**TerminusX** TerminusX is TerminusDB as a service. SOC 2 certified hosting. Build your beta and get to market fast. Scale up and deploy your own instance. [Sign up now][dashboard].
+**TerminusCMS** is a [headless content management system](https://terminusdb.com/terminuscms/) for complex enviroments. Try it out for yourself, it's free to get started with generous limits. Clone a demo project to play around. [Sign up][dashboard].
 
 [dashboard]: https://dashboard.terminusdb.com/
 
