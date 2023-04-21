@@ -1,3 +1,9 @@
+# TerminusDB Client v10.0.28
+
+## Fixes 🛠
+* Fix woql.distinct using variables
+* Fix woql.select using variables
+
 # TerminusDB Client v10.0.27
 
 ## Fixes 🛠
