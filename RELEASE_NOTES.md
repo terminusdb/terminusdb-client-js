@@ -1,3 +1,11 @@
+# TerminusDB Client v10.0.29
+## Fixes 🛠
+* Fix getCommitsLog in WOQLClient
+
+## New 🚀
+* add getDocumentHistory in WOQLClient class
+* add baseServer property to ConnectionConfig class 
+
 # TerminusDB Client v10.0.28
 
 ## Fixes 🛠
