@@ -1337,7 +1337,7 @@ Get the patch of difference between branches or commits.
 | beforeVersion | <code>string</code> | Before branch/commit to compare |
 | afterVersion | <code>string</code> | After branch/commit to compare |
 | [id] | <code>string</code> | The document id to be diffed, if it is omitted all the documents will be compared |
-| [options] | <code>object</code> | {keep:{}} Options to send to the diff endpoint. The diff api outputs the changes between the input (branches or commits), in options you can list the properties that you would like to see in the diff result in any case. |
+| [options] | <code>typedef.DiffObject</code> | {keep:{},count:10,start:0} Options to send to the diff endpoint. The diff api outputs the changes between the input (branches or commits), in options you can list the properties that you would like to see in the diff result in any case. |
 
 **Example**  
 ```javascript
@@ -1360,7 +1360,7 @@ client.getVersionDiff("main", afterCommit, "Person/Tom" ).then(diffResult=>{
 })
 
 //This is to view the changes between two branches with the keep options
-const options = {"keep":{"@id":true, "name": true}}
+const options = {"keep":{"@id":true, "name": true}, start:0, count:10}
 client.getVersionDiff("main","mybranch",options).then(diffResult=>{
    console.log(diffResult)
 })

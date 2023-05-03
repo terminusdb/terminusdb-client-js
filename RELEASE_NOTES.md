@@ -3,6 +3,7 @@
 * Fix getCommitsLog in WOQLClient
 
 ## New 🚀
+* add pagination to getVersionDiff
 * add getDocumentHistory in WOQLClient class
 * add baseServer property to ConnectionConfig class 
 

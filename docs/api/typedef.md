@@ -212,3 +212,14 @@ the manage capability command type
 | [updated] | <code>boolean</code> | Last updated time (excludes history) false is the default |
 | [created] | <code>boolean</code> | Created date of object (excludes history) false is the default |
 
+
+## DiffObject
+##### DiffObject:  `  Object`
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| [Object] | <code>keep</code> | Index to start from, 0 is the default |
+| [number] | <code>start</code> | Amount of commits to show, 10 is the default |
+| [number] | <code>count</code> | Last updated time (excludes history) false is the default |
+
