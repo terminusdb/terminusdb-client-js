@@ -1,29 +1,23 @@
 name: Create PR on Docs repo
 on:
   push:
-    paths:
-    - 'docs/api/**'
-    branches:
-      - main
+#    branches:
+#      - main
 
 jobs:
   pull-request:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
-    - name: Set BRANCH_NAME
-      run: echo "BRANCH_NAME=JS-Reference-Updates-$(date +%s)" >> $GITHUB_ENV
-    - name: Create pull request in terminusdb/terminusdb-docs
-      uses: paygoc6/action-pull-request-another-repo@v1.0.1
-      env:
-        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-      with:
-        source_folder: 'docs/api/.'
-        destination_repo: 'terminusdb/terminusdb-docs'
-        destination_folder: 'guides/reference-guides/javascript-client-reference'
-        destination_base_branch: 'main'
-        destination_head_branch: ${{ env.BRANCH_NAME }}
-        user_email: 'neel@terminusdb.com'
-        user_name: 'Neelterminusdb'
-        pull_request_reviewers: 'mark-terminusdb'
+      uses: actions/checkout@v3
+    - name: Clone JSDoc template
+      run: git clone https://github.com/terminusdb-labs/jsdoc-terminusdb-template.git
+    - name: Run NPM Install
+      run: npm i
+    - name: Run JSDoc
+      run: npx jsdoc --template ./jsdoc-terminusdb-template --recurse ./lib/ > docs.json
+    - name: Upload to TerminusCMS
+      run: |
+        curl -H 'Authorization: Token ${{ secrets.TERMINUSCMS_TOKEN}}' \
+          -H 'Content-Type: application/json' \
+          '${{ secrets.TERMINUSCMS_URL}}' -d @./docs.json
