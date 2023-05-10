@@ -15,7 +15,7 @@ jobs:
     - name: Run NPM Install
       run: npm i
     - name: Run JSDoc
-      run: npx jsdoc --template ./jsdoc-terminusdb-template --recurse ./lib/ > docs.json
+      run: npx jsdoc --template ./jsdoc-terminusdb-template --recurse ./lib/ > docs.json || true
     - name: Upload to TerminusCMS
       run: |
         curl -H 'Authorization: Token ${{ secrets.TERMINUSCMS_TOKEN}}' \
