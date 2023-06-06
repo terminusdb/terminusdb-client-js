@@ -1,8 +1,8 @@
 name: Create PR on Docs repo
 on:
   push:
-    tags:
-      - v*
+#    branches:
+#      - main
 
 jobs:
   pull-request:
