@@ -48,7 +48,7 @@ package, run:
 $ npm install --save @terminusdb/terminusdb-client
 ```
 
-This command update your `package.json`.
+This command updates your `package.json`.
 
 ### Script
 
@@ -69,7 +69,7 @@ it to your sources, and use that in the `<script>` instead.
 This example creates a simple dataProduct, starting to create a database model the schema
 and insert a simple document
 
-For the [full Documentation](https://terminusdb.com/docs/guides/reference-guides/javascript-client-reference)
+For the [full Documentation](https://terminusdb.com/docs/javascript)
 
 ```javascript
 const TerminusClient = require("@terminusdb/terminusdb-client");
@@ -158,9 +158,9 @@ The TerminusDB API can be found at the [TerminusDB Documentation][terminusdb-doc
 
 ## Report Issues
 
-If you have encounter any issues, please report it with your os and environment setup, version that you are using and a simple reproducible case.
+If you encounter any issues, please report it with your os and environment setup, the version that you are using, and a simple reproducible case.
 
-If you encounter other questions, you can ask in our [Discord Server](https://discord.gg/hTU3XWSzuZ).
+If you encounter other questions, you can ask them on our [Discord Server](https://discord.gg/hTU3XWSzuZ).
 
 ## Contribute
 
