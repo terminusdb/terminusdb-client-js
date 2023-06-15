@@ -1,8 +1,8 @@
-name: Create PR on Docs repo
+name: Upload code docs to TerminusCMS
 on:
   push:
-#    branches:
-#      - main
+    tags:
+      - v*
 
 jobs:
   pull-request:
