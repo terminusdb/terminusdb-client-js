@@ -1,3 +1,7 @@
+# TerminusDB Client v10.0.30
+## Fixes 🛠
+* Fix DiffObject type definition
+
 # TerminusDB Client v10.0.29
 ## Fixes 🛠
 * Fix getCommitsLog in WOQLClient
