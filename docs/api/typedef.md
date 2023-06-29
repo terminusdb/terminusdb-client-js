@@ -219,7 +219,7 @@ the manage capability command type
 
 | Name | Type | Description |
 | --- | --- | --- |
-| [Object] | <code>keep</code> | Index to start from, 0 is the default |
-| [number] | <code>start</code> | Amount of commits to show, 10 is the default |
-| [number] | <code>count</code> | Last updated time (excludes history) false is the default |
+| [keep] | <code>Object</code> | Index to start from, 0 is the default |
+| [count] | <code>number</code> | Last updated time (excludes history) false is the default |
+| [start] | <code>number</code> | Amount of commits to show, 10 is the default |
 
