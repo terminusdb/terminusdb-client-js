@@ -1,5 +1,8 @@
 # TerminusDB Client v10.0.30
 ## Fixes 🛠
+* Fix schema endpoint for system database
+# TerminusDB Client v10.0.30
+## Fixes 🛠
 * Fix DiffObject type definition
 
 # TerminusDB Client v10.0.29
