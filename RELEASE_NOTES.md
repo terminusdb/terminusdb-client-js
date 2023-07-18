@@ -1,3 +1,6 @@
+# TerminusDB Client v10.0.32
+## Fixes 🛠
+* Make AccessControl manageCapability scopeType param optional
 # TerminusDB Client v10.0.30
 ## Fixes 🛠
 * Fix schema endpoint for system database
