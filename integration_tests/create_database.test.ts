@@ -30,7 +30,7 @@ describe('Create a database, schema and insert data', () => {
   })
 
   test('Insert Document Child Tom', async () => {
-      const person = {"age":"10","name":"Tom","@type":"Child"}
+      const person = {"age":"10","name":"Tom","@type":"Child" }
       const result = await client.addDocument(person);
       expect(result).toStrictEqual(["terminusdb:///data/Child/Tom" ]);
   })
@@ -45,6 +45,11 @@ describe('Create a database, schema and insert data', () => {
       const person = {"age":"40","name":"Tom Senior","@type":"Parent" , "has_child":"Child/Tom"}
       const result = await client.addDocument(person);
       expect(result).toStrictEqual(["terminusdb:///data/Parent/Tom%20Senior" ]);
+  })
+
+  test('Get document history on an object', async () => {
+      const result = await client.getDocumentHistory("Child/Tom");
+      expect(result[0].message).toStrictEqual("add a new document");
   })
 
   test('Query Person by name', async () => {
