@@ -486,6 +486,7 @@ describe('woql queries', () => {
         }
       })
   });
+
   it('check deep arithmetic var', () => {
     let v = Vars("a", "res");
       const wq = WOQL.and(
@@ -496,4 +497,20 @@ describe('woql queries', () => {
     expect(wq).to.deep.eql(
       {"@type":"And","and":[{"@type":"Eval","expression":{"@type":"Times","left":{"@type":"ArithmeticValue","data":{"@type":"xsd:decimal","@value":3}},"right":{"@type":"ArithmeticValue","data":{"@type":"xsd:decimal","@value":4}}},"result":{"@type":"ArithmeticValue","variable":"a"}},{"@type":"Eval","expression":{"@type":"Times","left":{"@type":"ArithmeticValue","variable":"a"},"right":{"@type":"ArithmeticValue","data":{"@type":"xsd:decimal","@value":3}}},"result":{"@type":"ArithmeticValue","variable":"res"}}]})
   });
+
+  it('check limit().evaluate()', () => {
+    let v = Vars("result");
+    const woqlObject = WOQL.limit(100).evaluate(WOQL.times(2, 3), v.result);
+    const expectedJson = [
+      {
+        "result": {
+          "@type": "xsd:decimal",
+          "@value": 6
+        }
+      }
+    ];
+
+    expect(woqlObject.json()).to.deep.eql(expectedJson);
+  });
+
 });
