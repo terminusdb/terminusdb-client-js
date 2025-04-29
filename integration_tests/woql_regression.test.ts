@@ -7,7 +7,7 @@ let client: WOQLClient
 const db01 = 'db__test_woql_regression';
 
 beforeAll(async () => {
-  client = new WOQLClient("http://localhost:6363", { user: 'admin', organization: 'admin', key: process.env.TDB_ADMIN_PASS ?? 'root' })
+  client = new WOQLClient("http://127.0.0.1:6363", { user: 'admin', organization: 'admin', key: process.env.TDB_ADMIN_PASS ?? 'root' })
   client.db(db01);
   const dbObj: DbDetails = { label: db01, comment: 'add db', schema: true }
   await client.createDatabase(db01, dbObj);

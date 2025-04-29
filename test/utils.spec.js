@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const UTILS = require('../lib/utils.js');
 
 describe('utils tests', () => {
-  const servURL = 'http://localhost:6363/';
+  const servURL = 'http://127.0.0.1:6363/';
 
   it('check standard urls', () => {
     expect(UTILS.standard_urls.rdf).to.equal(UTILS.getStdURL('rdf', ''));

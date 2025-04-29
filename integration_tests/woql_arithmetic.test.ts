@@ -4,11 +4,11 @@ import { WOQLClient, WOQL } from '../index.js';
 import { DbDetails } from '../dist/typescript/lib/typedef.js';
 import { Vars } from '../lib/woql.js';
 
-let client: WOQLClient //= new WOQLClient('http://localhost:6363');
+let client: WOQLClient //= new WOQLClient('http://127.0.0.1:6363');
 const db01 = 'db__test_woql_arithmetic';
 
 beforeAll(() => {
-  client = new WOQLClient("http://localhost:6363", { user: 'admin', organization: 'admin', key: process.env.TDB_ADMIN_PASS ?? 'root' })
+  client = new WOQLClient("http://127.0.0.1:6363", { user: 'admin', organization: 'admin', key: process.env.TDB_ADMIN_PASS ?? 'root' })
   client.db(db01);
 });
 
