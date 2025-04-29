@@ -37,6 +37,7 @@ jobs:
         docker run --detach --net=host terminusdb/terminusdb-server:dev && sleep 10
         docker ps
         netstat -an |grep 6363
+        echo "127.0.0.1       localhost" >> /etc/hosts
     - name: Install, build and test
       run: |
         npm ci
