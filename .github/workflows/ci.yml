@@ -33,7 +33,10 @@ jobs:
       with:
         node-version: 18
     - name: Run terminusdb server
-      run: docker run --detach --publish 127.0.0.1:6363:6363 terminusdb/terminusdb-server:dev && sleep 10
+      run: |
+        docker run --detach --publish 127.0.0.1:6363:6363 terminusdb/terminusdb-server:dev && sleep 10
+        docker ps
+        netstat -an |grep 8080
     - name: Install, build and test
       run: |
         npm ci
