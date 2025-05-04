@@ -15,7 +15,7 @@ describe('create new db tests', () => {
       .stub(axiosInstance, 'post')
       .returns(Promise.resolve({ status: 200, data: { 'system:status': 'system:success' } }));
 
-    expect(global.client.connectionConfig.serverURL()).to.equal('http://localhost:6363/');
+    expect(global.client.connectionConfig.serverURL()).to.equal('http://127.0.0.1:6363/');
     global.client
       .createDatabase(dbid, doc, organizationid)
       .then((response) => {

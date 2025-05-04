@@ -7,7 +7,7 @@ const CONNECT_RESPONSE = require('./serverResponse/connectResponseForCapabilitie
 
 before((done) => {
   console.log('before all test');
-  global.url = 'http://localhost:6363/';
+  global.url = 'http://127.0.0.1:6363/';
   const key = 'root';
   global.sandbox = sinon.createSandbox();
   global.sandbox

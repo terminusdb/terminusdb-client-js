@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const ConnectionConfig = require('../lib/connectionConfig');
 
 describe('connectionConfig tests', () => {
-  const startServerUrl = 'http://localhost:6363/';
+  const startServerUrl = 'http://127.0.0.1:6363/';
   const startDBid = 'testDB';
   const organization = 'admin';
   const params = {
@@ -10,7 +10,7 @@ describe('connectionConfig tests', () => {
   };
   const connectionConfig = new ConnectionConfig(startServerUrl, params);
 
-  const dbURL = 'http://localhost:6363/api/db/admin/testDB';
+  const dbURL = 'http://127.0.0.1:6363/api/db/admin/testDB';
 
   it('check get server URL', () => {
     expect(connectionConfig.serverURL()).to.equal(startServerUrl);
@@ -22,7 +22,7 @@ describe('connectionConfig tests', () => {
 
   it('check set branch', () => {
     connectionConfig.setBranch('myBranch');
-    const queryURLBranch = 'http://localhost:6363/api/woql/admin/testDB/local/branch/myBranch';
+    const queryURLBranch = `${startServerUrl}api/woql/admin/testDB/local/branch/myBranch`;
     /*
          * the dbURL dosen't change
          */
@@ -33,7 +33,7 @@ describe('connectionConfig tests', () => {
   it('check set refId', () => {
     connectionConfig.setRef('gfhfjkflfgorpyuiioo');
 
-    const queryURL = 'http://localhost:6363/api/woql/admin/testDB/local/commit/gfhfjkflfgorpyuiioo';
+    const queryURL = `${startServerUrl}api/woql/admin/testDB/local/commit/gfhfjkflfgorpyuiioo`;
 
     expect(connectionConfig.queryURL()).to.equal(queryURL);
   });
@@ -42,7 +42,7 @@ describe('connectionConfig tests', () => {
      * get the schema in owl turtle encoding
      */
   it('check set class tripleUrl', () => {
-    const classTripleURL = 'http://localhost:6363/api/triples/admin/testDB/local/commit/gfhfjkflfgorpyuiioo/schema/main';
+    const classTripleURL = `${startServerUrl}api/triples/admin/testDB/local/commit/gfhfjkflfgorpyuiioo/schema/main`;
 
     // console.log(JSON.stringify(connectionConfig.triplesURL(), null, 4));
 
@@ -50,9 +50,9 @@ describe('connectionConfig tests', () => {
   });
 
   it('check remove the refCommit', () => {
-    const queryUrlBranch01 = 'http://localhost:6363/api/woql/admin/testDB/local/branch/myBranch';
-    // const queryFrameBranch01 = 'http://localhost:6363/api/frame/admin/testDB/local/branch/myBranch'
-    const queryTriplesBranch01 = 'http://localhost:6363/api/triples/admin/testDB/local/branch/myBranch/schema/main';
+    const queryUrlBranch01 = `${startServerUrl}api/woql/admin/testDB/local/branch/myBranch`;
+    // const queryFrameBranch01 = `${startServerUrl}api/frame/admin/testDB/local/branch/myBranch`
+    const queryTriplesBranch01 = `${startServerUrl}api/triples/admin/testDB/local/branch/myBranch/schema/main`;
     /*
          *remove the ref commit it come to the
          */
@@ -65,7 +65,7 @@ describe('connectionConfig tests', () => {
   });
 
   it('check set branch', () => {
-    const optimizeUrl = 'http://localhost:6363/api/optimize/admin/testDB/local/branch/%23%23branch01';
+    const optimizeUrl = `${startServerUrl}api/optimize/admin/testDB/local/branch/%23%23branch01`;
     /*
          * the dbURL dosen't change
          */
@@ -73,9 +73,9 @@ describe('connectionConfig tests', () => {
   });
 
   it('check remove the branch', () => {
-    const queryUrlBranch01 = 'http://localhost:6363/api/woql/admin/testDB/local/branch/main';
-    // const queryFrameBranch01 = 'http://localhost:6363/api/frame/admin/testDB/local/branch/main'
-    const queryTriplesBranch01 = 'http://localhost:6363/api/triples/admin/testDB/local/branch/main/instance/main';
+    const queryUrlBranch01 = `${startServerUrl}api/woql/admin/testDB/local/branch/main`;
+    // const queryFrameBranch01 = `${startServerUrl}api/frame/admin/testDB/local/branch/main`
+    const queryTriplesBranch01 = `${startServerUrl}api/triples/admin/testDB/local/branch/main/instance/main`;
     /*
          *remove the ref commit it come to the
          */
@@ -269,7 +269,7 @@ describe('connectionConfig tests', () => {
     it('check baseUrlEncode', function() {
         const db = "%6277&ˆˆˆ@ˆˆWˆTWTET#Y@&&GHHSHHS"
         connectionConfig.setDB(db)
-        const dbBase = 'http://localhost:6363/api/woql/123/%256277%26%CB%86%CB%86%CB%86@%CB%86%CB%86W%CB%86TWTET%23Y@%26%26GHHSHHS'
+        const dbBase = `${startServerUrl}api/woql/123/%256277%26%CB%86%CB%86%CB%86@%CB%86%CB%86W%CB%86TWTET%23Y@%26%26GHHSHHS`;
         expect(connectionConfig.dbBase('woql')).to.equal(dbBase)
         expect(connectionConfig.db()).to.equal(db)
 
@@ -296,7 +296,7 @@ describe('connectionConfig tests', () => {
 
     //serverUrlEncoding
 
-    //const startServerUrl = 'http://localhost:6363/'
+    //const startServerUrl = 'http://127.0.0.1:6363/'
     //const startDBid = 'testDB'
     //const organization = 'admin'
 

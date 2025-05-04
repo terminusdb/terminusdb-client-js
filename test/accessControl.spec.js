@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const AccessControl = require('../lib/accessControl');
 
 describe('AccessControl tests', () => {
-    const startServerUrl = 'http://localhost:6363/';
+    const startServerUrl = 'http://127.0.0.1:6363/';
     const organization = 'admin';
     const user = 'admin';
     const key ='mykey'
