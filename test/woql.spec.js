@@ -123,22 +123,20 @@ describe('woql queries', () => {
   });
 
   it('check the from method', () => {
-    const WOQLQuery = WOQL.limit(10);
-
-    const woqlObjectChain = WOQL.from('http://dburl').limit(10);
-    const woqlObject = WOQL.from('http://dburl', WOQLQuery);
+    const woqlObjectChain = WOQL.from('instance/main').limit(10).and();
     const jsonObj = {
       '@type': 'From',
-      graph: 'http://dburl',
+      graph: {
+        "@type": "xsd:string",
+        "@value": "instance/main",
+      },
       query: {
         '@type': 'Limit',
         limit: 10,
-        query: {},
       },
     };
 
-    // expect(woqlObject.json()).to.eql(jsonObj);
-    // expect(woqlObjectChain.json()).to.eql(jsonObj);
+    expect(woqlObjectChain.json()).to.eql(jsonObj);
   });
 
   it('check the star method', () => {
@@ -495,5 +493,12 @@ describe('woql queries', () => {
     console.log(JSON.stringify(wq));
     expect(wq).to.deep.eql(
       {"@type":"And","and":[{"@type":"Eval","expression":{"@type":"Times","left":{"@type":"ArithmeticValue","data":{"@type":"xsd:decimal","@value":3}},"right":{"@type":"ArithmeticValue","data":{"@type":"xsd:decimal","@value":4}}},"result":{"@type":"ArithmeticValue","variable":"a"}},{"@type":"Eval","expression":{"@type":"Times","left":{"@type":"ArithmeticValue","variable":"a"},"right":{"@type":"ArithmeticValue","data":{"@type":"xsd:decimal","@value":3}}},"result":{"@type":"ArithmeticValue","variable":"res"}}]})
+  });
+
+  it('check limit().eval()', () => {
+    let v = Vars("result");
+    const woqlObject = WOQL.limit(100).eval(WOQL.times(2, 3), v.result);
+    const expectedJson = {"@type":"Limit","limit":100,"query":{"@type":"Eval","expression":{"@type":"Times","left":{"@type":"ArithmeticValue","data":{"@type":"xsd:decimal","@value":2}},"right":{"@type":"ArithmeticValue","data":{"@type":"xsd:decimal","@value":3}}},"result":{"@type":"ArithmeticValue","variable":"result"}}};
+    expect(woqlObject.json()).to.deep.eql(expectedJson);
   });
 });

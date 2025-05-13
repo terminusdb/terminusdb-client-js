@@ -28,12 +28,15 @@ jobs:
     if: needs.skip_if_running.outputs.skip != 'true'
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
       with:
-        node-version: 14
+        node-version: 18
     - name: Run terminusdb server
-      run: docker run --detach --publish 127.0.0.1:6363:6363 terminusdb/terminusdb-server:dev && sleep 3
+      run: |
+        docker run --detach --publish 127.0.0.1:6363:6363 terminusdb/terminusdb-server:dev && sleep 10
+        docker ps
+        netstat -an |grep 6363
     - name: Install, build and test
       run: |
         npm ci
