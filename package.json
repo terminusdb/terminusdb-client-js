@@ -56,7 +56,7 @@
     "typescript": "^4.6.4",
     "webpack": "^5.36.2",
     "webpack-cli": "^4.6.0",
-    "webpack-dev-server": "^4.6.0"
+    "webpack-dev-server": "^5.2.1"
   },
   "scripts": {
     "mkdocs:multi": "node ./docs/createDocs.js",
