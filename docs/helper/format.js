@@ -117,7 +117,7 @@ exports.isDeprecated = function () {
 exports.navItemAnchor = function () {
   if (typeof this.label === 'string') {
     const anchorName = this.label.replace(/ /g, '-');
-    return anchorName.toLowerCase();
+    return anchorName?.toLowerCase();
   }
   return this.name;
 };
