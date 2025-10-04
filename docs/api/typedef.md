@@ -95,7 +95,7 @@ the DELETE document interface query parameters
 | Name | Type | Description |
 | --- | --- | --- |
 | type | <code>&#x27;basic&#x27;</code> \| <code>&#x27;jwt&#x27;</code> \| <code>&#x27;apikey&#x27;</code> | the authorization type of an TerminusDB connection |
-| [user] | <code>string</code> \| <code>boolean</code> | the user id | I don't need the user with the jwt token |
+| [user] | <code>string</code> \| <code>boolean</code> | the user id |
 | key | <code>string</code> | the connection key |
 
 
