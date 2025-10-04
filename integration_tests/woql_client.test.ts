@@ -6,10 +6,10 @@ import schemaJson from './persons_schema'
 import { mock_employees_limit_1 } from './data/employees_limit1';
 import fs from 'fs';
 
-let client: WOQLClient //= new WOQLClient('http://localhost:6363');
+let client: WOQLClient //= new WOQLClient('http://127.0.0.1:6363');
 
 beforeAll(() => {
-  client = new WOQLClient("http://localhost:6363", { user: 'admin', organization: 'admin', key: 'root' })
+  client = new WOQLClient("http://127.0.0.1:6363", { user: 'admin', organization: 'admin', key: process.env.TDB_ADMIN_PASS ?? 'root' })
 });
 
 const db01 = 'db__test_woql';
