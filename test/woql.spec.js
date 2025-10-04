@@ -518,7 +518,6 @@ describe('woql queries', () => {
         WOQL.eval(WOQL.times(3,4), v.a),
         WOQL.eval(WOQL.times(v.a, 3),v.res)
       ).json();
-    console.log(JSON.stringify(wq));
     expect(wq).to.deep.eql(
       {"@type":"And","and":[{"@type":"Eval","expression":{"@type":"Times","left":{"@type":"ArithmeticValue","data":{"@type":"xsd:decimal","@value":3}},"right":{"@type":"ArithmeticValue","data":{"@type":"xsd:decimal","@value":4}}},"result":{"@type":"ArithmeticValue","variable":"a"}},{"@type":"Eval","expression":{"@type":"Times","left":{"@type":"ArithmeticValue","variable":"a"},"right":{"@type":"ArithmeticValue","data":{"@type":"xsd:decimal","@value":3}}},"result":{"@type":"ArithmeticValue","variable":"res"}}]})
   });
