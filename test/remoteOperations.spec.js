@@ -29,7 +29,7 @@ describe('Remote Operations - Unit Tests', () => {
       config.setDB('testdb');
       
       const url = config.remoteURL();
-      expect(url).to.equal('http://localhost:6363/api/remote/admin/testdb/local/branch/main');
+      expect(url).to.equal('http://localhost:6363/api/remote/admin/testdb');
     });
 
     it('should generate correct URL with remote name', () => {
@@ -38,7 +38,7 @@ describe('Remote Operations - Unit Tests', () => {
       config.setDB('testdb');
       
       const url = config.remoteURL('origin');
-      expect(url).to.equal('http://localhost:6363/api/remote/admin/testdb/local/branch/main/origin');
+      expect(url).to.equal('http://localhost:6363/api/remote/admin/testdb/origin');
     });
 
     it('should URL encode remote name with special characters', () => {
@@ -71,7 +71,7 @@ describe('Remote Operations - Unit Tests', () => {
 
       expect(stub.calledOnce).to.be.true;
       const call = stub.getCall(0);
-      expect(call.args[0]).to.include('/api/remote/admin/testdb/local/branch/main');
+      expect(call.args[0]).to.include('/api/remote/admin/testdb');
       expect(call.args[1]).to.deep.equal({
         remote_name: 'origin',
         remote_location: 'http://remote.example.com/org/db'
@@ -148,7 +148,7 @@ describe('Remote Operations - Unit Tests', () => {
 
       expect(stub.calledOnce).to.be.true;
       const call = stub.getCall(0);
-      expect(call.args[0]).to.include('/api/remote/admin/testdb/local/branch/main');
+      expect(call.args[0]).to.include('/api/remote/admin/testdb');
       expect(call.args[0]).to.include('remote_name=origin');
     });
 
@@ -191,7 +191,7 @@ describe('Remote Operations - Unit Tests', () => {
 
       expect(stub.calledOnce).to.be.true;
       const call = stub.getCall(0);
-      expect(call.args[0]).to.include('/api/remote/admin/testdb/local/branch/main');
+      expect(call.args[0]).to.include('/api/remote/admin/testdb');
       expect(call.args[1]).to.deep.equal({
         remote_name: 'origin',
         remote_location: 'http://new.example.com/org/db'
@@ -264,7 +264,7 @@ describe('Remote Operations - Unit Tests', () => {
 
       expect(stub.calledOnce).to.be.true;
       const call = stub.getCall(0);
-      expect(call.args[0]).to.include('/api/remote/admin/testdb/local/branch/main');
+      expect(call.args[0]).to.include('/api/remote/admin/testdb');
       expect(call.args[0]).to.include('remote_name=origin');
     });
 
@@ -300,20 +300,20 @@ describe('Remote Operations - Unit Tests', () => {
     it('should use current database context', async () => {
       const stub = sandbox.stub(axiosInstance, 'post').resolves({
         status: 200,
-        data: { '@type': 'api:RemoteAddedResponse' }
+        data: { '@type': 'api:RemoteResponse' }
       });
 
       client.db('mydb');
       await client.createRemote('origin', 'http://example.com');
 
       const call = stub.getCall(0);
-      expect(call.args[0]).to.include('/mydb/');
+      expect(call.args[0]).to.include('/mydb');
     });
 
     it('should use current organization context', async () => {
       const stub = sandbox.stub(axiosInstance, 'post').resolves({
         status: 200,
-        data: { '@type': 'api:RemoteAddedResponse' }
+        data: { '@type': 'api:RemoteResponse' }
       });
 
       client.organization('myorg');
