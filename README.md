@@ -18,8 +18,8 @@
 and document store. It allows you to link JSON documents in a powerful knowledge
 graph all through a simple document API.
 
-[terminusdb]: https://terminusdb.com/
-[terminusdb-docs]: https://terminusdb.com/docs/
+[terminusdb]: https://terminusdb.org/
+[terminusdb-docs]: https://terminusdb.org/docs/
 [terminusdb-repo]: https://github.com/terminusdb/terminusdb
 
 **TerminusCMS** is a [headless content management system](https://terminusdb.com/terminuscms/) for complex enviroments. Try it out for yourself, it's free to get started with generous limits. Clone a demo project to play around. [Sign up][dashboard].

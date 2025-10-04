@@ -2,8 +2,8 @@ const { expect } = require('chai');
 const turtleSchemaR = require('./extraFile/getSchemaTurtleResponse');
 const axiosInstance = require('../lib/axiosInstance');
 
-// http://localhost:6363/triples/terminus/schema/main
-// http://localhost:6363/triples/admin/testDB/local/commit/gfhfjkflfgorpyuiioo
+// http://127.0.0.1:6363/triples/terminus/schema/main
+// http://127.0.0.1:6363/triples/admin/testDB/local/commit/gfhfjkflfgorpyuiioo
 
 describe('get a terminusDB schema', () => {
   const dbID = 'second_database';
@@ -14,7 +14,7 @@ describe('get a terminusDB schema', () => {
 	    expect(global.client.connectionConfig.server).to.equal(global.url);
 
 	  // console.log(JSON.stringify(global.client.connectionConfig.triplesURL('schema'), null, 4));
-	    const schemaURL = 'http://localhost:6363/api/triples/organization01/second_database/local/branch/main/schema/main';
+	    const schemaURL = 'http://127.0.0.1:6363/api/triples/organization01/second_database/local/branch/main/schema/main';
 
     expect(global.client.connectionConfig.triplesURL('schema')).to.equal(schemaURL);
   });
