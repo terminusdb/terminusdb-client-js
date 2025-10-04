@@ -281,7 +281,7 @@ describe('woql query', () => {
       const query = WOQL.removed_quad('v:S', 'v:P', 'v:O', 'schema/main');
       const json = query.json();
       
-      expect(json['@type']).to.equal('RemovedQuad');
+      expect(json['@type']).to.equal('DeletedQuad');
     });
   });
 
