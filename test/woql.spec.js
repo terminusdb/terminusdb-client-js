@@ -190,6 +190,34 @@ describe('woql queries', () => {
     expect(woqlObject.json()).to.eql(woqlMathJson.evalJson);
   });
 
+  it('check the evaluate method (functional style)', () => {
+    const woqlObject = WOQL.evaluate('1+2', 'b');
+    expect(woqlObject.json()).to.eql(woqlMathJson.evalJson);
+  });
+
+  it('check the evaluate method (fluent style)', () => {
+    // Test the reported bug: WOQL.limit(100).evaluate(...)
+    const woqlObject = WOQL.limit(100).evaluate(WOQL.times(2, 3), 'v:result');
+    const json = woqlObject.json();
+    
+    // Should have Limit with nested query
+    expect(json).to.have.property('@type', 'Limit');
+    expect(json).to.have.property('limit', 100);
+    expect(json).to.have.property('query');
+    
+    // Nested query should be Eval
+    expect(json.query).to.have.property('@type', 'Eval');
+    expect(json.query).to.have.property('expression');
+    expect(json.query.expression).to.have.property('@type', 'Times');
+  });
+
+  it('check evaluate and eval produce identical results', () => {
+    const withEval = WOQL.limit(10).eval(WOQL.plus(5, 3), 'x');
+    const withEvaluate = WOQL.limit(10).evaluate(WOQL.plus(5, 3), 'x');
+    
+    expect(withEval.json()).to.deep.eql(withEvaluate.json());
+  });
+
   it('check the minus method', () => {
     const woqlObject = WOQL.minus('2', '1');
     expect(woqlObject.json()).to.eql(woqlMathJson.minusJson);
