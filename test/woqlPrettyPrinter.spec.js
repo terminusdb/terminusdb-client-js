@@ -17,4 +17,9 @@ describe('woql prettyprint', () => {
     const query = WOQL.all();
     expect(query.prettyPrint()).to.eql('WOQL.triple("v:Subject", "v:Predicate", "v:Object")');
   });
+
+  it('woql.as() to prettyPrint', () => {
+    const query = WOQL.get(WOQL.as("col1", "v:col1"));
+    expect(query.prettyPrint()).to.eql('WOQL.get(\n    WOQL.as(\"col1\", \"v:col1\")))');
+  });
 });
