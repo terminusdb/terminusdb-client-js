@@ -16,7 +16,6 @@ describe('connectionConfig tests', () => {
     expect(connectionConfig.serverURL()).to.equal(startServerUrl);
     expect(connectionConfig.dbURL()).to.equal(dbURL);
     const cconf = { type: 'basic', user: 'admin', key: 'myKey' };
-    console.log(connectionConfig.localAuth());
     expect(connectionConfig.localAuth()).to.eql(cconf);
   });
 
@@ -277,7 +276,6 @@ describe('connectionConfig tests', () => {
 
     it('check serverUrlEncoding', function() {
         const url = "http://127.0.0.1:6363/##TEAM_NAME/"
-        console.log('serverUrlEncoding',connectionConfig.serverUrlEncoding(url))
         expect(connectionConfig.serverUrlEncoding(url)).to.equal('http://127.0.0.1:6363/%23%23TEAM_NAME/')
 
     })
