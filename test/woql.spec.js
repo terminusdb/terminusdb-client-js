@@ -154,7 +154,7 @@ describe('woql queries', () => {
 
     // console.log(JSON.stringify(woqlObjectMultiple.json(), null, 4));
 
-	  expect(woqlObject.json()).to.eql(woqlSelectJson.jsonObj);
+    expect(woqlObject.json()).to.eql(woqlSelectJson.jsonObj);
     expect(woqlObjectChain.json()).to.eql(woqlSelectJson.jsonObj);
     expect(woqlObjectMultiple.json()).to.eql(woqlSelectJson.jsonObjMulti);
     expect(woqlObjectChainMultiple.json()).to.eql(woqlSelectJson.jsonObjMulti);
@@ -345,9 +345,9 @@ describe('woql queries', () => {
       v.eyes,
       v.label,
       v.group,
-      WOQL.and(WOQL.triple(v.person, "rdf:type", "@schema:People"), 
-              WOQL.triple(v.person, "label", v.label),
-              WOQL.triple(v.person, "eye_color", v.eyes)))
+      WOQL.and(WOQL.triple(v.person, "rdf:type", "@schema:People"),
+        WOQL.triple(v.person, "label", v.label),
+        WOQL.triple(v.person, "eye_color", v.eyes)))
 
     expect(query.json()).to.eql(woqlJson.groupbyJsonWithVars);
   })
@@ -531,7 +531,7 @@ describe('woql queries', () => {
     })
   });
 
- 
+
   it('check datetime', () => {
     const TypeOf = WOQL.triple("v:a", "datetime", WOQL.datetime("2022-10-19T21:14:20Z")).json()
     expect(TypeOf).to.deep.eql({
@@ -579,37 +579,37 @@ describe('woql queries', () => {
 
   it('check arithmetic var', () => {
     let v = Vars("a", "res");
-    const wq = WOQL.eval(WOQL.times(v.a, 3),v.res).json();
+    const wq = WOQL.eval(WOQL.times(v.a, 3), v.res).json();
     expect(wq).to.deep.eql({
       "@type": "Eval",
-        "expression": {
-          "@type": "Times",
-          "left": {
-            "@type": "ArithmeticValue",
-            "variable": "a"
-          },
-          "right": {
-            "@type": "ArithmeticValue",
-            "data": {
-              "@type": "xsd:decimal",
-              "@value": 3
-            }
-          }
-        },
-        "result": {
+      "expression": {
+        "@type": "Times",
+        "left": {
           "@type": "ArithmeticValue",
-          "variable": "res"
+          "variable": "a"
+        },
+        "right": {
+          "@type": "ArithmeticValue",
+          "data": {
+            "@type": "xsd:decimal",
+            "@value": 3
+          }
         }
-      })
+      },
+      "result": {
+        "@type": "ArithmeticValue",
+        "variable": "res"
+      }
+    })
   });
   it('check deep arithmetic var', () => {
     let v = Vars("a", "res");
-      const wq = WOQL.and(
-        WOQL.eval(WOQL.times(3,4), v.a),
-        WOQL.eval(WOQL.times(v.a, 3),v.res)
-      ).json();
+    const wq = WOQL.and(
+      WOQL.eval(WOQL.times(3, 4), v.a),
+      WOQL.eval(WOQL.times(v.a, 3), v.res)
+    ).json();
     expect(wq).to.deep.eql(
-      {"@type":"And","and":[{"@type":"Eval","expression":{"@type":"Times","left":{"@type":"ArithmeticValue","data":{"@type":"xsd:decimal","@value":3}},"right":{"@type":"ArithmeticValue","data":{"@type":"xsd:decimal","@value":4}}},"result":{"@type":"ArithmeticValue","variable":"a"}},{"@type":"Eval","expression":{"@type":"Times","left":{"@type":"ArithmeticValue","variable":"a"},"right":{"@type":"ArithmeticValue","data":{"@type":"xsd:decimal","@value":3}}},"result":{"@type":"ArithmeticValue","variable":"res"}}]})
+      { "@type": "And", "and": [{ "@type": "Eval", "expression": { "@type": "Times", "left": { "@type": "ArithmeticValue", "data": { "@type": "xsd:decimal", "@value": 3 } }, "right": { "@type": "ArithmeticValue", "data": { "@type": "xsd:decimal", "@value": 4 } } }, "result": { "@type": "ArithmeticValue", "variable": "a" } }, { "@type": "Eval", "expression": { "@type": "Times", "left": { "@type": "ArithmeticValue", "variable": "a" }, "right": { "@type": "ArithmeticValue", "data": { "@type": "xsd:decimal", "@value": 3 } } }, "result": { "@type": "ArithmeticValue", "variable": "res" } }] })
   });
 
   it('check limit().eval()', () => {
