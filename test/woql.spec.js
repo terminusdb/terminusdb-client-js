@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 
 const WOQL = require('../lib/woql');
-const { Var, Vars } = require('../lib/query/woqlDoc');
+const { Var, VarUnique, Vars } = require('../lib/query/woqlDoc');
 
 const idGenJson = require('./woqlJson/woqlIdgenJson');
 const woqlStarJson = require('./woqlJson/woqlStarJson');
@@ -402,6 +402,96 @@ describe('woql queries', () => {
     const varsArr = WOQL.vars('A', 'B', 'C');
 
     expect(varsArr[0]).to.be.instanceof(Var);
+  });
+
+  it('check the vars_unique method creates VarUnique instances', () => {
+    const varsArr = WOQL.vars_unique('A', 'B', 'C');
+
+    expect(varsArr[0]).to.be.instanceof(VarUnique);
+    expect(varsArr[1]).to.be.instanceof(VarUnique);
+    expect(varsArr[2]).to.be.instanceof(VarUnique);
+  });
+
+  it('check vars_unique creates unique variable names within a single call', () => {
+    const [a, b, c] = WOQL.vars_unique('A', 'B', 'C');
+
+    // Each variable should have a unique name
+    expect(a.name).to.not.equal(b.name);
+    expect(b.name).to.not.equal(c.name);
+    expect(a.name).to.not.equal(c.name);
+
+    // Each should contain the base name
+    expect(a.name).to.include('A');
+    expect(b.name).to.include('B');
+    expect(c.name).to.include('C');
+  });
+
+  it('check vars_unique creates unique variable names across multiple calls', () => {
+    const [a1] = WOQL.vars_unique('X');
+    const [a2] = WOQL.vars_unique('X');
+    const [a3] = WOQL.vars_unique('X');
+
+    // Variables with the same base name should still be unique
+    expect(a1.name).to.not.equal(a2.name);
+    expect(a2.name).to.not.equal(a3.name);
+    expect(a1.name).to.not.equal(a3.name);
+
+    // All should contain the base name 'X'
+    expect(a1.name).to.include('X');
+    expect(a2.name).to.include('X');
+    expect(a3.name).to.include('X');
+  });
+
+  it('check vars_unique appends incrementing counter', () => {
+    // Get the current counter value by creating a variable
+    const [v1] = WOQL.vars_unique('test');
+    const counter1 = v1.counter;
+
+    // Next variable should have counter + 1
+    const [v2] = WOQL.vars_unique('test');
+    expect(v2.counter).to.equal(counter1 + 1);
+
+    // And so on
+    const [v3] = WOQL.vars_unique('test');
+    expect(v3.counter).to.equal(counter1 + 2);
+  });
+
+  it('check vars_unique generates correct JSON with unique variable names', () => {
+    const [a, b] = WOQL.vars_unique('myvar', 'myvar');
+
+    const jsonA = a.json();
+    const jsonB = b.json();
+
+    expect(jsonA).to.have.property('@type', 'Value');
+    expect(jsonA).to.have.property('variable');
+    expect(jsonB).to.have.property('@type', 'Value');
+    expect(jsonB).to.have.property('variable');
+
+    // Variable names in JSON should be different even with same base name
+    expect(jsonA.variable).to.not.equal(jsonB.variable);
+    expect(jsonA.variable).to.include('myvar');
+    expect(jsonB.variable).to.include('myvar');
+  });
+
+  it('check vars still works exactly as before (no changes)', () => {
+    const [x, y, z] = WOQL.vars('X', 'Y', 'Z');
+
+    // Should create Var instances, not VarUnique
+    expect(x).to.be.instanceof(Var);
+    expect(x).to.not.be.instanceof(VarUnique);
+
+    // Names should be exactly as provided
+    expect(x.name).to.equal('X');
+    expect(y.name).to.equal('Y');
+    expect(z.name).to.equal('Z');
+
+    // Should not have counter property
+    expect(x).to.not.have.property('counter');
+
+    // Multiple calls with same names should produce identical variable names
+    const [x2] = WOQL.vars('X');
+    expect(x2.name).to.equal('X');
+    expect(x2.name).to.equal(x.name);
   });
 
   it('check type_of(Var,Var)', () => {
