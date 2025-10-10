@@ -443,20 +443,25 @@ describe('woql queries', () => {
   });
 
   it('check vars_unique appends incrementing counter', () => {
+    WOQL.vars_unique_reset_start(0);
     // Get the current counter value by creating a variable
     const [v1] = WOQL.vars_unique('test');
-    const counter1 = v1.counter;
+    const counter1 = Number(v1.name.split('_')[1]);
 
     // Next variable should have counter + 1
     const [v2] = WOQL.vars_unique('test');
-    expect(v2.counter).to.equal(counter1 + 1);
+    const counter2 = Number(v2.name.split('_')[1]);
+    expect(counter2).to.equal(counter1 + 1);
+    expect(counter2).to.equal(2);
 
     // And so on
     const [v3] = WOQL.vars_unique('test');
-    expect(v3.counter).to.equal(counter1 + 2);
+    const counter3 = Number(v3.name.split('_')[1]);
+    expect(counter3).to.equal(counter1 + 2);
   });
 
   it('check vars_unique generates correct JSON with unique variable names', () => {
+    WOQL.vars_unique_reset_start(0);
     const [a, b] = WOQL.vars_unique('myvar', 'myvar');
 
     const jsonA = a.json();
@@ -469,9 +474,17 @@ describe('woql queries', () => {
 
     // Variable names in JSON should be different even with same base name
     expect(jsonA.variable).to.not.equal(jsonB.variable);
-    expect(jsonA.variable).to.include('myvar');
-    expect(jsonB.variable).to.include('myvar');
+    expect(jsonA.variable).to.equal('myvar_1');
+    expect(jsonB.variable).to.equal('myvar_2');
   });
+
+  it('checks that vars_unique and vars work the same way', () => {
+    const [a, b] = WOQL.vars_unique('myvar', 'myvar');
+    const [x, y] = WOQL.vars('myvar', 'myvar');
+
+    expect(a.name.split('_')[0]).to.equal(x.name);
+    expect(b.name.split('_')[0]).to.equal(y.name);
+  })
 
   it('check vars still works exactly as before (no changes)', () => {
     const [x, y, z] = WOQL.vars('X', 'Y', 'Z');
