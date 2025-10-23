@@ -10,6 +10,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@terminusdb/terminusdb-client?logo=npm)](https://www.npmjs.com/package/@terminusdb/terminusdb-client)
 [![npm downloads](https://img.shields.io/npm/dw/@terminusdb/terminusdb-client?color=red&label=npm%20package&logo=npm&style=flat)](https://www.npmjs.com/package/@terminusdb/terminusdb-client)
+[![Coverage Status](https://coveralls.io/builds/76119876/badge)](https://coveralls.io/builds/76119876)
 
 > This repository is for the JavaScript client library for TerminusDB and
 > TerminusCMS.
