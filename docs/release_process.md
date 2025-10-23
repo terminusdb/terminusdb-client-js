@@ -5,5 +5,6 @@
 1. Add target version number to release notes
 1. Check in and merge
 1. Pick the latest version from the RELEASE_NOTES.md file
+1. Update package.json version and run npm install
 1. Tag the repo locally and push the tag, align the release (git tag -s v11.x.x)
 1. The new release will be built and published 🎉
