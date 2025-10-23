@@ -1,9 +1,36 @@
+# TerminusDB Client v11.1.1
+## Fixes
+* Update dependencies follow-redirects, webpack-dev-middleware, axios, braces, semver, micromatch, cross-spawn, word-wrap, on-headers, compression, form-data
+* Fixes axios upgrade issues, incl. content-type casing error, buffer
+* Fixes inconsistency with removed_quad keyword (DeleteQuad in WOQL)
+* Fluent vs functional style inconsistency with from() fixed
+* Clean up code and improve test suites
+* Documentation fixes and updates
+* Fix variable name mismatches in from() and length() methods
+* Verified xsd:double handled correctly in conjunction with terminusdb server
+
+## New 🚀
+* Enable string-based CSV resources (not only from local files)
+* Increased test coverage from 30% to 59%
+* Deprecated Node 18, lowest supported is now Node 20
+* Handling of remotes is now supported in the client
+* New: `vars_unique()` produces unique variables, complement to `vars()`
+* Add evaluate() to fluent style WOQL queries
+
+# TerminusDB Client v10.0.33
+## Fixes
+* Update dependencies word-wrap, semver, axios
+* Fix arithmetic variable treatment (#296)
+* Marshall variable args carefully in arithmetic expressions (#297)
+
 # TerminusDB Client v10.0.32
 ## Fixes 🛠
 * Make AccessControl manageCapability scopeType param optional
+
 # TerminusDB Client v10.0.30
 ## Fixes 🛠
 * Fix schema endpoint for system database
+
 # TerminusDB Client v10.0.30
 ## Fixes 🛠
 * Fix DiffObject type definition
