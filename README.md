@@ -15,26 +15,25 @@
 > This repository is for the JavaScript client library for TerminusDB and
 > TerminusCMS.
 
-[**TerminusDB**][terminusdb] is an [open-source][terminusdb-repo] graph database
-and document store. It allows you to link JSON documents in a powerful knowledge
-graph all through a simple document API.
+[**TerminusDB**][terminusdb] is an [open-source][terminusdb-repo] graph database and document store. It allows you to link JSON documents in a powerful knowledge graph all through a simple document API.
 
 [terminusdb]: https://terminusdb.org/
 [terminusdb-docs]: https://terminusdb.org/docs/
 [terminusdb-repo]: https://github.com/terminusdb/terminusdb
 
-**TerminusCMS** is a [headless content management system](https://terminusdb.com/terminuscms/) for complex enviroments. Try it out for yourself, it's free to get started with generous limits. Clone a demo project to play around. [Sign up][dashboard].
+It is the model-based, in-memory, and distributed knowledge graph database for hierarchical records with a git-for-data collaboration model at its heart. So many great things in a single package and a high precision datalog query language with advanced features like transactions, schema validation and unification.
 
-[dashboard]: https://dashboard.terminusdb.com/
+For many, it serves as a headless content management system for complex enviroments with push, pull, clone, rebase and merge capabilities with immutable history and a strong schema checker that covers both the simplest and most advanced models.
+
+Use the [cloud-based studio environment](https://studio.dfrnt.com/) to [build graph data products in the cloud](https://dfrnt.com/solutions-studio) or in your [localhost dockerized TerminusDB instances](https://terminusdb.org/docs/install-terminusdb-as-a-docker-container/). Try it out for yourself, it's free to get started with generous limits, clone a demo project to play around.
 
 ## Requirements
 
-- Node.js version 10+ if using the TerminusDB client library as a Node.js package
+- Node.js version 20+ if using the TerminusDB client library as a Node.js package (might work with earlier versions too).
 
 ## Installation
 
-The TerminusDB JavaScript client library can be used either as a Node.js package
-or as a script that runs in the browser.
+The TerminusDB JavaScript client library can be used either as a Node.js package or as a script that runs in the browser.
 
 ### NPM Package
 
@@ -42,8 +41,7 @@ or as a script that runs in the browser.
 
 [node-install]: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
 
-To install the `terminusdb-client` package as a dependency in an existing
-package, run:
+To install the `@terminusdb/terminusdb-client` package as a dependency in an existing package, run:
 
 ```sh
 $ npm install --save @terminusdb/terminusdb-client
@@ -53,15 +51,13 @@ This command updates your `package.json`.
 
 ### Script
 
-To use the `terminusdb-client` script on a webpage sourced from a CDN, add this
-to your HTML:
+To use the `terminusdb-client` script on a webpage sourced from a CDN, add this to your HTML:
 
 ```html
 <script src="https://unpkg.com/@terminusdb/terminusdb-client/dist/terminusdb-client.min.js"></script>
 ```
 
-Alternatively, you can download the latest [`terminusdb-client.min.js`][js], add
-it to your sources, and use that in the `<script>` instead.
+Alternatively, you can download the latest [`terminusdb-client.min.js`][js], add it to your sources, and use that in the `<script>` instead.
 
 [js]: https://unpkg.com/@terminusdb/terminusdb-client/dist/terminusdb-client.min.js
 
@@ -70,7 +66,7 @@ it to your sources, and use that in the `<script>` instead.
 This example creates a simple dataProduct, starting to create a database model the schema
 and insert a simple document
 
-For the [full Documentation](https://terminusdb.com/docs/javascript)
+For the [full Documentation](https://terminusdb.org/docs/javascript)
 
 ```javascript
 const TerminusClient = require("@terminusdb/terminusdb-client");
@@ -139,7 +135,7 @@ async function createDataProduct(){
 
 ## Options
 
-connections options.
+Connections options.
 
 To initialize `TerminusDB client` with custom options use
 
@@ -156,6 +152,8 @@ const client = new TerminusClient.WOQLClient("http://127.0.0.1:6363/", {
 ## API
 
 The TerminusDB API can be found at the [TerminusDB Documentation][terminusdb-docs].
+
+TerminusDB communicates using JSON over HTTP. It works with advanced datatypes including integers, floats, decimals, big integers, arbitrary precision decimals, dates and other important XML Datatypes. Math is capped at 20 digits of precision, where the core is ready to support higher precision if needed.
 
 ## Report Issues
 
