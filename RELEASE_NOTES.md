@@ -1,7 +1,7 @@
 # TerminusDB Client v11.1.2
 ## Fixes
 * Adjust the release process to include version update task
-* Fix typescript generation and add ci tests to prevent similar errors
+* Fix typescript generation and add ci tests to prevent similar errors in the future.
 
 # TerminusDB Client v11.1.1
 ## Fixes
