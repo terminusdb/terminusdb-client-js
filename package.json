@@ -71,15 +71,15 @@
     "cover": "nyc --check-coverage --lines 30 npm run test:only ",
     "lint:check": "eslint .",
     "lint": "eslint --fix .",
-    "validate-types:strict": "tsc && tsc --project tsconfig.validate.json",
-    "build": "webpack --mode production && tsc",
+    "validate-types:strict": "npm run generate-types && tsc --project tsconfig.validate.json",
+    "build": "webpack --mode production && npm run generate-types",
     "coveralls-after": "nyc --reporter=lcov mocha --require @babel/register --require @babel/preset-env",
     "npm:publish": "npm publish --access public",
     "test-single": "mocha $1",
     "woql-test": "mocha test/woqlTripleBuilder.spec.js  test/woql.spec.js test/woqlTripleBuilder01.spec.js test/woqlExtra.spec.js",
     "git-tag": "git tag $npm_package_version",
     "prepare": "husky install",
-    "generate-types": "tsc"
+    "generate-types": "tsc && node scripts/fix-eval-export.js"
   },
   "repository": {
     "type": "git",

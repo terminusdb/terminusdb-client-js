@@ -4,9 +4,12 @@
 # Lint
 npm run lint:check; 
 
-# Test
-npm test; 
+# Check typescript
+npm run validate-types:strict
 
 # Build
 npm run build
+
+# Test
+npm test; 
 
