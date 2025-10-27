@@ -1,3 +1,8 @@
+# TerminusDB Client v11.1.2
+## Fixes
+* Adjust the release process to include version update task
+* Fix typescript generation and add ci tests to prevent similar errors
+
 # TerminusDB Client v11.1.1
 ## Fixes
 * Update dependencies follow-redirects, webpack-dev-middleware, axios, braces, semver, micromatch, cross-spawn, word-wrap, on-headers, compression, form-data
