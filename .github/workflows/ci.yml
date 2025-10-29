@@ -41,6 +41,7 @@ jobs:
       run: |
         npm ci
         npm run build
+        npm run validate-types:strict
         npm run test
         npm run test:integration
     - name: Lint
