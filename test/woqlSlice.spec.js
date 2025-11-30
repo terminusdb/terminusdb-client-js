@@ -9,14 +9,14 @@ const WOQL = require('../lib/woql');
 const WOQL_SLICE_JSON = require('./woqlJson/woqlSliceJson');
 
 describe('WOQL slice operator', () => {
-  describe('AC-1: Basic slicing', () => {
+  describe('Basic slicing', () => {
     it('generates correct JSON for slice with start and end', () => {
       const woqlObject = WOQL.slice(['a', 'b', 'c', 'd'], 'v:Result', 1, 3);
       expect(woqlObject.json()).to.eql(WOQL_SLICE_JSON.basicSlice);
     });
   });
 
-  describe('AC-3: Negative indices', () => {
+  describe('Negative indices', () => {
     it('generates correct JSON for slice with negative indices', () => {
       const woqlObject = WOQL.slice(['a', 'b', 'c', 'd'], 'v:Result', -2, -1);
       expect(woqlObject.json()).to.eql(WOQL_SLICE_JSON.negativeIndices);
@@ -42,7 +42,7 @@ describe('WOQL slice operator', () => {
     });
   });
 
-  describe('AC-7: Full range', () => {
+  describe('Full range', () => {
     it('generates correct JSON for slice from start', () => {
       const woqlObject = WOQL.slice(['a', 'b', 'c'], 'v:Result', 0, 2);
       expect(woqlObject.json()).to.eql(WOQL_SLICE_JSON.fromStart);
