@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["dist/typescript/**/*.d.ts", "index.js"],
+  "compilerOptions": {
+    "allowJs": true,
+    "declaration": false,
+    "emitDeclarationOnly": false,
+    "noEmit": true,
+    "skipLibCheck": false,
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true
+  }
+}
