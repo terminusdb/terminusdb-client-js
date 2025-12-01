@@ -4,6 +4,7 @@ const WOQL = require('../lib/woql');
 const { Var, VarUnique, Vars } = require('../lib/query/woqlDoc');
 
 const idGenJson = require('./woqlJson/woqlIdgenJson');
+const randomKeyJson = require('./woqlJson/woqlRandomKeyJson');
 const woqlStarJson = require('./woqlJson/woqlStarJson');
 const woqlInsertJson = require('./woqlJson/woqlInsertJson');
 const woqlDoctypeJson = require('./woqlJson/woqlDoctypeJson');
@@ -283,6 +284,12 @@ describe('woql queries', () => {
     // console.log("____ID___GEN___",JSON.stringify(woqlObject.json(), null, 4));
 
     expect(woqlObject.json()).to.eql(idGenJson);
+  });
+
+  it('check the idgen_random method', () => {
+    const woqlObject = WOQL.idgen_random('Person/', 'v:Person_ID');
+
+    expect(woqlObject.json()).to.eql(randomKeyJson);
   });
 
   it('check the typecast method', () => {
