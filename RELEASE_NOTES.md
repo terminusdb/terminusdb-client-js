@@ -1,3 +1,14 @@
+# TerminusDB Client v12.0.0
+## New 🚀
+* Add WOQL `slice()`, and `idgen_random()` operators
+
+## Fixes and maintenance
+* Update with latest security fixes
+* Follow latest release of TerminusDB v12.0.0
+* Make `dot()` operator work correctly again
+* Fix handling of list-nested WOQL document templates (#346)
+* Make VarUnique process correctly
+
 # TerminusDB Client v11.1.2
 ## Fixes
 * Adjust the release process to include version update task

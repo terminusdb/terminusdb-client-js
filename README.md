@@ -12,10 +12,9 @@
 [![npm downloads](https://img.shields.io/npm/dw/@terminusdb/terminusdb-client?color=red&label=npm%20package&logo=npm&style=flat)](https://www.npmjs.com/package/@terminusdb/terminusdb-client)
 [![Coverage Status](https://coveralls.io/builds/76119876/badge)](https://coveralls.io/builds/76119876)
 
-> This repository is for the JavaScript client library for TerminusDB and
-> TerminusCMS.
+> This repository is for the JavaScript client library for TerminusDB
 
-[**TerminusDB**][terminusdb] is an [open-source][terminusdb-repo] graph database and document store. It allows you to link JSON documents in a powerful knowledge graph all through a simple document API.
+[**TerminusDB**][terminusdb] is an [open-source][terminusdb-repo] graph database and document store. It allows you to link and process structured and unstructured JSON documents in a powerful knowledge graph all through a simple document API.
 
 [terminusdb]: https://terminusdb.org/
 [terminusdb-docs]: https://terminusdb.org/docs/
