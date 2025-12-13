@@ -59,6 +59,7 @@
     "webpack-dev-server": "^5.2.1"
   },
   "scripts": {
+    "mkdocs:docs": "npx jsdoc --template ./jsdoc-terminusdb-template --recurse ./lib/ > docs.json",
     "mkdocs:multi": "node ./docs/createDocs.js",
     "mkdocs:src": "docco lib/*.js -l plain -x md -o docs/api",
     "mkdocs:api": "jsdoc2md --configure docs/doc_config.json --partial  docs/partial/scope.hbs docs/partial/member-index.hbs docs/partial/header.hbs --helper docs/helper/format.js --files lib/woql.js lib/woqlClient.js lib/typedef.js > docs/api/api.js.md",
