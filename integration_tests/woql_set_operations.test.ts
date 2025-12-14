@@ -29,7 +29,8 @@ describe('Tests for WOQL set operations', () => {
 
       const result = await client.query(query);
       expect(result?.bindings).toHaveLength(1);
-      expect(result?.bindings[0].Diff).toEqual([1, 3]);
+      const diff = result?.bindings[0].Diff.map((v: any) => v['@value']);
+      expect(diff).toEqual([1, 3]);
     });
 
     test('returns empty list when first list is subset of second', async () => {
@@ -67,7 +68,8 @@ describe('Tests for WOQL set operations', () => {
 
       const result = await client.query(query);
       expect(result?.bindings).toHaveLength(1);
-      expect(result?.bindings[0].Common).toEqual([2, 3]);
+      const common = result?.bindings[0].Common.map((v: any) => v['@value']);
+      expect(common).toEqual([2, 3]);
     });
 
     test('returns empty list when no common elements', async () => {
@@ -93,7 +95,8 @@ describe('Tests for WOQL set operations', () => {
 
       const result = await client.query(query);
       expect(result?.bindings).toHaveLength(1);
-      expect(result?.bindings[0].All).toEqual([1, 2, 3]);
+      const all = result?.bindings[0].All.map((v: any) => v['@value']);
+      expect(all).toEqual([1, 2, 3]);
     });
 
     test('removes duplicates', async () => {
@@ -105,7 +108,8 @@ describe('Tests for WOQL set operations', () => {
 
       const result = await client.query(query);
       expect(result?.bindings).toHaveLength(1);
-      expect(result?.bindings[0].All).toEqual([1, 2]);
+      const all = result?.bindings[0].All.map((v: any) => v['@value']);
+      expect(all).toEqual([1, 2]);
     });
   });
 
@@ -140,7 +144,8 @@ describe('Tests for WOQL set operations', () => {
 
       const result = await client.query(query);
       expect(result?.bindings).toHaveLength(1);
-      expect(result?.bindings[0].MySet).toEqual([1, 2, 3]);
+      const mySet = result?.bindings[0].MySet.map((v: any) => v['@value']);
+      expect(mySet).toEqual([1, 2, 3]);
     });
   });
 
