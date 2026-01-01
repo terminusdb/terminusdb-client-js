@@ -1,20 +1,17 @@
 //@ts-check
-import { describe, expect, test, beforeAll } from '@jest/globals';
-import { WOQLClient, WOQL, Vars } from '../index.js';
-import { DbDetails } from '../dist/typescript/lib/typedef.js';
+import { describe, expect, test, beforeAll, afterAll } from '@jest/globals';
+import { WOQL, Vars } from '../index.js';
+import { createTestClient, setupTestBranch, teardownTestBranch } from "./test_utils";
 
-let client: WOQLClient
-const db01 = 'db__test_woql_regression';
+const branchName = 'test_woql_regression';
+let client = createTestClient();
 
 beforeAll(async () => {
-  client = new WOQLClient("http://127.0.0.1:6363", { user: 'admin', organization: 'admin', key: process.env.TDB_ADMIN_PASS ?? 'root' })
-  client.db(db01);
-  const dbObj: DbDetails = { label: db01, comment: 'add db', schema: true }
-  await client.createDatabase(db01, dbObj);
-});
+  await setupTestBranch(client, branchName);
+}, 30000);
 
 afterAll(async () => {
-  await client.deleteDatabase(db01);
+  await teardownTestBranch(client, branchName);
 });
 
 describe('Tests for woql graph addressing', () => {
