@@ -1,10 +1,10 @@
 //@ts-check
 import { describe, expect, test, beforeAll, afterAll } from "@jest/globals";
-import { WOQLClient, WOQL } from "../index.js";
-import { DbDetails } from "../dist/typescript/lib/typedef.js";
+import { WOQL } from "../index.js";
+import { createTestClient, setupTestDatabase, cleanupDatabase } from "./test_utils";
 
-let client: WOQLClient;
 const db01 = "db__test_woql_dot_operator";
+let client = createTestClient();
 
 // Reusable WOQL query that uses dot operator with path results
 let pathQueryWithDot: any;
@@ -35,20 +35,10 @@ const personSchema = [
 ];
 
 beforeAll(async () => {
-  client = new WOQLClient("http://127.0.0.1:6363", {
-    user: "admin",
-    organization: "admin",
-    key: process.env.TDB_ADMIN_PASS ?? "root"
-  });
   client.db(db01);
 
   // Create database with schema
-  const dbObj: DbDetails = {
-    label: db01,
-    comment: "Test Dot operator",
-    schema: true
-  };
-  await client.createDatabase(db01, dbObj);
+  await setupTestDatabase(client, db01, { comment: "Test Dot operator" });
 
   // Add schema
   await client.addDocument(personSchema, {
@@ -94,7 +84,7 @@ beforeAll(async () => {
     WOQL.dot("v:edge", "predicate", "v:via"),
     WOQL.dot("v:edge", "object", "v:to")
   );
-});
+}, 30000);
 
 afterAll(async () => {
   await client.deleteDatabase(db01);

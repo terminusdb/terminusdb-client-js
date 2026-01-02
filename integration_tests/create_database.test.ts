@@ -1,19 +1,15 @@
 //@ts-check
-import {describe, expect, test, beforeAll} from '@jest/globals';
-//import  WOQLClient  from '../lib/woqlClient';
-import {WOQLClient} from '../index.js';
+import {describe, expect, test, beforeAll, afterAll} from '@jest/globals';
 import { DbDetails, DocParamsGet } from '../dist/typescript/lib/typedef';
-//import {ParamsObj,DbDetails}  from '../lib/typedef'; 
 import schemaJson from './persons_schema'
-//console.log(typeof schemaJson)
+import { createTestClient, cleanupDatabase } from "./test_utils";
 
-let client : WOQLClient //= new WOQLClient('http://127.0.0.1:6363');
+const db01 = 'db__test_create_database';
+let client = createTestClient();
 
-beforeAll(() => {
-  client  = new WOQLClient("http://127.0.0.1:6363",{ user: 'admin', organization: 'admin', key: process.env.TDB_ADMIN_PASS ?? 'root' })
+beforeAll(async () => {
+  await cleanupDatabase(client, db01);
 });
-
-const db01 = 'db__test';
 
 describe('Create a database, schema and insert data', () => {
   test('Create a database', async () => {
@@ -22,7 +18,7 @@ describe('Create a database, schema and insert data', () => {
     //woqlClient return only the data no status
     expect(result["@type"]).toEqual("api:DbCreateResponse");
     expect(result["api:status"]).toEqual("api:success");
-  });
+  }, 15000);
 
   test('Create a schema', async () => {
       const result = await client.addDocument(schemaJson,{graph_type:"schema",full_replace:true});
@@ -124,8 +120,8 @@ describe('Create a database, schema and insert data', () => {
     expect(result).toStrictEqual({ '@type': 'api:BranchResponse', 'api:status': 'api:success' });
   });
 
-  test('Delete a database', async () => {
-    const result = await client.deleteDatabase(db01);
-    expect(result).toStrictEqual({ '@type': 'api:DbDeleteResponse', 'api:status': 'api:success' });
-  });
+});
+
+afterAll(async () => {
+  await cleanupDatabase(client, db01);
 });

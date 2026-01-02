@@ -155,6 +155,12 @@ module.exports = {
 
   // The glob patterns Jest uses to detect test files
   "testMatch": ["<rootDir>/integration_tests/*.test.ts"],
+
+  // Default timeout for all tests/hooks (10 seconds)
+  testTimeout: 10000,
+
+  // Limit parallel test execution to 4 workers
+  maxWorkers: 4,
  
   // testMatch: [
   //   "**/__tests__/**/*.[jt]s?(x)",

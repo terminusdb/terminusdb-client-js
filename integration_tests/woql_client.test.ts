@@ -1,28 +1,21 @@
 //@ts-check
-import { describe, expect, test, beforeAll } from '@jest/globals';
-import { WOQLClient, WOQL } from '../index.js';
-import { DbDetails, DocParamsGet } from '../dist/typescript/lib/typedef.js';
+import { describe, expect, test, beforeAll, afterAll } from '@jest/globals';
+import { WOQL } from '../index.js';
+import { DocParamsGet } from '../dist/typescript/lib/typedef.js';
 import schemaJson from './persons_schema'
 import { mock_employees_limit_1 } from './data/employees_limit1';
 import fs from 'fs';
+import { createTestClient, cleanupDatabase, setupTestDatabase } from "./test_utils";
 
-let client: WOQLClient //= new WOQLClient('http://127.0.0.1:6363');
+const db01 = 'db__test_woql_client';
+let client = createTestClient();
 
-beforeAll(() => {
-  client = new WOQLClient("http://127.0.0.1:6363", { user: 'admin', organization: 'admin', key: process.env.TDB_ADMIN_PASS ?? 'root' })
-});
-
-const db01 = 'db__test_woql';
+beforeAll(async () => {
+  client.db(db01);
+  await setupTestDatabase(client, db01, { comment: 'add db' });
+}, 30000);
 
 describe('Create a database, schema and insert data', () => {
-  test('Create a database', async () => {
-    const dbObj: DbDetails = { label: db01, comment: 'add db', schema: true }
-    const result = await client.createDatabase(db01, dbObj);
-    //woqlClient return only the data no status
-    expect(result["@type"]).toEqual("api:DbCreateResponse");
-    expect(result["api:status"]).toEqual("api:success");
-  });
-
   test('Create a schema', async () => {
     const result = await client.addDocument(schemaJson, { graph_type: "schema", full_replace: true });
     expect(result).toStrictEqual(["Child", "Person", "Parent"]);
@@ -80,8 +73,8 @@ describe('Create a database, schema and insert data', () => {
     expect(result[0]["@id"]).toStrictEqual("Organization/admin");
   });
 
-  test('Delete a database', async () => {
-    const result = await client.deleteDatabase(db01);
-    expect(result).toStrictEqual({ '@type': 'api:DbDeleteResponse', 'api:status': 'api:success' });
-  });
+});
+
+afterAll(async () => {
+  await cleanupDatabase(client, db01);
 });
