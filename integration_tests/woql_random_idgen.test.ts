@@ -1,42 +1,28 @@
 //@ts-check
 import { describe, expect, test, beforeAll, afterAll } from "@jest/globals";
-import { WOQLClient, WOQL } from "../index.js";
-import { DbDetails } from "../dist/typescript/lib/typedef.js";
-
-let client: WOQLClient;
-
-beforeAll(() => {
-  client = new WOQLClient("http://127.0.0.1:6363", {
-    user: "admin",
-    organization: "admin",
-    key: process.env.TDB_ADMIN_PASS ?? "root"
-  });
-});
+import { WOQL } from "../index.js";
+import { createTestClient, cleanupDatabase, setupTestDatabase } from "./test_utils";
 
 const testDb = "db__test_woql_random_idgen";
+let client = createTestClient();
+
+beforeAll(async () => {
+  client.db(testDb);
+  await setupTestDatabase(client, testDb, { comment: "Test database for random ID generation" });
+
+  const schema = [
+    {
+      "@type": "Class",
+      "@id": "Person",
+      "@key": { "@type": "Random" },
+      name: "xsd:string"
+    }
+  ];
+
+  await client.addDocument(schema, { graph_type: "schema" });
+}, 30000);
 
 describe("WOQL Random ID Generation", () => {
-  test("Setup: Create database and schema", async () => {
-    const dbObj: DbDetails = {
-      label: testDb,
-      comment: "Test database for random ID generation",
-      schema: true
-    };
-    const result = await client.createDatabase(testDb, dbObj);
-    expect(result["@type"]).toEqual("api:DbCreateResponse");
-
-    const schema = [
-      {
-        "@type": "Class",
-        "@id": "Person",
-        "@key": { "@type": "Random" },
-        name: "xsd:string"
-      }
-    ];
-
-    await client.addDocument(schema, { graph_type: "schema" });
-  });
-
   test("Generate random ID using WOQL", async () => {
     const query = WOQL.random_idgen("Person/", "v:person_id");
 

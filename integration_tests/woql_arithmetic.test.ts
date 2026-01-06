@@ -1,28 +1,18 @@
 //@ts-check
-import { describe, expect, test, beforeAll } from '@jest/globals';
-import { WOQLClient, WOQL } from '../index.js';
-import { DbDetails } from '../dist/typescript/lib/typedef.js';
+import { describe, expect, test, beforeAll, afterAll } from '@jest/globals';
+import { WOQL } from '../index.js';
 import { vars, vars_unique, Vars, VarsUnique } from '../lib/woql.js';
+import { createTestClient, setupTestBranch, teardownTestBranch } from "./test_utils";
 
-let client: WOQLClient //= new WOQLClient('http://127.0.0.1:6363');
-const db01 = 'db__test_woql_arithmetic';
+const branchName = 'test_woql_arithmetic';
+let client = createTestClient();
 
-beforeAll(() => {
+beforeAll(async () => {
   WOQL.vars_unique_reset_start(20);
-  client = new WOQLClient("http://127.0.0.1:6363", { user: 'admin', organization: 'admin', key: process.env.TDB_ADMIN_PASS ?? 'root' })
-  client.db(db01);
-});
-
+  await setupTestBranch(client, branchName);
+}, 30000);
 
 describe('Tests for woql arithmetic', () => {
-  test('Create a database', async () => {
-    const dbObj: DbDetails = { label: db01, comment: 'add db', schema: true }
-    const result = await client.createDatabase(db01, dbObj);
-    //woqlClient return only the data no status
-    expect(result["@type"]).toEqual("api:DbCreateResponse");
-    expect(result["api:status"]).toEqual("api:success");
-  });
-
   test('Test simple arithmetic with Vars variables handling', async () => {
     let v = Vars("result1", "result2");
     const query = WOQL.limit(100).eval(WOQL.times(2, 3), v.result1);
@@ -74,8 +64,8 @@ describe('Tests for woql arithmetic', () => {
     expect(result?.bindings).toStrictEqual(expectedJson);
   });
 
-  test('Delete a database', async () => {
-    const result = await client.deleteDatabase(db01);
-    expect(result).toStrictEqual({ '@type': 'api:DbDeleteResponse', 'api:status': 'api:success' });
-  });
+});
+
+afterAll(async () => {
+  await teardownTestBranch(client, branchName);
 });

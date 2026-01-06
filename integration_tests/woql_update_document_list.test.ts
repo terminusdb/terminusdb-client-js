@@ -55,7 +55,7 @@ beforeAll(async () => {
 
   // Add schema
   await client.addDocument(schema, { graph_type: 'schema', full_replace: true });
-});
+}, 30000);
 
 afterAll(async () => {
   try {
