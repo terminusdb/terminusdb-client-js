@@ -1,6 +1,6 @@
 {
   "name": "@terminusdb/terminusdb-client",
-  "version": "12.0.1",
+  "version": "12.0.3",
   "description": "TerminusDB client library",
   "main": "index.js",
   "types": "./dist/typescript/index.d.ts",
