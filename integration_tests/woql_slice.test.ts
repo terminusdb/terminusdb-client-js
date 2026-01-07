@@ -1,33 +1,17 @@
 //@ts-check
 import { describe, expect, test, beforeAll, afterAll } from "@jest/globals";
-import { WOQLClient, WOQL } from "../index.js";
-import { DbDetails } from "../dist/typescript/lib/typedef.js";
+import { WOQL } from "../index.js";
 import { Vars } from "../lib/woql.js";
+import { createTestClient, setupTestBranch, teardownTestBranch } from "./test_utils";
 
-let client: WOQLClient;
-const db01 = "db__test_woql_slice";
+const branchName = "test_woql_slice";
+let client = createTestClient();
 
-beforeAll(() => {
-  client = new WOQLClient("http://127.0.0.1:6363", {
-    user: "admin",
-    organization: "admin",
-    key: process.env.TDB_ADMIN_PASS ?? "root"
-  });
-  client.db(db01);
-});
+beforeAll(async () => {
+  await setupTestBranch(client, branchName);
+}, 30000);
 
 describe("Integration tests for WOQL slice operator", () => {
-  test("Create a database", async () => {
-    const dbObj: DbDetails = {
-      label: db01,
-      comment: "test slice operator",
-      schema: true
-    };
-    const result = await client.createDatabase(db01, dbObj);
-    expect(result["@type"]).toEqual("api:DbCreateResponse");
-    expect(result["api:status"]).toEqual("api:success");
-  });
-
   test("Basic slice: slice([A, B, C, D], 0, 2) returns [A, B]", async () => {
     let v = Vars("Result");
     const query = WOQL.slice(["A", "B", "C", "D"], v.Result, 0, 2);
@@ -100,11 +84,8 @@ describe("Integration tests for WOQL slice operator", () => {
     ]);
   });
 
-  test("Delete a database", async () => {
-    const result = await client.deleteDatabase(db01);
-    expect(result).toStrictEqual({
-      "@type": "api:DbDeleteResponse",
-      "api:status": "api:success"
-    });
-  });
+});
+
+afterAll(async () => {
+  await teardownTestBranch(client, branchName);
 });
