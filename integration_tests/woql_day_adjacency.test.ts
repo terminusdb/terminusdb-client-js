@@ -19,6 +19,53 @@ afterAll(async () => {
   await teardownTestBranch(client, branchName);
 }, 30000);
 
+describe('Interval — construct (start+end -> interval)', () => {
+  test('constructs Q1 interval from two dates', async () => {
+    let v = Vars("i");
+    const query = WOQL.interval(dat('2025-01-01'), dat('2025-04-01'), v.i);
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+    expect(result?.bindings[0].i['@type']).toBe('xdd:dateTimeInterval');
+    expect(result?.bindings[0].i['@value']).toBe('[2025-01-01,2025-04-01)');
+  });
+
+  test('constructs full-year interval', async () => {
+    let v = Vars("i");
+    const query = WOQL.interval(dat('2024-01-01'), dat('2025-01-01'), v.i);
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+    expect(result?.bindings[0].i['@value']).toBe('[2024-01-01,2025-01-01)');
+  });
+});
+
+describe('Interval — deconstruct (interval -> start+end)', () => {
+  test('extracts start and end from interval', async () => {
+    let v = Vars("s", "e");
+    const intVal = { '@type': 'xdd:dateTimeInterval', '@value': '[2025-01-01,2025-04-01)' } as any;
+    const query = WOQL.interval(v.s, v.e, intVal);
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+    expect(result?.bindings[0].s['@value']).toBe('2025-01-01');
+    expect(result?.bindings[0].e['@value']).toBe('2025-04-01');
+  });
+});
+
+describe('Interval — validation (all args ground)', () => {
+  test('succeeds when all three match', async () => {
+    const intVal = { '@type': 'xdd:dateTimeInterval', '@value': '[2025-01-01,2025-04-01)' } as any;
+    const query = WOQL.interval(dat('2025-01-01'), dat('2025-04-01'), intVal);
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+  });
+
+  test('fails when interval does not match dates', async () => {
+    const intVal = { '@type': 'xdd:dateTimeInterval', '@value': '[2025-01-01,2025-04-01)' } as any;
+    const query = WOQL.interval(dat('2025-01-01'), dat('2025-06-01'), intVal);
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(0);
+  });
+});
+
 describe('DayAfter — forward (date -> next)', () => {
   test('mid-month: Jan 15 -> Jan 16', async () => {
     let v = Vars("n");
