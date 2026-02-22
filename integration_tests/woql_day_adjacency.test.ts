@@ -26,7 +26,7 @@ describe('Interval — construct (start+end -> interval)', () => {
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(1);
     expect(result?.bindings[0].i['@type']).toBe('xdd:dateTimeInterval');
-    expect(result?.bindings[0].i['@value']).toBe('[2025-01-01,2025-04-01)');
+    expect(result?.bindings[0].i['@value']).toBe('2025-01-01/2025-04-01');
   });
 
   test('constructs full-year interval', async () => {
@@ -34,14 +34,14 @@ describe('Interval — construct (start+end -> interval)', () => {
     const query = WOQL.interval(dat('2024-01-01'), dat('2025-01-01'), v.i);
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].i['@value']).toBe('[2024-01-01,2025-01-01)');
+    expect(result?.bindings[0].i['@value']).toBe('2024-01-01/2025-01-01');
   });
 });
 
 describe('Interval — deconstruct (interval -> start+end)', () => {
   test('extracts start and end from interval', async () => {
     let v = Vars("s", "e");
-    const intVal = { '@type': 'xdd:dateTimeInterval', '@value': '[2025-01-01,2025-04-01)' } as any;
+    const intVal = { '@type': 'xdd:dateTimeInterval', '@value': '2025-01-01/2025-04-01' } as any;
     const query = WOQL.interval(v.s, v.e, intVal);
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(1);
@@ -52,14 +52,14 @@ describe('Interval — deconstruct (interval -> start+end)', () => {
 
 describe('Interval — validation (all args ground)', () => {
   test('succeeds when all three match', async () => {
-    const intVal = { '@type': 'xdd:dateTimeInterval', '@value': '[2025-01-01,2025-04-01)' } as any;
+    const intVal = { '@type': 'xdd:dateTimeInterval', '@value': '2025-01-01/2025-04-01' } as any;
     const query = WOQL.interval(dat('2025-01-01'), dat('2025-04-01'), intVal);
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(1);
   });
 
   test('fails when interval does not match dates', async () => {
-    const intVal = { '@type': 'xdd:dateTimeInterval', '@value': '[2025-01-01,2025-04-01)' } as any;
+    const intVal = { '@type': 'xdd:dateTimeInterval', '@value': '2025-01-01/2025-04-01' } as any;
     const query = WOQL.interval(dat('2025-01-01'), dat('2025-06-01'), intVal);
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(0);
