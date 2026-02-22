@@ -72,6 +72,55 @@ describe('IntervalRelationTyped — validation mode', () => {
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(1);
   });
+
+  test('after: Q3 after Q1', async () => {
+    const query = WOQL.interval_relation_typed(
+      str('after'), iv('2024-06-01/2024-09-01'), iv('2024-01-01/2024-03-01'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+  });
+
+  test('met_by: Q2 met_by Q1', async () => {
+    const query = WOQL.interval_relation_typed(
+      str('met_by'), iv('2024-04-01/2024-07-01'), iv('2024-01-01/2024-04-01'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+  });
+
+  test('overlapped_by: Y overlapped_by X', async () => {
+    const query = WOQL.interval_relation_typed(
+      str('overlapped_by'), iv('2024-04-01/2024-09-01'), iv('2024-01-01/2024-06-01'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+  });
+
+  test('starts: sub-interval starts outer', async () => {
+    const query = WOQL.interval_relation_typed(
+      str('starts'), iv('2024-01-01/2024-04-01'), iv('2024-01-01/2024-12-01'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+  });
+
+  test('started_by: outer started_by sub-interval', async () => {
+    const query = WOQL.interval_relation_typed(
+      str('started_by'), iv('2024-01-01/2024-12-01'), iv('2024-01-01/2024-04-01'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+  });
+
+  test('finishes: sub-interval finishes outer', async () => {
+    const query = WOQL.interval_relation_typed(
+      str('finishes'), iv('2024-09-01/2024-12-01'), iv('2024-01-01/2024-12-01'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+  });
+
+  test('finished_by: outer finished_by sub-interval', async () => {
+    const query = WOQL.interval_relation_typed(
+      str('finished_by'), iv('2024-01-01/2024-12-01'), iv('2024-09-01/2024-12-01'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+  });
 });
 
 describe('IntervalRelationTyped — classification mode', () => {
@@ -109,6 +158,87 @@ describe('IntervalRelationTyped — classification mode', () => {
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(1);
     expect(result?.bindings[0].rel['@value']).toBe('equals');
+  });
+
+  test('classifies as overlaps', async () => {
+    let v = Vars("rel");
+    const query = WOQL.interval_relation_typed(
+      v.rel, iv('2024-01-01/2024-06-01'), iv('2024-04-01/2024-09-01'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+    expect(result?.bindings[0].rel['@value']).toBe('overlaps');
+  });
+
+  test('classifies as overlapped_by', async () => {
+    let v = Vars("rel");
+    const query = WOQL.interval_relation_typed(
+      v.rel, iv('2024-04-01/2024-09-01'), iv('2024-01-01/2024-06-01'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+    expect(result?.bindings[0].rel['@value']).toBe('overlapped_by');
+  });
+
+  test('classifies as contains', async () => {
+    let v = Vars("rel");
+    const query = WOQL.interval_relation_typed(
+      v.rel, iv('2024-01-01/2025-01-01'), iv('2024-04-01/2024-07-01'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+    expect(result?.bindings[0].rel['@value']).toBe('contains');
+  });
+
+  test('classifies as after', async () => {
+    let v = Vars("rel");
+    const query = WOQL.interval_relation_typed(
+      v.rel, iv('2024-06-01/2024-09-01'), iv('2024-01-01/2024-03-01'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+    expect(result?.bindings[0].rel['@value']).toBe('after');
+  });
+
+  test('classifies as met_by', async () => {
+    let v = Vars("rel");
+    const query = WOQL.interval_relation_typed(
+      v.rel, iv('2024-04-01/2024-07-01'), iv('2024-01-01/2024-04-01'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+    expect(result?.bindings[0].rel['@value']).toBe('met_by');
+  });
+
+  test('classifies as starts', async () => {
+    let v = Vars("rel");
+    const query = WOQL.interval_relation_typed(
+      v.rel, iv('2024-01-01/2024-04-01'), iv('2024-01-01/2024-12-01'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+    expect(result?.bindings[0].rel['@value']).toBe('starts');
+  });
+
+  test('classifies as started_by', async () => {
+    let v = Vars("rel");
+    const query = WOQL.interval_relation_typed(
+      v.rel, iv('2024-01-01/2024-12-01'), iv('2024-01-01/2024-04-01'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+    expect(result?.bindings[0].rel['@value']).toBe('started_by');
+  });
+
+  test('classifies as finishes', async () => {
+    let v = Vars("rel");
+    const query = WOQL.interval_relation_typed(
+      v.rel, iv('2024-09-01/2024-12-01'), iv('2024-01-01/2024-12-01'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+    expect(result?.bindings[0].rel['@value']).toBe('finishes');
+  });
+
+  test('classifies as finished_by', async () => {
+    let v = Vars("rel");
+    const query = WOQL.interval_relation_typed(
+      v.rel, iv('2024-01-01/2024-12-01'), iv('2024-09-01/2024-12-01'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+    expect(result?.bindings[0].rel['@value']).toBe('finished_by');
   });
 
   test('classifies dateTime intervals as meets', async () => {
