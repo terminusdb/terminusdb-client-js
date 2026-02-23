@@ -187,6 +187,332 @@ describe('Sequence as matcher (ground value)', () => {
   });
 });
 
+// ---------------------------------------------------------------------------
+// Typed-literal helpers
+// ---------------------------------------------------------------------------
+function dat(v: string) {
+  return { '@type': 'xsd:date', '@value': v } as any;
+}
+function ym(v: string) {
+  return { '@type': 'xsd:gYearMonth', '@value': v } as any;
+}
+function dt(v: string) {
+  return { '@type': 'xsd:dateTime', '@value': v } as any;
+}
+function yr(v: string) {
+  return { '@type': 'xsd:gYear', '@value': v } as any;
+}
+function dec(v: string) {
+  return { '@type': 'xsd:decimal', '@value': v } as any;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Date sequences
+// ═══════════════════════════════════════════════════════════════════════════
+
+describe('Sequence of xsd:date values', () => {
+  test('generates daily dates for a week', async () => {
+    let v = Vars("d");
+    const query = WOQL.sequence(v.d, dat('2025-01-06'), dat('2025-01-13'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(7);
+    const values = result?.bindings.map((b: any) => b.d['@value']);
+    expect(values).toEqual([
+      '2025-01-06', '2025-01-07', '2025-01-08', '2025-01-09',
+      '2025-01-10', '2025-01-11', '2025-01-12',
+    ]);
+  });
+
+  test('generates weekly dates with integer step', async () => {
+    let v = Vars("d");
+    const query = WOQL.sequence(v.d, dat('2025-01-01'), dat('2025-02-01'), 7);
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(5);
+    const values = result?.bindings.map((b: any) => b.d['@value']);
+    expect(values).toEqual([
+      '2025-01-01', '2025-01-08', '2025-01-15', '2025-01-22', '2025-01-29',
+    ]);
+  });
+
+  test('crosses month boundary correctly', async () => {
+    let v = Vars("d");
+    const query = WOQL.sequence(v.d, dat('2025-01-30'), dat('2025-02-03'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(4);
+    const values = result?.bindings.map((b: any) => b.d['@value']);
+    expect(values).toEqual([
+      '2025-01-30', '2025-01-31', '2025-02-01', '2025-02-02',
+    ]);
+  });
+
+  test('handles Feb 28 → Mar 1 in non-leap year', async () => {
+    let v = Vars("d");
+    const query = WOQL.sequence(v.d, dat('2025-02-27'), dat('2025-03-02'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(3);
+    const values = result?.bindings.map((b: any) => b.d['@value']);
+    expect(values).toEqual(['2025-02-27', '2025-02-28', '2025-03-01']);
+  });
+
+  test('handles Feb 28-29 → Mar 1 in leap year', async () => {
+    let v = Vars("d");
+    const query = WOQL.sequence(v.d, dat('2024-02-27'), dat('2024-03-02'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(4);
+    const values = result?.bindings.map((b: any) => b.d['@value']);
+    expect(values).toEqual(['2024-02-27', '2024-02-28', '2024-02-29', '2024-03-01']);
+  });
+
+  test('empty range for equal dates', async () => {
+    let v = Vars("d");
+    const query = WOQL.sequence(v.d, dat('2025-06-01'), dat('2025-06-01'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(0);
+  });
+
+  test('single date for adjacent days', async () => {
+    let v = Vars("d");
+    const query = WOQL.sequence(v.d, dat('2025-06-01'), dat('2025-06-02'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+    expect(result?.bindings[0].d['@value']).toBe('2025-06-01');
+  });
+
+  test('date matcher succeeds for date in range', async () => {
+    const query = WOQL.sequence(dat('2025-01-15'), dat('2025-01-01'), dat('2025-02-01'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+  });
+
+  test('date matcher fails for date outside range', async () => {
+    const query = WOQL.sequence(dat('2025-03-01'), dat('2025-01-01'), dat('2025-02-01'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(0);
+  });
+
+  test('date matcher fails at exclusive end', async () => {
+    const query = WOQL.sequence(dat('2025-02-01'), dat('2025-01-01'), dat('2025-02-01'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(0);
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// gYearMonth sequences
+// ═══════════════════════════════════════════════════════════════════════════
+
+describe('Sequence of xsd:gYearMonth values', () => {
+  test('generates months for H1 2025', async () => {
+    let v = Vars("m");
+    const query = WOQL.sequence(v.m, ym('2025-01'), ym('2025-07'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(6);
+    const values = result?.bindings.map((b: any) => b.m['@value']);
+    expect(values).toEqual([
+      '2025-01', '2025-02', '2025-03', '2025-04', '2025-05', '2025-06',
+    ]);
+  });
+
+  test('generates months crossing year boundary', async () => {
+    let v = Vars("m");
+    const query = WOQL.sequence(v.m, ym('2024-10'), ym('2025-04'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(6);
+    const values = result?.bindings.map((b: any) => b.m['@value']);
+    expect(values).toEqual([
+      '2024-10', '2024-11', '2024-12', '2025-01', '2025-02', '2025-03',
+    ]);
+  });
+
+  test('single month for adjacent gYearMonth values', async () => {
+    let v = Vars("m");
+    const query = WOQL.sequence(v.m, ym('2025-06'), ym('2025-07'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+    expect(result?.bindings[0].m['@value']).toBe('2025-06');
+  });
+
+  test('empty range for equal gYearMonth', async () => {
+    let v = Vars("m");
+    const query = WOQL.sequence(v.m, ym('2025-03'), ym('2025-03'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(0);
+  });
+
+  test('gYearMonth matcher succeeds for month in range', async () => {
+    const query = WOQL.sequence(ym('2025-03'), ym('2025-01'), ym('2025-07'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+  });
+
+  test('gYearMonth matcher fails at exclusive end', async () => {
+    const query = WOQL.sequence(ym('2025-07'), ym('2025-01'), ym('2025-07'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(0);
+  });
+
+  test('quarterly step generates 4 quarter starts', async () => {
+    let v = Vars("m");
+    const query = WOQL.sequence(v.m, ym('2025-01'), ym('2026-01'), 3);
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(4);
+    const values = result?.bindings.map((b: any) => b.m['@value']);
+    expect(values).toEqual(['2025-01', '2025-04', '2025-07', '2025-10']);
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// DateTime sequences
+// ═══════════════════════════════════════════════════════════════════════════
+
+describe('Sequence of xsd:dateTime values', () => {
+  test('generates hourly timestamps for 6 hours', async () => {
+    let v = Vars("t");
+    const query = WOQL.sequence(v.t, dt('2025-01-01T00:00:00Z'), dt('2025-01-01T06:00:00Z'), 3600);
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(6);
+    const values = result?.bindings.map((b: any) => b.t['@value']);
+    expect(values).toEqual([
+      '2025-01-01T00:00:00Z', '2025-01-01T01:00:00Z', '2025-01-01T02:00:00Z',
+      '2025-01-01T03:00:00Z', '2025-01-01T04:00:00Z', '2025-01-01T05:00:00Z',
+    ]);
+  });
+
+  test('crosses midnight with per-second step', async () => {
+    let v = Vars("t");
+    const query = WOQL.sequence(v.t, dt('2025-01-01T23:59:57Z'), dt('2025-01-02T00:00:02Z'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(5);
+  });
+
+  test('generates 15-minute intervals', async () => {
+    let v = Vars("t");
+    const query = WOQL.sequence(v.t, dt('2025-06-15T09:00:00Z'), dt('2025-06-15T10:00:00Z'), 900);
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(4);
+    const values = result?.bindings.map((b: any) => b.t['@value']);
+    expect(values).toEqual([
+      '2025-06-15T09:00:00Z', '2025-06-15T09:15:00Z',
+      '2025-06-15T09:30:00Z', '2025-06-15T09:45:00Z',
+    ]);
+  });
+
+  test('empty range for equal dateTime', async () => {
+    let v = Vars("t");
+    const query = WOQL.sequence(v.t, dt('2025-01-01T12:00:00Z'), dt('2025-01-01T12:00:00Z'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(0);
+  });
+
+  test('dateTime matcher succeeds on hourly step', async () => {
+    const query = WOQL.sequence(dt('2025-01-01T03:00:00Z'), dt('2025-01-01T00:00:00Z'), dt('2025-01-01T06:00:00Z'), 3600);
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+  });
+
+  test('dateTime matcher fails between steps', async () => {
+    const query = WOQL.sequence(dt('2025-01-01T03:30:00Z'), dt('2025-01-01T00:00:00Z'), dt('2025-01-01T06:00:00Z'), 3600);
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(0);
+  });
+
+  test('dateTime matcher fails at exclusive end', async () => {
+    const query = WOQL.sequence(dt('2025-01-01T06:00:00Z'), dt('2025-01-01T00:00:00Z'), dt('2025-01-01T06:00:00Z'), 3600);
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(0);
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// gYear sequences
+// ═══════════════════════════════════════════════════════════════════════════
+
+describe('Sequence of xsd:gYear values', () => {
+  test('generates a decade of years', async () => {
+    let v = Vars("y");
+    const query = WOQL.sequence(v.y, yr('2020'), yr('2030'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(10);
+    const values = result?.bindings.map((b: any) => b.y['@value']);
+    expect(values).toEqual([
+      '2020', '2021', '2022', '2023', '2024',
+      '2025', '2026', '2027', '2028', '2029',
+    ]);
+  });
+
+  test('generates every 5th year', async () => {
+    let v = Vars("y");
+    const query = WOQL.sequence(v.y, yr('2000'), yr('2020'), 5);
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(4);
+    const values = result?.bindings.map((b: any) => b.y['@value']);
+    expect(values).toEqual(['2000', '2005', '2010', '2015']);
+  });
+
+  test('single year for adjacent values', async () => {
+    let v = Vars("y");
+    const query = WOQL.sequence(v.y, yr('2025'), yr('2026'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+    expect(result?.bindings[0].y['@value']).toBe('2025');
+  });
+
+  test('empty range for equal gYear', async () => {
+    let v = Vars("y");
+    const query = WOQL.sequence(v.y, yr('2025'), yr('2025'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(0);
+  });
+
+  test('gYear matcher succeeds for year in range', async () => {
+    const query = WOQL.sequence(yr('2025'), yr('2020'), yr('2030'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+  });
+
+  test('gYear matcher fails at exclusive end', async () => {
+    const query = WOQL.sequence(yr('2030'), yr('2020'), yr('2030'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(0);
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Decimal sequences
+// ═══════════════════════════════════════════════════════════════════════════
+
+describe('Sequence of xsd:decimal values', () => {
+  test('generates 0, 0.3, 0.6, 0.9 with step 0.3', async () => {
+    let v = Vars("r");
+    const query = WOQL.sequence(v.r, dec('0.0'), dec('1.0'), dec('0.3'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(4);
+    const values = result?.bindings.map((b: any) => b.r['@value']);
+    expect(values).toEqual([0, 0.3, 0.6, 0.9]);
+  });
+
+  test('generates 1, 1.5, 2 with step 0.5', async () => {
+    let v = Vars("r");
+    const query = WOQL.sequence(v.r, dec('1.0'), dec('2.5'), dec('0.5'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(3);
+    const values = result?.bindings.map((b: any) => b.r['@value']);
+    expect(values).toEqual([1, 1.5, 2]);
+  });
+
+  test('decimal matcher succeeds for value on step', async () => {
+    const query = WOQL.sequence(dec('0.6'), dec('0.0'), dec('1.0'), dec('0.3'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
+  });
+
+  test('decimal matcher fails for value between steps', async () => {
+    const query = WOQL.sequence(dec('0.5'), dec('0.0'), dec('1.0'), dec('0.3'));
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(0);
+  });
+});
+
 afterAll(async () => {
   await teardownTestBranch(client, branchName);
 });
