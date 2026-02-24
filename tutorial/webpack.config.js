@@ -19,7 +19,7 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      '@terminusdb/terminusdb-client': path.resolve('../index.js'),
+      'terminusdb': path.resolve('../index.js'),
     },
     extensions: ['.js', '.jsx', '.json'],
   },

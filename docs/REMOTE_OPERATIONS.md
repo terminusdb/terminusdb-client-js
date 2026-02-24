@@ -121,7 +121,7 @@ await client.deleteRemote('origin');
 ## Complete Workflow Example
 
 ```javascript
-const { WOQLClient } = require('@terminusdb/terminusdb-client');
+const { WOQLClient } = require('terminusdb');
 
 async function manageRemotes() {
   // Initialize client
