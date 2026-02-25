@@ -48,7 +48,19 @@ jobs:
       run: npm run lint:check
     - name: Genrate test coverage report
       run: npm run coveralls-after
+    - name: Check Coveralls availability
+      id: coveralls_check
+      run: |
+        HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 https://coveralls.io || echo "000")
+        echo "Coveralls returned HTTP status: $HTTP_STATUS"
+        if [ "$HTTP_STATUS" -ge 500 ] 2>/dev/null || [ "$HTTP_STATUS" = "000" ]; then
+          echo "Coveralls is unavailable (status $HTTP_STATUS), skipping upload"
+          echo "available=false" >> "$GITHUB_OUTPUT"
+        else
+          echo "available=true" >> "$GITHUB_OUTPUT"
+        fi
     - name: Update coveralls
+      if: steps.coveralls_check.outputs.available == 'true'
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
