@@ -4,6 +4,10 @@ on:
     tags:
       - v*
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
@@ -11,14 +15,14 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+    - name: Use Node.js 20
+      uses: actions/setup-node@v4
       with:
-        node-version: 18
+        node-version: 20
         registry-url: 'https://registry.npmjs.org'
-    - run: npm install
+    - run: npm ci
     - run: npm run build
     - run: npm run generate-types
-    - run: npm publish
+    - run: npm publish --provenance
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
