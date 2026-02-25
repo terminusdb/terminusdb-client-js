@@ -1,5 +1,5 @@
 // import TerminusDB Library
-import TerminusDB from '@terminusdb/terminusdb-client';
+import TerminusDB from 'terminusdb';
 
 // Connect with terminusdb Server
 const client = new TerminusDB.woqlClient('https:127.0.0.1:6363', { user: 'admin', key: process.env.TDB_ADMIN_PASS ?? 'root' });
