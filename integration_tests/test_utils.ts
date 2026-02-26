@@ -30,28 +30,13 @@ export function createTestClient(): WOQLClient {
 }
 
 /**
- * Ensures the shared test database exists
- * Creates it if it doesn't exist, does nothing if it already exists
+ * Points the client at the shared test database.
+ *
+ * The database is created by globalSetup.ts (runs once, sequentially,
+ * before any parallel worker starts), so no creation logic is needed here.
  */
 export async function ensureSharedDatabase(client: WOQLClient): Promise<void> {
-  try {
-    // Try to list databases and check if shared db exists
-    const dbs = await client.getDatabases();
-    const dbExists = dbs.some((db: any) => db.name === SHARED_TEST_DB || db.path === `${TEST_ORG}/${SHARED_TEST_DB}`);
-    if (!dbExists) {
-      throw new Error("Database not found");
-    }
-    client.db(SHARED_TEST_DB);
-  } catch (_e) {
-    // Database doesn't exist, create it
-    const dbObj: DbDetails = {
-      label: SHARED_TEST_DB,
-      comment: "Shared database for integration tests",
-      schema: true
-    };
-    await client.createDatabase(SHARED_TEST_DB, dbObj);
-    client.db(SHARED_TEST_DB);
-  }
+  client.db(SHARED_TEST_DB);
 }
 
 /**
