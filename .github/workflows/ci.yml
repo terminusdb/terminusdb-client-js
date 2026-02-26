@@ -46,7 +46,7 @@ jobs:
         npm run test:integration
     - name: Lint
       run: npm run lint:check
-    - name: Genrate test coverage report
+    - name: Generate test coverage report
       run: npm run coveralls-after
     - name: Check Coveralls availability
       id: coveralls_check
