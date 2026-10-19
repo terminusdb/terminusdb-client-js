@@ -57,7 +57,7 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await cleanupDatabase(client, dbName);
-});
+}, 30000);
 
 describe("triple_slice: forward range queries on integers", () => {
 

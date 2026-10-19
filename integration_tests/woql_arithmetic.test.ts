@@ -64,6 +64,19 @@ describe('Tests for woql arithmetic', () => {
     expect(result?.bindings).toStrictEqual(expectedJson);
   });
 
+  // test('Eval with variable in expression should unify, not internal server error', async () => {
+  //   // evaluate(plus("v:a", 5), 10) should unify v:a with 5
+  //   // Currently this gives an internal server error due to Prolog is/2
+  //   // requiring a fully ground RHS expression.
+  //   const query = WOQL.eval(WOQL.plus("v:a", 5), 10);
+
+  //   const result = await client.query(query);
+  //   // Should not throw an internal server error.
+  //   // Expected: v:a unifies with 5 (since 5 + 5 = 10)
+  //   const expectedJson = [{"a": {"@type": "xsd:decimal", "@value": 5}}];
+  //   expect(result?.bindings).toStrictEqual(expectedJson);
+  // });
+
 });
 
 afterAll(async () => {
