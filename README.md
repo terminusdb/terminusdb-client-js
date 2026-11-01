@@ -8,8 +8,8 @@
 [![Reddit](https://img.shields.io/reddit/subreddit-subscribers/TerminusDB?style=social)](https://www.reddit.com/r/TerminusDB/)
 [![Twitter](https://img.shields.io/twitter/follow/terminusdb?color=skyblue&label=Follow%20on%20Twitter&logo=twitter&style=flat)](https://twitter.com/TerminusDB)
 
-[![npm version](https://img.shields.io/npm/v/@terminusdb/terminusdb-client?logo=npm)](https://www.npmjs.com/package/@terminusdb/terminusdb-client)
-[![npm downloads](https://img.shields.io/npm/dw/@terminusdb/terminusdb-client?color=red&label=npm%20package&logo=npm&style=flat)](https://www.npmjs.com/package/@terminusdb/terminusdb-client)
+[![npm version](https://img.shields.io/npm/v/terminusdb?logo=npm)](https://www.npmjs.com/package/terminusdb)
+[![npm downloads](https://img.shields.io/npm/dw/terminusdb?color=red&label=npm%20package&logo=npm&style=flat)](https://www.npmjs.com/package/terminusdb)
 [![Coverage Status](https://coveralls.io/builds/76119876/badge)](https://coveralls.io/builds/76119876)
 
 > This repository is for the JavaScript client library for TerminusDB
@@ -40,10 +40,10 @@ The TerminusDB JavaScript client library can be used either as a Node.js package
 
 [node-install]: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
 
-To install the `@terminusdb/terminusdb-client` package as a dependency in an existing package, run:
+To install the `terminusdb` package as a dependency in an existing package, run:
 
 ```sh
-$ npm install --save @terminusdb/terminusdb-client
+$ npm install --save terminusdb
 ```
 
 This command updates your `package.json`.
@@ -53,12 +53,12 @@ This command updates your `package.json`.
 To use the `terminusdb-client` script on a webpage sourced from a CDN, add this to your HTML:
 
 ```html
-<script src="https://unpkg.com/@terminusdb/terminusdb-client/dist/terminusdb-client.min.js"></script>
+<script src="https://unpkg.com/terminusdb/dist/terminusdb-client.min.js"></script>
 ```
 
 Alternatively, you can download the latest [`terminusdb-client.min.js`][js], add it to your sources, and use that in the `<script>` instead.
 
-[js]: https://unpkg.com/@terminusdb/terminusdb-client/dist/terminusdb-client.min.js
+[js]: https://unpkg.com/terminusdb/dist/terminusdb-client.min.js
 
 ## Usage
 
@@ -68,7 +68,7 @@ and insert a simple document
 For the [full Documentation](https://terminusdb.org/docs/javascript)
 
 ```javascript
-const TerminusClient = require("@terminusdb/terminusdb-client");
+const TerminusClient = require("terminusdb");
 
 // Connect and configure the TerminusClient
 const client = new TerminusClient.WOQLClient('SERVER_CLOUD_URL/mycloudTeam',
@@ -139,7 +139,7 @@ Connections options.
 To initialize `TerminusDB client` with custom options use
 
 ```js
-const TerminusClient = require("@terminusdb/terminusdb-client");
+const TerminusClient = require("terminusdb");
 
 const client = new TerminusClient.WOQLClient("http://127.0.0.1:6363/", {
   db: "test_db",

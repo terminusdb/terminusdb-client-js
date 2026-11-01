@@ -48,30 +48,29 @@ describe('woql queries', () => {
   });
 
   it('check the start method', () => {
-    const woqlObject = WOQL.limit(10).start(0);
+    const woqlObject = WOQL.start(10).limit(5).eq('v:X', 'v:Y');
 
-    /* const jsonObj={"@type": "woql:Limit",
-                  "woql:limit": {
-                      "@type": "woql:DataValue",
-                      "woql:datatype": {
-                          "@type": "xsd:nonNegativeInteger",
-                          "@value": 10
-                      }
-                  },
-                  "woql:query": {
-                      "@type": "woql:Start",
-                      "woql:start": {
-                          "@type": "woql:DataValue",
-                          "woql:datatype": {
-                              "@type": "xsd:nonNegativeInteger",
-                              "@value": 0
-                          }
-                      },
-                      "woql:query": {}
-                  }
-              } */
+    const expectedJson = {
+      '@type': 'Start',
+      start: 10,
+      query: {
+        '@type': 'Limit',
+        limit: 5,
+        query: {
+          '@type': 'Equals',
+          left: {
+            '@type': 'Value',
+            variable: 'X',
+          },
+          right: {
+            '@type': 'Value',
+            variable: 'Y',
+          },
+        },
+      },
+    };
 
-    // expect(woqlObject.json()).to.eql({});
+    expect(woqlObject.json()).to.eql(expectedJson);
   });
 
   it('check the not method', () => {

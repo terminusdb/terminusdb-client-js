@@ -1,3 +1,15 @@
+# TerminusDB Client v12.0.1
+## New 🚀
+* Add WOQL predicates:
+  * `set_difference` (operates on a set, takes lists)
+  * `set_intersection` (operates on a set, takes lists)
+  * `set_union` (operates on a set, takes lists)
+  * `set_member` (operates on a set, takes set, prepare with list_to_set)
+  * `list_to_set` (converts a list to a set)
+
+## Fixes and maintenance
+* bump latest packages with security fixes
+
 # TerminusDB Client v12.0.0
 ## New 🚀
 * Add WOQL `slice()`, and `idgen_random()` operators
