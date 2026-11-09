@@ -26,7 +26,7 @@ function str(v: string) {
 describe('IntervalRelationTyped — validation mode', () => {
   test('meets: Q1 meets Q2', async () => {
     const query = WOQL.interval_relation_typed(
-      str('meets'), iv('2024-01-01/2024-04-01'), iv('2024-04-01/2024-07-01'));
+      str('meets'), iv('2024-01-01/2024-03-31'), iv('2024-04-01/2024-06-30'));
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(1);
   });
@@ -82,7 +82,7 @@ describe('IntervalRelationTyped — validation mode', () => {
 
   test('met_by: Q2 met_by Q1', async () => {
     const query = WOQL.interval_relation_typed(
-      str('met_by'), iv('2024-04-01/2024-07-01'), iv('2024-01-01/2024-04-01'));
+      str('met_by'), iv('2024-04-01/2024-06-30'), iv('2024-01-01/2024-03-31'));
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(1);
   });
@@ -127,7 +127,7 @@ describe('IntervalRelationTyped — classification mode', () => {
   test('classifies as meets', async () => {
     let v = Vars("rel");
     const query = WOQL.interval_relation_typed(
-      v.rel, iv('2024-01-01/2024-04-01'), iv('2024-04-01/2024-07-01'));
+      v.rel, iv('2024-01-01/2024-03-31'), iv('2024-04-01/2024-06-30'));
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(1);
     expect(result?.bindings[0].rel['@value']).toBe('meets');
@@ -199,7 +199,7 @@ describe('IntervalRelationTyped — classification mode', () => {
   test('classifies as met_by', async () => {
     let v = Vars("rel");
     const query = WOQL.interval_relation_typed(
-      v.rel, iv('2024-04-01/2024-07-01'), iv('2024-01-01/2024-04-01'));
+      v.rel, iv('2024-04-01/2024-06-30'), iv('2024-01-01/2024-03-31'));
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(1);
     expect(result?.bindings[0].rel['@value']).toBe('met_by');
