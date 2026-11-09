@@ -36,26 +36,28 @@ describe('Interval predicate — constructing intervals from dates', () => {
   test('build Q1 2025 from two xsd:date endpoints', async () => {
     let v = Vars("iv");
     const result = await client.query(
-      WOQL.interval(dat('2025-01-01'), dat('2025-04-01'), v.iv));
+      WOQL.interval(dat('2025-01-01'), dat('2025-03-31'), v.iv));
     expect(result?.bindings).toHaveLength(1);
     expect(result?.bindings[0].iv['@type']).toBe('xdd:dateTimeInterval');
-    expect(result?.bindings[0].iv['@value']).toBe('2025-01-01/2025-04-01');
+    // xsd:date endpoints denote whole days, both inclusive; the interval is
+    // rendered with instants, where the end is the first moment not covered
+    expect(result?.bindings[0].iv['@value']).toBe('2025-01-01T00:00:00Z/2025-04-01T00:00:00Z');
   });
 
   test('build calendar year 2024 (leap year)', async () => {
     let v = Vars("iv");
     const result = await client.query(
-      WOQL.interval(dat('2024-01-01'), dat('2025-01-01'), v.iv));
+      WOQL.interval(dat('2024-01-01'), dat('2024-12-31'), v.iv));
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].iv['@value']).toBe('2024-01-01/2025-01-01');
+    expect(result?.bindings[0].iv['@value']).toBe('2024-01-01T00:00:00Z/2025-01-01T00:00:00Z');
   });
 
-  test('build single-day interval Feb 29 to Mar 1 on a leap year', async () => {
+  test('build single-day leap-day interval (Feb 29)', async () => {
     let v = Vars("iv");
     const result = await client.query(
-      WOQL.interval(dat('2024-02-29'), dat('2024-03-01'), v.iv));
+      WOQL.interval(dat('2024-02-29'), dat('2024-02-29'), v.iv));
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].iv['@value']).toBe('2024-02-29/2024-03-01');
+    expect(result?.bindings[0].iv['@value']).toBe('2024-02-29T00:00:00Z/2024-03-01T00:00:00Z');
   });
 });
 
@@ -63,20 +65,20 @@ describe('Interval predicate — deconstructing intervals into dates', () => {
   test('extract start and end from a Q1 interval', async () => {
     let v = Vars("s", "e");
     const result = await client.query(
-      WOQL.interval(v.s, v.e, dti('2025-01-01/2025-04-01')));
+      WOQL.interval(v.s, v.e, dti('2025-01-01/2025-03-31')));
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].s['@type']).toBe('xsd:date');
-    expect(result?.bindings[0].s['@value']).toBe('2025-01-01');
-    expect(result?.bindings[0].e['@type']).toBe('xsd:date');
-    expect(result?.bindings[0].e['@value']).toBe('2025-04-01');
+    expect(result?.bindings[0].s['@type']).toBe('xsd:dateTime');
+    expect(result?.bindings[0].s['@value']).toBe('2025-01-01T00:00:00Z');
+    expect(result?.bindings[0].e['@type']).toBe('xsd:dateTime');
+    expect(result?.bindings[0].e['@value']).toBe('2025-04-01T00:00:00Z');
   });
 
   test('extract start only (end already ground)', async () => {
     let v = Vars("s");
     const result = await client.query(
-      WOQL.interval(v.s, dat('2025-04-01'), dti('2025-01-01/2025-04-01')));
+      WOQL.interval(v.s, dat('2025-03-31'), dti('2025-01-01/2025-03-31')));
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].s['@value']).toBe('2025-01-01');
+    expect(result?.bindings[0].s['@value']).toBe('2025-01-01T00:00:00Z');
   });
 });
 
@@ -84,24 +86,24 @@ describe('Interval predicate — validation (all three args ground)', () => {
   test('succeeds when dates match the interval', async () => {
     const result = await client.query(
       WOQL.interval(
-        dat('2025-01-01'), dat('2025-04-01'),
-        dti('2025-01-01/2025-04-01')));
+        dat('2025-01-01'), dat('2025-03-31'),
+        dti('2025-01-01/2025-03-31')));
     expect(result?.bindings).toHaveLength(1);
   });
 
   test('fails when end date does not match interval', async () => {
     const result = await client.query(
       WOQL.interval(
-        dat('2025-01-01'), dat('2025-06-01'),
-        dti('2025-01-01/2025-04-01')));
+        dat('2025-01-01'), dat('2025-04-30'),
+        dti('2025-01-01/2025-03-31')));
     expect(result?.bindings).toHaveLength(0);
   });
 
   test('fails when start date does not match interval', async () => {
     const result = await client.query(
       WOQL.interval(
-        dat('2025-02-01'), dat('2025-04-01'),
-        dti('2025-01-01/2025-04-01')));
+        dat('2025-02-01'), dat('2025-03-31'),
+        dti('2025-01-01/2025-03-31')));
     expect(result?.bindings).toHaveLength(0);
   });
 });
@@ -111,23 +113,23 @@ describe('Interval predicate — validation (all three args ground)', () => {
 // ═══════════════════════════════════════════════════════════════════════════
 
 describe('Typecast — string to xdd:dateTimeInterval', () => {
-  test('cast a half-open bracket string to dateTimeInterval', async () => {
+  test('cast a date-pair string to dateTimeInterval', async () => {
     let v = Vars("iv");
     const result = await client.query(
-      WOQL.typecast(str('2025-01-01/2025-04-01'),
+      WOQL.typecast(str('2025-01-01/2025-03-31'),
                     'xdd:dateTimeInterval', v.iv));
     expect(result?.bindings).toHaveLength(1);
     expect(result?.bindings[0].iv['@type']).toBe('xdd:dateTimeInterval');
-    expect(result?.bindings[0].iv['@value']).toBe('2025-01-01/2025-04-01');
+    expect(result?.bindings[0].iv['@value']).toBe('2025-01-01/2025-03-31');
   });
 
   test('cast a full-year interval string', async () => {
     let v = Vars("iv");
     const result = await client.query(
-      WOQL.typecast(str('2024-01-01/2025-01-01'),
+      WOQL.typecast(str('2024-01-01/2024-12-31'),
                     'xdd:dateTimeInterval', v.iv));
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].iv['@value']).toBe('2024-01-01/2025-01-01');
+    expect(result?.bindings[0].iv['@value']).toBe('2024-01-01/2024-12-31');
   });
 });
 
@@ -135,11 +137,11 @@ describe('Typecast — xdd:dateTimeInterval to string', () => {
   test('cast an interval value back to string', async () => {
     let v = Vars("s");
     const result = await client.query(
-      WOQL.typecast(dti('2025-01-01/2025-04-01'),
+      WOQL.typecast(dti('2025-01-01/2025-03-31'),
                     'xsd:string', v.s));
     expect(result?.bindings).toHaveLength(1);
     expect(result?.bindings[0].s['@type']).toBe('xsd:string');
-    expect(result?.bindings[0].s['@value']).toBe('2025-01-01/2025-04-01');
+    expect(result?.bindings[0].s['@value']).toBe('2025-01-01/2025-03-31');
   });
 });
 
@@ -152,7 +154,7 @@ describe('Roundtrip — string through interval type and back', () => {
     let v = Vars("iv", "s", "e", "iv2", "out");
     const query = WOQL.and(
       // Step 1: cast string to dateTimeInterval
-      WOQL.typecast(str('2025-07-01/2025-10-01'),
+      WOQL.typecast(str('2025-07-01/2025-09-30'),
                     'xdd:dateTimeInterval', v.iv),
       // Step 2: deconstruct interval into start+end dates
       WOQL.interval(v.s, v.e, v.iv),
@@ -164,11 +166,12 @@ describe('Roundtrip — string through interval type and back', () => {
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(1);
     const b = result?.bindings[0];
-    // Start and end dates extracted correctly
-    expect(b.s['@value']).toBe('2025-07-01');
-    expect(b.e['@value']).toBe('2025-10-01');
-    // Roundtrip produces identical string
-    expect(b.out['@value']).toBe('2025-07-01/2025-10-01');
+    // Start and end instants extracted correctly (end is the first
+    // moment not covered)
+    expect(b.s['@value']).toBe('2025-07-01T00:00:00Z');
+    expect(b.e['@value']).toBe('2025-10-01T00:00:00Z');
+    // Roundtrip produces the normalized instant spelling
+    expect(b.out['@value']).toBe('2025-07-01T00:00:00Z/2025-10-01T00:00:00Z');
   });
 });
 
@@ -177,65 +180,66 @@ describe('Roundtrip — string through interval type and back', () => {
 // ═══════════════════════════════════════════════════════════════════════════
 
 describe('Articulating the same interval in different ways', () => {
-  // All of these express FY2025-Q1: 2025-01-01/2025-04-01
+  // All of these express FY2025-Q1: 2025-01-01 through 2025-03-31 inclusive
 
   test('way 1: typed literal — pass xdd:dateTimeInterval directly', async () => {
     let v = Vars("s", "e");
     const result = await client.query(
-      WOQL.interval(v.s, v.e, dti('2025-01-01/2025-04-01')));
+      WOQL.interval(v.s, v.e, dti('2025-01-01/2025-03-31')));
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].s['@value']).toBe('2025-01-01');
-    expect(result?.bindings[0].e['@value']).toBe('2025-04-01');
+    expect(result?.bindings[0].s['@value']).toBe('2025-01-01T00:00:00Z');
+    expect(result?.bindings[0].e['@value']).toBe('2025-04-01T00:00:00Z');
   });
 
   test('way 2: two dates — construct via Interval predicate', async () => {
     let v = Vars("iv");
     const result = await client.query(
-      WOQL.interval(dat('2025-01-01'), dat('2025-04-01'), v.iv));
+      WOQL.interval(dat('2025-01-01'), dat('2025-03-31'), v.iv));
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].iv['@value']).toBe('2025-01-01/2025-04-01');
+    expect(result?.bindings[0].iv['@value']).toBe('2025-01-01T00:00:00Z/2025-04-01T00:00:00Z');
   });
 
   test('way 3: string + typecast — parse from a string value', async () => {
     let v = Vars("iv");
     const result = await client.query(
-      WOQL.typecast(str('2025-01-01/2025-04-01'),
+      WOQL.typecast(str('2025-01-01/2025-03-31'),
                     'xdd:dateTimeInterval', v.iv));
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].iv['@value']).toBe('2025-01-01/2025-04-01');
+    expect(result?.bindings[0].iv['@value']).toBe('2025-01-01/2025-03-31');
   });
 
   test('way 4: typecast + Interval combined — parse then decompose', async () => {
     let v = Vars("iv", "s", "e");
     const query = WOQL.and(
-      WOQL.typecast(str('2025-01-01/2025-04-01'),
+      WOQL.typecast(str('2025-01-01/2025-03-31'),
                     'xdd:dateTimeInterval', v.iv),
       WOQL.interval(v.s, v.e, v.iv),
     );
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].s['@value']).toBe('2025-01-01');
-    expect(result?.bindings[0].e['@value']).toBe('2025-04-01');
+    expect(result?.bindings[0].s['@value']).toBe('2025-01-01T00:00:00Z');
+    expect(result?.bindings[0].e['@value']).toBe('2025-04-01T00:00:00Z');
   });
 
   test('all three ways produce equivalent results', async () => {
     let v = Vars("iv1", "iv2", "iv3");
     const query = WOQL.and(
       // Way 1: from dates
-      WOQL.interval(dat('2025-01-01'), dat('2025-04-01'), v.iv1),
+      WOQL.interval(dat('2025-01-01'), dat('2025-03-31'), v.iv1),
       // Way 2: from typecast
-      WOQL.typecast(str('2025-01-01/2025-04-01'),
+      WOQL.typecast(str('2025-01-01/2025-03-31'),
                     'xdd:dateTimeInterval', v.iv2),
       // Way 3: typed literal directly
-      WOQL.eq(v.iv3, dti('2025-01-01/2025-04-01')),
+      WOQL.eq(v.iv3, dti('2025-01-01/2025-03-31')),
     );
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(1);
     const b = result?.bindings[0];
-    // All three produce the same value
-    expect(b.iv1['@value']).toBe('2025-01-01/2025-04-01');
-    expect(b.iv2['@value']).toBe('2025-01-01/2025-04-01');
-    expect(b.iv3['@value']).toBe('2025-01-01/2025-04-01');
+    // All three produce the same interval; construction from xsd:date
+    // normalizes to instants while typecast and the literal keep the spelling
+    expect(b.iv1['@value']).toBe('2025-01-01T00:00:00Z/2025-04-01T00:00:00Z');
+    expect(b.iv2['@value']).toBe('2025-01-01/2025-03-31');
+    expect(b.iv3['@value']).toBe('2025-01-01/2025-03-31');
   });
 });
 
@@ -247,17 +251,19 @@ describe('Interval type with IntervalRelation — real-world scheduling', () => 
   test('Q1 meets Q2: construct both intervals then check adjacency', async () => {
     let v = Vars("q1", "q2", "rel");
     const query = WOQL.and(
-      WOQL.interval(dat('2025-01-01'), dat('2025-04-01'), v.q1),
-      WOQL.interval(dat('2025-04-01'), dat('2025-07-01'), v.q2),
+      WOQL.interval(dat('2025-01-01'), dat('2025-03-31'), v.q1),
+      WOQL.interval(dat('2025-04-01'), dat('2025-06-30'), v.q2),
+      // IntervalRelation compares bounds; timestamps denote the precise
+      // moments where one interval ends and the next begins
       WOQL.interval_relation("meets",
-        dat('2025-01-01'), dat('2025-04-01'),
-        dat('2025-04-01'), dat('2025-07-01')),
+        dtm('2025-01-01T00:00:00Z'), dtm('2025-04-01T00:00:00Z'),
+        dtm('2025-04-01T00:00:00Z'), dtm('2025-07-01T00:00:00Z')),
     );
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(1);
     // Both intervals were constructed
-    expect(result?.bindings[0].q1['@value']).toBe('2025-01-01/2025-04-01');
-    expect(result?.bindings[0].q2['@value']).toBe('2025-04-01/2025-07-01');
+    expect(result?.bindings[0].q1['@value']).toBe('2025-01-01T00:00:00Z/2025-04-01T00:00:00Z');
+    expect(result?.bindings[0].q2['@value']).toBe('2025-04-01T00:00:00Z/2025-07-01T00:00:00Z');
   });
 
   test('classify relation between two date-constructed intervals', async () => {
@@ -284,24 +290,27 @@ describe('Interval with DayAfter/DayBefore — building intervals from day arith
     const query = WOQL.and(
       // Start after Jan 15
       WOQL.day_after(dat('2025-01-15'), v.next),
-      // End is Jan 23 (7 days later)
-      WOQL.day_after(dat('2025-01-22'), v.end),
-      // Build the interval Jan 16 to Jan 23
+      // End is Jan 22 (7 days later, last day included)
+      WOQL.day_after(dat('2025-01-21'), v.end),
+      // Build the interval Jan 16 through Jan 22
       WOQL.interval(v.next, v.end, v.iv),
     );
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].iv['@value']).toBe('2025-01-16/2025-01-23');
+    expect(result?.bindings[0].iv['@value']).toBe('2025-01-16T00:00:00Z/2025-01-23T00:00:00Z');
   });
 
   test('find the day before an interval starts', async () => {
     let v = Vars("s", "e", "before_start");
     const query = WOQL.and(
-      WOQL.interval(v.s, v.e, dti('2025-03-01/2025-04-01')),
-      WOQL.day_before(v.s, v.before_start),
+      WOQL.interval(v.s, v.e, dti('2025-03-01/2025-03-31')),
+      // day_before operates on xsd:date; the interval's start instant
+      // denotes midnight of Mar 1
+      WOQL.day_before(dat('2025-03-01'), v.before_start),
     );
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(1);
+    expect(result?.bindings[0].s['@value']).toBe('2025-03-01T00:00:00Z');
     expect(result?.bindings[0].before_start['@value']).toBe('2025-02-28');
   });
 });
@@ -328,7 +337,7 @@ describe('Interval with dateTime endpoints', () => {
     const result = await client.query(
       WOQL.interval(dat('2025-01-01'), dtm('2025-04-01T12:00:00Z'), v.iv));
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].iv['@value']).toBe('2025-01-01/2025-04-01T12:00:00Z');
+    expect(result?.bindings[0].iv['@value']).toBe('2025-01-01T00:00:00Z/2025-04-01T12:00:00Z');
   });
 
   test('deconstruct dateTime interval preserves types', async () => {
@@ -353,9 +362,9 @@ describe('IntervalStartDuration — extract start and duration from interval', (
   test('90-day interval yields P90D', async () => {
     let v = Vars("s", "d");
     const result = await client.query(
-      WOQL.interval_start_duration(v.s, v.d, dti('2025-01-01/2025-04-01')));
+      WOQL.interval_start_duration(v.s, v.d, dti('2025-01-01/2025-03-31')));
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].s['@value']).toBe('2025-01-01');
+    expect(result?.bindings[0].s['@value']).toBe('2025-01-01T00:00:00Z');
     expect(result?.bindings[0].d['@value']).toBe('P90D');
   });
 
@@ -375,7 +384,7 @@ describe('IntervalStartDuration — construct interval from start + duration', (
     const result = await client.query(
       WOQL.interval_start_duration(dat('2025-01-01'), dur('P90D'), v.iv));
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].iv['@value']).toBe('2025-01-01/2025-04-01');
+    expect(result?.bindings[0].iv['@value']).toBe('2025-01-01T00:00:00Z/P90D');
   });
 
   test('start + P365D builds a full-year interval', async () => {
@@ -383,7 +392,7 @@ describe('IntervalStartDuration — construct interval from start + duration', (
     const result = await client.query(
       WOQL.interval_start_duration(dat('2025-01-01'), dur('P365D'), v.iv));
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].iv['@value']).toBe('2025-01-01/2026-01-01');
+    expect(result?.bindings[0].iv['@value']).toBe('2025-01-01T00:00:00Z/P365D');
   });
 });
 
@@ -395,20 +404,20 @@ describe('IntervalDurationEnd — extract duration and end from interval', () =>
   test('90-day interval yields P90D and end date', async () => {
     let v = Vars("d", "e");
     const result = await client.query(
-      WOQL.interval_duration_end(v.d, v.e, dti('2025-01-01/2025-04-01')));
+      WOQL.interval_duration_end(v.d, v.e, dti('2025-01-01/2025-03-31')));
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].e['@value']).toBe('2025-04-01');
+    expect(result?.bindings[0].e['@value']).toBe('2025-04-01T00:00:00Z');
     expect(result?.bindings[0].d['@value']).toBe('P90D');
   });
 });
 
 describe('IntervalDurationEnd — construct interval from duration + end', () => {
-  test('P90D before Apr 1 yields Jan 1 to Apr 1', async () => {
+  test('P90D ending Mar 31 yields Jan 1 through Mar 31', async () => {
     let v = Vars("iv");
     const result = await client.query(
-      WOQL.interval_duration_end(dur('P90D'), dat('2025-04-01'), v.iv));
+      WOQL.interval_duration_end(dur('P90D'), dat('2025-03-31'), v.iv));
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].iv['@value']).toBe('2025-01-01/2025-04-01');
+    expect(result?.bindings[0].iv['@value']).toBe('P90D/2025-04-01T00:00:00Z');
   });
 });
 
@@ -419,7 +428,7 @@ describe('IntervalDurationEnd — construct interval from duration + end', () =>
 describe('Three views of the same interval', () => {
   test('start/end, start/duration, and duration/end all agree', async () => {
     let v = Vars("s1", "e1", "s2", "d2", "d3", "e3");
-    const iv = dti('2025-01-01/2025-04-01');
+    const iv = dti('2025-01-01/2025-03-31');
     const query = WOQL.and(
       WOQL.interval(v.s1, v.e1, iv),
       WOQL.interval_start_duration(v.s2, v.d2, iv),
