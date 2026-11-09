@@ -16,15 +16,13 @@
 
 [**TerminusDB**][terminusdb] is an [open-source][terminusdb-repo] graph database and document store. It allows you to link and process structured and unstructured JSON documents in a powerful knowledge graph all through a simple document API.
 
-[terminusdb]: https://terminusdb.org/
-[terminusdb-docs]: https://terminusdb.org/docs/
+[terminusdb]: https://terminusdb.com/
+[terminusdb-docs]: https://terminusdb.com/docs/
 [terminusdb-repo]: https://github.com/terminusdb/terminusdb
 
 It is the model-based, in-memory, and distributed knowledge graph database for hierarchical records with a git-for-data collaboration model at its heart. So many great things in a single package and a high precision datalog query language with advanced features like transactions, schema validation and unification.
 
 For many, it serves as a headless content management system for complex enviroments with push, pull, clone, rebase and merge capabilities with immutable history and a strong schema checker that covers both the simplest and most advanced models.
-
-Use the [cloud-based studio environment](https://studio.dfrnt.com/) to [build graph data products in the cloud](https://dfrnt.com/solutions-studio) or in your [localhost dockerized TerminusDB instances](https://terminusdb.org/docs/install-terminusdb-as-a-docker-container/). Try it out for yourself, it's free to get started with generous limits, clone a demo project to play around.
 
 ## Requirements
 
@@ -65,7 +63,7 @@ Alternatively, you can download the latest [`terminusdb-client.min.js`][js], add
 This example creates a simple dataProduct, starting to create a database model the schema
 and insert a simple document
 
-For the [full Documentation](https://terminusdb.org/docs/javascript)
+For the [full Documentation](https://terminusdb.com/docs/javascript)
 
 ```javascript
 const TerminusClient = require("terminusdb");
