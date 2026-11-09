@@ -28,19 +28,19 @@ describe('Create a database, schema and insert data', () => {
   test('Insert Document Child Tom', async () => {
       const person = {"age":"10","name":"Tom","@type":"Child" }
       const result = await client.addDocument(person);
-      expect(result).toStrictEqual(["terminusdb:///data/Child/Tom" ]);
+      expect(result).toStrictEqual(["Child/Tom" ]);
   })
 
   test('Insert Document Child Anna', async () => {
       const person = {"age":"20","name":"Anna","@type":"Child"}
       const result = await client.addDocument(person);
-      expect(result).toStrictEqual(["terminusdb:///data/Child/Anna" ]);
+      expect(result).toStrictEqual(["Child/Anna" ]);
   })
 
   test('Insert Document Parent Tom Senior', async () => {
       const person = {"age":"40","name":"Tom Senior","@type":"Parent" , "has_child":"Child/Tom"}
       const result = await client.addDocument(person);
-      expect(result).toStrictEqual(["terminusdb:///data/Parent/Tom%20Senior" ]);
+      expect(result).toStrictEqual(["Parent/Tom%20Senior" ]);
   })
 
   test('Get document history on an object', async () => {
@@ -75,7 +75,7 @@ describe('Create a database, schema and insert data', () => {
   test('Update Child Tom, link Parent', async () => {
     const childTom = { '@id': 'Child/Tom', '@type': 'Child', age: 10, name: 'Tom' , has_parent:"Parent/Tom%20Senior"}
     const result = await client.updateDocument(childTom);
-    expect(result).toStrictEqual(["terminusdb:///data/Child/Tom" ]);
+    expect(result).toStrictEqual(["Child/Tom" ]);
   })
 
   test('Diff beetwen main and change_request branch', async () => {
