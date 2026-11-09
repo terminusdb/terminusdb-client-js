@@ -5,6 +5,7 @@ const { Var, VarUnique, Vars } = require('../lib/query/woqlDoc');
 
 const idGenJson = require('./woqlJson/woqlIdgenJson');
 const randomKeyJson = require('./woqlJson/woqlRandomKeyJson');
+const uuidV7Json = require('./woqlJson/woqlUuidV7Json');
 const woqlStarJson = require('./woqlJson/woqlStarJson');
 const woqlInsertJson = require('./woqlJson/woqlInsertJson');
 const woqlDoctypeJson = require('./woqlJson/woqlDoctypeJson');
@@ -289,6 +290,12 @@ describe('woql queries', () => {
     const woqlObject = WOQL.idgen_random('Person/', 'v:Person_ID');
 
     expect(woqlObject.json()).to.eql(randomKeyJson);
+  });
+
+  it('check the idgen_uuid_v7 method', () => {
+    const woqlObject = WOQL.idgen_uuid_v7('Person/', 'v:Person_ID');
+
+    expect(woqlObject.json()).to.eql(uuidV7Json);
   });
 
   it('check the typecast method', () => {
@@ -669,5 +676,17 @@ describe('woql queries', () => {
     const woqlObject = WOQL.limit(100).eval(WOQL.times(2, 3), v.result);
     const expectedJson = {"@type":"Limit","limit":100,"query":{"@type":"Eval","expression":{"@type":"Times","left":{"@type":"ArithmeticValue","data":{"@type":"xsd:decimal","@value":2}},"right":{"@type":"ArithmeticValue","data":{"@type":"xsd:decimal","@value":3}}},"result":{"@type":"ArithmeticValue","variable":"result"}}};
     expect(woqlObject.json()).to.deep.eql(expectedJson);
+  });
+
+  it('check the triple_relation method', () => {
+    const woqlObject = WOQL.triple_relation('v:doc', 'scm:interval', 'v:o', 'meets', { '@type': 'xdd:dateTimeInterval', '@value': '2025-01-01/2025-04-01' });
+    expect(woqlObject.json()).to.eql({
+      '@type': 'TripleRelation',
+      subject: { '@type': 'NodeValue', variable: 'doc' },
+      predicate: { '@type': 'NodeValue', node: 'scm:interval' },
+      object: { '@type': 'Value', variable: 'o' },
+      relation: { '@type': 'DataValue', data: { '@type': 'xsd:string', '@value': 'meets' } },
+      value: { '@type': 'DataValue', data: { '@type': 'xdd:dateTimeInterval', '@value': '2025-01-01/2025-04-01' } },
+    });
   });
 });
