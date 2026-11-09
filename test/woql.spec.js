@@ -317,6 +317,39 @@ describe('woql queries', () => {
     expect(woqlObject.json()).to.eql(woqlCastJson);
   });
 
+  it('check the typecast method with a literal prefixes map', () => {
+    const woqlObject = WOQL.typecast(
+      'v:QName_str',
+      'xsd:QName',
+      'v:QName_val',
+      { eg: 'http://example.org/ns#' },
+    );
+
+    expect(woqlObject.json().prefixes).to.eql({
+      '@type': 'Value',
+      data: { eg: 'http://example.org/ns#' },
+    });
+  });
+
+  it('check the typecast method with a variable prefixes map', () => {
+    const woqlObject = WOQL.typecast(
+      'v:QName_str',
+      'xsd:QName',
+      'v:QName_val',
+      'v:Namespaces',
+    );
+
+    expect(woqlObject.json().prefixes).to.eql({
+      '@type': 'Value',
+      variable: 'Namespaces',
+    });
+  });
+
+  it('check the typecast method omits prefixes when absent', () => {
+    const woqlObject = WOQL.typecast('v:Duration', 'xsd:integer', 'v:Duration_Cast');
+    expect(woqlObject.json()).to.not.have.property('prefixes');
+  });
+
   it('check the concat method', () => {
     const woqlObject = WOQL.concat('v:Duration yo v:Duration_Cast', 'x');
     expect(woqlObject.json()).to.eql(woqlConcatJson);
