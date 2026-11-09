@@ -5,6 +5,7 @@ const { Var, VarUnique, Vars } = require('../lib/query/woqlDoc');
 
 const idGenJson = require('./woqlJson/woqlIdgenJson');
 const randomKeyJson = require('./woqlJson/woqlRandomKeyJson');
+const uuidV7Json = require('./woqlJson/woqlUuidV7Json');
 const woqlStarJson = require('./woqlJson/woqlStarJson');
 const woqlInsertJson = require('./woqlJson/woqlInsertJson');
 const woqlDoctypeJson = require('./woqlJson/woqlDoctypeJson');
@@ -291,6 +292,12 @@ describe('woql queries', () => {
     expect(woqlObject.json()).to.eql(randomKeyJson);
   });
 
+  it('check the idgen_uuid_v7 method', () => {
+    const woqlObject = WOQL.idgen_uuid_v7('Person/', 'v:Person_ID');
+
+    expect(woqlObject.json()).to.eql(uuidV7Json);
+  });
+
   it('check the typecast method', () => {
     const woqlObject = WOQL.typecast('v:Duration', 'xsd:integer', 'v:Duration_Cast');
 
@@ -315,6 +322,39 @@ describe('woql queries', () => {
 
     // console.log(JSON.stringify(woqlObject.json(), null, 4));
     expect(woqlObject.json()).to.eql(woqlCastJson);
+  });
+
+  it('check the typecast method with a literal prefixes map', () => {
+    const woqlObject = WOQL.typecast(
+      'v:QName_str',
+      'xsd:QName',
+      'v:QName_val',
+      { eg: 'http://example.org/ns#' },
+    );
+
+    expect(woqlObject.json().prefixes).to.eql({
+      '@type': 'Value',
+      data: { eg: 'http://example.org/ns#' },
+    });
+  });
+
+  it('check the typecast method with a variable prefixes map', () => {
+    const woqlObject = WOQL.typecast(
+      'v:QName_str',
+      'xsd:QName',
+      'v:QName_val',
+      'v:Namespaces',
+    );
+
+    expect(woqlObject.json().prefixes).to.eql({
+      '@type': 'Value',
+      variable: 'Namespaces',
+    });
+  });
+
+  it('check the typecast method omits prefixes when absent', () => {
+    const woqlObject = WOQL.typecast('v:Duration', 'xsd:integer', 'v:Duration_Cast');
+    expect(woqlObject.json()).to.not.have.property('prefixes');
   });
 
   it('check the concat method', () => {
