@@ -87,8 +87,6 @@ describe('WOQL Prefix Operations', () => {
     // The PrefixID should be a hash-based URI
     const prefixId = result.bindings[0].PrefixID;
     expect(prefixId).toMatch(/^terminusdb:\/\/Prefix_Pair\/[a-f0-9]{64}$/);
-    
-    console.log('Generated Prefix ID:', prefixId);
   }, 30000);
 
   test('Verify the prefix was added by querying the schema', async () => {
@@ -123,8 +121,6 @@ describe('WOQL Prefix Operations', () => {
     expect(result.bindings.length).toBe(1);
     expect(result.bindings[0].Name['@value']).toBe('myprefix');
     expect(result.bindings[0].URL['@value']).toBe('http://example.org/myprefix/');
-    
-    console.log('Verified prefix:', result.bindings[0]);
   }, 30000);
 
   test('HashKey generates deterministic IDs (same input = same output)', async () => {
@@ -145,7 +141,6 @@ describe('WOQL Prefix Operations', () => {
     const result2 = await client.query(query2);
 
     expect(result1.bindings[0].ID1).toBe(result2.bindings[0].ID2);
-    console.log('Deterministic ID:', result1.bindings[0].ID1);
   }, 30000);
 
   test('HashKey generates different IDs for different inputs', async () => {
@@ -165,8 +160,6 @@ describe('WOQL Prefix Operations', () => {
     const result = await client.query(query);
 
     expect(result.bindings[0].ID_A).not.toBe(result.bindings[0].ID_B);
-    console.log('ID_A:', result.bindings[0].ID_A);
-    console.log('ID_B:', result.bindings[0].ID_B);
   }, 30000);
 
   test('Add another prefix and verify both exist', async () => {
@@ -237,8 +230,6 @@ describe('WOQL Prefix Operations', () => {
     const prefixNames = result.bindings.map((b: any) => b.Name['@value']);
     expect(prefixNames).toContain('myprefix');
     expect(prefixNames).toContain('schema_org');
-    
-    console.log('All prefixes:', prefixNames);
   }, 30000);
 
 });
