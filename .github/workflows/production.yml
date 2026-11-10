@@ -1,8 +1,7 @@
 name: Build and release on npm
 on:
-  push:
-    tags:
-      - v*
+  release:
+    types: [published]
 
 permissions:
   contents: read
@@ -15,14 +14,20 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+    - name: Verify release tag matches package version
+      run: |
+        PKG_VERSION=$(node -p "require('./package.json').version")
+        TAG="${GITHUB_REF_NAME#v}"
+        if [ "$PKG_VERSION" != "$TAG" ]; then
+          echo "Release tag ${GITHUB_REF_NAME} does not match package.json version ${PKG_VERSION}"
+          exit 1
+        fi
     - name: Use Node.js 22
       uses: actions/setup-node@v4
       with:
         node-version: 22
-        registry-url: 'https://registry.npmjs.org'
+    - name: Upgrade npm for trusted publishing
+      run: npm install -g npm@latest
     - run: npm ci
     - run: npm run build
-    - run: npm run generate-types
     - run: npm publish --provenance
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_PKG_TOKEN }}
