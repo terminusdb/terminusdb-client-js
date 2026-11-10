@@ -815,4 +815,57 @@ describe('woql query', () => {
       expect(query.hasErrors()).to.be.true;
     });
   });
+
+  describe('as() argument shapes', () => {
+    it('should handle a flat array as indexed columns', () => {
+      const query = WOQL.as(['v:a', 'v:b']);
+      expect(query.query).to.be.an('array').with.length(2);
+      expect(query.query[0]['@type']).to.equal('Column');
+      expect(query.query[0].indicator.index).to.equal(0);
+    });
+
+    it('should handle a scalar pair with a type argument', () => {
+      const query = WOQL.as('v:a', 'v:b', 'xsd:string');
+      expect(query.query).to.be.an('array').with.length(1);
+      expect(query.query[0].type).to.equal('xsd:string');
+    });
+
+    it('should handle an object argument', () => {
+      const query = WOQL.as({ '@type': 'AsVar', identifier: 'x' });
+      expect(query.query[0]['@type']).to.equal('AsVar');
+    });
+  });
+
+  describe('substr() argument shapes', () => {
+    it('should emit a Substring query with positional args', () => {
+      const query = WOQL.substr('v:full', 0, 3, 0, 'v:sub');
+      expect(query.query['@type']).to.equal('Substring');
+      expect(query.query.substring['@type']).to.equal('DataValue');
+    });
+
+    it('should flag non-string arguments as an error', () => {
+      expect(WOQL.substr(123, 0, 3, 0, 456).hasErrors()).to.be.true;
+    });
+  });
+
+  describe('chained builders wrap the open cursor', () => {
+    it('should wrap the cursor with And when methods chain', () => {
+      const query = WOQL.triple('v:s', 'v:p', 'v:o')
+        .upper('v:a', 'v:b').lower('v:a', 'v:b')
+        .pad('v:a', 'x', 2, 'v:b').split('v:a', 'x', 'v:b')
+        .member('v:a', 'v:b').set_member('v:a', 'v:b')
+        .concat('v:a', 'v:b').join('v:a', 'v:b').sum('v:a', 'v:b')
+        .start(5).limit(5)
+        .re('x', 'v:a', 'v:b').length('v:a', 'v:b').slice('v:a', 'v:b', 0, 1)
+        .typecast('v:a', 'xsd:string', 'v:b').count('v:a', 'v:b')
+        .size('v:a', 'v:b').triple_count('v:a', 'v:b')
+        .unique('doc:X', ['v:a'], 'v:id').idgen('doc:X', ['v:a'], 'v:id')
+        .idgen_random('doc:X', ['v:a'], 'v:id').idgen_uuid_v7('doc:X', 'v:id')
+        .dot('v:a', 'p', 'v:b')
+        .order_by('v:a')
+        .group_by(['v:a'], ['v:b'], 'v:g');
+      expect(query.hasErrors()).to.be.false;
+      expect(query.json()['@type']).to.equal('And');
+    });
+  });
 });

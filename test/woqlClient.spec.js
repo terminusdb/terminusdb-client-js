@@ -2777,5 +2777,77 @@ describe('WOQLClient tests', () => {
       expect(readStub.calledWith('/data/test.csv')).to.be.true;
     });
   });
+
+  describe('schema getters', () => {
+    beforeEach(() => {
+      client.db('test_db');
+    });
+
+    it('should request the schema graph as a list', async () => {
+      dispatchStub.resolves([]);
+      await client.getSchema();
+      const [action, url] = dispatchStub.firstCall.args;
+      expect(action).to.equal('GET');
+      expect(url).to.include('graph_type=schema');
+      expect(url).to.include('as_list=true');
+    });
+
+    it('should filter schema classes and enums by type', async () => {
+      dispatchStub.resolves([]);
+      await client.getClasses();
+      expect(dispatchStub.firstCall.args[1]).to.include('type=sys:Class');
+      await client.getEnums();
+      expect(dispatchStub.secondCall.args[1]).to.include('type=sys:Enum');
+    });
+
+    it('should request the schema frame for a type', async () => {
+      dispatchStub.resolves({});
+      await client.getSchemaFrame('Person', 'test_db');
+      expect(dispatchStub.firstCall.args[1]).to.include('type=Person');
+    });
+
+    it('should drop subdocuments and abstracts from class documents', async () => {
+      dispatchStub.resolves([
+        { '@id': 'A' },
+        { '@id': 'B', '@subdocument': [] },
+        { '@id': 'C', '@abstract': [] },
+      ]);
+      const docs = await client.getClassDocuments();
+      expect(docs).to.have.length(1);
+      expect(docs[0]['@id']).to.equal('A');
+    });
+  });
+
+  describe('patch', () => {
+    it('should reject missing before and patch documents', async () => {
+      try {
+        await client.patch();
+        expect.fail('Should have rejected');
+      } catch (err) {
+        expect(err.message).to.include('before');
+      }
+    });
+
+    it('should post the patch payload', async () => {
+      dispatchStub.resolves({ status: 200 });
+      await client.patch({ a: 1 }, { b: 2 });
+      const [action, url, payload] = dispatchStub.firstCall.args;
+      expect(action).to.equal('POST');
+      expect(url).to.include('patch');
+      expect(payload).to.deep.equal({ before: { a: 1 }, patch: { b: 2 } });
+    });
+  });
+
+  describe('dispatch', () => {
+    it('should reject when no api url is given', async () => {
+      const fresh = new WOQLClient('http://localhost:6363', { user: 'admin', key: 'k' });
+      try {
+        await fresh.dispatch('GET', null, {});
+        expect.fail('Should have rejected');
+      } catch (err) {
+        expect(err.message).to.include('Invalid Parameter');
+      }
+    });
+  });
 });
 
