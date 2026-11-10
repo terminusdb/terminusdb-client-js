@@ -1,5 +1,4 @@
 const { expect } = require('chai');
-const axiosInstance = require('../lib/axiosInstance');
 
 describe('create new db tests', () => {
   it('create new db by send details data', (done) => {
@@ -12,8 +11,8 @@ describe('create new db tests', () => {
 
     const organizationid = 'organization01';
     global.sandbox
-      .stub(axiosInstance, 'post')
-      .returns(Promise.resolve({ status: 200, data: { 'system:status': 'system:success' } }));
+      .stub(globalThis, 'fetch')
+      .resolves(new Response(JSON.stringify({ 'system:status': 'system:success' }), { status: 200 }));
 
     expect(global.client.connectionConfig.serverURL()).to.equal('http://127.0.0.1:6363/');
     global.client

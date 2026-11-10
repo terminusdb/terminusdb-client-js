@@ -24,7 +24,8 @@
     "axios": "^1.20.0",
     "buffer": "^6.0.3",
     "form-data": "^4.0.0",
-    "pako": "^2.0.4"
+    "pako": "^2.0.4",
+    "undici": "^6.29.1"
   },
   "devDependencies": {
     "@babel/core": "^7.29.13",
@@ -99,7 +100,8 @@
     "path": false,
     "stream": false,
     "tls": false,
-    "fs": false
+    "fs": false,
+    "undici": false
   },
   "engines": {
     "node": ">=20"

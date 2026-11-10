@@ -2711,10 +2711,8 @@ describe('WOQLClient tests', () => {
 
       const headers = requestHeadersArg(dispatchStub.firstCall);
       expect(headers).to.have.property('TerminusDB-Data-Version', 'branch:v1');
-      expect(headers['content-type'] || headers['Content-Type']).to.include('multipart/form-data');
+      // fetch generates the multipart Content-Type incl. boundary itself
       expect(storedHeaders()).to.not.have.property('TerminusDB-Data-Version');
-      expect(storedHeaders()['content-type'] || storedHeaders()['Content-Type'] || '')
-        .to.not.include('multipart');
     });
   });
 
@@ -2739,10 +2737,44 @@ describe('WOQLClient tests', () => {
       const WOQL = require('../lib/woql');
       const query = WOQL.triple('v:A', 'v:B', 'v:C');
       const resources = [{ filename: 'test.csv', data: 'col1,col2\nval1,val2' }];
-      
+
       await client.query(query, '', resources);
-      
+
       expect(dispatchStub.calledOnce).to.be.true;
+    });
+
+    it('should send resource uploads as native FormData with file and payload parts', async () => {
+      dispatchStub.resolves({ bindings: [] });
+      const WOQL = require('../lib/woql');
+      const query = WOQL.get(WOQL.as('Name', 'v:Name')).post('test.csv', { type: 'csv' }, 'post');
+
+      await client.query(query, '', false, '', false, [{ filename: 'test.csv', data: 'a,b\n1,2' }]);
+
+      const body = dispatchStub.firstCall.args[2];
+      expect(body).to.be.an.instanceof(FormData);
+      const file = body.get('file');
+      expect(file.name).to.equal('test.csv');
+      expect(await file.text()).to.equal('a,b\n1,2');
+      const payload = body.get('payload');
+      expect(payload.type).to.equal('application/json');
+      expect(await payload.text()).to.include('test.csv');
+      // fetch generates the multipart Content-Type incl. boundary itself
+      expect(dispatchStub.firstCall.args[5] || {}).to.not.have.property('Content-Type');
+      expect(dispatchStub.firstCall.args[5] || {}).to.not.have.property('content-type');
+    });
+
+    it('should read the file from disk when no resource data is provided', async () => {
+      dispatchStub.resolves({ bindings: [] });
+      const fs = require('fs');
+      const readStub = sinon.stub(fs, 'readFileSync').returns(Buffer.from('a,b\n1,2'));
+      const WOQL = require('../lib/woql');
+      const query = WOQL.get(WOQL.as('Name', 'v:Name')).post('/data/test.csv', { type: 'csv' }, 'post');
+
+      await client.query(query, '', false, '', false);
+
+      const file = dispatchStub.firstCall.args[2].get('file');
+      expect(file.name).to.equal('test.csv'); // basename of the file path
+      expect(readStub.calledWith('/data/test.csv')).to.be.true;
     });
   });
 });
