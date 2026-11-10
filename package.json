@@ -59,6 +59,17 @@
     "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^6.1.0"
   },
+  "overrides": {
+    "mocha": {
+      "minimatch": "^11.0.1"
+    },
+    "glob@^13.0.0": {
+      "minimatch": "^11.0.1"
+    },
+    "test-exclude": {
+      "minimatch": "^11.0.1"
+    }
+  },
   "scripts": {
     "mkdocs:docs": "npx jsdoc --template ./jsdoc-terminusdb-template --recurse ./lib/ > docs.json",
     "mkdocs:multi": "node ./docs/createDocs.js",
