@@ -1,6 +1,6 @@
 [![TerminusDB JavaScript Client](https://assets.terminusdb.com/readmes/terminusdb-client-js/header.gif)][terminusdb-client-js-docs]
 
-[terminusdb-client-js-docs]: https://terminusdb.github.io/terminusdb-client-js/
+[terminusdb-client-js-docs]: https://terminusdb.com/docs/javascript
 
 ---
 
@@ -20,7 +20,7 @@
 [terminusdb-docs]: https://terminusdb.com/docs/
 [terminusdb-repo]: https://github.com/terminusdb/terminusdb
 
-It is the model-based, in-memory, and distributed knowledge graph database for hierarchical records with a git-for-data collaboration model at its heart. So many great things in a single package and a high precision datalog query language with advanced features like transactions, schema validation and unification.
+It is the model-based, in-memory, and distributed knowledge graph database with version control for JSON documents with a git-for-data collaboration model at its heart. So many great things in a single package and a high precision datalog query language with advanced features like transactions, schema validation and unification.
 
 For many, it serves as a headless content management system for complex enviroments with push, pull, clone, rebase and merge capabilities with immutable history and a strong schema checker that covers both the simplest and most advanced models.
 
@@ -128,6 +128,58 @@ async function createDataProduct(){
     }
   }
 
+```
+
+## TypeScript
+
+The package ships generated type declarations (`dist/typescript`), so TypeScript works out of the box with `import`.
+WOQL functions accept either `"v:name"` strings or `Var`/`Vars` objects wherever a variable is expected.
+The `WOQLClient` CRUD and query methods take an optional type parameter describing the expected result; pass a second type parameter when `getDataVersion` is set. Shared result and error shapes are importable by name from the package root (also available under the `typedef` namespace).
+
+```typescript
+import {
+  WOQLClient,
+  WOQL,
+  type WithDataVersion,
+  type TerminusDBError,
+} from "terminusdb";
+
+interface Person {
+  "@id": string;
+  "@type": string;
+  name: string;
+}
+
+const client = new WOQLClient("http://127.0.0.1:6363/", {
+  user: "admin",
+  key: "my_secret_key",
+  db: "test_db",
+});
+
+// Typed query bindings
+interface NameRow { name: string }
+const result = await client.query<NameRow>(
+  WOQL.triple("v:p", "name", WOQL.Vars("name").name),
+);
+const names = result.bindings.map((row) => row.name);
+
+// Typed document and getDataVersion wrapper
+const person = await client.getDocument<Person>({ id: "Person/ada" });
+const wrapped = await client.getDocument<Person, WithDataVersion<Person>>(
+  { id: "Person/ada" }, undefined, undefined, undefined, true,
+);
+console.log(wrapped.dataVersion);
+
+// Errors are standard Error objects carrying .status and the parsed server
+// error body on .data (type: TerminusDBError)
+try {
+  await client.getDocument<Person>({ id: "Person/missing" });
+} catch (err) {
+  const e = err as TerminusDBError;
+  if (e.status === 404) {
+    console.log(e.data?.["api:error"]?.["@type"]); // "api:DocumentNotFound"
+  }
+}
 ```
 
 ## Options

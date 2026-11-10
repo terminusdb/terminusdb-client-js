@@ -10,6 +10,7 @@ const WOQLGraph = require('./lib/viewer/woqlGraph');
 const axiosInstance = require('./lib/axiosInstance');
 const AccessControl = require('./lib/accessControl');
 const WOQLQuery = require('./lib/query/woqlBuilder');
+const typedef = require('./lib/typedef');
 
 module.exports = {
   Var,
@@ -25,4 +26,5 @@ module.exports = {
   axiosInstance,
   AccessControl,
   WOQLQuery,
+  typedef,
 };

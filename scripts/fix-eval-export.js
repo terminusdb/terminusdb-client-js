@@ -45,3 +45,17 @@ if (content.length < originalLength) {
   fs.writeFileSync(woqlDtsPath, content, 'utf8');
   console.log('>> No eval export found in woql.d.ts, but fixed gt/lt aliases');
 }
+
+// Re-export the typedef module's types from the package root so consumers can
+// write: import TerminusClient, { WOQLResult } from 'terminusdb'
+// Type-only re-export: no runtime binding is claimed for the value stubs.
+const indexDtsPath = path.join(__dirname, '../dist/typescript/index.d.ts');
+
+if (fs.existsSync(indexDtsPath)) {
+  const reExport = 'export type * from "./lib/typedef";';
+  const indexContent = fs.readFileSync(indexDtsPath, 'utf8');
+  if (!indexContent.includes(reExport)) {
+    fs.writeFileSync(indexDtsPath, `${indexContent.trimEnd()}\n${reExport}\n`);
+    console.log('>> Added typedef type re-exports to index.d.ts');
+  }
+}
