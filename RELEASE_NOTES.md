@@ -1,3 +1,11 @@
+# TerminusDB Client v12.1.0
+## Breaking
+* Remove the `lib/viewer` rendering layer deprecated in 12.0.9 — `View`, `WOQLResult`, `WOQLTable`, `WOQLGraph` and their rule/config helpers are no longer exported. Data rendering is outside this package's scope; render query results with your own components.
+
+## Fixes and maintenance
+* Remove unused dependencies and redundant security pins (`webpack-dev-server`, `ts-node`, `concurrently`, `node-forge`, `eol`, `follow-redirects`, `pathval`, `underscore`, `html-webpack-plugin`, `prettier`, `jsdoc-to-markdown`) and the dead `mkdocs:*` scripts and `jest.config.ts` → `jest.config.js`
+* Publish to npm via trusted publishing (OIDC) with provenance attestation
+
 # TerminusDB Client v12.0.1
 ## New 🚀
 * Add WOQL predicates:
