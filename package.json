@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "follow-redirects": "^1.14.8",
-    "node-forge": "^1.0.0",
+    "node-forge": "^1.4.3",
     "pathval": "^1.1.1",
     "underscore": "^1.13.2",
     "ts-node": "^10.9.1",
@@ -57,7 +57,7 @@
     "typescript": "^5.9.3",
     "webpack": "^5.36.2",
     "webpack-cli": "^4.6.0",
-    "webpack-dev-server": "^5.2.1"
+    "webpack-dev-server": "^5.2.6"
   },
   "scripts": {
     "mkdocs:docs": "npx jsdoc --template ./jsdoc-terminusdb-template --recurse ./lib/ > docs.json",
