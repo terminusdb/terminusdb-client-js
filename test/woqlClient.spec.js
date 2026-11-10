@@ -2849,5 +2849,73 @@ describe('WOQLClient tests', () => {
       }
     });
   });
+
+  describe('prefix management', () => {
+    beforeEach(() => {
+      client.db('test_db');
+      dispatchStub.resolves({});
+    });
+
+    it('should get a prefix definition', async () => {
+      await client.getPrefix('ex', 'test_db');
+      expect(dispatchStub.firstCall.args[1]).to.include('prefix');
+    });
+
+    it('should add, update, upsert and delete a prefix', async () => {
+      await client.addPrefix('ex', 'http://x.y/', 'test_db');
+      await client.updatePrefix('ex', 'http://z.y/', 'test_db');
+      await client.upsertPrefix('ex', 'http://z.y/', 'test_db');
+      await client.deletePrefix('ex', 'test_db');
+      expect(dispatchStub.callCount).to.equal(4);
+      expect(dispatchStub.firstCall.args[0]).to.equal('POST');
+      expect(dispatchStub.secondCall.args[0]).to.equal('PUT');
+      expect(dispatchStub.thirdCall.args[0]).to.equal('PUT');
+      expect(dispatchStub.lastCall.args[0]).to.equal('DELETE');
+    });
+  });
+
+  describe('optional-argument dispatch calls', () => {
+    beforeEach(() => {
+      client.db('test_db');
+      dispatchStub.resolves({});
+    });
+
+    it('should pass paging parameters to getCommitsLog', async () => {
+      await client.getCommitsLog(5, 10);
+      expect(dispatchStub.firstCall.args[1]).to.include('log');
+    });
+
+    it('should list prefixes and user organizations', async () => {
+      await client.getPrefixes('test_db');
+      expect(dispatchStub.firstCall.args[1]).to.include('prefix');
+      dispatchStub.resolves([]);
+      await client.getUserOrganizations();
+      expect(dispatchStub.callCount).to.equal(2);
+    });
+
+    it('should keep the organization list in memory', () => {
+      expect(client.userOrganizations(['admin'])).to.deep.equal(['admin']);
+      expect(client.userOrganizations()).to.deep.equal(['admin']);
+    });
+
+    it('should update and delete documents with options', async () => {
+      await client.updateDocument({ '@id': 'doc/x' }, null, 'test_db');
+      expect(dispatchStub.firstCall.args[0]).to.equal('PUT');
+      await client.deleteDocument('doc/x', 'test_db');
+      expect(dispatchStub.secondCall.args[0]).to.equal('DELETE');
+    });
+
+    it('should list branches', async () => {
+      dispatchStub.resolves([]);
+      await client.getBranches();
+      expect(dispatchStub.calledOnce).to.be.true;
+    });
+
+    it('should apply a patch to a resource', async () => {
+      dispatchStub.resolves({ status: 200 });
+      await client.patchResource([{ '@op': 'Delete', '@delete': 'doc/x' }], 'a message');
+      expect(dispatchStub.firstCall.args[1]).to.include('patch');
+    });
+  });
 });
 

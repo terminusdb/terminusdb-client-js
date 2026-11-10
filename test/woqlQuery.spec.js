@@ -1,5 +1,6 @@
 const { expect } = require('chai');
 const WOQL = require('../lib/woql');
+const WOQLQuery = require('../lib/query/woqlCore');
 
 describe('woql query', () => {
   describe('Arithmetic operations', () => {
@@ -866,6 +867,63 @@ describe('woql query', () => {
         .group_by(['v:a'], ['v:b'], 'v:g');
       expect(query.hasErrors()).to.be.false;
       expect(query.json()['@type']).to.equal('And');
+    });
+  });
+
+  describe('argument validation', () => {
+    // Each of these builders flags a parameterError when required args are missing.
+    [
+      'triple', 'quad', 'sub', 'type_of', 'select', 'distinct', 'order_by',
+      'added_triple', 'removed_triple', 'added_quad', 'removed_quad',
+      'triple_slice', 'triple_slice_rev', 'triple_next', 'triple_previous',
+      'quad_slice', 'quad_slice_rev', 'quad_next', 'quad_previous',
+      'value', 'link', 'weekday', 'weekday_sunday_start',
+      'month_start_date', 'month_start_dates', 'month_end_date', 'month_end_dates',
+      'interval', 'range_min', 'range_max', 'day_after', 'day_before',
+      'iso_week', 'date_duration', 'using', 'insert',
+      'delete_triple', 'delete_quad', 'add_triple', 'add_quad', 'triple_relation',
+    ].forEach((method) => {
+      it(`should flag ${method}() with no arguments as an error`, () => {
+        expect(WOQL[method]().hasErrors()).to.be.true;
+      });
+    });
+  });
+
+  describe('findLastProperty', () => {
+    const propertyTriple = {
+      subject: 'doc:P', predicate: 'rdf:type', object: 'owl:DatatypeProperty',
+    };
+
+    it('should find a property triple nested inside and()', () => {
+      const q = new WOQLQuery();
+      const found = q.findLastProperty({ and: [{ '@type': 'Triple' }, propertyTriple] });
+      expect(found).to.equal(propertyTriple);
+    });
+
+    it('should find a property triple nested inside or()', () => {
+      const q = new WOQLQuery();
+      const found = q.findLastProperty({ or: [{ '@type': 'Triple' }, propertyTriple] });
+      expect(found).to.equal(propertyTriple);
+    });
+
+    it('should recurse into a query wrapper', () => {
+      const q = new WOQLQuery();
+      const found = q.findLastProperty({ query: propertyTriple });
+      expect(found).to.equal(propertyTriple);
+    });
+
+    it('should search and/or from the last element backwards', () => {
+      const q = new WOQLQuery();
+      const other = { subject: 'doc:P', predicate: 'rdfs:domain', object: 'owl:Thing' };
+      const found = q.findLastProperty({ and: [propertyTriple, other] });
+      expect(found).to.equal(other);
+    });
+
+    it('should return false for non-property triples and empty input', () => {
+      const q = new WOQLQuery();
+      expect(q.findLastProperty({ subject: 'a', predicate: 'b', object: 'c' })).to.be.false;
+      expect(q.findLastProperty({})).to.be.false;
+      expect(q.findLastProperty(null)).to.be.false;
     });
   });
 });

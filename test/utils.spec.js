@@ -767,6 +767,38 @@ describe('utils tests', () => {
       expect(DH.extractXsdTimezone('2024-01-15T12:30:45-05:00')).to.equal('-05:00');
       expect(DH.extractXsdTimezone('2024-01-15T12:30:45Z')).to.equal('Z');
       expect(DH.extractXsdTimezone('2024-01-15T12:30:45')).to.be.false;
+      expect(DH.extractXsdTimezone(null)).to.be.false;
+      expect(DH.extractXsdTimezone('2024-01-15')).to.be.false;
+    });
+
+    it('should carry timezone suffixes through the parsers', () => {
+      const DH = UTILS.DateHelper;
+      expect(DH.parseXsdTime('12:30:45Z').timezone).to.equal('Z');
+      expect(DH.parseXsdTime('12:30:45+02:00').timezone).to.equal('+02:00');
+      expect(DH.parseXsdDateTime('2024-01-15T12:30:45-05:00').timezone).to.equal('-05:00');
+    });
+
+    it('should return undefined for an unknown xsd type', () => {
+      expect(UTILS.DateHelper.parseDate('xsd:string', 'abc')).to.be.undefined;
+    });
+
+    it('should pad partial parsed dates and serialize every type', () => {
+      const DH = UTILS.DateHelper;
+      expect(DH.addXsdPadding({})).to.deep.equal({});
+      expect(DH.addXsdPadding({ month: 3 })).to.include({ month: '03' });
+      expect(DH.xsdFromParsed(DH.parseDate('xsd:gMonth', '--11'), 'xsd:gMonth')).to.equal('--11');
+      expect(DH.xsdFromParsed(DH.parseDate('xsd:gDay', '15'), 'xsd:gDay')).to.equal('---15');
+      expect(DH.xsdFromParsed(DH.parseDate('xsd:gYearMonth', '2024-11'), 'xsd:gYearMonth')).to.equal('2024-11');
+      expect(DH.xsdFromParsed(DH.parseDate('xsd:gMonthDay', '11-15'), 'xsd:gMonthDay')).to.equal('--11-15');
+    });
+
+    it('should handle TypeHelper edge cases', () => {
+      const TH = UTILS.TypeHelper;
+      expect(TH.isStringType('xsd:integer')).to.be.false;
+      expect(TH.isDatatype('Person')).to.be.false;
+      expect(TH.numberWithCommas(1234567, '.')).to.equal('1.234.567');
+      expect(TH.formatBytes(0)).to.match(/0/);
+      expect(TH.formatBytes(2048, 0)).to.match(/KB/);
     });
   });
 });
