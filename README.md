@@ -134,10 +134,15 @@ async function createDataProduct(){
 
 The package ships generated type declarations (`dist/typescript`), so TypeScript works out of the box with `import`.
 WOQL functions accept either `"v:name"` strings or `Var`/`Vars` objects wherever a variable is expected.
-The `WOQLClient` CRUD and query methods take an optional type parameter describing the expected result; pass a second type parameter when `getDataVersion` is set, and import `typedef` for the shared result and error shapes.
+The `WOQLClient` CRUD and query methods take an optional type parameter describing the expected result; pass a second type parameter when `getDataVersion` is set. Shared result and error shapes are importable by name from the package root (also available under the `typedef` namespace).
 
 ```typescript
-import { WOQLClient, WOQL, typedef } from "terminusdb";
+import {
+  WOQLClient,
+  WOQL,
+  type WithDataVersion,
+  type TerminusDBError,
+} from "terminusdb";
 
 interface Person {
   "@id": string;
@@ -160,22 +165,26 @@ const names = result.bindings.map((row) => row.name);
 
 // Typed document and getDataVersion wrapper
 const person = await client.getDocument<Person>({ id: "Person/ada" });
-const wrapped = await client.getDocument<Person, typedef.WithDataVersion<Person>>(
+const wrapped = await client.getDocument<Person, WithDataVersion<Person>>(
   { id: "Person/ada" }, undefined, undefined, undefined, true,
 );
 console.log(wrapped.dataVersion);
 
 // Errors are standard Error objects carrying .status and the parsed server
-// error body on .data (type: typedef.TerminusDBError)
+// error body on .data (type: TerminusDBError)
 try {
   await client.getDocument<Person>({ id: "Person/missing" });
 } catch (err) {
-  const e = err as typedef.TerminusDBError;
+  const e = err as TerminusDBError;
   if (e.status === 404) {
     console.log(e.data?.["api:error"]?.["@type"]); // "api:DocumentNotFound"
   }
 }
 ```
+
+## Deprecated
+
+The viewer classes exported from `lib/viewer` — `View`, `WOQLResult`, `WOQLTable`, `WOQLGraph` (and their rule/config helpers) — render query results into charts, tables and graphs. Data rendering is outside this package's scope: the client connects to TerminusDB, your application renders the results. These exports are marked `@deprecated` in the type declarations and will be removed in a future major release.
 
 ## Options
 

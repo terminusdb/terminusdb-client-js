@@ -1,6 +1,9 @@
 //@ts-check
 import { describe, expect, test, beforeAll, afterAll } from '@jest/globals';
-import { WOQL, typedef } from '../index.js';
+import { WOQL } from '../index.js';
+// Type-only import through the generated declarations — the same surface the
+// package "types" field exposes to consumers of 'terminusdb'.
+import type { WOQLQueryResult, WithDataVersion } from '../dist/typescript';
 import { createTestClient, cleanupDatabase, setupTestDatabase } from './test_utils';
 
 interface PersonRow {
@@ -47,11 +50,11 @@ describe('WOQLClient generic typing (#382)', () => {
     expect(row.name).toBeDefined();
   });
 
-  test('query<T,R> with getDataVersion resolves to WithDataVersion<WOQLResult<T>>', async () => {
+  test('query<T,R> with getDataVersion resolves to WithDataVersion<WOQLQueryResult<T>>', async () => {
     const v = WOQL.Vars('name');
     const wrapped = await client.query<
       PersonRow,
-      typedef.WithDataVersion<typedef.WOQLResult<PersonRow>>
+      WithDataVersion<WOQLQueryResult<PersonRow>>
     >(
       WOQL.triple('v:p', 'name', v.name),
       undefined, undefined, undefined, true,
