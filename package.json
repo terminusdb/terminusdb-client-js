@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "follow-redirects": "^1.14.8",
-    "node-forge": "^1.0.0",
+    "node-forge": "^1.4.3",
     "pathval": "^1.1.1",
     "underscore": "^1.13.2",
     "ts-node": "^10.9.1",
