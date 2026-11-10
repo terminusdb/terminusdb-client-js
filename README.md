@@ -26,7 +26,7 @@ For many, it serves as a headless content management system for complex envirome
 
 ## Requirements
 
-- Node.js version 20+ if using the TerminusDB client library as a Node.js package (might work with earlier versions too).
+- Node.js version 22+ if using the TerminusDB client library as a Node.js package.
 
 ## Installation
 
