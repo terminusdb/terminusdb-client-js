@@ -10,7 +10,7 @@
  * After the fix: Tests compile and pass at runtime.
  */
 import { describe, expect, test, beforeAll, afterAll } from "@jest/globals";
-import { WOQL } from "../index.js";
+import { WOQL, WOQLQuery, Var } from "../index.js";
 import { Vars } from "../lib/woql.js";
 import {
   createTestClient,
@@ -204,5 +204,135 @@ describe("Issue #378: Mixed Var and string variable usage", () => {
 
     expect(result?.bindings).toHaveLength(1);
     expect(result!.bindings[0].count["@value"]).toBe(3);
+  });
+});
+
+describe("Issue #378: Var acceptance sweep - remaining functions", () => {
+  test("idgen_uuid_v7 accepts Var for the output variable", async () => {
+    const v = WOQL.Vars("itemName", "newId");
+
+    const query = WOQL.and(
+      WOQL.triple("v:item", "name", v.itemName),
+      WOQL.idgen_uuid_v7("Item/", v.newId)
+    );
+
+    const result = await client.query(query);
+
+    expect(result?.bindings).toHaveLength(3);
+    for (const binding of result!.bindings) {
+      expect(binding.newId).toMatch(/^Item\//);
+    }
+  });
+
+  test("idgen accepts Var list elements and Var output variable", () => {
+    const v = WOQL.Vars("first", "last", "generatedId");
+
+    const query = new WOQLQuery().idgen("doc:Item/", [v.first, v.last], v.generatedId);
+    const json = query.json();
+
+    expect(json).toHaveProperty("@type", "LexicalKey");
+    expect(json.uri).toHaveProperty("variable", "generatedId");
+  });
+
+  test("idgen_uuid_v7 builder method accepts Var output variable", () => {
+    const [newId] = WOQL.vars("newId");
+
+    const query = new WOQLQuery().idgen_uuid_v7("Item/", newId);
+    const json = query.json();
+
+    expect(json).toHaveProperty("@type", "UuidV7");
+    expect(json.uri).toHaveProperty("variable", "newId");
+  });
+
+  test("re accepts Var for pattern, input and result list", async () => {
+    const v = WOQL.Vars("pat", "itemName", "match");
+
+    const query = WOQL.and(
+      WOQL.eq(v.pat, WOQL.string("^Al")),
+      WOQL.triple("v:item", "name", v.itemName),
+      new WOQLQuery().re(v.pat, v.itemName, [v.match])
+    );
+
+    const result = await client.query(query);
+
+    expect(result?.bindings).toHaveLength(1);
+    const bound = result!.bindings[0].itemName as { "@value"?: string } | string;
+    expect(typeof bound === "object" ? bound["@value"] : bound).toBe("Alpha");
+  });
+
+  test("select accepts Var arguments and a trailing subquery", async () => {
+    const v = WOQL.Vars("itemName", "itemTags");
+
+    const query = WOQL.select(
+      v.itemName,
+      WOQL.triple("v:item", "name", v.itemName)
+    );
+
+    const result = await client.query(query);
+
+    expect(result?.bindings).toHaveLength(3);
+    for (const binding of result!.bindings) {
+      expect(Object.keys(binding)).toEqual(["itemName"]);
+    }
+  });
+
+  test("distinct accepts Var arguments and a trailing subquery", async () => {
+    const v = WOQL.Vars("tag");
+
+    const query = WOQL.distinct(
+      v.tag,
+      WOQL.triple("v:item", "tags", v.tag)
+    );
+
+    const result = await client.query(query);
+
+    expect(result?.bindings).toHaveLength(4);
+  });
+
+  test("order_by accepts Var, [Var, order] tuples and a trailing subquery", async () => {
+    const v = WOQL.Vars("itemName");
+
+    const query = WOQL.order_by(
+      [v.itemName, "desc"],
+      WOQL.triple("v:item", "name", v.itemName)
+    );
+
+    const result = await client.query(query);
+
+    const names = result?.bindings.map((b: Record<string, unknown>) => {
+      const bound = b.itemName as { "@value"?: string } | string;
+      return typeof bound === "object" ? bound["@value"] : bound;
+    });
+    expect(names).toEqual([
+      "Gamma",
+      "Beta",
+      "Alpha",
+    ]);
+  });
+
+  test("update_quad builder accepts Var for subject, predicate and object", () => {
+    const v = WOQL.Vars("s", "p", "o");
+
+    const query = new WOQLQuery().update_quad(v.s, v.p, v.o, "schema/main");
+    const json = query.json();
+
+    expect(json).toHaveProperty("@type", "And");
+  });
+
+  test("Vars() and VarsUnique() return a record of Var", async () => {
+    const v = WOQL.Vars("alpha");
+    const vu = WOQL.VarsUnique("beta");
+
+    const alphaVar: Var = v.alpha;
+    const betaVar: Var = vu.beta;
+    expect(alphaVar.name).toBe("alpha");
+    expect(betaVar.name).toMatch(/^beta/);
+
+    const query = WOQL.and(
+      WOQL.eq(alphaVar, "Item/Alpha"),
+      WOQL.read_document(alphaVar, vu.beta)
+    );
+    const result = await client.query(query);
+    expect(result?.bindings).toHaveLength(1);
   });
 });
