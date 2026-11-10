@@ -1930,7 +1930,8 @@ describe('WOQLClient tests', () => {
         await client.addDocument(doc, {}, null, 'Adding', 'branch:abc123');
         
         expect(dispatchStub.calledOnce).to.be.true;
-        expect(client.customHeaders()).to.have.property('TerminusDB-Data-Version');
+        expect(dispatchStub.firstCall.args[5])
+          .to.deep.equal({ 'TerminusDB-Data-Version': 'branch:abc123' });
       });
 
       it('should add document with getDataVersion', async () => {
@@ -2000,7 +2001,8 @@ describe('WOQLClient tests', () => {
         const query = { type: 'Person' };
         await client.queryDocument(query, {}, null, null, 'branch:v123');
         
-        expect(client.customHeaders()).to.have.property('TerminusDB-Data-Version');
+        expect(dispatchStub.firstCall.args[5])
+          .to.deep.equal({ 'TerminusDB-Data-Version': 'branch:v123' });
       });
 
       it('should query documents with getDataVersion', async () => {
@@ -2064,7 +2066,8 @@ describe('WOQLClient tests', () => {
         
         await client.getDocument({}, null, null, 'branch:v123');
         
-        expect(client.customHeaders()).to.have.property('TerminusDB-Data-Version');
+        expect(dispatchStub.firstCall.args[5])
+          .to.deep.equal({ 'TerminusDB-Data-Version': 'branch:v123' });
       });
 
       it('should get documents with getDataVersion', async () => {
@@ -2178,8 +2181,9 @@ describe('WOQLClient tests', () => {
       
       await client.updateDocument(doc, {}, '', 'update msg', 'branch:abc123', false);
       
-      expect(client._customHeaders).to.exist;
-      expect(client._customHeaders['TerminusDB-Data-Version']).to.equal('branch:abc123');
+      expect(dispatchStub.firstCall.args[5])
+        .to.deep.equal({ 'TerminusDB-Data-Version': 'branch:abc123' });
+      expect(client._customHeaders || {}).to.not.have.property('TerminusDB-Data-Version');
     });
 
     it('should not set custom header when lastDataVersion is empty string', async () => {
@@ -2232,8 +2236,9 @@ describe('WOQLClient tests', () => {
       
       await client.deleteDocument({ id: 'Person/P1' }, '', 'delete msg', 'branch:abc123');
       
-      expect(client._customHeaders).to.exist;
-      expect(client._customHeaders['TerminusDB-Data-Version']).to.equal('branch:abc123');
+      expect(dispatchStub.firstCall.args[5])
+        .to.deep.equal({ 'TerminusDB-Data-Version': 'branch:abc123' });
+      expect(client._customHeaders || {}).to.not.have.property('TerminusDB-Data-Version');
     });
 
     it('should not set custom header when lastDataVersion is empty', async () => {
@@ -2629,6 +2634,87 @@ describe('WOQLClient tests', () => {
       const result = client.prepareRevisionControlArgs({ remote: 'origin', author: 'existing' });
       
       expect(result.author).to.equal('existing');
+    });
+  });
+
+  describe('TerminusDB-Data-Version request header (#391)', () => {
+    beforeEach(() => {
+      client.organization('admin');
+      client.db('testdb');
+    });
+
+    // dispatch(action, apiUrl, payload, getDataVersion, compress, requestHeaders)
+    const requestHeadersArg = (call) => call.args[5];
+    const storedHeaders = () => client.customHeaders() || {};
+
+    it('should send lastDataVersion on the request without persisting it', async () => {
+      dispatchStub.resolves({ '@type': 'api:InsertResponse' });
+
+      await client.addDocument({ '@type': 'Person' }, {}, null, 'msg', 'branch:v1');
+
+      expect(requestHeadersArg(dispatchStub.firstCall))
+        .to.deep.equal({ 'TerminusDB-Data-Version': 'branch:v1' });
+      expect(storedHeaders()).to.not.have.property('TerminusDB-Data-Version');
+    });
+
+    it('should not send a stale data version on a subsequent addDocument', async () => {
+      dispatchStub.resolves({ '@type': 'api:InsertResponse' });
+
+      await client.addDocument({ '@type': 'Person' }, {}, null, 'msg', 'branch:v1');
+      await client.addDocument({ '@type': 'Person' }, {}, null, 'msg');
+
+      expect(requestHeadersArg(dispatchStub.secondCall)).to.be.undefined;
+      expect(storedHeaders()).to.not.have.property('TerminusDB-Data-Version');
+    });
+
+    it('should not overwrite user custom headers when sending lastDataVersion', async () => {
+      dispatchStub.resolves({ '@type': 'api:InsertResponse' });
+      client.customHeaders({ 'X-Trace': 'yes' });
+
+      await client.addDocument({ '@type': 'Person' }, {}, null, 'msg', 'branch:v1');
+
+      expect(client.customHeaders()).to.deep.equal({ 'X-Trace': 'yes' });
+      expect(requestHeadersArg(dispatchStub.firstCall))
+        .to.deep.equal({ 'TerminusDB-Data-Version': 'branch:v1' });
+    });
+
+    const methodsUsingLastDataVersion = [
+      ['queryDocument', (c) => c.queryDocument({ type: 'Person' }, {}, null, null, 'branch:v1')],
+      ['getDocument', (c) => c.getDocument({}, null, null, 'branch:v1')],
+      ['updateDocument', (c) => c.updateDocument({ '@type': 'Person' }, {}, null, 'msg', 'branch:v1')],
+      ['deleteDocument', (c) => c.deleteDocument({ id: 'Person/P1' }, null, 'msg', 'branch:v1')],
+      ['query', (c) => {
+        const WOQL = require('../lib/woql');
+        return c.query(WOQL.triple('v:s', 'v:p', 'v:o'), '', false, 'branch:v1');
+      }],
+    ];
+
+    methodsUsingLastDataVersion.forEach(([name, invoke]) => {
+      it(`should send lastDataVersion per request without persisting it on ${name}`, async () => {
+        dispatchStub.resolves({ bindings: [] });
+
+        await invoke(client);
+
+        expect(requestHeadersArg(dispatchStub.firstCall))
+          .to.deep.equal({ 'TerminusDB-Data-Version': 'branch:v1' });
+        expect(storedHeaders()).to.not.have.property('TerminusDB-Data-Version');
+      });
+    });
+
+    it('should merge the data version with multipart headers on query without persisting either', async () => {
+      dispatchStub.resolves({ bindings: [] });
+      const WOQL = require('../lib/woql');
+      const query = WOQL.get(WOQL.as('Name', 'v:Name')).post('test.csv', { type: 'csv' }, 'post');
+      const resources = [{ filename: 'test.csv', data: 'a,b\n1,2' }];
+
+      await client.query(query, '', false, 'branch:v1', false, resources);
+
+      const headers = requestHeadersArg(dispatchStub.firstCall);
+      expect(headers).to.have.property('TerminusDB-Data-Version', 'branch:v1');
+      expect(headers['content-type'] || headers['Content-Type']).to.include('multipart/form-data');
+      expect(storedHeaders()).to.not.have.property('TerminusDB-Data-Version');
+      expect(storedHeaders()['content-type'] || storedHeaders()['Content-Type'] || '')
+        .to.not.include('multipart');
     });
   });
 
