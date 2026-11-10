@@ -7,8 +7,7 @@
   "files": [
     "lib",
     "dist",
-    "RELEASE_NOTES.md",
-    "Contributing.md"
+    "RELEASE_NOTES.md"
   ],
   "directories": {
     "lib": "lib",
@@ -18,15 +17,17 @@
   "publishConfig": {
     "access": "public"
   },
-  "author": "kevin@terminusdb.com",
-  "license": "Apache-2.0",
-  "dependencies": {
-    "axios": "^1.20.0",
-    "buffer": "^6.0.3",
-    "form-data": "^4.0.0",
-    "pako": "^2.0.4",
-    "undici": "^6.29.1"
+  "author": {
+    "name": "Philippe Höij",
+    "email": "philippe.hoij@dfrnt.com"
   },
+  "contributors": [
+    {
+      "name": "Kevin Feeney",
+      "email": "kevin@terminusdb.com"
+    }
+  ],
+  "license": "Apache-2.0",
   "devDependencies": {
     "@babel/core": "^7.29.13",
     "@babel/preset-env": "^7.13.12",
@@ -100,8 +101,7 @@
     "path": false,
     "stream": false,
     "tls": false,
-    "fs": false,
-    "undici": false
+    "fs": false
   },
   "engines": {
     "node": ">=20"

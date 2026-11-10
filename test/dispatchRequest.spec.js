@@ -133,8 +133,10 @@ describe('dispatchRequest tests', () => {
 
       const options = lastOptions();
       expect(options.headers['Content-Encoding']).to.equal('gzip');
-      // The payload should be compressed (Uint8Array)
-      expect(options.body).to.be.an.instanceof(Uint8Array);
+      // The payload should be a gzipped body that decompresses to the JSON
+      const zlib = require('zlib');
+      const body = Buffer.from(await options.body);
+      expect(JSON.parse(zlib.gunzipSync(body).toString())).to.deep.equal(largePayload);
     });
 
     it('should not compress small POST payloads', async () => {
@@ -213,7 +215,9 @@ describe('dispatchRequest tests', () => {
 
       const options = lastOptions();
       expect(options.headers['Content-Encoding']).to.equal('gzip');
-      expect(options.body).to.be.an.instanceof(Uint8Array);
+      const zlib = require('zlib');
+      const body = Buffer.from(await options.body);
+      expect(JSON.parse(zlib.gunzipSync(body).toString())).to.deep.equal(largePayload);
     });
 
     it('should handle PUT request errors', async () => {
