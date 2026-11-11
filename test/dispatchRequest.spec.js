@@ -630,6 +630,48 @@ describe('dispatchRequest tests', () => {
   });
 
   describe('Edge cases', () => {
+    it('should fall back to Buffer for non-Latin1 basic auth characters', async () => {
+      fetchStub.resolves(jsonResponse({ result: 'success' }));
+
+      await DispatchRequest(
+        'http://localhost:6363/api/test',
+        CONST.GET,
+        null,
+        { type: 'basic', user: 'admïn€', key: 'kéy' }
+      );
+
+      expect(lastOptions().headers.Authorization).to.include('Basic');
+    });
+
+    it('should send a string DELETE payload without JSON encoding', async () => {
+      fetchStub.resolves(jsonResponse({ result: 'deleted' }));
+
+      await DispatchRequest(
+        'http://localhost:6363/api/test/123',
+        CONST.DELETE,
+        'raw-string-body',
+        { type: 'basic', user: 'admin', key: 'test' }
+      );
+
+      expect(lastOptions().body).to.equal('raw-string-body');
+    });
+
+    it('should buffer non-Buffer stream chunks', async () => {
+      fetchStub.resolves(jsonResponse({ result: 'ok' }));
+
+      const { Readable } = require('stream');
+      const stream = Readable.from(['plain-string-chunk']);
+
+      await DispatchRequest(
+        'http://localhost:6363/api/test',
+        CONST.POST,
+        stream,
+        { type: 'basic', user: 'admin', key: 'test' }
+      );
+
+      expect(lastOptions().body.toString()).to.include('plain-string-chunk');
+    });
+
     it('should handle empty payload', async () => {
       fetchStub.resolves(jsonResponse({ result: 'success' }));
 

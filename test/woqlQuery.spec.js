@@ -1,6 +1,8 @@
 const { expect } = require('chai');
 const WOQL = require('../lib/woql');
 const WOQLQuery = require('../lib/query/woqlCore');
+const WOQLQueryExt = require('../lib/query/woqlQuery');
+const { Var } = require('../lib/query/woqlDoc');
 
 describe('woql query', () => {
   describe('Arithmetic operations', () => {
@@ -924,6 +926,270 @@ describe('woql query', () => {
       expect(q.findLastProperty({ subject: 'a', predicate: 'b', object: 'c' })).to.be.false;
       expect(q.findLastProperty({})).to.be.false;
       expect(q.findLastProperty(null)).to.be.false;
+    });
+  });
+
+  describe('builders on a non-empty cursor wrap with And', () => {
+    const SUB = () => WOQL.triple('a', 'b', 'c');
+    const CHAINED = {
+      read_document: ['doc:X', 'v:o'],
+      insert_document: [{ name: 'x' }, 'doc:X'],
+      update_document: [{ name: 'x' }, 'doc:X'],
+      delete_document: ['doc:X'],
+      using: ['v:p', SUB()],
+      select: ['v:x'],
+      distinct: ['v:x'],
+      or: [SUB()],
+      into: ['v:g', SUB()],
+      triple: ['s', 'p', 'o'],
+      triple_relation: ['s', 'p', 'o', 'r', 'v'],
+      triple_slice: ['s', 'p', 'o', 'v:l', 'v:h'],
+      quad_slice: ['s', 'p', 'o', 'v:l', 'v:h', 'g'],
+      triple_slice_rev: ['s', 'p', 'o', 'v:l', 'v:h'],
+      quad_slice_rev: ['s', 'p', 'o', 'v:l', 'v:h', 'g'],
+      triple_next: ['s', 'p', 'o', 'v:n'],
+      quad_next: ['s', 'p', 'o', 'v:n', 'g'],
+      triple_previous: ['s', 'p', 'o', 'v:pr'],
+      quad_previous: ['s', 'p', 'o', 'v:pr', 'g'],
+      added_triple: ['s', 'p', 'o'],
+      removed_triple: ['s', 'p', 'o'],
+      link: ['s', 'p', 'o'],
+      value: ['s', 'p', 'o'],
+      quad: ['s', 'p', 'o', 'g'],
+      added_quad: ['s', 'p', 'o', 'g'],
+      removed_quad: ['s', 'p', 'o', 'g'],
+      sub: ['A', 'B'],
+      substr: ['v:s', 1, 2, 3, 'v:o'],
+      remote: ['http://x', { format: 'csv' }],
+      trim: ['v:s', 'v:r'],
+      plus: ['v:a', 'v:b'],
+      minus: ['v:a', 'v:b'],
+      times: ['v:a', 'v:b'],
+      div: ['v:a', 'v:b'],
+      exp: ['v:a', 'v:b'],
+      floor: ['v:a'],
+      like: ['v:a', 'v:b', 0.5],
+      less: ['v:a', 'v:b'],
+      greater: ['v:a', 'v:b'],
+      gte: ['v:a', 'v:b'],
+      lte: ['v:a', 'v:b'],
+      sequence: ['v:v', 'v:s', 'v:e', 'v:st', 'v:c'],
+      month_start_date: ['v:ym', 'v:d'],
+      month_end_date: ['v:ym', 'v:d'],
+      month_start_dates: ['v:d', 'v:s', 'v:e'],
+      month_end_dates: ['v:d', 'v:s', 'v:e'],
+      interval_relation: ['v:r', 'v:a', 'v:b', 'v:c', 'v:d'],
+      interval_relation_typed: ['v:r', 'v:x', 'v:y'],
+      range_min: ['v:l', 'v:r'],
+      range_max: ['v:l', 'v:r'],
+      day_after: ['v:d', 'v:n'],
+      day_before: ['v:d', 'v:p'],
+      weekday: ['v:d', 'v:w'],
+      weekday_sunday_start: ['v:d', 'v:w'],
+      iso_week: ['v:d', 'v:y', 'v:w'],
+      date_duration: ['v:s', 'v:e', 'v:du'],
+      pad: ['v:i', 'x', 3, 'v:r'],
+      split: ['v:i', ',', 'v:r'],
+      member: ['v:e', 'v:l'],
+      set_difference: ['v:a', 'v:b', 'v:r'],
+      set_intersection: ['v:a', 'v:b', 'v:r'],
+      set_union: ['v:a', 'v:b', 'v:r'],
+      set_member: ['v:e', 'v:s'],
+      list_to_set: ['v:l', 'v:s'],
+      concat: ['v:l', 'v:r'],
+      join: ['v:l', ';', 'v:r'],
+      sum: [SUB(), 'v:t'],
+      start: [5, SUB()],
+      limit: [5, SUB()],
+      re: ['.*', 'v:i', 'v:r'],
+      length: ['v:l', 'v:r'],
+      slice: ['v:l', 'v:r', 1, 3],
+      not: [SUB()],
+      once: [SUB()],
+      immediately: [SUB()],
+      count: ['v:c', SUB()],
+      typecast: ['v:v', 'xsd:string', 'v:r', {}],
+      order_by: ['v:x'],
+      group_by: ['v:g', 'v:gr', 'v:o', SUB()],
+      collect: ['v:t', 'v:i', SUB()],
+      dot: ['v:d', 'f', 'v:v'],
+      type_of: ['e', 'T'],
+    };
+    Object.keys(CHAINED).forEach((method) => {
+      it(`should wrap the cursor when ${method} follows another query`, () => {
+        const q = SUB()[method](...CHAINED[method]);
+        expect(q.hasErrors()).to.be.false;
+        expect(q.json().and).to.exist;
+      });
+    });
+  });
+
+  describe('partial argument validation', () => {
+    // Missing the last required argument is rejected by these builders.
+    const GUARDED = {
+      less: ['v:a'],
+      greater: ['v:a'],
+      gte: ['v:a'],
+      lte: ['v:a'],
+      sequence: ['v:v', 'v:s'],
+      interval_relation: ['r', 'a', 'b', 'c'],
+      interval_start_duration: ['s', 'd'],
+      quad: ['a', 'b', 'c'],
+      sub: ['A'],
+      type_of: ['e'],
+      link: ['s', 'p'],
+      added_quad: ['s', 'p', 'o'],
+      removed_quad: ['s', 'p', 'o'],
+      quad_slice: ['s', 'p', 'o', 'v:l'],
+      quad_slice_rev: ['s', 'p', 'o', 'v:l'],
+      quad_next: ['s', 'p', 'o'],
+      quad_previous: ['s', 'p', 'o'],
+      month_start_date: ['v:ym'],
+      month_end_date: ['v:ym'],
+      month_start_dates: ['v:d', 'v:s'],
+      month_end_dates: ['v:d', 'v:s'],
+      range_min: ['v:l'],
+      range_max: ['v:l'],
+      day_after: ['v:d'],
+      day_before: ['v:d'],
+      weekday: ['v:d'],
+      weekday_sunday_start: ['v:d'],
+      iso_week: ['v:d', 'v:y'],
+      date_duration: ['v:s', 'v:e'],
+    };
+    Object.keys(GUARDED).forEach((method) => {
+      it(`should flag ${method}() missing its last argument as an error`, () => {
+        expect(WOQL[method](...GUARDED[method]).hasErrors()).to.be.true;
+      });
+    });
+
+    // These builders tolerate a missing trailing argument — documented contract.
+    const LENIENT = {
+      triple: ['a', 'b'],
+      value: ['s', 'p'],
+      added_triple: ['s', 'p'],
+      removed_triple: ['s', 'p'],
+      triple_slice: ['s', 'p', 'o', 'v:l'],
+      triple_slice_rev: ['s', 'p', 'o', 'v:l'],
+      triple_next: ['s', 'p', 'o'],
+      triple_previous: ['s', 'p', 'o'],
+      pad: ['v:i', 'x', 3],
+      split: ['v:i'],
+      member: ['v:e'],
+      sum: [WOQL.triple('a', 'b', 'c')],
+      start: [5],
+      limit: [5],
+      length: ['v:l'],
+      slice: ['v:l', 'v:r', 1],
+      typecast: ['v:v', 'xsd:string', 'v:r'],
+    };
+    Object.keys(LENIENT).forEach((method) => {
+      it(`should tolerate ${method}() missing its last argument`, () => {
+        expect(WOQL[method](...LENIENT[method]).hasErrors()).to.be.false;
+      });
+    });
+  });
+
+  describe('base class stubs', () => {
+    ['update_triple', 'star', 'update_quad', 'insert', 'graph', 'node', 'nuke', 'all', '_set_context']
+      .forEach((method) => {
+        it(`should return the query itself from ${method}()`, () => {
+          const q = new WOQLQueryExt();
+          expect(q[method]('a', 'b', 'c', 'd')).to.equal(q);
+        });
+      });
+
+    ['boolean', 'string', 'literal', 'iri'].forEach((method) => {
+      it(`should return a literal descriptor from ${method}()`, () => {
+        expect(new WOQLQueryExt()[method]('x', 't')).to.deep.equal({});
+      });
+    });
+  });
+
+  describe('argument shape internals', () => {
+    const SUB = () => WOQL.triple('a', 'b', 'c');
+
+    it('should accept a trailing subquery in select and from', () => {
+      expect(WOQL.select('v:x', SUB()).hasErrors()).to.be.false;
+      expect(WOQL.from('g', SUB()).hasErrors()).to.be.false;
+    });
+
+    it('should reject a non-string graph ref in from and into', () => {
+      expect(WOQL.from(123).hasErrors()).to.be.true;
+      expect(WOQL.into(123).hasErrors()).to.be.true;
+    });
+
+    it('should shuffle substr arguments when the substring is omitted', () => {
+      expect(WOQL.substr('joe', 1, 2, 'oe').hasErrors()).to.be.false;
+      expect(WOQL.substr('joe', 1, 'oe').hasErrors()).to.be.false;
+      expect(WOQL.substr('joe').hasErrors()).to.be.true;
+    });
+
+    it('should accept both asvars shapes and an optional resource in get', () => {
+      expect(WOQL.get(WOQL.as('a', 'v:b')).hasErrors()).to.be.false;
+      expect(WOQL.get(['a', 'v:b'], WOQL.remote('http://x')).hasErrors()).to.be.false;
+    });
+
+    it('should accept both varsToExp shapes and an optional file resource in put', () => {
+      const withFile = WOQL.put(WOQL.as('a', 'v:b'), SUB(), 'file.csv');
+      expect(withFile.hasErrors()).to.be.false;
+      expect(WOQL.put(['a', 'b'], SUB()).hasErrors()).to.be.false;
+    });
+
+    it('should handle as() tuple arrays, types and Var instances', () => {
+      expect(WOQL.as(['a', 'v:x'], ['b', 'v:y', 'xsd:string']).hasErrors()).to.be.false;
+      expect(WOQL.as(0, 'v:a', 'xsd:string').hasErrors()).to.be.false;
+      expect(WOQL.as('a', new Var('b')).hasErrors()).to.be.false;
+      expect(WOQL.as('a', 'xsd:string').hasErrors()).to.be.false;
+      expect(WOQL.as('a').hasErrors()).to.be.false;
+      expect(WOQL.as({ indicator: 'a' }).hasErrors()).to.be.false;
+      expect(WOQL.as({ json: () => ({ one: 'a' }) }).hasErrors()).to.be.false;
+    });
+
+    it('should set remote options when a format object is given', () => {
+      const q = WOQL.remote('http://x', { format: 'csv' });
+      expect(q.hasErrors()).to.be.false;
+      expect(q.json().options).to.deep.equal({ format: 'csv' });
+      expect(WOQL.remote('http://x').json().options).to.be.undefined;
+    });
+
+    it('should nest arithmetic arguments beyond the second', () => {
+      ['plus', 'minus', 'times', 'div', 'divide'].forEach((m) => {
+        const q = WOQL[m](1, 2, 3);
+        expect(q.hasErrors()).to.be.false;
+      });
+    });
+
+    it('should accept query and non-query expressions in eval', () => {
+      expect(WOQL.eval(WOQL.plus(1, 2), 'v:r').hasErrors()).to.be.false;
+      expect(WOQL.eval('v:a', 'v:r').hasErrors()).to.be.false;
+    });
+
+    it('should wrap a non-empty cursor for the remaining builders', () => {
+      expect(SUB().in_range('v:v', 'v:s', 'v:e').json().and).to.exist;
+      expect(SUB().from('g', SUB()).json().and).to.exist;
+      expect(SUB().comment('c').json().and).to.exist;
+      expect(SUB().eq('v:a', 'v:b').json().and).to.exist;
+      expect(SUB().concat('v:l', 'v:r').json().and).to.exist;
+    });
+
+    it('should flag partial arguments on the remaining guarded builders', () => {
+      expect(WOQL.interval_relation_typed('r', 'x').hasErrors()).to.be.true;
+      expect(WOQL.interval('s', 'd').hasErrors()).to.be.true;
+      expect(WOQL.interval_duration_end('d', 'e').hasErrors()).to.be.true;
+      expect(WOQL.eq('v:a').hasErrors()).to.be.true;
+    });
+
+    it('should parse a comma-separated variable string in concat', () => {
+      expect(WOQL.concat('v:a,v:b', 'v:r').hasErrors()).to.be.false;
+    });
+
+    it('should accept a numeric length result', () => {
+      expect(WOQL.length('v:l', 5).hasErrors()).to.be.false;
+    });
+
+    it('should accept a Var template in collect', () => {
+      expect(WOQL.collect(new Var('t'), 'v:i', SUB()).hasErrors()).to.be.false;
     });
   });
 });
