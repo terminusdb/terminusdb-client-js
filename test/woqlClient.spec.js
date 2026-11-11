@@ -929,6 +929,27 @@ describe('WOQLClient tests', () => {
       expect(response).to.exist;
       expect(dispatchStub.calledOnce).to.be.true;
     });
+
+    it('should request the JSON Schema for a type', async () => {
+      dispatchStub.resolves({});
+
+      await client.getJSONSchema('Person');
+
+      const url = dispatchStub.firstCall.args[1];
+      expect(dispatchStub.firstCall.args[0]).to.equal('GET');
+      expect(url).to.include('type=Person');
+      expect(url).to.include('format=jsonschema');
+    });
+
+    it('should request the JSON Schema for all types when no type is given', async () => {
+      dispatchStub.resolves({ definitions: {} });
+
+      await client.getJSONSchema();
+
+      const url = dispatchStub.firstCall.args[1];
+      expect(url).to.include('format=jsonschema');
+      expect(url).to.not.include('type=');
+    });
   });
 
   describe('Commit operations', () => {
