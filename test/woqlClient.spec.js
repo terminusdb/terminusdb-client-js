@@ -676,6 +676,19 @@ describe('WOQLClient tests', () => {
         expect(err.message).to.include('parameter error');
       }
     });
+
+    it('should execute an update query without commit message using the default', async () => {
+      dispatchStub.resolves({ bindings: [] });
+      const WOQL = require('../lib/woql');
+      const query = WOQL.add_triple('a', 'b', 'c');
+
+      const response = await client.query(query);
+
+      expect(response).to.exist;
+      expect(dispatchStub.calledOnce).to.be.true;
+      const postBody = dispatchStub.firstCall.args[2];
+      expect(postBody.commit_info.message).to.include('without message');
+    });
   });
 
   describe('Branch operations', () => {

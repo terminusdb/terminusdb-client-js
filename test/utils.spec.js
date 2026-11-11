@@ -378,6 +378,72 @@ describe('utils tests', () => {
         );
         expect(result).to.equal('10:30:45');
       });
+
+      it('should return false for xsd:gYear without year', () => {
+        expect(UTILS.DateHelper.xsdFromParsed({}, 'xsd:gYear')).to.be.false;
+      });
+
+      it('should return false for xsd:time with incomplete fields', () => {
+        expect(UTILS.DateHelper.xsdFromParsed({ hour: 10 }, 'xsd:time')).to.be.false;
+      });
+
+      it('should return false for xsd:date with incomplete fields', () => {
+        expect(UTILS.DateHelper.xsdFromParsed({ year: 2023, month: 5 }, 'xsd:date')).to.be.false;
+      });
+
+      it('should use 12:00:00 defaults for xsd:dateTime without time fields', () => {
+        const result = UTILS.DateHelper.xsdFromParsed(
+          { year: 2023, month: 5, day: 15 },
+          'xsd:dateTime',
+        );
+        expect(result).to.equal('2023-05-15T12:00:00');
+      });
+
+      it('should return false for xsd:dateTime without a full date', () => {
+        expect(UTILS.DateHelper.xsdFromParsed({ year: 2023 }, 'xsd:dateTime')).to.be.false;
+      });
+
+      it('should append the timezone to xsd:dateTime when present', () => {
+        const result = UTILS.DateHelper.xsdFromParsed(
+          {
+            year: 2023, month: 5, day: 15, hour: 10, minute: 30, second: 45, timezone: 'Z',
+          },
+          'xsd:dateTime',
+        );
+        expect(result).to.equal('2023-05-15T10:30:45Z');
+      });
+
+      it('should generate xsd:gYearMonth', () => {
+        const result = UTILS.DateHelper.xsdFromParsed(
+          { year: 2023, month: 5 },
+          'xsd:gYearMonth',
+        );
+        expect(result).to.equal('2023-05');
+      });
+
+      it('should return false for xsd:gYearMonth without month', () => {
+        expect(UTILS.DateHelper.xsdFromParsed({ year: 2023 }, 'xsd:gYearMonth')).to.be.false;
+      });
+
+      it('should generate xsd:gMonthDay', () => {
+        const result = UTILS.DateHelper.xsdFromParsed(
+          { month: 5, day: 15 },
+          'xsd:gMonthDay',
+        );
+        expect(result).to.equal('--05-15');
+      });
+
+      it('should return false for xsd:gMonthDay without day', () => {
+        expect(UTILS.DateHelper.xsdFromParsed({ month: 5 }, 'xsd:gMonthDay')).to.be.false;
+      });
+
+      it('should return false for xsd:gMonth without month', () => {
+        expect(UTILS.DateHelper.xsdFromParsed({}, 'xsd:gMonth')).to.be.false;
+      });
+
+      it('should return false for xsd:gDay without day', () => {
+        expect(UTILS.DateHelper.xsdFromParsed({}, 'xsd:gDay')).to.be.false;
+      });
     });
 
     describe('convertTimestampToXsd', () => {

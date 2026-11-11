@@ -48,11 +48,12 @@ if (content.length < originalLength) {
 
 // Re-export the typedef module's types from the package root so consumers can
 // write: import TerminusClient, { WOQLResult } from 'terminusdb'
-// Type-only re-export: no runtime binding is claimed for the value stubs.
+// typedef.d.ts contains only `export type` declarations, so a plain `export *`
+// re-exports types only; `export type *` is not valid TypeScript syntax.
 const indexDtsPath = path.join(__dirname, '../dist/typescript/index.d.ts');
 
 if (fs.existsSync(indexDtsPath)) {
-  const reExport = 'export type * from "./lib/typedef";';
+  const reExport = 'export * from "./lib/typedef";';
   const indexContent = fs.readFileSync(indexDtsPath, 'utf8');
   if (!indexContent.includes(reExport)) {
     fs.writeFileSync(indexDtsPath, `${indexContent.trimEnd()}\n${reExport}\n`);
