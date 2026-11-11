@@ -1,6 +1,6 @@
 [![TerminusDB JavaScript Client](https://assets.terminusdb.com/readmes/terminusdb-client-js/header.gif)][terminusdb-client-js-docs]
 
-[terminusdb-client-js-docs]: https://terminusdb.github.io/terminusdb-client-js/
+[terminusdb-client-js-docs]: https://terminusdb.com/docs/javascript
 
 ---
 
@@ -8,27 +8,25 @@
 [![Reddit](https://img.shields.io/reddit/subreddit-subscribers/TerminusDB?style=social)](https://www.reddit.com/r/TerminusDB/)
 [![Twitter](https://img.shields.io/twitter/follow/terminusdb?color=skyblue&label=Follow%20on%20Twitter&logo=twitter&style=flat)](https://twitter.com/TerminusDB)
 
-[![npm version](https://img.shields.io/npm/v/@terminusdb/terminusdb-client?logo=npm)](https://www.npmjs.com/package/@terminusdb/terminusdb-client)
-[![npm downloads](https://img.shields.io/npm/dw/@terminusdb/terminusdb-client?color=red&label=npm%20package&logo=npm&style=flat)](https://www.npmjs.com/package/@terminusdb/terminusdb-client)
+[![npm version](https://img.shields.io/npm/v/terminusdb?logo=npm)](https://www.npmjs.com/package/terminusdb)
+[![npm downloads](https://img.shields.io/npm/dw/terminusdb?color=red&label=npm%20package&logo=npm&style=flat)](https://www.npmjs.com/package/terminusdb)
 [![Coverage Status](https://coveralls.io/builds/76119876/badge)](https://coveralls.io/builds/76119876)
 
 > This repository is for the JavaScript client library for TerminusDB
 
 [**TerminusDB**][terminusdb] is an [open-source][terminusdb-repo] graph database and document store. It allows you to link and process structured and unstructured JSON documents in a powerful knowledge graph all through a simple document API.
 
-[terminusdb]: https://terminusdb.org/
-[terminusdb-docs]: https://terminusdb.org/docs/
+[terminusdb]: https://terminusdb.com/
+[terminusdb-docs]: https://terminusdb.com/docs/
 [terminusdb-repo]: https://github.com/terminusdb/terminusdb
 
-It is the model-based, in-memory, and distributed knowledge graph database for hierarchical records with a git-for-data collaboration model at its heart. So many great things in a single package and a high precision datalog query language with advanced features like transactions, schema validation and unification.
+It is the model-based, in-memory, and distributed knowledge graph database with version control for JSON documents with a git-for-data collaboration model at its heart. So many great things in a single package and a high precision datalog query language with advanced features like transactions, schema validation and unification.
 
 For many, it serves as a headless content management system for complex enviroments with push, pull, clone, rebase and merge capabilities with immutable history and a strong schema checker that covers both the simplest and most advanced models.
 
-Use the [cloud-based studio environment](https://studio.dfrnt.com/) to [build graph data products in the cloud](https://dfrnt.com/solutions-studio) or in your [localhost dockerized TerminusDB instances](https://terminusdb.org/docs/install-terminusdb-as-a-docker-container/). Try it out for yourself, it's free to get started with generous limits, clone a demo project to play around.
-
 ## Requirements
 
-- Node.js version 20+ if using the TerminusDB client library as a Node.js package (might work with earlier versions too).
+- Node.js version 22+ if using the TerminusDB client library as a Node.js package.
 
 ## Installation
 
@@ -40,10 +38,10 @@ The TerminusDB JavaScript client library can be used either as a Node.js package
 
 [node-install]: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
 
-To install the `@terminusdb/terminusdb-client` package as a dependency in an existing package, run:
+To install the `terminusdb` package as a dependency in an existing package, run:
 
 ```sh
-$ npm install --save @terminusdb/terminusdb-client
+$ npm install --save terminusdb
 ```
 
 This command updates your `package.json`.
@@ -53,22 +51,22 @@ This command updates your `package.json`.
 To use the `terminusdb-client` script on a webpage sourced from a CDN, add this to your HTML:
 
 ```html
-<script src="https://unpkg.com/@terminusdb/terminusdb-client/dist/terminusdb-client.min.js"></script>
+<script src="https://unpkg.com/terminusdb/dist/terminusdb-client.min.js"></script>
 ```
 
 Alternatively, you can download the latest [`terminusdb-client.min.js`][js], add it to your sources, and use that in the `<script>` instead.
 
-[js]: https://unpkg.com/@terminusdb/terminusdb-client/dist/terminusdb-client.min.js
+[js]: https://unpkg.com/terminusdb/dist/terminusdb-client.min.js
 
 ## Usage
 
 This example creates a simple dataProduct, starting to create a database model the schema
 and insert a simple document
 
-For the [full Documentation](https://terminusdb.org/docs/javascript)
+For the [full Documentation](https://terminusdb.com/docs/javascript)
 
 ```javascript
-const TerminusClient = require("@terminusdb/terminusdb-client");
+const TerminusClient = require("terminusdb");
 
 // Connect and configure the TerminusClient
 const client = new TerminusClient.WOQLClient('SERVER_CLOUD_URL/mycloudTeam',
@@ -132,6 +130,62 @@ async function createDataProduct(){
 
 ```
 
+## TypeScript
+
+The package ships generated type declarations (`dist/typescript`), so TypeScript works out of the box with `import`.
+WOQL functions accept either `"v:name"` strings or `Var`/`Vars` objects wherever a variable is expected.
+The `WOQLClient` CRUD and query methods take an optional type parameter describing the expected result; pass a second type parameter when `getDataVersion` is set. Shared result and error shapes are importable by name from the package root (also available under the `typedef` namespace).
+
+```typescript
+import {
+  WOQLClient,
+  WOQL,
+  type WithDataVersion,
+  type TerminusDBError,
+} from "terminusdb";
+
+interface Person {
+  "@id": string;
+  "@type": string;
+  name: string;
+}
+
+const client = new WOQLClient("http://127.0.0.1:6363/", {
+  user: "admin",
+  key: "my_secret_key",
+  db: "test_db",
+});
+
+// Typed query bindings
+interface NameRow { name: string }
+const result = await client.query<NameRow>(
+  WOQL.triple("v:p", "name", WOQL.Vars("name").name),
+);
+const names = result.bindings.map((row) => row.name);
+
+// Typed document and getDataVersion wrapper
+const person = await client.getDocument<Person>({ id: "Person/ada" });
+const wrapped = await client.getDocument<Person, WithDataVersion<Person>>(
+  { id: "Person/ada" }, undefined, undefined, undefined, true,
+);
+console.log(wrapped.dataVersion);
+
+// Errors are standard Error objects carrying .status and the parsed server
+// error body on .data (type: TerminusDBError)
+try {
+  await client.getDocument<Person>({ id: "Person/missing" });
+} catch (err) {
+  const e = err as TerminusDBError;
+  if (e.status === 404) {
+    console.log(e.data?.["api:error"]?.["@type"]); // "api:DocumentNotFound"
+  }
+}
+```
+
+## Deprecated
+
+The viewer classes exported from `lib/viewer` — `View`, `WOQLResult`, `WOQLTable`, `WOQLGraph` (and their rule/config helpers) — render query results into charts, tables and graphs. Data rendering is outside this package's scope: the client connects to TerminusDB, your application renders the results. These exports are marked `@deprecated` in the type declarations and will be removed in a future major release.
+
 ## Options
 
 Connections options.
@@ -139,7 +193,7 @@ Connections options.
 To initialize `TerminusDB client` with custom options use
 
 ```js
-const TerminusClient = require("@terminusdb/terminusdb-client");
+const TerminusClient = require("terminusdb");
 
 const client = new TerminusClient.WOQLClient("http://127.0.0.1:6363/", {
   db: "test_db",

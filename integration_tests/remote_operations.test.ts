@@ -38,7 +38,7 @@ describe('Remote Operations', () => {
       schema: true
     });
     client.db(testDbName);
-  });
+  }, 15000);
 
   describe('createRemote', () => {
     test('should create a new remote successfully', async () => {

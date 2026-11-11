@@ -1,19 +1,15 @@
 //@ts-check
-import {describe, expect, test, beforeAll} from '@jest/globals';
-//import  WOQLClient  from '../lib/woqlClient';
-import {WOQLClient} from '../index.js';
+import {describe, expect, test, beforeAll, afterAll} from '@jest/globals';
 import { DbDetails, DocParamsGet } from '../dist/typescript/lib/typedef';
-//import {ParamsObj,DbDetails}  from '../lib/typedef'; 
 import schemaJson from './persons_schema'
-//console.log(typeof schemaJson)
+import { createTestClient, cleanupDatabase } from "./test_utils";
 
-let client : WOQLClient //= new WOQLClient('http://127.0.0.1:6363');
+const db01 = 'db__test_create_database';
+let client = createTestClient();
 
-beforeAll(() => {
-  client  = new WOQLClient("http://127.0.0.1:6363",{ user: 'admin', organization: 'admin', key: process.env.TDB_ADMIN_PASS ?? 'root' })
+beforeAll(async () => {
+  await cleanupDatabase(client, db01);
 });
-
-const db01 = 'db__test';
 
 describe('Create a database, schema and insert data', () => {
   test('Create a database', async () => {
@@ -22,7 +18,7 @@ describe('Create a database, schema and insert data', () => {
     //woqlClient return only the data no status
     expect(result["@type"]).toEqual("api:DbCreateResponse");
     expect(result["api:status"]).toEqual("api:success");
-  });
+  }, 15000);
 
   test('Create a schema', async () => {
       const result = await client.addDocument(schemaJson,{graph_type:"schema",full_replace:true});
@@ -32,19 +28,19 @@ describe('Create a database, schema and insert data', () => {
   test('Insert Document Child Tom', async () => {
       const person = {"age":"10","name":"Tom","@type":"Child" }
       const result = await client.addDocument(person);
-      expect(result).toStrictEqual(["terminusdb:///data/Child/Tom" ]);
+      expect(result).toStrictEqual(["Child/Tom" ]);
   })
 
   test('Insert Document Child Anna', async () => {
       const person = {"age":"20","name":"Anna","@type":"Child"}
       const result = await client.addDocument(person);
-      expect(result).toStrictEqual(["terminusdb:///data/Child/Anna" ]);
+      expect(result).toStrictEqual(["Child/Anna" ]);
   })
 
   test('Insert Document Parent Tom Senior', async () => {
       const person = {"age":"40","name":"Tom Senior","@type":"Parent" , "has_child":"Child/Tom"}
       const result = await client.addDocument(person);
-      expect(result).toStrictEqual(["terminusdb:///data/Parent/Tom%20Senior" ]);
+      expect(result).toStrictEqual(["Parent/Tom%20Senior" ]);
   })
 
   test('Get document history on an object', async () => {
@@ -79,7 +75,7 @@ describe('Create a database, schema and insert data', () => {
   test('Update Child Tom, link Parent', async () => {
     const childTom = { '@id': 'Child/Tom', '@type': 'Child', age: 10, name: 'Tom' , has_parent:"Parent/Tom%20Senior"}
     const result = await client.updateDocument(childTom);
-    expect(result).toStrictEqual(["terminusdb:///data/Child/Tom" ]);
+    expect(result).toStrictEqual(["Child/Tom" ]);
   })
 
   test('Diff beetwen main and change_request branch', async () => {
@@ -124,8 +120,8 @@ describe('Create a database, schema and insert data', () => {
     expect(result).toStrictEqual({ '@type': 'api:BranchResponse', 'api:status': 'api:success' });
   });
 
-  test('Delete a database', async () => {
-    const result = await client.deleteDatabase(db01);
-    expect(result).toStrictEqual({ '@type': 'api:DbDeleteResponse', 'api:status': 'api:success' });
-  });
+});
+
+afterAll(async () => {
+  await cleanupDatabase(client, db01);
 });

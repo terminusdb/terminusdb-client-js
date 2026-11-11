@@ -31,7 +31,7 @@ jobs:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
-        node-version: 20
+        node-version: 22
     - name: Run terminusdb server
       run: |
         docker run --detach --publish 127.0.0.1:6363:6363 terminusdb/terminusdb-server:dev && sleep 10
@@ -46,9 +46,21 @@ jobs:
         npm run test:integration
     - name: Lint
       run: npm run lint:check
-    - name: Genrate test coverage report
+    - name: Generate test coverage report
       run: npm run coveralls-after
+    - name: Check Coveralls availability
+      id: coveralls_check
+      run: |
+        HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 https://coveralls.io || echo "000")
+        echo "Coveralls returned HTTP status: $HTTP_STATUS"
+        if [ "$HTTP_STATUS" -ge 500 ] 2>/dev/null || [ "$HTTP_STATUS" = "000" ]; then
+          echo "Coveralls is unavailable (status $HTTP_STATUS), skipping upload"
+          echo "available=false" >> "$GITHUB_OUTPUT"
+        else
+          echo "available=true" >> "$GITHUB_OUTPUT"
+        fi
     - name: Update coveralls
+      if: steps.coveralls_check.outputs.available == 'true'
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}

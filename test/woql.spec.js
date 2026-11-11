@@ -5,6 +5,7 @@ const { Var, VarUnique, Vars } = require('../lib/query/woqlDoc');
 
 const idGenJson = require('./woqlJson/woqlIdgenJson');
 const randomKeyJson = require('./woqlJson/woqlRandomKeyJson');
+const uuidV7Json = require('./woqlJson/woqlUuidV7Json');
 const woqlStarJson = require('./woqlJson/woqlStarJson');
 const woqlInsertJson = require('./woqlJson/woqlInsertJson');
 const woqlDoctypeJson = require('./woqlJson/woqlDoctypeJson');
@@ -48,30 +49,29 @@ describe('woql queries', () => {
   });
 
   it('check the start method', () => {
-    const woqlObject = WOQL.limit(10).start(0);
+    const woqlObject = WOQL.start(10).limit(5).eq('v:X', 'v:Y');
 
-    /* const jsonObj={"@type": "woql:Limit",
-                  "woql:limit": {
-                      "@type": "woql:DataValue",
-                      "woql:datatype": {
-                          "@type": "xsd:nonNegativeInteger",
-                          "@value": 10
-                      }
-                  },
-                  "woql:query": {
-                      "@type": "woql:Start",
-                      "woql:start": {
-                          "@type": "woql:DataValue",
-                          "woql:datatype": {
-                              "@type": "xsd:nonNegativeInteger",
-                              "@value": 0
-                          }
-                      },
-                      "woql:query": {}
-                  }
-              } */
+    const expectedJson = {
+      '@type': 'Start',
+      start: 10,
+      query: {
+        '@type': 'Limit',
+        limit: 5,
+        query: {
+          '@type': 'Equals',
+          left: {
+            '@type': 'Value',
+            variable: 'X',
+          },
+          right: {
+            '@type': 'Value',
+            variable: 'Y',
+          },
+        },
+      },
+    };
 
-    // expect(woqlObject.json()).to.eql({});
+    expect(woqlObject.json()).to.eql(expectedJson);
   });
 
   it('check the not method', () => {
@@ -292,6 +292,12 @@ describe('woql queries', () => {
     expect(woqlObject.json()).to.eql(randomKeyJson);
   });
 
+  it('check the idgen_uuid_v7 method', () => {
+    const woqlObject = WOQL.idgen_uuid_v7('Person/', 'v:Person_ID');
+
+    expect(woqlObject.json()).to.eql(uuidV7Json);
+  });
+
   it('check the typecast method', () => {
     const woqlObject = WOQL.typecast('v:Duration', 'xsd:integer', 'v:Duration_Cast');
 
@@ -316,6 +322,39 @@ describe('woql queries', () => {
 
     // console.log(JSON.stringify(woqlObject.json(), null, 4));
     expect(woqlObject.json()).to.eql(woqlCastJson);
+  });
+
+  it('check the typecast method with a literal prefixes map', () => {
+    const woqlObject = WOQL.typecast(
+      'v:QName_str',
+      'xsd:QName',
+      'v:QName_val',
+      { eg: 'http://example.org/ns#' },
+    );
+
+    expect(woqlObject.json().prefixes).to.eql({
+      '@type': 'Value',
+      data: { eg: 'http://example.org/ns#' },
+    });
+  });
+
+  it('check the typecast method with a variable prefixes map', () => {
+    const woqlObject = WOQL.typecast(
+      'v:QName_str',
+      'xsd:QName',
+      'v:QName_val',
+      'v:Namespaces',
+    );
+
+    expect(woqlObject.json().prefixes).to.eql({
+      '@type': 'Value',
+      variable: 'Namespaces',
+    });
+  });
+
+  it('check the typecast method omits prefixes when absent', () => {
+    const woqlObject = WOQL.typecast('v:Duration', 'xsd:integer', 'v:Duration_Cast');
+    expect(woqlObject.json()).to.not.have.property('prefixes');
   });
 
   it('check the concat method', () => {
@@ -637,5 +676,17 @@ describe('woql queries', () => {
     const woqlObject = WOQL.limit(100).eval(WOQL.times(2, 3), v.result);
     const expectedJson = {"@type":"Limit","limit":100,"query":{"@type":"Eval","expression":{"@type":"Times","left":{"@type":"ArithmeticValue","data":{"@type":"xsd:decimal","@value":2}},"right":{"@type":"ArithmeticValue","data":{"@type":"xsd:decimal","@value":3}}},"result":{"@type":"ArithmeticValue","variable":"result"}}};
     expect(woqlObject.json()).to.deep.eql(expectedJson);
+  });
+
+  it('check the triple_relation method', () => {
+    const woqlObject = WOQL.triple_relation('v:doc', 'scm:interval', 'v:o', 'meets', { '@type': 'xdd:dateTimeInterval', '@value': '2025-01-01/2025-04-01' });
+    expect(woqlObject.json()).to.eql({
+      '@type': 'TripleRelation',
+      subject: { '@type': 'NodeValue', variable: 'doc' },
+      predicate: { '@type': 'NodeValue', node: 'scm:interval' },
+      object: { '@type': 'Value', variable: 'o' },
+      relation: { '@type': 'DataValue', data: { '@type': 'xsd:string', '@value': 'meets' } },
+      value: { '@type': 'DataValue', data: { '@type': 'xdd:dateTimeInterval', '@value': '2025-01-01/2025-04-01' } },
+    });
   });
 });
