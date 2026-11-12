@@ -699,4 +699,236 @@ describe('WOQLPrinter tests', () => {
       expect(result).to.equal('');
     });
   });
+
+  describe('printJSON - operator dispatch', () => {
+    it('should strip a prefix from @type', () => {
+      const json = {
+        '@type': 'woql:Triple',
+        subject: { '@type': 'NodeValue', variable: 's' },
+        predicate: { '@type': 'NodeValue', node: 'rdf:type' },
+        object: { '@type': 'Value', variable: 'o' },
+      };
+      const result = printer.printJSON(json);
+      expect(result).to.include('WOQL.triple');
+    });
+
+    it('should print a QueryResource through printJSON', () => {
+      const json = {
+        '@type': 'QueryResource',
+        source: { file: '/data.csv' },
+        format: 'csv',
+      };
+      const result = printer.printJSON(json);
+      expect(result).to.include('WOQL.file');
+    });
+
+    it('should log and return empty-ish string for falsy operator', () => {
+      const result = printer.printJSON({ '@type': '' });
+      expect(result).to.equal('');
+    });
+
+    it('should wrap a boxed list operator in brackets', () => {
+      const json = { '@type': 'NamedAsVar', variable: 'v1' };
+      const result = printer.printJSON(json);
+      expect(result).to.equal('["v1"]');
+    });
+
+    it('should open a list operator without a boxed predicate', () => {
+      const json = { '@type': 'AsVar', key: { '@type': 'True' } };
+      const result = printer.printJSON(json);
+      expect(result).to.equal('[true]');
+    });
+
+    it('should adjust argument separators around a query argument', () => {
+      const json = {
+        '@type': 'When',
+        query: {
+          '@type': 'Triple',
+          subject: { '@type': 'NodeValue', variable: 's' },
+          predicate: { '@type': 'NodeValue', node: 'rdf:type' },
+          object: { '@type': 'Value', variable: 'o' },
+        },
+        consequent: { '@type': 'True' },
+      };
+      const result = printer.printJSON(json);
+      expect(result).to.include('WOQL.when');
+      expect(result).to.include('.triple');
+    });
+
+    it('should treat a string resource argument as non-fluent', () => {
+      const json = {
+        '@type': 'PostResource',
+        resource: 'http://example.com/data',
+      };
+      const result = printer.printJSON(json);
+      expect(result).to.include('WOQL.post');
+      expect(result).to.include('http://example.com/data');
+    });
+
+    it('should not add separators between Get arguments', () => {
+      const json = {
+        '@type': 'Get',
+        columns: [
+          { '@type': 'Column', indicator: { name: 'col1', type: 'xsd:string' }, variable: 'v1' },
+          { '@type': 'Column', indicator: { index: 0 }, variable: 'v2' },
+        ],
+        query: {
+          '@type': 'Triple',
+          subject: { '@type': 'NodeValue', variable: 's' },
+          predicate: { '@type': 'NodeValue', node: 'rdf:type' },
+          object: { '@type': 'Value', variable: 'o' },
+        },
+      };
+      const result = printer.printJSON(json, 0, false, true);
+      expect(result).to.include('WOQL.get');
+      expect(result).to.include('.as("col1", "v:v1", "xsd:string")');
+      expect(result).to.include('.as("0", "v:v2")');
+    });
+  });
+
+  describe('printArgument', () => {
+    it('should print a True literal', () => {
+      expect(printer.printArgument('X', 'p', { '@type': 'True' }, 0, false)).to.equal('true');
+    });
+
+    it('should decompile a document argument', () => {
+      const arg = {
+        dictionary: {
+          data: [{ field: 'name', value: { data: { '@value': 'John' } } }],
+        },
+      };
+      const result = printer.printArgument('InsertDocument', 'document', arg, 0, false);
+      expect(result).to.include('WOQL.doc(');
+      expect(result).to.include('John');
+    });
+
+    it('should decompile variables and group_by arguments', () => {
+      expect(printer.printArgument('X', 'variables', ['a', 'b'], 0, false)).to.equal('"v:a", "v:b"');
+      expect(printer.printArgument('X', 'group_by', ['a', 'b'], 0, false)).to.equal('["v:a", "v:b"]');
+    });
+
+    it('should decompile a pattern argument', () => {
+      const arg = { '@type': 'DataValue', data: { '@type': 'xsd:string', '@value': 'p.*' } };
+      const result = printer.printArgument('X', 'pattern', arg, 0, false);
+      expect(result).to.include('p.*');
+    });
+
+    it('should join an array argument without brackets for other predicates', () => {
+      const arg = [{ '@type': 'True' }, { '@type': 'True' }];
+      expect(printer.printArgument('X', 'query', arg, 0, false)).to.include('true(),true()');
+    });
+
+    it('should return a number argument as is', () => {
+      expect(printer.printArgument('X', 'count', 5, 0, false)).to.equal(5);
+    });
+  });
+
+  describe('decompileFieldValuePair - edge cases', () => {
+    it('should handle missing field and value', () => {
+      const args = { dictionary: { data: [{ field: 'empty', value: {} }] } };
+      const result = printer.decompileDocument(args);
+      expect(result).to.include('"empty":false');
+    });
+
+    it('should decompile a dictionary value', () => {
+      const args = {
+        dictionary: {
+          data: [{
+            field: 'sub',
+            value: {
+              dictionary: {
+                data: [{ field: 'inner', value: { data: { '@value': 'x' } } }],
+              },
+            },
+          }],
+        },
+      };
+      const result = printer.decompileDocument(args);
+      expect(result).to.include('"inner":"x"');
+    });
+  });
+
+  describe('decompileRegexPattern - edge cases', () => {
+    it('should quote and escape a plain string pattern', () => {
+      expect(printer.decompileRegexPattern('a\\b')).to.equal('"a\\\\b"');
+    });
+
+    it('should decompile an inverse path predicate pattern', () => {
+      const json = { '@type': 'InversePathPredicate', predicate: 'parent' };
+      expect(printer.decompileRegexPattern(json)).to.equal('"<parent"');
+    });
+  });
+
+  describe('decompilePathPattern - parentheses and fallthrough', () => {
+    it('should parenthesize a PathOr under PathPlus', () => {
+      const pstruct = {
+        '@type': 'PathPlus',
+        plus: {
+          '@type': 'PathOr',
+          or: [
+            { '@type': 'PathPredicate', predicate: 'a' },
+            { '@type': 'PathPredicate', predicate: 'b' },
+          ],
+        },
+      };
+      expect(printer.decompilePathPattern(pstruct)).to.equal('(a|b)+');
+    });
+
+    it('should parenthesize a PathOr under PathStar', () => {
+      const pstruct = {
+        '@type': 'PathStar',
+        star: {
+          '@type': 'PathOr',
+          or: [
+            { '@type': 'PathPredicate', predicate: 'a' },
+            { '@type': 'PathPredicate', predicate: 'b' },
+          ],
+        },
+      };
+      expect(printer.decompilePathPattern(pstruct)).to.equal('(a|b)*');
+    });
+
+    it('should parenthesize a PathOr under PathTimes', () => {
+      const pstruct = {
+        '@type': 'PathTimes',
+        times: {
+          '@type': 'PathOr',
+          or: [
+            { '@type': 'PathPredicate', predicate: 'a' },
+            { '@type': 'PathPredicate', predicate: 'b' },
+          ],
+        },
+        from: 1,
+        to: 2,
+      };
+      expect(printer.decompilePathPattern(pstruct)).to.equal('(a|b) {1,2}');
+    });
+
+    it('should close a sequence after an inverse path predicate', () => {
+      const pstruct = {
+        '@type': 'PathSequence',
+        sequence: [
+          { '@type': 'InversePathPredicate', predicate: 'child' },
+          { '@type': 'PathPredicate', predicate: 'brother' },
+        ],
+      };
+      expect(printer.decompilePathPattern(pstruct)).to.equal('<child,brother>');
+    });
+
+    it('should return error for a PathSequence with the wrong length', () => {
+      const pstruct = {
+        '@type': 'PathSequence',
+        sequence: [{ '@type': 'PathPredicate', predicate: 'a' }],
+      };
+      expect(printer.decompilePathPattern(pstruct)).to.equal('error');
+    });
+
+    it('should return error for a PathOr with the wrong length', () => {
+      const pstruct = {
+        '@type': 'PathOr',
+        or: [{ '@type': 'PathPredicate', predicate: 'a' }],
+      };
+      expect(printer.decompilePathPattern(pstruct)).to.equal('error');
+    });
+  });
 });

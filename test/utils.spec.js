@@ -378,6 +378,72 @@ describe('utils tests', () => {
         );
         expect(result).to.equal('10:30:45');
       });
+
+      it('should return false for xsd:gYear without year', () => {
+        expect(UTILS.DateHelper.xsdFromParsed({}, 'xsd:gYear')).to.be.false;
+      });
+
+      it('should return false for xsd:time with incomplete fields', () => {
+        expect(UTILS.DateHelper.xsdFromParsed({ hour: 10 }, 'xsd:time')).to.be.false;
+      });
+
+      it('should return false for xsd:date with incomplete fields', () => {
+        expect(UTILS.DateHelper.xsdFromParsed({ year: 2023, month: 5 }, 'xsd:date')).to.be.false;
+      });
+
+      it('should use 12:00:00 defaults for xsd:dateTime without time fields', () => {
+        const result = UTILS.DateHelper.xsdFromParsed(
+          { year: 2023, month: 5, day: 15 },
+          'xsd:dateTime',
+        );
+        expect(result).to.equal('2023-05-15T12:00:00');
+      });
+
+      it('should return false for xsd:dateTime without a full date', () => {
+        expect(UTILS.DateHelper.xsdFromParsed({ year: 2023 }, 'xsd:dateTime')).to.be.false;
+      });
+
+      it('should append the timezone to xsd:dateTime when present', () => {
+        const result = UTILS.DateHelper.xsdFromParsed(
+          {
+            year: 2023, month: 5, day: 15, hour: 10, minute: 30, second: 45, timezone: 'Z',
+          },
+          'xsd:dateTime',
+        );
+        expect(result).to.equal('2023-05-15T10:30:45Z');
+      });
+
+      it('should generate xsd:gYearMonth', () => {
+        const result = UTILS.DateHelper.xsdFromParsed(
+          { year: 2023, month: 5 },
+          'xsd:gYearMonth',
+        );
+        expect(result).to.equal('2023-05');
+      });
+
+      it('should return false for xsd:gYearMonth without month', () => {
+        expect(UTILS.DateHelper.xsdFromParsed({ year: 2023 }, 'xsd:gYearMonth')).to.be.false;
+      });
+
+      it('should generate xsd:gMonthDay', () => {
+        const result = UTILS.DateHelper.xsdFromParsed(
+          { month: 5, day: 15 },
+          'xsd:gMonthDay',
+        );
+        expect(result).to.equal('--05-15');
+      });
+
+      it('should return false for xsd:gMonthDay without day', () => {
+        expect(UTILS.DateHelper.xsdFromParsed({ month: 5 }, 'xsd:gMonthDay')).to.be.false;
+      });
+
+      it('should return false for xsd:gMonth without month', () => {
+        expect(UTILS.DateHelper.xsdFromParsed({}, 'xsd:gMonth')).to.be.false;
+      });
+
+      it('should return false for xsd:gDay without day', () => {
+        expect(UTILS.DateHelper.xsdFromParsed({}, 'xsd:gDay')).to.be.false;
+      });
     });
 
     describe('convertTimestampToXsd', () => {
@@ -569,12 +635,12 @@ describe('utils tests', () => {
     describe('extractXsdTimezone - additional cases', () => {
       it('should extract positive timezone offset', () => {
         const result = UTILS.DateHelper.extractXsdTimezone('2023-05-15T10:30:45+05:00');
-        expect(result).to.be.false; // Based on the code, it doesn't return the extracted value
+        expect(result).to.equal('+05:00');
       });
 
       it('should extract negative timezone offset', () => {
         const result = UTILS.DateHelper.extractXsdTimezone('2023-05-15T10:30:45-05:00');
-        expect(result).to.be.false; // Based on the code, it doesn't return the extracted value
+        expect(result).to.equal('-05:00');
       });
     });
 
@@ -674,6 +740,131 @@ describe('utils tests', () => {
       const context = { ex: 'http://example.com/' };
       const result = UTILS.isIRI('ex:test', context, true);
       expect(result).to.be.true;
+    });
+  });
+
+  describe('URL and variable helpers', () => {
+    it('should shorten urls to the fragment and unshorten known prefixes', () => {
+      const prefixes = { rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#' };
+      expect(UTILS.shorten('http://www.w3.org/1999/02/22-rdf-syntax-ns#type', prefixes)).to.equal('type');
+      expect(UTILS.unshorten('rdf:type')).to.equal('http://www.w3.org/1999/02/22-rdf-syntax-ns#type');
+      expect(UTILS.unshorten('http://x.y/z')).to.equal('http://x.y/z');
+    });
+
+    it('should remap object keys with json_shorten and json_unshorten', () => {
+      expect(UTILS.json_shorten({ 'http://x.y/ns#a': 1 }, { p: 'http://x.y/ns#' })).to.deep.equal({ a: 1 });
+      expect(UTILS.json_unshorten({ 'rdf:type': 1 })).to.deep.equal({ 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type': 1 });
+    });
+
+    it('should extract labels and fragments from urls', () => {
+      expect(UTILS.validURL('http://x.y/z')).to.be.true;
+      expect(UTILS.validURL('not a url')).to.be.false;
+      expect(UTILS.labelFromURL('http://x.y/ns#Thing')).to.equal('Thing');
+      expect(UTILS.urlFragment('http://x.y/ns#Thing')).to.equal('Thing');
+      expect(UTILS.lastURLBit('http://x.y/ns/Thing')).to.equal('Thing');
+      expect(UTILS.labelFromVariable('v:my_var')).to.equal('V:my var');
+    });
+
+    it('should namespace variables', () => {
+      expect(UTILS.addNamespaceToVariable('name')).to.equal('v:name');
+      expect(UTILS.removeNamespaceFromVariable('v:name')).to.equal('name');
+      expect(UTILS.removeNamespacesFromVariables(['v:a', 'v:b'])).to.deep.equal(['a', 'b']);
+      expect(UTILS.addNamespacesToVariables(['a'])).to.deep.equal(['v:a']);
+    });
+
+    it('should run encoding and id helpers', () => {
+      expect(UTILS.decodeURISegment('a%20b')).to.equal('a b');
+      expect(UTILS.URIEncodePayload({ a: 1, b: 'x y' })).to.equal('a=1&b=x%20y');
+      expect(UTILS.removeDocType('doc:X')).to.equal('doc:X');
+      expect(UTILS.empty({})).to.be.true;
+      expect(UTILS.empty({ a: 1 })).to.be.false;
+      expect(UTILS.genBNID('b')).to.match(/^b/);
+      expect(UTILS.compareIDs('a', 'a')).to.be.true;
+      expect(UTILS.compareIDs('a', 'b')).to.be.false;
+      UTILS.addURLPrefix('ex', 'http://x.y/');
+      expect(UTILS.standard_urls.ex).to.equal('http://x.y/');
+      expect(UTILS.getConfigValue('k', { k: 'v' })).to.equal('v');
+    });
+  });
+
+  describe('TypeHelper and DateHelper', () => {
+    it('should parse a bounded range', () => {
+      expect(UTILS.TypeHelper.parseRangeValue('[0,10]')).to.deep.equal(['0', '10']);
+    });
+
+    it('should run type predicates and formatters', () => {
+      expect(UTILS.TypeHelper.isStringType('xsd:string')).to.be.true;
+      expect(UTILS.TypeHelper.isDatatype('xsd:string')).to.be.true;
+      expect(UTILS.TypeHelper.numberWithCommas(1234567)).to.equal('1,234,567');
+      expect(UTILS.TypeHelper.formatBytes(2048)).to.match(/KB/);
+    });
+
+    it('should parse each xsd date type', () => {
+      const DH = UTILS.DateHelper;
+      expect(DH.parseXsdDate('2024-01-15')).to.include({ year: '2024', month: 1, day: 15 });
+      expect(DH.parseXsdTime('12:30:45')).to.include({ hour: '12', minute: '30', second: '45' });
+      expect(DH.parseXsdDateTime('2024-01-15T12:30:45')).to.include({ year: '2024', hour: '12' });
+      expect(DH.parseDate('xsd:date', '2024-01-15')).to.include({ year: '2024' });
+      expect(DH.parseDate('xsd:time', '12:30:45')).to.include({ hour: '12' });
+      expect(DH.parseDate('xsd:dateTime', '2024-01-15T12:30:45')).to.include({ year: '2024' });
+      expect(DH.parseDate('xsd:dateTimeStamp', '2024-01-15T12:30:45')).to.include({ year: '2024' });
+      expect(DH.parseDate('xsd:gYear', '2024')).to.deep.equal({ year: '2024' });
+      expect(DH.parseDate('xsd:gYearRange', '2020-2024')).to.deep.equal({ year: '2020-2024' });
+      expect(DH.parseDate('xsd:gMonth', '--11')).to.deep.equal({ month: '11' });
+      expect(DH.parseDate('xsd:gDay', '15')).to.deep.equal({ day: '15' });
+      expect(DH.parseDate('xsd:gYearMonth', '2024-11')).to.deep.equal({ year: '2024', month: '11' });
+      expect(DH.parseDate('xsd:gMonthDay', '11-15')).to.deep.equal({ month: '11', day: '15' });
+    });
+
+    it('should serialize parsed dates back to xsd', () => {
+      const DH = UTILS.DateHelper;
+      expect(DH.xsdFromParsed(DH.parseDate('xsd:time', '12:30:45'), 'xsd:time')).to.equal('12:30:45');
+      expect(DH.xsdFromParsed(DH.parseDate('xsd:dateTime', '2024-01-15T12:30:45'), 'xsd:dateTime')).to.equal('2024-01-15T12:30:45');
+      expect(DH.xsdFromParsed(DH.parseDate('xsd:gYear', '2024'), 'xsd:gYear')).to.equal('2024');
+      expect(DH.addXsdPadding(DH.parseXsdDate('2024-01-15'))).to.include({ year: '2024', month: '01' });
+    });
+
+    it('should convert unix timestamps and extract timezones', () => {
+      const DH = UTILS.DateHelper;
+      const parsed = DH.convertTimestampToXsd(1705321845);
+      expect(parsed.year).to.be.at.least(2024);
+      expect(parsed).to.have.property('month');
+      expect(DH.extractXsdTimezone('2024-01-15T12:30:45+02:00')).to.equal('+02:00');
+      expect(DH.extractXsdTimezone('2024-01-15T12:30:45-05:00')).to.equal('-05:00');
+      expect(DH.extractXsdTimezone('2024-01-15T12:30:45Z')).to.equal('Z');
+      expect(DH.extractXsdTimezone('2024-01-15T12:30:45')).to.be.false;
+      expect(DH.extractXsdTimezone(null)).to.be.false;
+      expect(DH.extractXsdTimezone('2024-01-15')).to.be.false;
+    });
+
+    it('should carry timezone suffixes through the parsers', () => {
+      const DH = UTILS.DateHelper;
+      expect(DH.parseXsdTime('12:30:45Z').timezone).to.equal('Z');
+      expect(DH.parseXsdTime('12:30:45+02:00').timezone).to.equal('+02:00');
+      expect(DH.parseXsdDateTime('2024-01-15T12:30:45-05:00').timezone).to.equal('-05:00');
+    });
+
+    it('should return undefined for an unknown xsd type', () => {
+      expect(UTILS.DateHelper.parseDate('xsd:string', 'abc')).to.be.undefined;
+    });
+
+    it('should pad partial parsed dates and serialize every type', () => {
+      const DH = UTILS.DateHelper;
+      expect(DH.addXsdPadding({})).to.deep.equal({});
+      expect(DH.addXsdPadding({ month: 3 })).to.include({ month: '03' });
+      expect(DH.xsdFromParsed(DH.parseDate('xsd:gMonth', '--11'), 'xsd:gMonth')).to.equal('--11');
+      expect(DH.xsdFromParsed(DH.parseDate('xsd:gDay', '15'), 'xsd:gDay')).to.equal('---15');
+      expect(DH.xsdFromParsed(DH.parseDate('xsd:gYearMonth', '2024-11'), 'xsd:gYearMonth')).to.equal('2024-11');
+      expect(DH.xsdFromParsed(DH.parseDate('xsd:gMonthDay', '11-15'), 'xsd:gMonthDay')).to.equal('--11-15');
+    });
+
+    it('should handle TypeHelper edge cases', () => {
+      const TH = UTILS.TypeHelper;
+      expect(TH.isStringType('xsd:integer')).to.be.false;
+      expect(TH.isDatatype('Person')).to.be.false;
+      expect(TH.numberWithCommas(1234567, '.')).to.equal('1.234.567');
+      expect(TH.formatBytes(0)).to.match(/0/);
+      expect(TH.formatBytes(2048, 0)).to.match(/KB/);
     });
   });
 });

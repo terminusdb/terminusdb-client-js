@@ -191,61 +191,9 @@ const insertQuery = WOQL.and(
   WOQL.insert('v:Bike_URL', 'Bicycle').label('v:Bike_Label'),
 );
 
-function getView(url, key, dbid) {
-  appendData('.....loading data for visualization', 'view', true);
-  const client = new TerminusClient.WOQLClient(url);
-  client.connect({ key, db: dbid }).then(() => {
-    showView(client);
-  });
-}
-
-function showView(client) {
-  const { WOQL } = TerminusClient;
-  const { View } = TerminusClient;
-  const woql = WOQL.select('v:Start', 'v:Start_Label', 'v:End', 'v:End_Label').and(
-    WOQL.triple('v:Journey', 'type', 'scm:Journey'),
-    WOQL.triple('v:Journey', 'start_station', 'v:Start'),
-    WOQL.opt().triple('v:Start', 'label', 'v:Start_Label'),
-    WOQL.triple('v:Journey', 'end_station', 'v:End'),
-    WOQL.opt().triple('v:End', 'label', 'v:End_Label'),
-    WOQL.triple('v:Journey', 'journey_bicycle', 'v:Bike'),
-  );
-  const woqlGraphConfig = View.graph();
-  woqlGraphConfig.height(500).width(1200);
-  woqlGraphConfig.node('Start_Label', 'End_Label').hidden(true);
-  woqlGraphConfig
-    .node('End')
-    .icon({ color: [255, 255, 255], unicode: '\uf84a' })
-    .text('v:End_Label')
-    .size(25)
-    .charge(-10);
-  woqlGraphConfig
-    .node('Start')
-    .icon({ color: [255, 255, 255], unicode: '\uf84a' })
-    .text('v:Start_Label')
-    .size(25)
-    .collisionRadius(10);
-  woqlGraphConfig.edge('Start', 'End').weight(100);
-
-  client
-    .query(woql)
-    .then((result) => {
-      const resultData = new TerminusClient.WOQLResult(result);
-
-      const viewer = woqlGraphConfig.create(null);
-
-      viewer.setResult(resultData);
-      console.log(viewer.config);
-
-      const graphResult = new TerminusDBComponents.GraphResultsViewer(viewer.config, viewer);
-      graphResult.load(document.getElementById('target'), true);
-      appendData('the Data has been loaded', 'view');
-    })
-    .catch((err) => {
-      console.log(err);
-      appendData(`ERROR in loadind data ${err.message}`, 'view');
-    });
-}
+// The viewer classes (TerminusClient.View, WOQLResult and friends) were
+// removed from the client in 12.1.0. Query for the graph edges with WOQL and
+// render them with your own components instead.
 
 /**
  * Runs the tutorial from start to finish

@@ -1494,7 +1494,6 @@ describe("WOQL rdf:List Operations", () => {
 
     // Path queries should return results in hop-count order (0 hops, 1 hop, 2 hops, 3 hops)
     // This means [A, B, C, D] in order
-    console.log("Path query results in order:", values);
     expect(values).toEqual(["A", "B", "C", "D"]);
   });
 

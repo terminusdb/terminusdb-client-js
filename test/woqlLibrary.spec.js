@@ -292,6 +292,233 @@ describe('WOQLLibrary tests', () => {
     });
   });
 
+  describe('rdflist_list()', () => {
+    it('should group_by collected cell values', () => {
+      const json = lib.rdflist_list('v:head', 'v:result').json();
+      const str = JSON.stringify(json);
+      expect(str).to.include('PathStar');
+      expect(str).to.include('rdf:first');
+      expect(str).to.include('GroupBy');
+    });
+  });
+
+  describe('rdflist_peek()', () => {
+    it('should read rdf:first of the head cell', () => {
+      const str = JSON.stringify(lib.rdflist_peek('v:head', 'v:val').json());
+      expect(str).to.include('rdf:first');
+      expect(str).to.include('rdf:List');
+    });
+  });
+
+  describe('rdflist_last()', () => {
+    it('should traverse rest* to the rdf:nil-terminated cell', () => {
+      const str = JSON.stringify(lib.rdflist_last('v:head', 'v:val').json());
+      expect(str).to.include('PathStar');
+      expect(str).to.include('rdf:nil');
+    });
+  });
+
+  describe('rdflist_nth0()', () => {
+    it('should throw for a negative index', () => {
+      expect(() => lib.rdflist_nth0('v:head', -1, 'v:val')).to.throw('index >= 0');
+    });
+
+    it('should peek the head for index 0', () => {
+      const str = JSON.stringify(lib.rdflist_nth0('v:head', 0, 'v:val').json());
+      expect(str).to.include('rdf:first');
+      expect(str).to.not.include('PathTimes');
+    });
+
+    it('should emit a fixed rest path for index 3', () => {
+      const str = JSON.stringify(lib.rdflist_nth0('v:head', 3, 'v:val').json());
+      expect(str).to.include('PathTimes').and.to.include('"from":"3"');
+    });
+
+    it('should use rest* plus length for a variable index', () => {
+      const str = JSON.stringify(lib.rdflist_nth0('v:head', 'v:idx', 'v:val').json());
+      expect(str).to.include('PathStar');
+      expect(str).to.include('Length');
+    });
+  });
+
+  describe('rdflist_nth1()', () => {
+    it('should throw for index below 1', () => {
+      expect(() => lib.rdflist_nth1('v:head', 0, 'v:val')).to.throw('index >= 1');
+    });
+
+    it('should map 1-based index 2 onto rest{1,1}', () => {
+      const str = JSON.stringify(lib.rdflist_nth1('v:head', 2, 'v:val').json());
+      expect(str).to.include('PathTimes').and.to.include('"from":"1"');
+    });
+
+    it('should throw for a variable index', () => {
+      expect(() => lib.rdflist_nth1('v:head', 'v:idx', 'v:val')).to.throw('not yet supported');
+    });
+  });
+
+  describe('rdflist_member()', () => {
+    it('should traverse rest* and match rdf:first', () => {
+      const str = JSON.stringify(lib.rdflist_member('v:head', 'v:val').json());
+      expect(str).to.include('PathStar');
+      expect(str).to.include('rdf:first');
+    });
+  });
+
+  describe('rdflist_length()', () => {
+    it('should measure the rest* path to rdf:nil', () => {
+      const str = JSON.stringify(lib.rdflist_length('v:head', 'v:len').json());
+      expect(str).to.include('PathStar');
+      expect(str).to.include('Length');
+    });
+  });
+
+  describe('rdflist_pop()', () => {
+    it('should delete the second cons cell and rewire the head', () => {
+      const str = JSON.stringify(lib.rdflist_pop('v:head', 'v:val').json());
+      expect(str).to.include('DeleteTriple');
+      expect(str).to.include('AddTriple');
+    });
+  });
+
+  describe('rdflist_push()', () => {
+    it('should insert a new cons cell before the old head content', () => {
+      const str = JSON.stringify(lib.rdflist_push('v:head', 'v:val').json());
+      expect(str).to.include('RandomKey');
+      expect(str).to.include('RandomKey');
+      expect(str).to.include('AddTriple');
+    });
+  });
+
+  describe('rdflist_append()', () => {
+    it('should attach a new cell after the rdf:nil-terminated tail', () => {
+      const str = JSON.stringify(lib.rdflist_append('v:head', 'v:val').json());
+      expect(str).to.include('rdf:nil');
+      expect(str).to.include('RandomKey');
+      expect(str).to.include('AddTriple');
+    });
+  });
+
+  describe('rdflist_clear()', () => {
+    it('should bind the result to rdf:nil', () => {
+      const str = JSON.stringify(lib.rdflist_clear('v:head', 'v:out').json());
+      expect(str).to.include('rdf:nil');
+      expect(str).to.include('DeleteTriple');
+    });
+  });
+
+  describe('rdflist_insert()', () => {
+    it('should throw for a negative position', () => {
+      expect(() => lib.rdflist_insert('v:head', -1, 'v:val')).to.throw('position >= 0');
+    });
+
+    it('should splice at the head for position 0', () => {
+      const str = JSON.stringify(lib.rdflist_insert('v:head', 0, 'v:val').json());
+      expect(str).to.include('LexicalKey');
+      expect(str).to.not.include('PathTimes');
+    });
+
+    it('should use eq on the head for position 1', () => {
+      const str = JSON.stringify(lib.rdflist_insert('v:head', 1, 'v:val').json());
+      expect(str).to.not.include('PathTimes');
+      expect(str).to.include('DeleteTriple');
+    });
+
+    it('should path to the predecessor for position 3', () => {
+      const str = JSON.stringify(lib.rdflist_insert('v:head', 3, 'v:val').json());
+      expect(str).to.include('PathTimes').and.to.include('"from":"2"');
+    });
+  });
+
+  describe('rdflist_drop()', () => {
+    it('should throw for a negative position', () => {
+      expect(() => lib.rdflist_drop('v:head', -1)).to.throw('position >= 0');
+    });
+
+    it('should relink the head for position 0', () => {
+      const str = JSON.stringify(lib.rdflist_drop('v:head', 0).json());
+      expect(str).to.include('DeleteTriple');
+      expect(str).to.not.include('PathTimes');
+    });
+
+    it('should use eq on the head for position 1', () => {
+      const str = JSON.stringify(lib.rdflist_drop('v:head', 1).json());
+      expect(str).to.not.include('PathTimes');
+    });
+
+    it('should path to the predecessor for position 3', () => {
+      const str = JSON.stringify(lib.rdflist_drop('v:head', 3).json());
+      expect(str).to.include('PathTimes').and.to.include('"from":"2"');
+    });
+  });
+
+  describe('rdflist_swap()', () => {
+    it('should throw for negative positions', () => {
+      expect(() => lib.rdflist_swap('v:head', -1, 2)).to.throw('positions >= 0');
+      expect(() => lib.rdflist_swap('v:head', 0, -2)).to.throw('positions >= 0');
+    });
+
+    it('should be a no-op triple when positions are equal', () => {
+      const str = JSON.stringify(lib.rdflist_swap('v:head', 2, 2).json());
+      expect(str).to.include('rdf:List');
+      expect(str).to.not.include('AddTriple');
+    });
+
+    it('should use eq for position 0 and path otherwise', () => {
+      const str = JSON.stringify(lib.rdflist_swap('v:head', 0, 2).json());
+      expect(str).to.include('PathTimes').and.to.include('"from":"2"');
+      expect(str).to.include('AddTriple');
+      expect(str).to.include('DeleteTriple');
+    });
+  });
+
+  describe('rdflist_empty() / rdflist_is_empty()', () => {
+    it('should equate the variable to rdf:nil', () => {
+      expect(JSON.stringify(lib.rdflist_empty('v:l').json())).to.include('rdf:nil');
+    });
+
+    it('should equate the cons subject to rdf:nil', () => {
+      expect(JSON.stringify(lib.rdflist_is_empty('v:head').json())).to.include('rdf:nil');
+    });
+  });
+
+  describe('rdflist_slice()', () => {
+    it('should throw for negative indices', () => {
+      expect(() => lib.rdflist_slice('v:head', -1, 2, 'v:out')).to.throw('negative');
+      expect(() => lib.rdflist_slice('v:head', 0, -2, 'v:out')).to.throw('negative');
+    });
+
+    it('should bind an empty list when start >= end', () => {
+      const str = JSON.stringify(lib.rdflist_slice('v:head', 2, 2, 'v:out').json());
+      expect(str).to.not.include('PathTimes');
+    });
+
+    it('should use eq on the head for slice [0,1)', () => {
+      const str = JSON.stringify(lib.rdflist_slice('v:head', 0, 1, 'v:out').json());
+      expect(str).to.not.include('PathTimes');
+      expect(str).to.include('GroupBy');
+    });
+
+    it('should emit rest{0,n-1} for a head-anchored range', () => {
+      const str = JSON.stringify(lib.rdflist_slice('v:head', 0, 3, 'v:out').json());
+      expect(str).to.include('PathTimes').and.to.include('"from":"0"').and.to.include('"to":"2"');
+    });
+
+    it('should emit rest{start,end-1} for an interior range', () => {
+      const str = JSON.stringify(lib.rdflist_slice('v:head', 2, 5, 'v:out').json());
+      expect(str).to.include('PathTimes').and.to.include('"from":"2"').and.to.include('"to":"4"');
+    });
+  });
+
+  describe('rdflist_reverse()', () => {
+    it('should collect values then write them back reversed', () => {
+      const str = JSON.stringify(lib.rdflist_reverse('v:head').json());
+      expect(str).to.include('PathStar');
+      expect(str).to.include('GroupBy');
+      expect(str).to.include('DeleteTriple');
+      expect(str).to.include('AddTriple');
+    });
+  });
+
   describe('Integration tests', () => {
     it('should create valid WOQL JSON for branches', () => {
       const result = lib.branches();
