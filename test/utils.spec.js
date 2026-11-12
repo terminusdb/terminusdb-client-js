@@ -7,6 +7,18 @@ describe('utils tests', () => {
   it('check standard urls', () => {
     expect(UTILS.standard_urls.rdf).to.equal(UTILS.getStdURL('rdf', ''));
   });
+
+  describe('getStdURL', () => {
+    it('should return the url when it matches the standard prefix', () => {
+      const url = `${UTILS.standard_urls.rdf}type`;
+      expect(UTILS.getStdURL('rdf', 'type', url)).to.equal(url);
+    });
+
+    it('should return false for a mismatched url or unknown prefix', () => {
+      expect(UTILS.getStdURL('rdf', 'type', 'http://other.example/x')).to.be.false;
+      expect(UTILS.getStdURL('nosuchprefix', 'x')).to.be.false;
+    });
+  });
   it('check URIEncodePayload', () => {
     const expected = 'a=A&b=B&c=C&day=sir&b=D';
 
@@ -43,6 +55,14 @@ describe('utils tests', () => {
     const sh = UTILS.compareIDs(`${UTILS.standard_urls.rdf}type`, 'rdf:type');
     expect(sh).to.equal(true);
   });
+
+  it('compareIDs matches when one side needs unshortening', () => {
+    expect(UTILS.compareIDs('rdf:type', `${UTILS.standard_urls.rdf}type`)).to.equal(true);
+  });
+
+  it('compareIDs matches when one side needs shortening', () => {
+    expect(UTILS.compareIDs(`${UTILS.standard_urls.rdf}type`, 'type')).to.equal(true);
+  });
   // I HAVE TO CHECK IF THIS IS OK
   it('check shorten', () => {
     const sh = UTILS.shorten(`${UTILS.standard_urls.rdf}type`);
@@ -63,6 +83,10 @@ describe('utils tests', () => {
   it('check labelFromURL', () => {
     const label = UTILS.labelFromURL('doc:This_IS_A_DOC');
     expect(label).to.equal('This IS A DOC');
+  });
+
+  it('check labelFromURL with empty input', () => {
+    expect(UTILS.labelFromURL('')).to.equal('');
   });
 
   it('check urlFragment', () => {
@@ -97,6 +121,11 @@ describe('utils tests', () => {
     expect(cnum2).to.equal('100.009.323');
   });
 
+  it('check numberWithCommas with negative values', () => {
+    expect(UTILS.TypeHelper.numberWithCommas(-1234)).to.equal('-1,234');
+    expect(UTILS.TypeHelper.numberWithCommas(-1234.56)).to.equal('-1,234.56');
+  });
+
   it('check parseDate', () => {
     const xsdstr = '-0001-02-01T10:12:23.3';
     const parsed = UTILS.DateHelper.parseDate('xsd:dateTime', xsdstr);
@@ -125,6 +154,10 @@ describe('utils tests', () => {
 
   it('encodeURISegment test %6277&ˆˆˆ@ˆˆWˆTWTET#Y@&&GHHSHHS organization name', () => {
     expect(UTILS.encodeURISegment("%6277&ˆˆˆ@ˆˆWˆTWTET#Y@&&GHHSHHS")).to.equal("%256277%26%CB%86%CB%86%CB%86@%CB%86%CB%86W%CB%86TWTET%23Y@%26%26GHHSHHS");
+  });
+
+  it('encodeURISegment returns non-string input unchanged', () => {
+    expect(UTILS.encodeURISegment(123)).to.equal(123);
   });
 
   describe('checkValidName', () => {
@@ -186,6 +219,30 @@ describe('utils tests', () => {
       };
       const unshortened = UTILS.json_unshorten(jsonld);
       expect(unshortened['http://www.w3.org/1999/02/22-rdf-syntax-ns#type']).to.equal('Class');
+    });
+
+    it('should shorten nested array and object values', () => {
+      const jsonld = {
+        'http://x.y/ns#a': ['http://x.y/ns#b', 'http://x.y/ns#c'],
+        'http://x.y/ns#d': { e: 'http://x.y/ns#f' },
+      };
+      expect(UTILS.json_shorten(jsonld)).to.deep.equal({
+        a: ['b', 'c'],
+        d: { e: 'f' },
+      });
+    });
+
+    it('should unshorten nested array and object values', () => {
+      const rdfType = `${UTILS.standard_urls.rdf}type`;
+      const xsdString = `${UTILS.standard_urls.xsd}string`;
+      const jsonld = {
+        'rdf:type': ['rdf:type', 'xsd:string'],
+        'xsd:a': { b: 'rdf:type' },
+      };
+      expect(UTILS.json_unshorten(jsonld)).to.deep.equal({
+        [rdfType]: [rdfType, xsdString],
+        [`${UTILS.standard_urls.xsd}a`]: { b: rdfType },
+      });
     });
   });
 
@@ -270,6 +327,10 @@ describe('utils tests', () => {
       it('should handle decimals', () => {
         expect(UTILS.TypeHelper.formatBytes(1536, 1)).to.equal('1.5 KB');
       });
+
+      it('should clamp negative decimals to zero', () => {
+        expect(UTILS.TypeHelper.formatBytes(1536, -1)).to.equal('2 KB');
+      });
     });
 
     describe('parseRangeValue', () => {
@@ -287,6 +348,10 @@ describe('utils tests', () => {
         const result = UTILS.TypeHelper.parseRangeValue('5');
         expect(result).to.deep.equal(['5']);
       });
+
+      it('should coerce numeric input to string', () => {
+        expect(UTILS.TypeHelper.parseRangeValue(5)).to.deep.equal(['5']);
+      });
     });
   });
 
@@ -303,6 +368,10 @@ describe('utils tests', () => {
         const result = UTILS.DateHelper.parseXsdTime('10:30:45Z');
         expect(result.timezone).to.equal('Z');
       });
+
+      it('should return empty object for empty input', () => {
+        expect(UTILS.DateHelper.parseXsdTime('')).to.deep.equal({});
+      });
     });
 
     describe('parseXsdDate', () => {
@@ -316,6 +385,18 @@ describe('utils tests', () => {
       it('should handle negative years', () => {
         const result = UTILS.DateHelper.parseXsdDate('-0001-02-01');
         expect(result.year).to.equal('-0001');
+      });
+
+      it('should strip a timezone suffix', () => {
+        const result = UTILS.DateHelper.parseXsdDate('2023-05-15Z');
+        expect(result).to.include({
+          year: '2023', month: 5, day: 15, timezone: 'Z',
+        });
+      });
+
+      it('should return false for a date without month or day', () => {
+        expect(UTILS.DateHelper.parseXsdDate('2023')).to.be.false;
+        expect(UTILS.DateHelper.parseXsdDate('2023-05')).to.be.false;
       });
     });
 
@@ -466,6 +547,10 @@ describe('utils tests', () => {
         const result = UTILS.DateHelper.parseXsdDateTime(1609459200);
         expect(result.year).to.equal(2021);
       });
+
+      it('should return empty object for empty input', () => {
+        expect(UTILS.DateHelper.parseXsdDateTime('')).to.deep.equal({});
+      });
     });
   });
 
@@ -521,6 +606,11 @@ describe('utils tests', () => {
         expect(result.year).to.equal('2023');
         expect(result.hour).to.equal('10');
       });
+
+      it('should pad missing components in gYearMonth and gMonthDay', () => {
+        expect(UTILS.DateHelper.parseDate('xsd:gYearMonth', '2023')).to.deep.equal({ year: '2023', month: '' });
+        expect(UTILS.DateHelper.parseDate('xsd:gMonthDay', '05')).to.deep.equal({ month: '05', day: '' });
+      });
     });
 
     describe('addXsdPadding - edge cases', () => {
@@ -572,6 +662,11 @@ describe('utils tests', () => {
       it('should handle second >= 10', () => {
         const result = UTILS.DateHelper.addXsdPadding({ second: 30 });
         expect(result.second).to.equal(30);
+      });
+
+      it('should pad hour, minute and second below 10', () => {
+        const result = UTILS.DateHelper.addXsdPadding({ hour: 5, minute: 3, second: 2 });
+        expect(result).to.deep.equal({ hour: '05', minute: '03', second: '02' });
       });
 
       it('should handle false values', () => {
@@ -720,6 +815,10 @@ describe('utils tests', () => {
     it('should return original for unknown prefix', () => {
       const result = UTILS.unshorten('unknown:test');
       expect(result).to.equal('unknown:test');
+    });
+
+    it('should return original when there is no prefix separator', () => {
+      expect(UTILS.unshorten('plainstring')).to.equal('plainstring');
     });
   });
 
