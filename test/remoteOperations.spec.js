@@ -2,7 +2,8 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 const WOQLClient = require('../lib/woqlClient');
 const ConnectionConfig = require('../lib/connectionConfig');
-const axiosInstance = require('../lib/axiosInstance');
+
+const jsonResponse = (data) => new Response(JSON.stringify(data), { status: 200 });
 
 describe('Remote Operations - Unit Tests', () => {
   let client;
@@ -62,17 +63,15 @@ describe('Remote Operations - Unit Tests', () => {
 
   describe('WOQLClient.createRemote', () => {
     it('should call dispatch with correct parameters', async () => {
-      const stub = sandbox.stub(axiosInstance, 'post').resolves({
-        status: 200,
-        data: { '@type': 'api:RemoteResponse' }
-      });
+      const stub = sandbox.stub(globalThis, 'fetch')
+        .resolves(jsonResponse({ '@type': 'api:RemoteResponse' }));
 
       await client.createRemote('origin', 'http://remote.example.com/org/db');
 
       expect(stub.calledOnce).to.be.true;
       const call = stub.getCall(0);
       expect(call.args[0]).to.include('/api/remote/admin/testdb');
-      expect(call.args[1]).to.deep.equal({
+      expect(JSON.parse(call.args[1].body)).to.deep.equal({
         remote_name: 'origin',
         remote_location: 'http://remote.example.com/org/db'
       });
@@ -135,14 +134,13 @@ describe('Remote Operations - Unit Tests', () => {
 
   describe('WOQLClient.getRemote', () => {
     it('should call dispatch with correct parameters', async () => {
-      const stub = sandbox.stub(axiosInstance, 'get').resolves({
-        status: 200,
-        data: {
+      const stub = sandbox.stub(globalThis, 'fetch').resolves(
+        jsonResponse({
           '@type': 'api:RemoteResponse',
           'api:remote_name': 'origin',
           'api:remote_url': 'http://example.com/org/db'
-        }
-      });
+        }),
+      );
 
       await client.getRemote('origin');
 
@@ -182,17 +180,15 @@ describe('Remote Operations - Unit Tests', () => {
 
   describe('WOQLClient.updateRemote', () => {
     it('should call dispatch with correct parameters', async () => {
-      const stub = sandbox.stub(axiosInstance, 'put').resolves({
-        status: 200,
-        data: { '@type': 'api:RemoteResponse' }
-      });
+      const stub = sandbox.stub(globalThis, 'fetch')
+        .resolves(jsonResponse({ '@type': 'api:RemoteResponse' }));
 
       await client.updateRemote('origin', 'http://new.example.com/org/db');
 
       expect(stub.calledOnce).to.be.true;
       const call = stub.getCall(0);
       expect(call.args[0]).to.include('/api/remote/admin/testdb');
-      expect(call.args[1]).to.deep.equal({
+      expect(JSON.parse(call.args[1].body)).to.deep.equal({
         remote_name: 'origin',
         remote_location: 'http://new.example.com/org/db'
       });
@@ -255,10 +251,8 @@ describe('Remote Operations - Unit Tests', () => {
 
   describe('WOQLClient.deleteRemote', () => {
     it('should call dispatch with correct parameters', async () => {
-      const stub = sandbox.stub(axiosInstance, 'delete').resolves({
-        status: 200,
-        data: { '@type': 'api:RemoteResponse' }
-      });
+      const stub = sandbox.stub(globalThis, 'fetch')
+        .resolves(jsonResponse({ '@type': 'api:RemoteResponse' }));
 
       await client.deleteRemote('origin');
 
@@ -298,10 +292,8 @@ describe('Remote Operations - Unit Tests', () => {
 
   describe('Remote operations with different database contexts', () => {
     it('should use current database context', async () => {
-      const stub = sandbox.stub(axiosInstance, 'post').resolves({
-        status: 200,
-        data: { '@type': 'api:RemoteResponse' }
-      });
+      const stub = sandbox.stub(globalThis, 'fetch')
+        .resolves(jsonResponse({ '@type': 'api:RemoteResponse' }));
 
       client.db('mydb');
       await client.createRemote('origin', 'http://example.com');
@@ -311,10 +303,8 @@ describe('Remote Operations - Unit Tests', () => {
     });
 
     it('should use current organization context', async () => {
-      const stub = sandbox.stub(axiosInstance, 'post').resolves({
-        status: 200,
-        data: { '@type': 'api:RemoteResponse' }
-      });
+      const stub = sandbox.stub(globalThis, 'fetch')
+        .resolves(jsonResponse({ '@type': 'api:RemoteResponse' }));
 
       client.organization('myorg');
       client.db('mydb');

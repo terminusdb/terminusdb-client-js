@@ -182,9 +182,9 @@ try {
 }
 ```
 
-## Deprecated
+## Removed in 12.1.0
 
-The viewer classes exported from `lib/viewer` — `View`, `WOQLResult`, `WOQLTable`, `WOQLGraph` (and their rule/config helpers) — render query results into charts, tables and graphs. Data rendering is outside this package's scope: the client connects to TerminusDB, your application renders the results. These exports are marked `@deprecated` in the type declarations and will be removed in a future major release.
+The viewer classes formerly exported from `lib/viewer` — `View`, `WOQLResult`, `WOQLTable`, `WOQLGraph` (and their rule/config helpers) — were deprecated in 12.0.9 and removed in 12.1.0. Data rendering is outside this package's scope: the client connects to TerminusDB, your application renders the results.
 
 ## Options
 

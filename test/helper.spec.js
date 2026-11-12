@@ -1,7 +1,5 @@
-// const axios = require("axios");
 const { expect } = require('chai');
 const sinon = require('sinon');
-const axiosInstance = require('../lib/axiosInstance');
 const WOQLClient = require('../lib/woqlClient');
 const CONNECT_RESPONSE = require('./serverResponse/connectResponseForCapabilities');
 
@@ -11,8 +9,8 @@ before((done) => {
   const key = 'root';
   global.sandbox = sinon.createSandbox();
   global.sandbox
-    .stub(axiosInstance, 'get')
-    .returns(Promise.resolve({ status: 200, data: CONNECT_RESPONSE }));
+    .stub(globalThis, 'fetch')
+    .resolves(new Response(JSON.stringify(CONNECT_RESPONSE), { status: 200 }));
 
   global.client = new WOQLClient(global.url);
   global.client

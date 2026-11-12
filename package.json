@@ -1,13 +1,13 @@
 {
   "name": "terminusdb",
-  "version": "12.0.9",
+  "version": "12.1.0",
   "description": "TerminusDB is the open-source knowledge graph database with git-like version control.",
   "main": "index.js",
   "types": "./dist/typescript/index.d.ts",
   "files": [
-    "*.md",
     "lib",
-    "dist"
+    "dist",
+    "RELEASE_NOTES.md"
   ],
   "directories": {
     "lib": "lib",
@@ -17,21 +17,18 @@
   "publishConfig": {
     "access": "public"
   },
-  "author": "kevin@terminusdb.com",
-  "license": "Apache-2.0",
-  "dependencies": {
-    "axios": "^1.20.0",
-    "pako": "^2.0.4",
-    "buffer": "^6.0.3",
-    "form-data": "^4.0.0"
+  "author": {
+    "name": "Philippe Höij",
+    "email": "philippe.hoij@dfrnt.com"
   },
+  "contributors": [
+    {
+      "name": "Kevin Feeney",
+      "email": "kevin@terminusdb.com"
+    }
+  ],
+  "license": "Apache-2.0",
   "devDependencies": {
-    "follow-redirects": "^1.16.3",
-    "node-forge": "^1.4.3",
-    "pathval": "^1.1.1",
-    "underscore": "^1.13.2",
-    "ts-node": "^10.9.1",
-    "jest": "^29.1.2",
     "@babel/core": "^7.29.13",
     "@babel/preset-env": "^7.13.12",
     "@babel/register": "^7.13.8",
@@ -39,25 +36,18 @@
     "@types/node": "^20.19.27",
     "babel-loader": "^8.0.6",
     "chai": "^4.3.4",
-    "concurrently": "^7.4.0",
-    "eol": "^0.9.1",
     "eslint": "^8.6.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "6.11.0",
     "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-prettier": "3.1.3",
-    "html-webpack-plugin": "^5.3.1",
     "husky": "^7.0.4",
-    "jsdoc-to-markdown": "^7.1.0",
+    "jest": "^29.1.2",
     "mocha": "^12.0.3",
     "nyc": "^18.0.0",
-    "prettier": "^1.19.1",
     "sinon": "^12.0.1",
     "ts-jest": "^29.0.3",
     "typescript": "^5.9.3",
     "webpack": "^5.36.2",
-    "webpack-cli": "^4.6.0",
-    "webpack-dev-server": "^6.1.0"
+    "webpack-cli": "^4.6.0"
   },
   "overrides": {
     "mocha": {
@@ -71,17 +61,12 @@
     }
   },
   "scripts": {
-    "mkdocs:docs": "npx jsdoc --template ./jsdoc-terminusdb-template --recurse ./lib/ > docs.json",
-    "mkdocs:multi": "node ./docs/createDocs.js",
-    "mkdocs:src": "docco lib/*.js -l plain -x md -o docs/api",
-    "mkdocs:api": "jsdoc2md --configure docs/doc_config.json --partial  docs/partial/scope.hbs docs/partial/member-index.hbs docs/partial/header.hbs --helper docs/helper/format.js --files lib/woql.js lib/woqlClient.js lib/typedef.js > docs/api/api.js.md",
-    "mkdocs": "cp README.md docs/ && npm run mkdocs:multi",
     "test:integration": "jest",
     "test": "npm run cover",
     "test:only": "mocha --require @babel/register --require @babel/preset-env --recursive  ",
     "test:watch": "mocha --watch --require @babel/register --require @babel/preset-env --recursive",
     "test:examples": "node examples/",
-    "cover": "nyc --check-coverage --lines 30 npm run test:only ",
+    "cover": "nyc --check-coverage --statements 97 --branches 92 --functions 98 --lines 97 npm run test:only ",
     "lint:check": "eslint .",
     "lint": "eslint --fix .",
     "validate-types:strict": "npm run generate-types && tsc --project tsconfig.validate.json",
@@ -117,5 +102,9 @@
     "stream": false,
     "tls": false,
     "fs": false
-  }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "unpkg": "./dist/terminusdb-client.min.js"
 }

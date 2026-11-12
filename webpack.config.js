@@ -1,7 +1,4 @@
 const path = require('path');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
-
-require('@babel/register');
 // Webpack Configuration
 const config = {
   // Entry
@@ -41,12 +38,6 @@ module.exports = function (env, argv) {
 
   if (argv.mode === 'production') {
     config.watch = false;
-    config.plugins = [
-      new HtmlWebPackPlugin({
-        template: './index.html',
-        filename: 'index.html',
-      }),
-    ];
   }
 
   return config;

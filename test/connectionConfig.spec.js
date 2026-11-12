@@ -457,4 +457,78 @@ describe('ConnectionConfig tests', () => {
       expect(url).to.include('users');
     });
   });
+
+  describe('URL builders', () => {
+    const make = (params) => new ConnectionConfig('http://localhost:6363', params);
+
+    it('should build branch URLs for a normal database', () => {
+      const config = make({ user: 'admin', organization: 'myorg', db: 'mydb' });
+      expect(config.queryURL()).to.include('woql');
+      expect(config.log()).to.include('log');
+      expect(config.triplesURL('schema')).to.include('triples');
+      expect(config.triplesURL('schema')).to.include('schema');
+      expect(config.prefixesURL()).to.include('prefixes');
+      expect(config.prefixURL()).to.include('prefix');
+      expect(config.branchBase('woql')).to.include('branch/main');
+    });
+
+    it('should build db-base URLs for the system database', () => {
+      const config = make({ user: 'admin', organization: 'admin', db: '_system' });
+      expect(config.queryURL()).to.include('_system');
+      expect(config.queryURL()).to.not.include('branch');
+      expect(config.log()).to.include('_system');
+      expect(config.documentURL()).to.include('document');
+      expect(config.prefixesURL()).to.include('prefixes');
+      expect(config.prefixURL()).to.include('prefix');
+      expect(config.jsonSchemaURL()).to.include('schema');
+      expect(config.docHistoryURL()).to.include('history');
+      expect(config.dbURLFragment()).to.equal('_system');
+    });
+
+    it('should encode organization and db in the fragment', () => {
+      const config = make({ user: 'admin', organization: 'my org', db: 'mydb' });
+      expect(config.dbURLFragment()).to.equal('my%20org/mydb');
+    });
+
+    it('should append params to document, schema and history URLs', () => {
+      const config = make({ user: 'admin', organization: 'myorg', db: 'mydb' });
+      expect(config.documentURL({ graph_type: 'instance', id: 'doc/x' })).to.include('graph_type=instance');
+      expect(config.documentURL({ graph_type: 'instance', id: 'doc/x' })).to.include('id=doc');
+      expect(config.jsonSchemaURL({ type: 'Person' })).to.include('type=Person');
+      expect(config.docHistoryURL({ doc_id: 'doc/x' })).to.include('doc_id=doc');
+    });
+
+    it('should omit the query string for absent or non-object params', () => {
+      const config = make({ user: 'admin', organization: 'myorg', db: 'mydb' });
+      expect(config.documentURL()).to.not.include('?');
+      expect(config.documentURL('not-an-object')).to.not.include('?');
+      expect(config.docHistoryURL(null)).to.not.include('?');
+      expect(config.jsonSchemaURL()).to.not.include('?');
+    });
+
+    it('should use the default repo id when no repo is set', () => {
+      const config = make({ user: 'admin', organization: 'myorg', db: 'mydb' });
+      expect(config.repoBase('woql')).to.include('/local');
+    });
+
+    it('should use a configured repo id', () => {
+      const config = make({ user: 'admin', organization: 'myorg', db: 'mydb', repo: 'origin' });
+      expect(config.repoBase('woql')).to.include('/origin');
+    });
+
+    it('should return early for the _meta repo', () => {
+      const config = make({ user: 'admin', organization: 'myorg', db: 'mydb', repo: '_meta' });
+      expect(config.branchBase('woql')).to.not.include('branch');
+    });
+
+    it('should handle the _commits branch', () => {
+      const config = make({ user: 'admin', organization: 'myorg', db: 'mydb', branch: '_commits' });
+      expect(config.branchBase('log')).to.include('_commits');
+    });
+
+    it('should use the commit path when a ref is set', () => {
+      const config = make({ user: 'admin', organization: 'myorg', db: 'mydb', ref: 'abc123' });
+      expect(config.branchBase('log')).to.include('commit/abc123');
+    });
+  });
 });

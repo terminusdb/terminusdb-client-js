@@ -1,6 +1,5 @@
 const { expect } = require('chai');
 const turtleSchemaR = require('./extraFile/getSchemaTurtleResponse');
-const axiosInstance = require('../lib/axiosInstance');
 
 // http://127.0.0.1:6363/triples/terminus/schema/main
 // http://127.0.0.1:6363/triples/admin/testDB/local/commit/gfhfjkflfgorpyuiioo
@@ -20,13 +19,9 @@ describe('get a terminusDB schema', () => {
   });
 
   it('get a schema of the current database', (done) => {
-    global.sandbox.stub(axiosInstance, 'get').returns(Promise.resolve({ status: 200, data: turtleSchemaR }));
+    global.sandbox.stub(globalThis, 'fetch').resolves(new Response(turtleSchemaR, { status: 200 }));
    		global.client.getTriples('schema', 'main').then((response) => {
    			expect(response).to.be.an('string');
    		}).then(done, done);
-  });
-
-  it('update the schema of the current database', (done) => {
-    done();
   });
 });

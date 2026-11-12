@@ -676,6 +676,19 @@ describe('WOQLClient tests', () => {
         expect(err.message).to.include('parameter error');
       }
     });
+
+    it('should execute an update query without commit message using the default', async () => {
+      dispatchStub.resolves({ bindings: [] });
+      const WOQL = require('../lib/woql');
+      const query = WOQL.add_triple('a', 'b', 'c');
+
+      const response = await client.query(query);
+
+      expect(response).to.exist;
+      expect(dispatchStub.calledOnce).to.be.true;
+      const postBody = dispatchStub.firstCall.args[2];
+      expect(postBody.commit_info.message).to.include('without message');
+    });
   });
 
   describe('Branch operations', () => {
@@ -2732,10 +2745,8 @@ describe('WOQLClient tests', () => {
 
       const headers = requestHeadersArg(dispatchStub.firstCall);
       expect(headers).to.have.property('TerminusDB-Data-Version', 'branch:v1');
-      expect(headers['content-type'] || headers['Content-Type']).to.include('multipart/form-data');
+      // fetch generates the multipart Content-Type incl. boundary itself
       expect(storedHeaders()).to.not.have.property('TerminusDB-Data-Version');
-      expect(storedHeaders()['content-type'] || storedHeaders()['Content-Type'] || '')
-        .to.not.include('multipart');
     });
   });
 
@@ -2760,10 +2771,184 @@ describe('WOQLClient tests', () => {
       const WOQL = require('../lib/woql');
       const query = WOQL.triple('v:A', 'v:B', 'v:C');
       const resources = [{ filename: 'test.csv', data: 'col1,col2\nval1,val2' }];
-      
+
       await client.query(query, '', resources);
-      
+
       expect(dispatchStub.calledOnce).to.be.true;
+    });
+
+    it('should send resource uploads as native FormData with file and payload parts', async () => {
+      dispatchStub.resolves({ bindings: [] });
+      const WOQL = require('../lib/woql');
+      const query = WOQL.get(WOQL.as('Name', 'v:Name')).post('test.csv', { type: 'csv' }, 'post');
+
+      await client.query(query, '', false, '', false, [{ filename: 'test.csv', data: 'a,b\n1,2' }]);
+
+      const body = dispatchStub.firstCall.args[2];
+      expect(body).to.be.an.instanceof(FormData);
+      const file = body.get('file');
+      expect(file.name).to.equal('test.csv');
+      expect(await file.text()).to.equal('a,b\n1,2');
+      const payload = body.get('payload');
+      expect(payload.type).to.equal('application/json');
+      expect(await payload.text()).to.include('test.csv');
+      // fetch generates the multipart Content-Type incl. boundary itself
+      expect(dispatchStub.firstCall.args[5] || {}).to.not.have.property('Content-Type');
+      expect(dispatchStub.firstCall.args[5] || {}).to.not.have.property('content-type');
+    });
+
+    it('should read the file from disk when no resource data is provided', async () => {
+      dispatchStub.resolves({ bindings: [] });
+      const fs = require('fs');
+      const readStub = sinon.stub(fs, 'readFileSync').returns(Buffer.from('a,b\n1,2'));
+      const WOQL = require('../lib/woql');
+      const query = WOQL.get(WOQL.as('Name', 'v:Name')).post('/data/test.csv', { type: 'csv' }, 'post');
+
+      await client.query(query, '', false, '', false);
+
+      const file = dispatchStub.firstCall.args[2].get('file');
+      expect(file.name).to.equal('test.csv'); // basename of the file path
+      expect(readStub.calledWith('/data/test.csv')).to.be.true;
+    });
+  });
+
+  describe('schema getters', () => {
+    beforeEach(() => {
+      client.db('test_db');
+    });
+
+    it('should request the schema graph as a list', async () => {
+      dispatchStub.resolves([]);
+      await client.getSchema();
+      const [action, url] = dispatchStub.firstCall.args;
+      expect(action).to.equal('GET');
+      expect(url).to.include('graph_type=schema');
+      expect(url).to.include('as_list=true');
+    });
+
+    it('should filter schema classes and enums by type', async () => {
+      dispatchStub.resolves([]);
+      await client.getClasses();
+      expect(dispatchStub.firstCall.args[1]).to.include('type=sys:Class');
+      await client.getEnums();
+      expect(dispatchStub.secondCall.args[1]).to.include('type=sys:Enum');
+    });
+
+    it('should request the schema frame for a type', async () => {
+      dispatchStub.resolves({});
+      await client.getSchemaFrame('Person', 'test_db');
+      expect(dispatchStub.firstCall.args[1]).to.include('type=Person');
+    });
+
+    it('should drop subdocuments and abstracts from class documents', async () => {
+      dispatchStub.resolves([
+        { '@id': 'A' },
+        { '@id': 'B', '@subdocument': [] },
+        { '@id': 'C', '@abstract': [] },
+      ]);
+      const docs = await client.getClassDocuments();
+      expect(docs).to.have.length(1);
+      expect(docs[0]['@id']).to.equal('A');
+    });
+  });
+
+  describe('patch', () => {
+    it('should reject missing before and patch documents', async () => {
+      try {
+        await client.patch();
+        expect.fail('Should have rejected');
+      } catch (err) {
+        expect(err.message).to.include('before');
+      }
+    });
+
+    it('should post the patch payload', async () => {
+      dispatchStub.resolves({ status: 200 });
+      await client.patch({ a: 1 }, { b: 2 });
+      const [action, url, payload] = dispatchStub.firstCall.args;
+      expect(action).to.equal('POST');
+      expect(url).to.include('patch');
+      expect(payload).to.deep.equal({ before: { a: 1 }, patch: { b: 2 } });
+    });
+  });
+
+  describe('dispatch', () => {
+    it('should reject when no api url is given', async () => {
+      const fresh = new WOQLClient('http://localhost:6363', { user: 'admin', key: 'k' });
+      try {
+        await fresh.dispatch('GET', null, {});
+        expect.fail('Should have rejected');
+      } catch (err) {
+        expect(err.message).to.include('Invalid Parameter');
+      }
+    });
+  });
+
+  describe('prefix management', () => {
+    beforeEach(() => {
+      client.db('test_db');
+      dispatchStub.resolves({});
+    });
+
+    it('should get a prefix definition', async () => {
+      await client.getPrefix('ex', 'test_db');
+      expect(dispatchStub.firstCall.args[1]).to.include('prefix');
+    });
+
+    it('should add, update, upsert and delete a prefix', async () => {
+      await client.addPrefix('ex', 'http://x.y/', 'test_db');
+      await client.updatePrefix('ex', 'http://z.y/', 'test_db');
+      await client.upsertPrefix('ex', 'http://z.y/', 'test_db');
+      await client.deletePrefix('ex', 'test_db');
+      expect(dispatchStub.callCount).to.equal(4);
+      expect(dispatchStub.firstCall.args[0]).to.equal('POST');
+      expect(dispatchStub.secondCall.args[0]).to.equal('PUT');
+      expect(dispatchStub.thirdCall.args[0]).to.equal('PUT');
+      expect(dispatchStub.lastCall.args[0]).to.equal('DELETE');
+    });
+  });
+
+  describe('optional-argument dispatch calls', () => {
+    beforeEach(() => {
+      client.db('test_db');
+      dispatchStub.resolves({});
+    });
+
+    it('should pass paging parameters to getCommitsLog', async () => {
+      await client.getCommitsLog(5, 10);
+      expect(dispatchStub.firstCall.args[1]).to.include('log');
+    });
+
+    it('should list prefixes and user organizations', async () => {
+      await client.getPrefixes('test_db');
+      expect(dispatchStub.firstCall.args[1]).to.include('prefix');
+      dispatchStub.resolves([]);
+      await client.getUserOrganizations();
+      expect(dispatchStub.callCount).to.equal(2);
+    });
+
+    it('should keep the organization list in memory', () => {
+      expect(client.userOrganizations(['admin'])).to.deep.equal(['admin']);
+      expect(client.userOrganizations()).to.deep.equal(['admin']);
+    });
+
+    it('should update and delete documents with options', async () => {
+      await client.updateDocument({ '@id': 'doc/x' }, null, 'test_db');
+      expect(dispatchStub.firstCall.args[0]).to.equal('PUT');
+      await client.deleteDocument('doc/x', 'test_db');
+      expect(dispatchStub.secondCall.args[0]).to.equal('DELETE');
+    });
+
+    it('should list branches', async () => {
+      dispatchStub.resolves([]);
+      await client.getBranches();
+      expect(dispatchStub.calledOnce).to.be.true;
+    });
+
+    it('should apply a patch to a resource', async () => {
+      dispatchStub.resolves({ status: 200 });
+      await client.patchResource([{ '@op': 'Delete', '@delete': 'doc/x' }], 'a message');
+      expect(dispatchStub.firstCall.args[1]).to.include('patch');
     });
   });
 });

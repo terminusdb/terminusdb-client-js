@@ -522,4 +522,50 @@ describe('AccessControl tests', () => {
       }
     });
   });
+
+  describe('missing-argument validation', () => {
+    // Guards only fire when no organization is configured or passed.
+    const noOrg = new AccessControl('http://localhost:6363/', { user: 'admin', key: 'mykey' });
+
+    const rejectsWith = async (promise, msg) => {
+      try {
+        await promise;
+        expect.fail('Should have rejected');
+      } catch (err) {
+        expect(err.message).to.include(msg);
+      }
+    };
+
+    it('should reject org-scoped calls without an organization name', async () => {
+      await rejectsWith(noOrg.getOrgUsers(), 'organization name');
+      await rejectsWith(noOrg.ifOrganizationExists(), 'organization name');
+      await rejectsWith(noOrg.getPendingOrgInvites(), 'organization name');
+      await rejectsWith(noOrg.getTeamUserRole(), 'organization name');
+      await rejectsWith(noOrg.accessRequestsList(), 'organization name');
+      await rejectsWith(noOrg.deleteAccessRequest('id'), 'organization name');
+      await rejectsWith(noOrg.sendAccessRequest('e@x.org', 'a', 'n'), 'organization name');
+    });
+
+    it('should validate invite arguments in order', async () => {
+      await rejectsWith(accessControl.sendOrgInvite('', 'read', 'note', 'admin'), 'user email');
+      await rejectsWith(accessControl.sendOrgInvite('a@b.c', '', 'note', 'admin'), 'role');
+      await rejectsWith(accessControl.getOrgInvite('', 'admin'), 'invite id');
+      await rejectsWith(accessControl.deleteOrgInvite('', 'admin'), 'invite id');
+      await rejectsWith(accessControl.updateOrgInviteStatus('', true, 'admin'), 'invite id');
+      await rejectsWith(accessControl.updateOrgInviteStatus('id', undefined, 'admin'), 'accepted status');
+      await rejectsWith(noOrg.getOrgInvite('id'), 'organization name');
+    });
+
+    it('should validate user-role arguments in order', async () => {
+      await rejectsWith(accessControl.getDatabaseRolesOfUser('', 'admin'), 'user id');
+      await rejectsWith(accessControl.removeUserFromOrg('', 'admin'), 'userId');
+      await rejectsWith(accessControl.createUserRole('', 'scope', 'role', 'admin'), 'user id');
+      await rejectsWith(accessControl.createUserRole('user', '', 'role', 'admin'), 'scope');
+      await rejectsWith(accessControl.createUserRole('user', 'scope', '', 'admin'), 'role');
+      await rejectsWith(accessControl.updateUserRole('', 'cap', 'scope', 'role', 'admin'), 'user id');
+      await rejectsWith(accessControl.updateUserRole('user', '', 'scope', 'role', 'admin'), 'capability');
+      await rejectsWith(accessControl.updateUserRole('user', 'cap', '', 'role', 'admin'), 'scope');
+      await rejectsWith(accessControl.updateUserRole('user', 'cap', 'scope', '', 'admin'), 'role');
+    });
+  });
 });
