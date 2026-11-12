@@ -73,6 +73,21 @@ describe('Create a database, schema and insert data', () => {
     expect(result[0]["@id"]).toStrictEqual("Organization/admin");
   });
 
+  test('Get JSON Schema for a class', async () => {
+    const result = await client.getJSONSchema('Person');
+    expect(result.$schema).toStrictEqual('https://json-schema.org/draft-07/schema#');
+    expect(result.type).toStrictEqual('object');
+    expect(result.properties.name).toStrictEqual({ type: 'string' });
+    expect(result.properties.age).toStrictEqual({ type: 'number' });
+    expect(result.properties.has_parent['x-terminusdb'].link).toStrictEqual('Parent');
+  });
+
+  test('Get JSON Schema for all classes', async () => {
+    const result = await client.getJSONSchema();
+    expect(result.definitions.Person.properties.name.type).toStrictEqual('string');
+    expect(result.definitions.Parent).toBeDefined();
+    expect(result.definitions.Child).toBeDefined();
+  });
 });
 
 afterAll(async () => {
