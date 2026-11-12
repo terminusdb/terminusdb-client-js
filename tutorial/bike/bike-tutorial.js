@@ -56,9 +56,7 @@ const csvs = [
  * @param {String} [title]
  * @param {String} [description]
  */
-function createDatabase(client, id, title, description) {
-  title = title || 'Bike Data';
-  description = description || 'A Database for the Terminus Bikes Tutorial';
+function createDatabase(client, id, title = 'Bike Data', description = 'A Database for the Terminus Bikes Tutorial') {
   const dbdetails = {
     id, label: title, comment: description, schema: true,
   };
@@ -121,7 +119,7 @@ function loadCSVs(client, arr) {
     const csv = getCSVVariables(next);
     const inputQuery = WOQL.and(csv, ...wrangles);
     const answer = WOQL.and(inputQuery, insertQuery);
-    appendData(`........loading csv ${next} ${arr.length} remaining`, arr.length, true);
+    appendData(`Loading csv ${next} (${arr.length} remaining)`, arr.length, true);
     // console.log("PRETTY_PRINTER",answer.prettyPrinter())
     client
       .query(answer)
@@ -205,12 +203,12 @@ async function runTutorial(terminus_server_url, terminus_server_key, terminus_db
   const client = new TerminusClient.WOQLClient(terminus_server_url);
   try {
     await client.connect({ key: terminus_server_key });
-    appendData('......creating database', '001', true);
+    appendData('Creating database', '001', true);
     await createDatabase(client, terminus_db_id);
-    appendData('The database as been created!!!!', '001');
-    appendData('......creating schema', '002', true);
+    appendData('Database created', '001');
+    appendData('Creating schema', '002', true);
     await createSchema(client);
-    appendData('The schema as been created!!!!', '002');
+    appendData('Schema created', '002');
     loadCSVs(client, csvs);
   } catch (err) {
     appendData(`ERROR ${err.message}`, '003', true);

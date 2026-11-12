@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('node:path');
 // Webpack Configuration
 const config = {
   // Entry

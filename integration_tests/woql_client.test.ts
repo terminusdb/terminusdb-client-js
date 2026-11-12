@@ -59,7 +59,7 @@ describe('Create a database, schema and insert data', () => {
 
   test('Get commits log from the server', async () => {
     const result = await client.getCommitsLog();
-    expect(result.length).toStrictEqual(1);
+    expect(result).toHaveLength(1);
     expect(result[0]["@type"]).toStrictEqual("ValidCommit");
   });
 

@@ -69,146 +69,63 @@ describe('Interval — validation (all args ground)', () => {
 });
 
 describe('DayAfter — forward (date -> next)', () => {
-  test('mid-month: Jan 15 -> Jan 16', async () => {
+  test.each([
+    { name: 'mid-month: Jan 15 -> Jan 16', date: '2025-01-15', next: '2025-01-16' },
+    { name: 'end-of-month: Jan 31 -> Feb 1', date: '2025-01-31', next: '2025-02-01' },
+    { name: 'end-of-year: Dec 31 -> Jan 1 next year', date: '2025-12-31', next: '2026-01-01' },
+    { name: 'leap Feb 28 -> Feb 29', date: '2024-02-28', next: '2024-02-29' },
+    { name: 'leap Feb 29 -> Mar 1', date: '2024-02-29', next: '2024-03-01' },
+    { name: 'non-leap Feb 28 -> Mar 1', date: '2023-02-28', next: '2023-03-01' },
+  ])('$name', async ({ date, next }) => {
     let v = Vars("n");
-    const query = WOQL.day_after(dat('2025-01-15'), v.n);
+    const query = WOQL.day_after(dat(date), v.n);
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].n['@value']).toBe('2025-01-16');
-  });
-
-  test('end-of-month: Jan 31 -> Feb 1', async () => {
-    let v = Vars("n");
-    const query = WOQL.day_after(dat('2025-01-31'), v.n);
-    const result = await client.query(query);
-    expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].n['@value']).toBe('2025-02-01');
-  });
-
-  test('end-of-year: Dec 31 -> Jan 1 next year', async () => {
-    let v = Vars("n");
-    const query = WOQL.day_after(dat('2025-12-31'), v.n);
-    const result = await client.query(query);
-    expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].n['@value']).toBe('2026-01-01');
-  });
-
-  test('leap Feb 28 -> Feb 29', async () => {
-    let v = Vars("n");
-    const query = WOQL.day_after(dat('2024-02-28'), v.n);
-    const result = await client.query(query);
-    expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].n['@value']).toBe('2024-02-29');
-  });
-
-  test('leap Feb 29 -> Mar 1', async () => {
-    let v = Vars("n");
-    const query = WOQL.day_after(dat('2024-02-29'), v.n);
-    const result = await client.query(query);
-    expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].n['@value']).toBe('2024-03-01');
-  });
-
-  test('non-leap Feb 28 -> Mar 1', async () => {
-    let v = Vars("n");
-    const query = WOQL.day_after(dat('2023-02-28'), v.n);
-    const result = await client.query(query);
-    expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].n['@value']).toBe('2023-03-01');
+    expect(result?.bindings[0].n['@value']).toBe(next);
   });
 });
 
 describe('DayAfter — bidirectional (next -> date)', () => {
-  test('given next=Apr 1, deduces date=Mar 31', async () => {
+  test.each([
+    { name: 'given next=Apr 1, deduces date=Mar 31', next: '2025-04-01', date: '2025-03-31' },
+    { name: 'given next=Jan 1, deduces date=Dec 31 prev year', next: '2025-01-01', date: '2024-12-31' },
+    { name: 'given next=Mar 1 in leap year, deduces date=Feb 29', next: '2024-03-01', date: '2024-02-29' },
+  ])('$name', async ({ next, date }) => {
     let v = Vars("d");
-    const query = WOQL.day_after(v.d, dat('2025-04-01'));
+    const query = WOQL.day_after(v.d, dat(next));
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].d['@value']).toBe('2025-03-31');
-  });
-
-  test('given next=Jan 1, deduces date=Dec 31 prev year', async () => {
-    let v = Vars("d");
-    const query = WOQL.day_after(v.d, dat('2025-01-01'));
-    const result = await client.query(query);
-    expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].d['@value']).toBe('2024-12-31');
-  });
-
-  test('given next=Mar 1 in leap year, deduces date=Feb 29', async () => {
-    let v = Vars("d");
-    const query = WOQL.day_after(v.d, dat('2024-03-01'));
-    const result = await client.query(query);
-    expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].d['@value']).toBe('2024-02-29');
+    expect(result?.bindings[0].d['@value']).toBe(date);
   });
 });
 
 describe('DayBefore — forward (date -> previous)', () => {
-  test('mid-month: Jan 15 -> Jan 14', async () => {
+  test.each([
+    { name: 'mid-month: Jan 15 -> Jan 14', date: '2025-01-15', prev: '2025-01-14' },
+    { name: 'start-of-month: Mar 1 -> Feb 28 (non-leap)', date: '2025-03-01', prev: '2025-02-28' },
+    { name: 'start-of-year: Jan 1 -> Dec 31 prev year', date: '2025-01-01', prev: '2024-12-31' },
+    { name: 'leap Mar 1 -> Feb 29', date: '2024-03-01', prev: '2024-02-29' },
+    { name: 'end of 30-day month: May 1 -> Apr 30', date: '2025-05-01', prev: '2025-04-30' },
+  ])('$name', async ({ date, prev }) => {
     let v = Vars("p");
-    const query = WOQL.day_before(dat('2025-01-15'), v.p);
+    const query = WOQL.day_before(dat(date), v.p);
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].p['@value']).toBe('2025-01-14');
-  });
-
-  test('start-of-month: Mar 1 -> Feb 28 (non-leap)', async () => {
-    let v = Vars("p");
-    const query = WOQL.day_before(dat('2025-03-01'), v.p);
-    const result = await client.query(query);
-    expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].p['@value']).toBe('2025-02-28');
-  });
-
-  test('start-of-year: Jan 1 -> Dec 31 prev year', async () => {
-    let v = Vars("p");
-    const query = WOQL.day_before(dat('2025-01-01'), v.p);
-    const result = await client.query(query);
-    expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].p['@value']).toBe('2024-12-31');
-  });
-
-  test('leap Mar 1 -> Feb 29', async () => {
-    let v = Vars("p");
-    const query = WOQL.day_before(dat('2024-03-01'), v.p);
-    const result = await client.query(query);
-    expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].p['@value']).toBe('2024-02-29');
-  });
-
-  test('end of 30-day month: May 1 -> Apr 30', async () => {
-    let v = Vars("p");
-    const query = WOQL.day_before(dat('2025-05-01'), v.p);
-    const result = await client.query(query);
-    expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].p['@value']).toBe('2025-04-30');
+    expect(result?.bindings[0].p['@value']).toBe(prev);
   });
 });
 
 describe('DayBefore — bidirectional (previous -> date)', () => {
-  test('given previous=Mar 31, deduces date=Apr 1', async () => {
+  test.each([
+    { name: 'given previous=Mar 31, deduces date=Apr 1', prev: '2025-03-31', date: '2025-04-01' },
+    { name: 'given previous=Dec 31, deduces date=Jan 1 next year', prev: '2024-12-31', date: '2025-01-01' },
+    { name: 'given previous=Feb 29, deduces date=Mar 1 in leap year', prev: '2024-02-29', date: '2024-03-01' },
+  ])('$name', async ({ prev, date }) => {
     let v = Vars("d");
-    const query = WOQL.day_before(v.d, dat('2025-03-31'));
+    const query = WOQL.day_before(v.d, dat(prev));
     const result = await client.query(query);
     expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].d['@value']).toBe('2025-04-01');
-  });
-
-  test('given previous=Dec 31, deduces date=Jan 1 next year', async () => {
-    let v = Vars("d");
-    const query = WOQL.day_before(v.d, dat('2024-12-31'));
-    const result = await client.query(query);
-    expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].d['@value']).toBe('2025-01-01');
-  });
-
-  test('given previous=Feb 29, deduces date=Mar 1 in leap year', async () => {
-    let v = Vars("d");
-    const query = WOQL.day_before(v.d, dat('2024-02-29'));
-    const result = await client.query(query);
-    expect(result?.bindings).toHaveLength(1);
-    expect(result?.bindings[0].d['@value']).toBe('2024-03-01');
+    expect(result?.bindings[0].d['@value']).toBe(date);
   });
 });
 
